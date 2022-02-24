@@ -1,6 +1,6 @@
-package modifiers;
+package mechanics.modifiers;
 
-public interface HiddenDebuff extends Debuff {
+public interface HiddenBuff extends Buff {
 
 	@Override
 	default boolean isVisible() {

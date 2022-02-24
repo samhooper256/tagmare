@@ -1,4 +1,4 @@
-package modifiers;
+package mechanics.modifiers;
 
 public interface VisibleBuff extends Buff {
 

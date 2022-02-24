@@ -1,4 +1,4 @@
-package modifiers;
+package mechanics.modifiers;
 
 /** There are two kinds of {@link Modifier Modifiers}: {@link Buff Buffs} and {@link Debuff Debuffs}. All
  * {@link #isInteger() integer} modifiers are mutable. */

@@ -1,4 +1,4 @@
-package modifiers;
+package mechanics.modifiers;
 
 public class Motivation implements VisibleBuff {
 

@@ -1,4 +1,4 @@
-package modifiers;
+package mechanics.modifiers;
 
 public interface VisibleDebuff extends Debuff {
 

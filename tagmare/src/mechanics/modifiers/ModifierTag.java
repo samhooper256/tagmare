@@ -1,4 +1,4 @@
-package modifiers;
+package mechanics.modifiers;
 
 import java.util.function.Supplier;
 
