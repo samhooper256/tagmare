@@ -1,10 +1,10 @@
-package effects;
+package modifiers;
 
-/** There are two kinds of {@link Effect Effects}: {@link Buff Buffs} and {@link Debuff Debuffs}. All
- * {@link #isInteger() integer} effects are mutable. */
-public interface Effect {
+/** There are two kinds of {@link Modifier Modifiers}: {@link Buff Buffs} and {@link Debuff Debuffs}. All
+ * {@link #isInteger() integer} modifiers are mutable. */
+public interface Modifier {
 
-	EffectTag tag();
+	ModifierTag tag();
 	
 	default boolean isBuff() {
 		return this instanceof Buff;
@@ -14,10 +14,10 @@ public interface Effect {
 		return this instanceof Debuff;
 	}
 	
-	/** Visible {@link Effect Effects} will be shown to the user. */
+	/** Visible {@link Modifier Modifiers} will be shown to the user. */
 	boolean isVisible();
 	
-	/** Hidden {@link Effect Effects} will not be shown to the user. */
+	/** Hidden {@link Modifier Modifiers} will not be shown to the user. */
 	default boolean isHidden() {
 		return !isVisible(); 
 	}
@@ -26,36 +26,36 @@ public interface Effect {
 		return tag().displayName();
 	}
 	
-	/** Returns {@code true} iff this {@link Effect} has an integer value associated with it. For example, see
+	/** Returns {@code true} iff this {@link Modifier} has an integer value associated with it. For example, see
 	 * {@link Motivation}. */
 	default boolean isInteger() {
-		return tag().isIntegerEffect();
+		return tag().isIntegerModifier();
 	}
 	
-	/** <p>Throws an {@link UnsupportedOperationException} if this {@link Effect} is not an {@link #isInteger() integer}
-	 * effect.</p> 
+	/** <p>Throws an {@link UnsupportedOperationException} if this {@link Modifier} is not an {@link #isInteger() integer}
+	 * modifier.</p> 
 	 * <p>The default implementation is written such that this method must only be overridden by
-	 * integer {@code Effects}.</p> */
+	 * integer {@code Modifiers}.</p> */
 	default int integer() {
 		if(isInteger())
 			throw new UnsupportedOperationException("Must override");
 		else
 			throw new UnsupportedOperationException(
-					String.format("This Effect (%s) is not an integer Effect", getClass().getSimpleName()));
+					String.format("This Modifier (%s) is not an integer Modifier", getClass().getSimpleName()));
 	}
 	
-	/** <p>All {@link #isInteger() integer} {@link Effect Effects} are mutable and must support this method. Throws an
-	 * {@link UnsupportedOperationException} iff this {@code Effect} is not an integer effect.</p>
+	/** <p>All {@link #isInteger() integer} {@link Modifier Modifiers} are mutable and must support this method. Throws an
+	 * {@link UnsupportedOperationException} iff this {@code Modifiers} is not an integer modifier.</p>
 	 * <p>This method simply updates the value of {@link #integer()}; it does not cause any downstream effects of that
 	 * change to occur.</p>
 	 * <p>The default implementation is written such that this method must only be overridden by integer
-	 * {@code Effects}.</p> */
+	 * {@code Modifiers}.</p> */
 	default void setInteger(int integer) {
 		if(isInteger())
 			throw new UnsupportedOperationException("Must override");
 		else
 			throw new UnsupportedOperationException(
-					String.format("This Effect (%s) is not an integer Effect", getClass().getSimpleName()));
+					String.format("This Modifier (%s) is not an integer Modifier", getClass().getSimpleName()));
 	}
 	
 	default void increment() {

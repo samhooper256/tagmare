@@ -1,4 +1,4 @@
-package effects;
+package modifiers;
 
 public class Motivation implements VisibleBuff {
 
@@ -25,8 +25,8 @@ public class Motivation implements VisibleBuff {
 	}
 
 	@Override
-	public EffectTag tag() {
-		return EffectTag.MOTIVATION;
+	public ModifierTag tag() {
+		return ModifierTag.MOTIVATION;
 	}
 	
 }

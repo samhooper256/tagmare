@@ -1,4 +1,4 @@
-package effects;
+package modifiers;
 
 public interface HiddenBuff extends Buff {
 

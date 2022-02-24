@@ -1,6 +1,6 @@
-package effects;
+package modifiers;
 
-public interface VisibleBuff extends Buff {
+public interface VisibleDebuff extends Debuff {
 
 	@Override
 	default boolean isVisible() {
