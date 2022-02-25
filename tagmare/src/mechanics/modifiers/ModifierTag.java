@@ -10,7 +10,7 @@ public enum ModifierTag {
 	private final boolean isInteger;
 	private final Supplier<? extends Modifier> supplier;
 	
-	private ModifierTag(String name, boolean isInteger, Supplier<? extends Modifier> supplier) {
+	ModifierTag(String name, boolean isInteger, Supplier<? extends Modifier> supplier) {
 		this.name = name;
 		this.isInteger = isInteger;
 		this.supplier = supplier;

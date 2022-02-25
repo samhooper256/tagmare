@@ -1,7 +1,25 @@
 package mechanics.cards;
 
-import mechanics.actions.ActionSource;
+import mechanics.Enemy;
+import mechanics.actions.*;
 
+/** Cards use identity equality. */
 public interface Card extends ActionSource {
+	
+	Card copy();
+	
+	CardTag tag();
+	
+	/** if this {@link Card} is not {@link #isTargetted() targetted}, the parameter is ignored. */
+	ActionList generateActions(Enemy target);
+	
+	default boolean isTargetted() {
+		return tag().isTargetted();
+	}
+	
+	@Override
+	default ActionSourceType type() {
+		return ActionSourceType.CARD;
+	}
 	
 }

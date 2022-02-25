@@ -10,12 +10,13 @@ public class ModifierSet implements Iterable<Modifier> {
 		map = new TreeMap<>();
 	}
 
-	/** Returns the {@link Modifier} in this {@link ModifierSet} with the given {@link ModifierTag}. Returns {@code null} if
-	 * there is no such {@link Modifier}. Runs in O(n). */
-	public Modifier getModifier(ModifierTag tag) {
+	/** Returns the {@link Modifier} in this {@link ModifierSet} with the given {@link ModifierTag}. Returns
+	 * {@code null} if there is no such {@link Modifier}. Casts the {@link Modifier} to the given type. Runs in O(n). */
+	@SuppressWarnings("unchecked")
+	public <M extends Modifier> M getModifier(ModifierTag tag) {
 		for(Modifier e : this)
 			if(e.tag() == tag)
-				return e;
+				return (M) e;
 		return null;
 	}
 	

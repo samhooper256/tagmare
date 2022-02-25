@@ -1,8 +1,8 @@
 package mechanics.actions;
 
-import base.Entity;
+import mechanics.*;
 
-public class DealDamage implements TargettedAction {
+public class DealDamage extends AbstractTargettedAction {
 
 	/** Must be non-negative. */
 	private static int verifyAmount(int amount) {
@@ -11,28 +11,24 @@ public class DealDamage implements TargettedAction {
 		return amount;
 	}
 	
-	private final int amount;
-	private final ActionSource source;
-	private final Entity target;
+	private int damage;
 	
-	public DealDamage(int amount, ActionSource source, Entity target) {
-		this.amount = verifyAmount(amount);
-		this.source = source;
-		this.target = target;
-	}
-	
-	public int amount() {
-		return amount;
+	public DealDamage(int damage, ActionSource source, Enemy target) {
+		super(source, target);
+		this.damage = verifyAmount(damage);
 	}
 	
 	@Override
-	public ActionSource source() {
-		return source;
+	public void execute() {
+		target().setHealth(Math.max(0, target().health() - damage()));
 	}
 	
-	@Override
-	public Entity target() {
-		return target;
+	public int damage() {
+		return damage;
+	}
+	
+	public void setAmount(int amount) {
+		this.damage = verifyAmount(amount);
 	}
 	
 }
