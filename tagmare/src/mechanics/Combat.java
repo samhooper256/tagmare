@@ -39,7 +39,7 @@ public final class Combat {
 	}
 	
 	public void requestPlayCardFromHand(Card card, Enemy target) {
-		//TODO throw exception if the given card is not in the player's hadn OR the given enemy is not in this combat.
+		//TODO throw exception if the given card is not in the player's hand OR the given enemy is not in this combat.
 		stack().push(new PutCardInPlay(card, Hub.player(), target));
 	}
 	

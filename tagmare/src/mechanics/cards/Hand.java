@@ -23,6 +23,13 @@ public class Hand implements Iterable<Card> {
 		cards.add(card);
 	}
 	
+	/** Removes the {@link Card} from this {@link Hand}.
+	 * @throws IllegalArgumentException if {@code card} is not in this hand. */
+	public void remove(Card card) {
+		if(!cards.remove(card))
+			throw new IllegalArgumentException(String.format("Card is not in hand: %s", card));
+	}
+	
 	public int size() {
 		return cards.size();
 	}

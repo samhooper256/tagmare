@@ -9,7 +9,9 @@ public class GameScene extends Scene {
 	public static final GameScene INSTANCE = new GameScene();
 	
 	public final Pane pane;
-	public final CardListDisplay deckDisplay, drawPileDisplay, handDisplay, discardPileDisplay;
+	public final CardListDisplay deckDisplay, drawPileDisplay, discardPileDisplay;
+	public final HandDisplay handDisplay;
+	public final EnergyDisplay energyDisplay;
 	
 	private GameScene() {
 		super(new Pane(), 800, 400);
@@ -18,11 +20,13 @@ public class GameScene extends Scene {
 		handDisplay = new HandDisplay();
 		drawPileDisplay = new DrawPileDisplay();
 		discardPileDisplay = new DiscardPileDisplay();
+		energyDisplay = new EnergyDisplay();
+		Nodes.setLayout(energyDisplay, 0, 50);
 		Nodes.setLayout(deckDisplay, 40, 100);
 		Nodes.setLayout(drawPileDisplay, 200, 100);
 		Nodes.setLayout(handDisplay, 360, 100);
 		Nodes.setLayout(discardPileDisplay, 360 + 160, 100);
-		pane.getChildren().addAll(deckDisplay, drawPileDisplay, handDisplay, discardPileDisplay);
+		pane.getChildren().addAll(energyDisplay, deckDisplay, drawPileDisplay, handDisplay, discardPileDisplay);
 		updateAll();
 	}
 	
@@ -31,6 +35,7 @@ public class GameScene extends Scene {
 		drawPileDisplay.update();
 		handDisplay.update();
 		discardPileDisplay.update();
+		energyDisplay.update();
 	}
 	
 	

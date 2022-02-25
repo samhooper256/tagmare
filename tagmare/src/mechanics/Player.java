@@ -11,13 +11,11 @@ public class Player implements Entity, ActionSource {
 	private final ModifierSet modifiers;
 	
 	private final Deck deck;
-	
-	private int health, maxHealth;
+	private final Health health;
 	
 	public Player() {
 		modifiers = new ModifierSet();
-		maxHealth = STARTING_HEALTH;
-		health = maxHealth;
+		health = new Health(STARTING_HEALTH);
 		deck = Deck.createStartingDeck();
 	}
 	
@@ -31,28 +29,8 @@ public class Player implements Entity, ActionSource {
 	}
 
 	@Override
-	public int health() {
+	public Health health() {
 		return health;
-	}
-
-	@Override
-	public void setHealth(int health) {
-		if(health < 0 || health > maxHealth)
-			throw new IllegalArgumentException(
-					String.format("Invalid health (%d) for Player with max health %d", health, maxHealth));
-		this.health = health;
-	}
-	
-	public int maxHealth() {
-		return maxHealth;
-	}
-	
-	/** Updates {@link #health()} if the new {@code maxHealth} is less than {@code health()}. */
-	public void setMaxHealth(int maxHealth) {
-		if(maxHealth < 0)
-			throw new IllegalArgumentException(String.format("Invalid health: %d", maxHealth));
-		this.maxHealth = maxHealth;
-		health = Math.min(health, maxHealth);
 	}
 	
 	public Deck deck() {

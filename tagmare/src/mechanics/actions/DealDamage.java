@@ -20,7 +20,7 @@ public class DealDamage extends AbstractTargettedAction {
 	
 	@Override
 	public void execute() {
-		target().setHealth(Math.max(0, target().health() - damage()));
+		target().health().lose(damage);
 	}
 	
 	public int damage() {

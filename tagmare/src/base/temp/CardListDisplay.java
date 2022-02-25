@@ -15,6 +15,9 @@ abstract class CardListDisplay extends TextFlow {
 		getChildren().subList(1, getChildren().size()).clear();
 		for(Card c : cards()) {
 			Text text = new Text(String.format("%s\n", c));
+			text.setOnMouseClicked(eh -> {
+				System.out.printf("mouse clickered%n");
+			});
 			prettify(text);
 			getChildren().add(text);
 		}
