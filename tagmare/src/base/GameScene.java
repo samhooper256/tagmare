@@ -17,4 +17,8 @@ public class GameScene extends Scene {
 		pane.getChildren().add(deckDisplay);
 	}
 	
+	public void updateAll() {
+		deckDisplay.update();
+	}
+	
 }

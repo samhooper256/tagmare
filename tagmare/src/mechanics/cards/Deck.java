@@ -41,10 +41,20 @@ public class Deck implements Iterable<Card> {
 		if(!cards.remove(c))
 			throw new IllegalStateException(String.format("Card is not in Deck: %s", c));
 	}
+
+	/** Unmodifiable. */
+	public List<Card> cards() {
+		return Collections.unmodifiableList(cards);
+	}
 	
 	@Override
 	public Iterator<Card> iterator() {
 		return Iterators.unmodifiable(cards.iterator());
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Deck%s", cards);
 	}
 	
 }

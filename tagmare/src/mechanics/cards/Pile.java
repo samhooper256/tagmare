@@ -7,11 +7,11 @@ import utils.RNG;
 public abstract class Pile {
 
 	private List<Card> trueOrder;
-	private SortedSet<Card> sorted;
+	private List<Card> sorted;
 	
 	protected Pile() {
 		this.trueOrder = new ArrayList<>();
-		sorted = new TreeSet<>();
+		sorted = new ArrayList<>();
 	}
 	
 	public void shuffle() {
@@ -19,14 +19,12 @@ public abstract class Pile {
 	}
 	
 	public void addToTop(Card card) {
-		if(!sorted.add(card))
-			throw new IllegalStateException(String.format("Duplicate card added: %s", card));
+		addToSorted(card);
 		trueOrder.add(card);
 	}
 	
 	public void addToBottom(Card card) {
-		if(!sorted.add(card))
-			throw new IllegalStateException(String.format("Duplicate card added: %s", card));
+		addToSorted(card);
 		trueOrder.add(0, card);
 	}
 	
@@ -43,6 +41,13 @@ public abstract class Pile {
 		Card c = trueOrder.remove(trueOrder.size() - 1);
 		sorted.remove(c);
 		return c;
+	}
+	
+	/** throws {@link IllegalStateException} if the {@link Card} is already in this pile. */
+	private void addToSorted(Card card) {
+		if(sorted.contains(card))
+			throw new IllegalStateException(String.format("Duplicate card added: %s", card));
+		sorted.add(card);
 	}
 	
 	public int size() {

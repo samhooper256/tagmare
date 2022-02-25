@@ -9,13 +9,16 @@ import mechanics.cards.*;
 //TODO support user input other than selecting/targetting cards. (e.g. YOGA).
 public final class Combat {
 
+	/** The default number of cards drawn per turn. */
+	public static final int DEFAULT_DRAW = 5;
+	
 	private final ActionStack stack;
 	private final Set<Card> cardsInPlay;
 	private final DrawPile drawPile;
 	private final DiscardPile discardPile;
 	private final Hand hand;
 	
-	private boolean running;
+	private boolean running, playerTurn, enemyTurn;
 	private int turn;
 	
 	public Combat() {
@@ -24,6 +27,9 @@ public final class Combat {
 		drawPile = new DrawPile();
 		discardPile = new DiscardPile();
 		hand = new Hand();
+		playerTurn = false;
+		enemyTurn = false;
+		turn = 0;
 	}
 	
 	public void requestPlayCardFromHand(Card card) {
@@ -35,7 +41,17 @@ public final class Combat {
 		stack().push(new PutCardInPlay(card, Hub.player(), target));
 	}
 	
+	public void start() {
+		if(turn > 0)
+			throw new IllegalStateException(String.format("Already started (turn=%d)", turn));
+		drawPile.addAllToTop(Hub.deck().cards());
+		startPlayerTurn();
+		resume();
+	}
+	
 	public void resume() {
+		if(!started())
+			throw new IllegalStateException("Not started");
 		running = true;
 		while(!stack().isEmpty()) {
 			Action top = stack().pop();
@@ -44,6 +60,23 @@ public final class Combat {
 			if(paused())
 				return;
 		}
+		if(playerTurn) { //we're waiting for the player to end their turn.
+			running = false;
+		}
+		else if(enemyTurn) { //enemies have nothing else to do - start the player's next turn.
+			enemyTurn = false;
+			startPlayerTurn();
+			resume();
+		}
+	}
+	
+	/** Assumes {@link #enemyTurn} is {@code false}. Sets {@link #playerTurn} to {@code true}.
+	 * Increments {@link #turn}. */
+	private void startPlayerTurn() {
+		turn++;
+		playerTurn = true;
+		for(int i = 1; i <= DEFAULT_DRAW; i++)
+			stack().push(new SimpleDrawRequest());
 	}
 	
 	public void pause() {
@@ -56,6 +89,10 @@ public final class Combat {
 	
 	public boolean paused() {
 		return !running();
+	}
+	
+	public boolean started() {
+		return turn > 0;
 	}
 	
 	/** This method simply adds {@code card} to {@link #cardsInPlay()}; it does not play the given {@link Card} or

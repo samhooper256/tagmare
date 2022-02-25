@@ -4,7 +4,7 @@ import mechanics.Enemy;
 import mechanics.actions.*;
 
 /** Cards use identity equality. */
-public interface Card extends ActionSource {
+public interface Card extends ActionSource, Comparable<Card> {
 	
 	Card copy();
 	
@@ -20,6 +20,11 @@ public interface Card extends ActionSource {
 	@Override
 	default ActionSourceType type() {
 		return ActionSourceType.CARD;
+	}
+	
+	@Override
+	default int compareTo(Card o) {
+		return tag().compareTo(o.tag());
 	}
 	
 }
