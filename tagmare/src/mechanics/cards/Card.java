@@ -13,6 +13,10 @@ public interface Card extends ActionSource, Comparable<Card> {
 	/** if this {@link Card} is not {@link #isTargetted() targetted}, the parameter is ignored. */
 	ActionList generateActions(Enemy target);
 	
+	default int energyCost() {
+		return tag().energyCost();
+	}
+	
 	default boolean isTargetted() {
 		return tag().isTargetted();
 	}

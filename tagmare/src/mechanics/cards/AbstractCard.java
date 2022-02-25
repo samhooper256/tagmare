@@ -12,5 +12,10 @@ public abstract class AbstractCard implements Card {
 	public CardTag tag() {
 		return tag;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("%s (%d)", getClass().getSimpleName(), energyCost());
+	}
 	
 }

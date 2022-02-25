@@ -1,5 +1,6 @@
 package base;
 
+import base.temp.GameScene;
 import mechanics.ActionStack;
 import mechanics.actions.Action;
 
@@ -14,7 +15,7 @@ public final class VisualManager {
 	public static void executeAction(Action action) {
 		System.out.printf("EXECUTING: %s%n", action);
 		action.execute();
-		Main.gs.updateAll();
+		GameScene.INSTANCE.updateAll(); //this is temp stuff.
 	}
 	
 }

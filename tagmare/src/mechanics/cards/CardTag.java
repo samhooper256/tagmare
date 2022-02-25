@@ -6,20 +6,26 @@ import mechanics.cards.attacks.DoHomework;
 
 public enum CardTag {
 
-	DO_HOMEWORK("Do Homework", true, DoHomework::new);
+	DO_HOMEWORK("Do Homework", 1, true, DoHomework::new);
 	
 	private final String displayName;
 	private final boolean targetted;
+	private final int energyCost;
 	private final Supplier<Card> supplier;
 	
-	CardTag(String displayName, boolean targetted, Supplier<Card> supplier) {
+	CardTag(String displayName, int energyCost, boolean targetted, Supplier<Card> supplier) {
 		this.displayName = displayName;
+		this.energyCost = energyCost;
 		this.targetted = targetted;
 		this.supplier = supplier;
 	}
 	
 	public String displayName() {
 		return displayName;
+	}
+	
+	public int energyCost() {
+		return energyCost;
 	}
 	
 	public boolean isTargetted() {

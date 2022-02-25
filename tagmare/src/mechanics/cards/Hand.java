@@ -2,7 +2,10 @@ package mechanics.cards;
 
 import java.util.*;
 
-public class Hand {
+import utils.Iterators;
+
+/** {@link #iterator()} is unmodifiable. */
+public class Hand implements Iterable<Card> {
 
 	public static final int MAX_SIZE = 10;
 
@@ -30,6 +33,11 @@ public class Hand {
 	
 	public boolean isFull() {
 		return size() == MAX_SIZE;
+	}
+
+	@Override
+	public Iterator<Card> iterator() {
+		return Iterators.unmodifiable(cards.iterator());
 	}
 	
 }

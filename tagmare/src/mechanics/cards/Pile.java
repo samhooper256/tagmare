@@ -63,4 +63,17 @@ public abstract class Pile {
 		sorted.clear();
 	}
 	
+	/** Unmodifiable. Updated dynamically. The cards are in order from the bottom of the pile to the top. */
+	public List<Card> trueOrder() {
+		return Collections.unmodifiableList(trueOrder);
+	}
+	
+	@Override
+	public String toString() {
+		StringJoiner j = new StringJoiner(", ");
+		for(Card c : trueOrder)
+			j.add(c.toString());
+		return String.format("%s[trueOrder=%s]", getClass().getSimpleName(), j);
+	}
+	
 }
