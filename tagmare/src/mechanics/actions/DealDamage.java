@@ -5,17 +5,17 @@ import mechanics.*;
 public class DealDamage extends AbstractTargettedAction {
 
 	/** Must be non-negative. */
-	private static int verifyAmount(int amount) {
-		if(amount < 0)
-			throw new IllegalArgumentException(String.format("Invalid amount of damage: %d", amount));
-		return amount;
+	private static int verifyDamage(int damage) {
+		if(damage < 0)
+			throw new IllegalArgumentException(String.format("Invalid amount of damage: %d", damage));
+		return damage;
 	}
 	
 	private int damage;
 	
 	public DealDamage(int damage, ActionSource source, Enemy target) {
 		super(source, target);
-		this.damage = verifyAmount(damage);
+		this.damage = verifyDamage(damage);
 	}
 	
 	@Override
@@ -28,7 +28,7 @@ public class DealDamage extends AbstractTargettedAction {
 	}
 	
 	public void setAmount(int amount) {
-		this.damage = verifyAmount(amount);
+		this.damage = verifyDamage(amount);
 	}
 	
 }

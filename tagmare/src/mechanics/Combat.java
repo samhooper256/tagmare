@@ -17,6 +17,7 @@ public final class Combat {
 	private final DrawPile drawPile;
 	private final DiscardPile discardPile;
 	private final Hand hand;
+	private final Energy energy;
 	
 	private boolean running, playerTurn, enemyTurn;
 	private int turn;
@@ -27,6 +28,7 @@ public final class Combat {
 		drawPile = new DrawPile();
 		discardPile = new DiscardPile();
 		hand = new Hand();
+		energy = new Energy();
 		playerTurn = false;
 		enemyTurn = false;
 		turn = 0;
@@ -132,6 +134,10 @@ public final class Combat {
 	
 	public Hand hand() {
 		return hand;
+	}
+	
+	public Energy energy() {
+		return energy;
 	}
 	
 }

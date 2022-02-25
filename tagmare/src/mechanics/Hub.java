@@ -45,4 +45,8 @@ public final class Hub {
 		return combat().hand();
 	}
 	
+	public static Energy energy() {
+		return combat().energy();
+	}
+	
 }
