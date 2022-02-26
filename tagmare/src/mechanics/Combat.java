@@ -8,10 +8,11 @@ import mechanics.cards.*;
 import mechanics.enemies.*;
 
 //TODO support user input other than selecting/targetting cards. (e.g. YOGA).
+//TODO support some kind of "EndTurnFromCard" (ForcedEndTurn) action that ends your turn as a result of a card.
 public final class Combat {
 
 	/** The default number of cards drawn per turn. */
-	public static final int DEFAULT_DRAW = 5;
+	public static final int DEFAULT_DRAW = 5, DEFAULT_ENERGY = 3;
 	
 	private final ActionStack stack;
 	private final Set<Card> cardsInPlay;
@@ -60,7 +61,7 @@ public final class Combat {
 	public void start() {
 		if(turn > 0)
 			throw new IllegalStateException(String.format("Already started (turn=%d)", turn));
-		drawPile.addAllToTop(Hub.deck().cards());
+		drawPile.addAllToTop(Hub.deck().shuffledCopyOfCards());
 		startPlayerTurn();
 	}
 	
@@ -90,6 +91,7 @@ public final class Combat {
 		turn++;
 		System.out.printf("[enter] startPlayerTurn(), new turn = %d%n", turn);
 		playerTurn = true;
+		stack().push(new SetEnergy(DEFAULT_ENERGY));
 		for(int i = 1; i <= DEFAULT_DRAW; i++)
 			stack().push(new SimpleDrawRequest());
 		resume();

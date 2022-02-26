@@ -14,9 +14,9 @@ public class Deck implements Iterable<Card> {
 		CardTag.DO_HOMEWORK,
 		CardTag.DO_HOMEWORK,
 		CardTag.DO_HOMEWORK,
-		CardTag.DO_HOMEWORK,
-		CardTag.DO_HOMEWORK,
-		CardTag.DO_HOMEWORK
+		CardTag.GRIND,
+		CardTag.GRIND,
+		CardTag.GRIND
 	);
 	
 	public static Deck createStartingDeck() {
@@ -45,6 +45,13 @@ public class Deck implements Iterable<Card> {
 	/** Unmodifiable. */
 	public List<Card> cards() {
 		return Collections.unmodifiableList(cards);
+	}
+	
+	/** The returned copy is modifiable. */
+	public List<Card> shuffledCopyOfCards() {
+		List<Card> copy = new ArrayList<>(cards);
+		Collections.shuffle(copy, RNG.SOURCE);
+		return copy;
 	}
 	
 	@Override

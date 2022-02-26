@@ -36,7 +36,7 @@ public class GameScene extends Scene {
 		Nodes.setLayout(drawPileDisplay, 200, 100);
 		Nodes.setLayout(handDisplay, 360, 100);
 		Nodes.setLayout(discardPileDisplay, 360 + 160, 100);
-		Nodes.setLayout(hi, 400, 30);
+		Nodes.setLayout(hi, 200, 30);
 		pane.getChildren()
 			.addAll(energyDisplay, enemyBar, buttonBar, deckDisplay, drawPileDisplay, handDisplay, discardPileDisplay, hi);
 		updateAll();
@@ -49,6 +49,7 @@ public class GameScene extends Scene {
 		discardPileDisplay.update();
 		energyDisplay.update();
 		enemyBar.update();
+		buttonBar.update();
 	}
 	
 	

@@ -16,5 +16,9 @@ public class EndTurnButton extends Button {
 		else
 			System.out.println("Can't end turn");
 	}
+
+	public void update() {
+		setDisable(!Hub.combat().canEndTurn());
+	}
 	
 }

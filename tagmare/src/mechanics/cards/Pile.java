@@ -2,9 +2,10 @@ package mechanics.cards;
 
 import java.util.*;
 
-import utils.RNG;
+import utils.*;
 
-public abstract class Pile {
+/** The iterator is unmodifiable and iterates through the {@link #trueOrder()} of the cards. */
+public abstract class Pile implements Iterable<Card> {
 
 	private List<Card> trueOrder;
 	private List<Card> sorted;
@@ -29,7 +30,7 @@ public abstract class Pile {
 	}
 	
 	/** The last {@link Card} in the {@link List} will be at the top of this {@link Pile} when this method returns. */
-	public void addAllToTop(List<Card> list) {
+	public void addAllToTop(Iterable<Card> list) {
 		for(Card card : list)
 			addToTop(card);
 	}
@@ -50,6 +51,16 @@ public abstract class Pile {
 		sorted.add(card);
 	}
 	
+	/** Adds all the cards in this {@link Pile} to the {@link #addAllToTop(Iterable) top} of the given one.
+	 * {@link #clear() Clears} {@code this} pile.
+	 * @throws IllegalArgumentException if {@code (dest == this)}. */
+	public void transferTo(Pile dest) {
+		if(dest == this)
+			throw new IllegalArgumentException("Cannot transfer to self");
+		dest.addAllToTop(this);
+		clear();
+	}
+	
 	public int size() {
 		return trueOrder.size();
 	}
@@ -66,6 +77,11 @@ public abstract class Pile {
 	/** Unmodifiable. Updated dynamically. The cards are in order from the bottom of the pile to the top. */
 	public List<Card> trueOrder() {
 		return Collections.unmodifiableList(trueOrder);
+	}
+	
+	@Override
+	public Iterator<Card> iterator() {
+		return Iterators.unmodifiable(trueOrder.iterator());
 	}
 	
 	@Override

@@ -16,16 +16,12 @@ public final class VisualManager {
 	/** This method calls {@link Action#execute()} and assumes the given {@link Action} has been removed from the
 	 * {@link ActionStack}. */
 	public static void executeAction(Action action) {
-		System.out.printf("EXECUTING: %s%n", action);
-		if(action instanceof EOTDiscard) {
-			Hub.combat().pause();
-			AbstractAnimation.manager().add(new HalfFade(GameScene.INSTANCE.hi)
-					.withFinisher(() -> animationFinisherWithExecute(action)));
-		}
-		else {
-			action.execute();
-		}
-		GameScene.INSTANCE.updateAll(); //this is temp stuff.
+		Hub.combat().pause();
+		GameScene.INSTANCE.buttonBar.endTurnButton.setDisable(true);
+		Hi hi = GameScene.INSTANCE.hi;
+		hi.setOpacity(.2);
+		hi.setAction(action);
+		AbstractAnimation.manager().add(new TestFade(hi).withFinisher(() -> animationFinisherWithExecute(action)));
 	}
 	
 	private static void animationFinisherWithExecute(Action action) {

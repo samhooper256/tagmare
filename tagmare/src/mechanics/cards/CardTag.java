@@ -2,11 +2,11 @@ package mechanics.cards;
 
 import java.util.function.Supplier;
 
-import mechanics.cards.attacks.DoHomework;
+import mechanics.cards.attacks.*;
 
 public enum CardTag {
-
-	DO_HOMEWORK("Do Homework", 1, true, DoHomework::new);
+	DO_HOMEWORK("Do Homework", 1, true, DoHomework::new),
+	GRIND("Grind", 2, true, Grind::new);
 	
 	private final String displayName;
 	private final boolean targetted;

@@ -46,6 +46,10 @@ public class Hand implements Iterable<Card> {
 		return size() == MAX_SIZE;
 	}
 
+	public int spaceRemaining() {
+		return MAX_SIZE - size();
+	}
+	
 	/** Unmodifiable. */
 	public List<Card> cards() {
 		return Collections.unmodifiableList(cards);
