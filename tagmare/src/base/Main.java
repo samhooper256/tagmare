@@ -17,6 +17,7 @@ public class Main extends Application {
 		primaryStage.show();
 		Hub.combat().start();
 		System.out.println(Hub.deck());
+		Updater.startTimer();
 	}
 	
 }

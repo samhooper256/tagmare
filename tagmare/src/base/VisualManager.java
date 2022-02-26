@@ -1,6 +1,7 @@
 package base;
 
-import base.temp.GameScene;
+import base.animations.*;
+import base.temp.*;
 import mechanics.*;
 import mechanics.actions.*;
 import mechanics.cards.Card;
@@ -16,8 +17,21 @@ public final class VisualManager {
 	 * {@link ActionStack}. */
 	public static void executeAction(Action action) {
 		System.out.printf("EXECUTING: %s%n", action);
-		action.execute();
+		if(action instanceof EOTDiscard) {
+			Hub.combat().pause();
+			AbstractAnimation.manager().add(new HalfFade(GameScene.INSTANCE.hi)
+					.withFinisher(() -> animationFinisherWithExecute(action)));
+		}
+		else {
+			action.execute();
+		}
 		GameScene.INSTANCE.updateAll(); //this is temp stuff.
+	}
+	
+	private static void animationFinisherWithExecute(Action action) {
+		action.execute();
+		GameScene.INSTANCE.updateAll();
+		Hub.combat().resume();
 	}
 	
 	public static void requestPlayCardFromHand(Card card) {

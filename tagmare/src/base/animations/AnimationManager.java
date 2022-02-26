@@ -30,4 +30,8 @@ public class AnimationManager implements Updatable {
 		}
 	}
 	
+	public void add(Animation animation) {
+		animations.add(animation);
+	}
+	
 }

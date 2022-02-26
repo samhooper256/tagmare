@@ -1,14 +1,14 @@
 package base.animations;
 
-/** All implementing classes must extend {@link Animation}. */
-public interface FinisherAnimation {
+public interface FinisherAnimation extends Animation {
 
 	Runnable finisher();
 	
-	default Animation asAnimation() {
-		return (Animation) this;
+	default AbstractAnimation asAnimation() {
+		return (AbstractAnimation) this;
 	}
 	
+	@Override
 	default void interpolate(double frac) {
 		interpolateWithoutFinisher(frac);
 		if(frac == 1)

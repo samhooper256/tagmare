@@ -4,12 +4,12 @@ import java.util.Objects;
 
 /** If {@link #base()} is already a {@link FinisherAnimation}, its {@link FinisherAnimation#finisher() finisher} is
  * played first, then the {@link #finisher()} given to {@code this} {@link AnimationWithFinisher} is played. */
-public class AnimationWithFinisher extends Animation implements FinisherAnimation {
+public class AnimationWithFinisher extends AbstractAnimation implements FinisherAnimation {
 
-	private final Animation base;
+	private final AbstractAnimation base;
 	private final Runnable finisher;
 	
-	public AnimationWithFinisher(Animation base, Runnable finisher) {
+	public AnimationWithFinisher(AbstractAnimation base, Runnable finisher) {
 		super(base.duration());
 		Objects.requireNonNull(finisher);
 		this.base = base;
@@ -27,7 +27,7 @@ public class AnimationWithFinisher extends Animation implements FinisherAnimatio
 		FinisherAnimation.super.interpolate(frac);
 	}
 	
-	public Animation base() {
+	public AbstractAnimation base() {
 		return base;
 	}
 	
