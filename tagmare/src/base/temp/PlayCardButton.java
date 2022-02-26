@@ -2,6 +2,7 @@ package base.temp;
 
 import base.VisualManager;
 import javafx.scene.control.Button;
+import mechanics.cards.Card;
 
 public class PlayCardButton extends Button {
 
@@ -15,7 +16,10 @@ public class PlayCardButton extends Button {
 		HandCardRep selected = hd.selected();
 		if(selected == null)
 			return;
-		VisualManager.requestPlayCardFromHand(selected.card());
+		Card card = selected.card();
+		if(card.isTargetted())
+			return;
+		VisualManager.requestPlayCardFromHand(card);
 	}
 	
 }

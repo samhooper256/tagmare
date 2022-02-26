@@ -27,7 +27,7 @@ public class DealDamage extends AbstractTargettedAction {
 		return damage;
 	}
 	
-	public void setAmount(int amount) {
+	public void setDamage(int amount) {
 		this.damage = verifyDamage(amount);
 	}
 	

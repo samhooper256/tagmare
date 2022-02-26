@@ -1,5 +1,6 @@
-package mechanics;
+package mechanics.player;
 
+import mechanics.*;
 import mechanics.actions.*;
 import mechanics.cards.Deck;
 import mechanics.modifiers.ModifierSet;
@@ -12,11 +13,13 @@ public class Player implements Entity, ActionSource {
 	
 	private final Deck deck;
 	private final Health health;
+	private final Block block;
 	
 	public Player() {
 		modifiers = new ModifierSet();
 		health = new Health(STARTING_HEALTH);
 		deck = Deck.createStartingDeck();
+		block = new Block();
 	}
 	
 	public ModifierSet modifiers() {
@@ -35,6 +38,10 @@ public class Player implements Entity, ActionSource {
 	
 	public Deck deck() {
 		return deck;
+	}
+
+	public Block block() {
+		return block;
 	}
 	
 }

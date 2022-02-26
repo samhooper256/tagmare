@@ -1,5 +1,7 @@
 package mechanics;
 
+import mechanics.player.Player;
+
 public class GameInstance {
 
 	private final Player player;

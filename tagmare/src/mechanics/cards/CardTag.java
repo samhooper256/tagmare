@@ -3,9 +3,11 @@ package mechanics.cards;
 import java.util.function.Supplier;
 
 import mechanics.cards.attacks.*;
+import mechanics.cards.skills.ReviewNotes;
 
 public enum CardTag {
 	DO_HOMEWORK("Do Homework", 1, true, DoHomework::new),
+	REVIEW_NOTES("Review Notes", 1, false, ReviewNotes::new),
 	GRIND("Grind", 2, true, Grind::new);
 	
 	private final String displayName;

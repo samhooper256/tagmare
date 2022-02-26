@@ -14,6 +14,7 @@ public class GameScene extends Scene {
 	public final EnergyDisplay energyDisplay;
 	public final EnemyBar enemyBar;
 	public final ButtonBar buttonBar;
+	public final BlockDisplay blockDisplay;
 	public final Hi hi;
 	
 	private GameScene() {
@@ -26,6 +27,7 @@ public class GameScene extends Scene {
 		energyDisplay = new EnergyDisplay();
 		enemyBar = new EnemyBar();
 		buttonBar = new ButtonBar();
+		blockDisplay = new BlockDisplay();
 		hi = new Hi();
 		Nodes.setLayout(energyDisplay, 0, 50);
 		Nodes.setLayout(enemyBar, 0, 40);
@@ -36,9 +38,10 @@ public class GameScene extends Scene {
 		Nodes.setLayout(drawPileDisplay, 200, 100);
 		Nodes.setLayout(handDisplay, 360, 100);
 		Nodes.setLayout(discardPileDisplay, 360 + 160, 100);
+		Nodes.setLayout(blockDisplay, 340, 320);
 		Nodes.setLayout(hi, 200, 30);
-		pane.getChildren()
-			.addAll(energyDisplay, enemyBar, buttonBar, deckDisplay, drawPileDisplay, handDisplay, discardPileDisplay, hi);
+		pane.getChildren().addAll(energyDisplay, enemyBar, buttonBar, deckDisplay, drawPileDisplay, handDisplay,
+				discardPileDisplay, blockDisplay, hi);
 		updateAll();
 	}
 	
@@ -50,6 +53,7 @@ public class GameScene extends Scene {
 		energyDisplay.update();
 		enemyBar.update();
 		buttonBar.update();
+		blockDisplay.update();
 	}
 	
 	

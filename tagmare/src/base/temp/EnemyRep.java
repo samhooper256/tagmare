@@ -6,6 +6,7 @@ import base.VisualManager;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import mechanics.cards.Card;
 import mechanics.enemies.Enemy;
 import utils.Nodes;
 
@@ -41,7 +42,10 @@ public class EnemyRep extends StackPane {
 		HandCardRep hcr = hd.selected();
 		if(hcr == null)
 			return;
-		VisualManager.requestPlayCardFromHand(hcr.card(), enemy);
+		Card card = hcr.card();
+		if(!card.isTargetted())
+			return;
+		VisualManager.requestPlayCardFromHand(card, enemy);
 	}
 	
 	public void update() {

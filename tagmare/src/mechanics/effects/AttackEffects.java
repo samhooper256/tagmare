@@ -4,6 +4,7 @@ import mechanics.*;
 import mechanics.actions.*;
 import mechanics.cards.Attack;
 import mechanics.modifiers.*;
+import mechanics.player.Player;
 
 public final class AttackEffects {
 
@@ -24,7 +25,7 @@ public final class AttackEffects {
 		Motivation motivation = mods.getModifier(ModifierTag.MOTIVATION);
 		if(motivation != null && action instanceof DealDamage) {
 			DealDamage dd = (DealDamage) action;
-			dd.setAmount(dd.damage() + motivation.integer());
+			dd.setDamage(dd.damage() + motivation.integer());
 		}
 		//TODO add Discipline
 		return action;
