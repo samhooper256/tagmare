@@ -1,6 +1,6 @@
 package mechanics.actions;
 
-import mechanics.*;
+import mechanics.enemies.Enemy;
 
 abstract class AbstractTargettedAction extends AbstractAction implements TargettedAction {
 

@@ -4,6 +4,7 @@ public final class Health {
 
 	private int max, hp;
 	
+	/** At max {@link #hp()} by default. */
 	public Health(int max) {
 		this(max, max);
 	}

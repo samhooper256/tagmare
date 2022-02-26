@@ -1,7 +1,8 @@
 package mechanics.cards;
 
-import mechanics.Enemy;
+import mechanics.*;
 import mechanics.actions.*;
+import mechanics.enemies.Enemy;
 
 /** Cards use identity equality. */
 public interface Card extends ActionSource, Comparable<Card> {
@@ -9,6 +10,11 @@ public interface Card extends ActionSource, Comparable<Card> {
 	Card copy();
 	
 	CardTag tag();
+	
+	/** The default implementation only checks if the {@link Player} has enough {@link Energy}. */
+	default boolean isLegal() {
+		return energyCost() <= Hub.energy().amount();
+	}
 	
 	/** if this {@link Card} is not {@link #isTargetted() targetted}, the parameter is ignored. */
 	ActionList generateActions(Enemy target);

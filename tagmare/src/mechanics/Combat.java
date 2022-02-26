@@ -5,6 +5,7 @@ import java.util.*;
 import base.VisualManager;
 import mechanics.actions.*;
 import mechanics.cards.*;
+import mechanics.enemies.*;
 
 //TODO support user input other than selecting/targetting cards. (e.g. YOGA).
 public final class Combat {
@@ -18,6 +19,8 @@ public final class Combat {
 	private final DiscardPile discardPile;
 	private final Hand hand;
 	private final Energy energy;
+	/** In order from left to right as they appear to the player. */
+	private final List<Enemy> enemies;
 	
 	private boolean running, playerTurn, enemyTurn;
 	private int turn;
@@ -29,17 +32,28 @@ public final class Combat {
 		discardPile = new DiscardPile();
 		hand = new Hand();
 		energy = new Energy();
+		enemies = new ArrayList<>();
+		enemies.add(new VocabQuiz());
 		playerTurn = false;
 		enemyTurn = false;
 		turn = 0;
 	}
 	
-	public void requestPlayCardFromHand(Card card) {
-		requestPlayCardFromHand(card, null);
-	}
-	
-	public void requestPlayCardFromHand(Card card, Enemy target) {
-		//TODO throw exception if the given card is not in the player's hand OR the given enemy is not in this combat.
+	/** The card won't actually be played until this {@link Combat} {@link #resume() resumes}.
+	 * @throws IllegalStateException if the given {@link Card} is not in the {@link Hand}.
+	 * @throws IllegalStateException if the given {@link Enemy} is non-{@code null} and is not an enemy in this combat.
+	 * @throws IllegalStateException if {@link #running()}.
+	 * @throws IllegalStateException if {@code 
+	 * (card.isTargetted() && target == null || !card.isTargetted() && target != null)}*/
+	public void stackPlayCardFromHand(Card card, Enemy target) {
+		if(running())
+			throw new IllegalStateException("Running");
+		if(!hand().contains(card))
+			throw new IllegalStateException(String.format("Card is not in hand: %s", card));
+		if(target != null && !enemies().contains(target))
+			throw new IllegalStateException(String.format("Enemy is not in this combat: %s", target));
+		if(card.isTargetted() && target == null || !card.isTargetted() && target != null)
+			throw new IllegalStateException("Targetting does not match up");
 		stack().push(new PutCardInPlay(card, Hub.player(), target));
 	}
 	
@@ -48,7 +62,6 @@ public final class Combat {
 			throw new IllegalStateException(String.format("Already started (turn=%d)", turn));
 		drawPile.addAllToTop(Hub.deck().cards());
 		startPlayerTurn();
-		resume();
 	}
 	
 	public void resume() {
@@ -58,29 +71,52 @@ public final class Combat {
 		while(!stack().isEmpty()) {
 			Action top = stack().pop();
 			VisualManager.executeAction(top);
-			//TODO generate and add-to-stack the effects of playing the action, even if paused().
 			if(paused())
 				return;
 		}
-		if(playerTurn) { //we're waiting for the player to end their turn.
+		if(playerTurn) { //we're waiting for the player to end their turn or play another card.
 			running = false;
 		}
 		else if(enemyTurn) { //enemies have nothing else to do - start the player's next turn.
 			enemyTurn = false;
 			startPlayerTurn();
-			resume();
 		}
+		running = false;
 	}
 	
 	/** Assumes {@link #enemyTurn} is {@code false}. Sets {@link #playerTurn} to {@code true}.
-	 * Increments {@link #turn}. */
+	 * Increments {@link #turn}. Calls {@link #resume()}. */
 	private void startPlayerTurn() {
 		turn++;
+		System.out.printf("[enter] startPlayerTurn(), new turn = %d%n", turn);
 		playerTurn = true;
 		for(int i = 1; i <= DEFAULT_DRAW; i++)
 			stack().push(new SimpleDrawRequest());
+		resume();
 	}
 	
+	public boolean canEndTurn() {
+		return !running() && stack().isEmpty();
+	}
+	
+	/** Calls {@link #resume()}. */
+	public void endPlayerTurn() {
+		if(!canEndTurn())
+			throw new IllegalStateException("Cannot end turn");
+		playerTurn = false;
+		List<Card> cards = hand().cards();
+		stack().push(new StartEnemyTurn());
+		for(int i = cards.size() - 1; i >= 0; i--)
+			stack().push(new EOTDiscard(cards.get(i)));
+		resume();
+	}
+
+	/** Assumes {@link #playerTurn} is {@code false}. Set {@link #enemyTurn} to {@code true}.
+	 * Does not call {@link #resume()}. Should only be called by {@link StartEnemyTurn}. */
+	public void startEnemyTurn() {
+		enemyTurn = true;
+	}
+
 	public void pause() {
 		running = false;
 	}
@@ -105,9 +141,15 @@ public final class Combat {
 	}
 	
 	/** Throws an exception if the given {@link Card} was not in play. */
-	public void removeCardFromPlay(Card card) {
+	public void discardNaturally(Card card) {
 		if(!cardsInPlay.remove(card))
 			throw new IllegalStateException(String.format("Not in play: %s", card));
+		discardPile.addToTop(card);
+	}
+	
+	public void discardEOT(Card card) {
+		hand().remove(card);
+		discardPile().addToTop(card);
 	}
 	
 	/** Returns {@code 0} if the player's first turn hasn't started yet. */
@@ -138,6 +180,11 @@ public final class Combat {
 	
 	public Energy energy() {
 		return energy;
+	}
+	
+	/** Unmodifiable. */
+	public List<Enemy> enemies() {
+		return Collections.unmodifiableList(enemies);
 	}
 	
 }

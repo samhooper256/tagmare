@@ -1,6 +1,9 @@
 package mechanics;
 
+import java.util.List;
+
 import mechanics.cards.*;
+import mechanics.enemies.Enemy;
 
 /** A bunch of utility methods. */
 public final class Hub {
@@ -47,6 +50,11 @@ public final class Hub {
 	
 	public static Energy energy() {
 		return combat().energy();
+	}
+
+	/** Unmodifiable. */
+	public static List<Enemy> enemies() {
+		return combat().enemies();
 	}
 	
 }

@@ -7,15 +7,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import mechanics.cards.Card;
 
-public class CardRep extends HBox {
+public class HandCardRep extends HBox {
 	
 	private static final Background BACKGROUND = Backgrounds.of(Color.PINK);
 	
-	private static final Map<Card, CardRep> MAP = new HashMap<>();
+	private static final Map<Card, HandCardRep> MAP = new HashMap<>();
 	
-	public static CardRep of(Card card) {
+	public static HandCardRep of(Card card) {
 		if(!MAP.containsKey(card))
-			MAP.put(card, new CardRep(card));
+			MAP.put(card, new HandCardRep(card));
 		return MAP.get(card);
 	}
 	
@@ -24,7 +24,7 @@ public class CardRep extends HBox {
 	
 	private boolean selected;
 	
-	private CardRep(Card card) {
+	private HandCardRep(Card card) {
 		text = new Text(card.toString());
 		this.card = card;
 		this.selected = true;
@@ -33,7 +33,15 @@ public class CardRep extends HBox {
 	}
 	
 	private void mouseClicked() {
-		selected = !selected;
+		GameScene.INSTANCE.handDisplay.clicked(this);
+	}
+	
+	public boolean selected() {
+		return selected;
+	}
+	
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 		setBackground(selected ? BACKGROUND : null);
 	}
 	

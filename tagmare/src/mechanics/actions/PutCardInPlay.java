@@ -2,6 +2,7 @@ package mechanics.actions;
 
 import mechanics.*;
 import mechanics.cards.Card;
+import mechanics.enemies.Enemy;
 
 public final class PutCardInPlay extends AbstractTargettedAction {
 	
@@ -22,7 +23,7 @@ public final class PutCardInPlay extends AbstractTargettedAction {
 		Hub.combat().addCardToPlay(card);
 		Hub.hand().remove(card);
 		ActionStack stack = Hub.stack();
-		stack.push(new RemoveCardFromPlay(card));
+		stack.push(new NaturalDiscard(card));
 		stack.pushReversed(card.generateActions(target()));
 		stack.push(new SpendEnergy(card.energyCost(), card));
 	}

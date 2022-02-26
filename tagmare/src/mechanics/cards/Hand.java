@@ -30,6 +30,10 @@ public class Hand implements Iterable<Card> {
 			throw new IllegalArgumentException(String.format("Card is not in hand: %s", card));
 	}
 	
+	public boolean contains(Card card) {
+		return cards.contains(card);
+	}
+	
 	public int size() {
 		return cards.size();
 	}
@@ -42,9 +46,19 @@ public class Hand implements Iterable<Card> {
 		return size() == MAX_SIZE;
 	}
 
+	/** Unmodifiable. */
+	public List<Card> cards() {
+		return Collections.unmodifiableList(cards);
+	}
+	
 	@Override
 	public Iterator<Card> iterator() {
 		return Iterators.unmodifiable(cards.iterator());
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Hand%s", cards);
 	}
 	
 }

@@ -1,6 +1,6 @@
 package mechanics.actions;
 
-import mechanics.*;
+import mechanics.enemies.Enemy;
 
 /** {@link Action Actions} that sometimes have a target and sometimes don't may implement this interface;
  * {@link #target()} should return {@code null} if no target. */

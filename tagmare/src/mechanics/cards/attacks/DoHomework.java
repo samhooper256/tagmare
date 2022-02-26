@@ -1,9 +1,9 @@
 package mechanics.cards.attacks;
 
-import mechanics.Enemy;
 import mechanics.actions.*;
 import mechanics.cards.*;
 import mechanics.effects.AttackEffects;
+import mechanics.enemies.Enemy;
 
 public class DoHomework extends AbstractCard implements Attack {
 
