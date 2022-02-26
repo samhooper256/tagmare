@@ -1,4 +1,4 @@
-package mechanics.player;
+package mechanics;
 
 public class Block {
 

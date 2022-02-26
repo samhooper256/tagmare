@@ -1,11 +1,10 @@
-package mechanics.player;
+package mechanics;
 
-import mechanics.*;
 import mechanics.actions.*;
 import mechanics.cards.Deck;
 import mechanics.modifiers.ModifierSet;
 
-public class Player implements Entity, ActionSource {
+public class Player implements Entity {
 
 	public static final int STARTING_HEALTH = 100;
 	
@@ -20,6 +19,14 @@ public class Player implements Entity, ActionSource {
 		health = new Health(STARTING_HEALTH);
 		deck = Deck.createStartingDeck();
 		block = new Block();
+	}
+	
+	public void takeDamage(int damage) {
+		int blocked = Math.min(damage, block().amount());
+		block().lose(blocked);
+		damage -= blocked;
+		if(damage > 0)
+			health().lose(damage);
 	}
 	
 	public ModifierSet modifiers() {

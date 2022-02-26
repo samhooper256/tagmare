@@ -9,6 +9,7 @@ import mechanics.enemies.*;
 
 //TODO support user input other than selecting/targetting cards. (e.g. YOGA).
 //TODO support some kind of "EndTurnFromCard" (ForcedEndTurn) action that ends your turn as a result of a card.
+//TODO enemies need to have block; this also means DealDamage has to be changed to account for enemy block.
 public final class Combat {
 
 	/** The default number of cards drawn per turn. */

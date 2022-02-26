@@ -4,7 +4,6 @@ import mechanics.*;
 import mechanics.actions.*;
 import mechanics.cards.Attack;
 import mechanics.modifiers.*;
-import mechanics.player.Player;
 
 public final class AttackEffects {
 

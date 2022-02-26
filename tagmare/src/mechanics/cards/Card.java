@@ -3,7 +3,6 @@ package mechanics.cards;
 import mechanics.*;
 import mechanics.actions.*;
 import mechanics.enemies.Enemy;
-import mechanics.player.Player;
 
 /** Cards use identity equality. */
 public interface Card extends ActionSource, Comparable<Card> {

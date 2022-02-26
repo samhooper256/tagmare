@@ -1,9 +1,9 @@
 package mechanics;
 
-import mechanics.player.Player;
+import mechanics.actions.ActionSource;
 
 /** There are two kinds of {@link Entity Entities}: {@link Player} and {@link Enemy}. */
-public interface Entity {
+public interface Entity extends ActionSource {
 
 	Health health();
 	
