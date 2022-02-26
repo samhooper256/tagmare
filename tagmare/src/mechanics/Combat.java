@@ -94,6 +94,7 @@ public final class Combat {
 		stack().push(new SetEnergy(DEFAULT_ENERGY));
 		for(int i = 1; i <= DEFAULT_DRAW; i++)
 			stack().push(new SimpleDrawRequest());
+		stack().push(new SOTLoseBlock());
 		resume();
 	}
 	
