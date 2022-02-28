@@ -90,11 +90,14 @@ public final class Combat {
 	 * Increments {@link #turn}. Calls {@link #resume()}. */
 	private void startPlayerTurn() {
 		turn++;
+		for(Enemy e : enemies)
+			e.updateIntent();
 		System.out.printf("[enter] startPlayerTurn(), new turn = %d%n", turn);
 		playerTurn = true;
 		stack().push(new SetEnergy(DEFAULT_ENERGY));
 		for(int i = 1; i <= DEFAULT_DRAW; i++)
 			stack().push(new SimpleDrawRequest());
+		stack().push(new UpdateEnemyIntents());
 		stack().push(new SOTLoseBlock());
 		resume();
 	}

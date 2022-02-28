@@ -1,8 +1,9 @@
-package mechanics.enemies;
+package mechanics.enemies.intents;
 
 import java.util.*;
 
 import mechanics.actions.*;
+import mechanics.enemies.Enemy;
 
 public class AttackIntent implements Intent {
 

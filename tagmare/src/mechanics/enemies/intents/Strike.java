@@ -1,4 +1,4 @@
-package mechanics.enemies;
+package mechanics.enemies.intents;
 
 /** A single piece of damage dealt from an enemy. Damage dealt by a {@link Strike} happens in a single hit. This class
  * is mutable. */
