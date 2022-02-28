@@ -21,7 +21,7 @@ public final class PutCardInPlay extends AbstractTargettedAction {
 	@Override
 	public void execute() {
 		Hub.combat().addCardToPlay(card);
-		Hub.hand().remove(card);
+		Hub.hand().removeOrThrow(card);
 		ActionStack stack = Hub.stack();
 		stack.push(new NaturalDiscard(card));
 		stack.pushReversed(card.generateActions(target()));

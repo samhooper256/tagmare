@@ -51,10 +51,6 @@ public final class Hub {
 	public static Energy energy() {
 		return combat().energy();
 	}
-
-	public static Block playerBlock() {
-		return player().block();
-	}
 	
 	/** Unmodifiable. */
 	public static List<Enemy> enemies() {

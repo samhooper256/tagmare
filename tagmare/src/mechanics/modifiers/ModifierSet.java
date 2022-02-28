@@ -65,6 +65,19 @@ public class ModifierSet implements Iterable<Modifier> {
 		return there;
 	}
 	
+	public void decrement(ModifierTag tag) {
+		decrement(tag, 1);
+	}
+	
+	/** @throws IllegalArgumentException if {@code (!contains(tag))} or the modifier is not an
+	 * {@link Modifier#isInteger() integer} modifier. */
+	public void decrement(ModifierTag tag, int amount) {
+		Modifier m = getModifierOrThrow(tag);
+		m.decrement(amount);
+		if(m.integer() == 0)
+			removeOrThrow(tag);
+	}
+	
 	public int size() {
 		return map.size();
 	}

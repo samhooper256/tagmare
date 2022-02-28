@@ -159,8 +159,13 @@ public final class Combat {
 	}
 	
 	public void discardEOT(Card card) {
-		hand().remove(card);
+		hand().removeOrThrow(card);
 		discardPile().addToTop(card);
+	}
+	
+	/** Assumes the given {@link Card} is in the {@link Hand}. */
+	public void discardFromHandExplicitly(Card card) {
+		discardEOT(card);
 	}
 	
 	/** Returns {@code 0} if the player's first turn hasn't started yet. */

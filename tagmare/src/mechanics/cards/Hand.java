@@ -25,7 +25,7 @@ public class Hand implements Iterable<Card> {
 	
 	/** Removes the {@link Card} from this {@link Hand}.
 	 * @throws IllegalArgumentException if {@code card} is not in this hand. */
-	public void remove(Card card) {
+	public void removeOrThrow(Card card) {
 		if(!cards.remove(card))
 			throw new IllegalArgumentException(String.format("Card is not in hand: %s", card));
 	}

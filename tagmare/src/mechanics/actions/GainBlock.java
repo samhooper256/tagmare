@@ -21,7 +21,7 @@ public class GainBlock extends AbstractAction {
 	
 	@Override
 	public void execute() {
-		Hub.playerBlock().gain(block());
+		Hub.player().block().gain(block());
 	}
 	
 }
