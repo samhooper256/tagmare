@@ -12,9 +12,10 @@ public interface Card extends ActionSource, Comparable<Card> {
 	
 	CardTag tag();
 	
-	/** The default implementation only checks if the {@link Player} has enough {@link Energy}. */
-	default boolean isLegal() {
-		return energyCost() <= Hub.energy().amount();
+	/** The default implementation only checks if the {@link Player} has enough {@link Energy} and that the targetting
+	 * matches up. */
+	default boolean isLegal(Enemy target) {
+		return (isTargetted() ^ (target == null)) && energyCost() <= Hub.energy().amount();
 	}
 	
 	/** if this {@link Card} is not {@link #isTargetted() targetted}, the parameter is ignored. */

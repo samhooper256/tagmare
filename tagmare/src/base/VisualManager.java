@@ -38,7 +38,7 @@ public final class VisualManager {
 	 * {@link Combat#running() running}, adds playing the card to the {@link ActionStack}.
 	 * Returns {@code false} iff the card could not be played. */
 	public static boolean requestPlayCardFromHand(Card card, Enemy target) {
-		if(!Hub.combat().running() && card.isLegal()) {
+		if(!Hub.combat().running() && card.isLegal(target)) {
 			GameScene.INSTANCE.handDisplay.deselect(); //TODO this is temp stuff
 			Hub.combat().stackPlayCardFromHand(card, target);
 			Hub.combat().resume();

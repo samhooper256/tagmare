@@ -8,6 +8,7 @@ import mechanics.enemies.Enemy;
 public class EnemyBar extends HBox {
 
 	public EnemyBar() {
+		super(8);
 		setAlignment(Pos.CENTER);
 	}
 	

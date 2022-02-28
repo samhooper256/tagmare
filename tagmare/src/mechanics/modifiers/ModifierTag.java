@@ -3,7 +3,8 @@ package mechanics.modifiers;
 /** An immutable tag for each kind of {@link Modifier} (including hidden ones).*/
 public enum ModifierTag {
 	MOTIVATION("Motivation", true),
-	PROCRASTINATED("Procrastinated", true);
+	PROCRASTINATED("Procrastinated", true),
+	AP_CLASSROOM("AP Classroom", true);
 	
 	private final String name;
 	private final boolean isInteger;

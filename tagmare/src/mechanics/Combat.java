@@ -35,6 +35,7 @@ public final class Combat {
 		energy = new Energy();
 		enemies = new ArrayList<>();
 		enemies.add(new VocabQuiz());
+		enemies.add(new APESProgressCheck());
 		playerTurn = false;
 		enemyTurn = false;
 		turn = 0;
