@@ -35,7 +35,9 @@ public class EnemyRep extends StackPane {
 		vBox = new VBox(name, healthAndBlock, intent);
 		getChildren().add(vBox);
 		Nodes.setMaxSize(this, WIDTH, HEIGHT);
-		this.setOnMouseClicked(eh -> mouseClicked());
+		setOnMouseClicked(eh -> mouseClicked());
+		this.setOnMouseEntered(eh -> mouseEntered());
+		this.setOnMouseExited(eh -> mouseExited());
 	}
 	
 	private void mouseClicked() {
@@ -53,6 +55,14 @@ public class EnemyRep extends StackPane {
 		Health health = enemy().health();
 		healthAndBlock.setText(String.format("%d/%d (%d block)", health.hp(), health.max(), enemy().block().amount()));
 		intent.setText(enemy().intent().toString());
+	}
+
+	private void mouseEntered() {
+		GameScene.INSTANCE.showModifiers(enemy());
+	}
+	
+	private void mouseExited() {
+		GameScene.INSTANCE.hideModifiers();
 	}
 	
 	public Enemy enemy() {

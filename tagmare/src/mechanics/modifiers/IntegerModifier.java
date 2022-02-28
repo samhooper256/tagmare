@@ -18,4 +18,9 @@ abstract class IntegerModifier implements Modifier {
 		this.integer = integer;
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("%s (%d)", getClass().getSimpleName(), integer());
+	}
+	
 }

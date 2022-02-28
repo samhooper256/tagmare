@@ -8,10 +8,13 @@ public class Deck implements Iterable<Card> {
 	
 	private static final List<CardTag> STARTING_DECK = Colls.ulist(
 		CardTag.REVIEW_NOTES,
+//		CardTag.REVIEW_NOTES,
+//		CardTag.REVIEW_NOTES,
+//		CardTag.REVIEW_NOTES,
 		CardTag.REVIEW_NOTES,
-		CardTag.REVIEW_NOTES,
-		CardTag.REVIEW_NOTES,
-		CardTag.REVIEW_NOTES,
+		CardTag.PROCRASTINATE,
+		CardTag.PROCRASTINATE,
+		CardTag.PROCRASTINATE,
 		CardTag.DO_HOMEWORK,
 		CardTag.DO_HOMEWORK,
 		CardTag.DO_HOMEWORK,

@@ -28,4 +28,9 @@ public final class PutCardInPlay extends AbstractTargettedAction {
 		stack.push(new SpendEnergy(card.energyCost(), card));
 	}
 	
+	@Override
+	public Enemy target() {
+		return (Enemy) super.target();
+	}
+	
 }

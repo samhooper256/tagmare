@@ -2,6 +2,7 @@ package base.temp;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import mechanics.enemies.Enemy;
 import utils.Nodes;
 
 public class GameScene extends Scene {
@@ -16,6 +17,7 @@ public class GameScene extends Scene {
 	public final ButtonBar buttonBar;
 	public final BlockDisplay blockDisplay;
 	public final HealthDisplay healthDisplay;
+	public final ModifierDisplay modifierDisplay;
 	public final Hi hi;
 	
 	private GameScene() {
@@ -30,6 +32,9 @@ public class GameScene extends Scene {
 		buttonBar = new ButtonBar();
 		blockDisplay = new BlockDisplay();
 		healthDisplay = new HealthDisplay();
+		modifierDisplay = new ModifierDisplay();
+		modifierDisplay.layoutXProperty().bind(modifierDisplay.widthProperty().multiply(-.5).add(widthProperty().multiply(.5)));
+		modifierDisplay.setLayoutY(100);
 		hi = new Hi();
 		Nodes.setLayout(energyDisplay, 0, 50);
 		Nodes.setLayout(enemyBar, 0, 40);
@@ -44,7 +49,7 @@ public class GameScene extends Scene {
 		Nodes.setLayout(healthDisplay, 340, 330);
 		Nodes.setLayout(hi, 200, 30);
 		pane.getChildren().addAll(energyDisplay, enemyBar, buttonBar, deckDisplay, drawPileDisplay, handDisplay,
-				discardPileDisplay, blockDisplay, healthDisplay, hi);
+				discardPileDisplay, blockDisplay, healthDisplay, hi, modifierDisplay);
 		updateAll();
 	}
 	
@@ -58,7 +63,16 @@ public class GameScene extends Scene {
 		buttonBar.update();
 		blockDisplay.update();
 		healthDisplay.update();
+		modifierDisplay.update();
 	}
 	
+	public void showModifiers(Enemy enemy) {
+		modifierDisplay.update(enemy);
+		modifierDisplay.setVisible(true);
+	}
+	
+	public void hideModifiers() {
+		modifierDisplay.setVisible(false);
+	}
 	
 }

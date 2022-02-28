@@ -55,6 +55,16 @@ public class ModifierSet implements Iterable<Modifier> {
 		map.put(modifier.tag(), modifier);
 	}
 	
+	/** Removes the {@link Modifier} in this {@link ModifierSet} with the given {@link ModifierTag}. Returns the
+	 * modifier that was removed. 
+	 * @throws IllegalArgumentException if {@code (!contains(tag))}. */
+	public Modifier removeOrThrow(ModifierTag tag) {
+		Modifier there = map.remove(tag);
+		if(there == null)
+			throw new IllegalArgumentException(String.format("ModifierSet does not contain modifier with tag: %s", tag));
+		return there;
+	}
+	
 	public int size() {
 		return map.size();
 	}
