@@ -33,7 +33,7 @@ public class HandCardRep extends HBox {
 	}
 	
 	private void mouseClicked() {
-		GameScene.INSTANCE.handDisplay.clicked(this);
+		TempScene.INSTANCE.handDisplay.clicked(this);
 	}
 	
 	public boolean selected() {

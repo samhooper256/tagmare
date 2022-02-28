@@ -17,8 +17,8 @@ public final class VisualManager {
 	 * {@link ActionStack}. */
 	public static void executeAction(Action action) {
 		Hub.combat().pause();
-		GameScene.INSTANCE.buttonBar.endTurnButton.setDisable(true);
-		Hi hi = GameScene.INSTANCE.hi;
+		TempScene.INSTANCE.buttonBar.endTurnButton.setDisable(true);
+		Hi hi = TempScene.INSTANCE.hi;
 		hi.setOpacity(.2);
 		hi.setAction(action);
 		AbstractAnimation.manager().add(new TestFade(hi).withFinisher(() -> animationFinisherWithExecute(action)));
@@ -26,7 +26,7 @@ public final class VisualManager {
 	
 	private static void animationFinisherWithExecute(Action action) {
 		action.execute();
-		GameScene.INSTANCE.updateAll();
+		TempScene.INSTANCE.updateAll();
 		Hub.combat().resume();
 	}
 	
@@ -39,7 +39,7 @@ public final class VisualManager {
 	 * Returns {@code false} iff the card could not be played. */
 	public static boolean requestPlayCardFromHand(Card card, Enemy target) {
 		if(!Hub.combat().running() && card.isLegal(target)) {
-			GameScene.INSTANCE.handDisplay.deselect(); //TODO this is temp stuff
+			TempScene.INSTANCE.handDisplay.deselect(); //TODO this is temp stuff
 			Hub.combat().stackPlayCardFromHand(card, target);
 			Hub.combat().resume();
 			return true;

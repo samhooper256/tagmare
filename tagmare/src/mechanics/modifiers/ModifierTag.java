@@ -2,9 +2,10 @@ package mechanics.modifiers;
 
 /** An immutable tag for each kind of {@link Modifier} (including hidden ones).*/
 public enum ModifierTag {
+	AP_CLASSROOM("AP Classroom", false),
 	MOTIVATION("Motivation", true),
 	PROCRASTINATED("Procrastinated", true),
-	AP_CLASSROOM("AP Classroom", true);
+	ENRAGED("Enraged", true);
 	
 	private final String name;
 	private final boolean isInteger;

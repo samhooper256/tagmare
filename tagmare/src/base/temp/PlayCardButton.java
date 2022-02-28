@@ -12,7 +12,7 @@ public class PlayCardButton extends Button {
 	}
 	
 	private void mouseClicked() {
-		HandDisplay hd = GameScene.INSTANCE.handDisplay;
+		HandDisplay hd = TempScene.INSTANCE.handDisplay;
 		HandCardRep selected = hd.selected();
 		if(selected == null)
 			return;

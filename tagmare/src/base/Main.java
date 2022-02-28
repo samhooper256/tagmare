@@ -1,6 +1,6 @@
 package base;
 
-import base.temp.GameScene;
+import base.temp.TempScene;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import mechanics.Hub;
@@ -13,7 +13,7 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setScene(GameScene.INSTANCE);
+		primaryStage.setScene(TempScene.INSTANCE);
 		primaryStage.show();
 		Hub.combat().start();
 		System.out.println(Hub.deck());

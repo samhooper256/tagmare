@@ -41,7 +41,7 @@ public class EnemyRep extends StackPane {
 	}
 	
 	private void mouseClicked() {
-		HandDisplay hd = GameScene.INSTANCE.handDisplay;
+		HandDisplay hd = TempScene.INSTANCE.handDisplay;
 		HandCardRep hcr = hd.selected();
 		if(hcr == null)
 			return;
@@ -58,11 +58,11 @@ public class EnemyRep extends StackPane {
 	}
 
 	private void mouseEntered() {
-		GameScene.INSTANCE.showModifiers(enemy());
+		TempScene.INSTANCE.showModifiers(enemy());
 	}
 	
 	private void mouseExited() {
-		GameScene.INSTANCE.hideModifiers();
+		TempScene.INSTANCE.hideModifiers();
 	}
 	
 	public Enemy enemy() {

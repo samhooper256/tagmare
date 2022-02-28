@@ -8,14 +8,14 @@ import javafx.scene.text.Text;
 import mechanics.enemies.Enemy;
 import mechanics.modifiers.*;
 
-public class ModifierDisplay extends VBox {
+public class EModifierDisplay extends VBox {
 
 	private final Text title;
 	private final Text list;
 	
 	private Enemy enemy;
 	
-	public ModifierDisplay() {
+	public EModifierDisplay() {
 		title = new Text("Modifiers:\n");
 		title.setUnderline(true);
 		list = new Text();
