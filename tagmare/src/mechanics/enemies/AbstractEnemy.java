@@ -1,7 +1,7 @@
 package mechanics.enemies;
 
 import mechanics.*;
-import mechanics.enemies.intents.Intent;
+import mechanics.enemies.intents.*;
 
 abstract class AbstractEnemy implements Enemy {
 
@@ -11,7 +11,7 @@ abstract class AbstractEnemy implements Enemy {
 	
 	protected AbstractEnemy(int maxHealth) {
 		health = new Health(maxHealth);
-		intent = null;
+		intent = DoNothing.INSTANCE;
 	}
 	
 	@Override

@@ -1,8 +1,8 @@
 package mechanics.enemies;
 
 import mechanics.*;
-import mechanics.actions.ActionSourceType;
-import mechanics.enemies.intents.Intent;
+import mechanics.actions.*;
+import mechanics.enemies.intents.*;
 
 public interface Enemy extends Entity {
 
@@ -12,11 +12,17 @@ public interface Enemy extends Entity {
 	 * has been incremented to the turn the {@code Intent} is for. */
 	void updateIntent();
 	
+	/** Every {@link Enemy Enemy's} {@link Intent} is {@link DoNothing} by default. */
 	Intent intent();
 	
 	@Override
 	default ActionSourceType type() {
 		return ActionSourceType.ENEMY;
+	}
+	
+	/** <em>Should not be overridden.</em> */
+	default ActionList getActions() {
+		return intent().getActions(this);
 	}
 	
 }

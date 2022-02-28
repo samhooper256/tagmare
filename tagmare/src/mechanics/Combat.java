@@ -90,9 +90,6 @@ public final class Combat {
 	 * Increments {@link #turn}. Calls {@link #resume()}. */
 	private void startPlayerTurn() {
 		turn++;
-		for(Enemy e : enemies)
-			e.updateIntent();
-		System.out.printf("[enter] startPlayerTurn(), new turn = %d%n", turn);
 		playerTurn = true;
 		stack().push(new SetEnergy(DEFAULT_ENERGY));
 		for(int i = 1; i <= DEFAULT_DRAW; i++)
@@ -122,6 +119,9 @@ public final class Combat {
 	 * Does not call {@link #resume()}. Should only be called by {@link StartEnemyTurn}. */
 	public void startEnemyTurn() {
 		enemyTurn = true;
+		List<Enemy> enemies = enemies();
+		for(int i = enemies.size() - 1; i >= 0; i--)
+			stack().pushReversed(enemies.get(i).getActions());
 	}
 
 	public void pause() {

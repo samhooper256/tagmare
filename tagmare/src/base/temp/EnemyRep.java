@@ -24,14 +24,15 @@ public class EnemyRep extends StackPane {
 	}
 	
 	private final Enemy enemy;
-	private final Text health;
+	private final Text health, intent;
 	
 	public EnemyRep(Enemy enemy) {
 		setBackground(Backgrounds.of(Color.RED));
 		this.enemy = enemy;
 		Text name = new Text(enemy.name());
 		health = new Text("UPDATE ME PLS");
-		vBox = new VBox(name, health);
+		intent = new Text("UPDATE ME PLS");
+		vBox = new VBox(name, health, intent);
 		getChildren().add(vBox);
 		Nodes.setMaxSize(this, WIDTH, HEIGHT);
 		this.setOnMouseClicked(eh -> mouseClicked());
@@ -50,6 +51,7 @@ public class EnemyRep extends StackPane {
 	
 	public void update() {
 		health.setText(String.format("%d/%d", enemy().health().hp(), enemy().health().max()));
+		intent.setText(enemy().intent().toString());
 	}
 	
 	public Enemy enemy() {

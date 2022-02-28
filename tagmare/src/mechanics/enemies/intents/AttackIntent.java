@@ -29,5 +29,13 @@ public class AttackIntent implements Intent {
 	public List<Strike> strikes() {
 		return strikes;
 	}
+	
+	@Override
+	public String toString() {
+		StringJoiner j = new StringJoiner(", ", "{", "}");
+		for(Strike strike : strikes())
+			j.add(strike.toString());
+		return j.toString();
+	}
 
 }

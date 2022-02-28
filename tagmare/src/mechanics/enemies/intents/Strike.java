@@ -18,4 +18,9 @@ public final class Strike {
 		this.damage = damage;
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("Strike[%d]", damage());
+	}
+	
 }
