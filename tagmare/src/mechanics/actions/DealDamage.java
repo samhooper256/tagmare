@@ -1,6 +1,5 @@
 package mechanics.actions;
 
-import mechanics.Utils;
 import mechanics.enemies.Enemy;
 
 public class DealDamage extends AbstractTargettedAction {
@@ -21,7 +20,7 @@ public class DealDamage extends AbstractTargettedAction {
 	
 	@Override
 	public void execute() {
-		Utils.takeDamage(damage, target());
+		target().takeDamage(damage);
 	}
 	
 	public int damage() {

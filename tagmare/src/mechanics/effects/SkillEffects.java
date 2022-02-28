@@ -1,6 +1,7 @@
 package mechanics.effects;
 
 import mechanics.actions.*;
+import mechanics.actions.list.ActionList;
 import mechanics.cards.*;
 
 public final class SkillEffects {

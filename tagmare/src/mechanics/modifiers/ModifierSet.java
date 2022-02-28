@@ -22,11 +22,12 @@ public class ModifierSet implements Iterable<Modifier> {
 	
 	/** The returned {@link Modifier} is never {@code null}. Throws an {@link IllegalArgumentException} if this
 	 * {@link ModifierSet} has no {@code Modifier} with the given {@link ModifierTag}. */
-	public Modifier getModifierOrThrow(ModifierTag tag) {
+	@SuppressWarnings("unchecked")
+	public <M extends Modifier> M getModifierOrThrow(ModifierTag tag) {
 		Modifier e = getModifier(tag);
 		if(e == null)
 			throw new IllegalArgumentException(String.format("No modifier with tag: %s", tag));
-		return e;
+		return (M) e;
 	}
 
 	/** Adds the given {@link Modifier} to this {@link ModifierSet}. If this set does not already

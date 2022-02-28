@@ -1,6 +1,6 @@
 package mechanics.enemies.intents;
 
-import mechanics.actions.ActionList;
+import mechanics.actions.list.ActionList;
 import mechanics.enemies.Enemy;
 
 /** <p>An {@link Intent} represents what an {@link Enemy} intends to do (that is, what its action(s) will be on its turn).

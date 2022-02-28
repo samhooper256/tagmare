@@ -1,5 +1,5 @@
 package mechanics.actions;
 
 public enum ActionSourceType {
-	PLAYER, ENEMY, CARD;
+	PLAYER, ENEMY, CARD, MODIFIER;
 }

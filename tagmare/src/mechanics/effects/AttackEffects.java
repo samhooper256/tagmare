@@ -2,6 +2,7 @@ package mechanics.effects;
 
 import mechanics.*;
 import mechanics.actions.*;
+import mechanics.actions.list.ActionList;
 import mechanics.cards.Attack;
 import mechanics.modifiers.*;
 

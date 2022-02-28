@@ -1,6 +1,6 @@
 package mechanics.enemies.intents;
 
-import mechanics.actions.ActionList;
+import mechanics.actions.list.ActionList;
 import mechanics.enemies.Enemy;
 
 public class DoNothing implements Intent {

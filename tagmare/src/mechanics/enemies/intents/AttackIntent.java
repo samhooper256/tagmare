@@ -3,6 +3,7 @@ package mechanics.enemies.intents;
 import java.util.*;
 
 import mechanics.actions.*;
+import mechanics.actions.list.ActionList;
 import mechanics.enemies.Enemy;
 
 public class AttackIntent implements Intent {

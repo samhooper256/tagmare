@@ -1,8 +1,10 @@
 package mechanics.modifiers;
 
+import mechanics.actions.*;
+
 /** There are two kinds of {@link Modifier Modifiers}: {@link Buff Buffs} and {@link Debuff Debuffs}. All
  * {@link #isInteger() integer} modifiers are mutable. */
-public interface Modifier {
+public interface Modifier extends ActionSource {
 
 	ModifierTag tag();
 	
@@ -72,6 +74,11 @@ public interface Modifier {
 	
 	default void decrement(int amount) {
 		setInteger(integer() - amount);
+	}
+	
+	@Override
+	default ActionSourceType type() {
+		return ActionSourceType.MODIFIER;
 	}
 	
 }

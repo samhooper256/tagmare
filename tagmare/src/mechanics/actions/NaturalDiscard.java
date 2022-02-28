@@ -1,6 +1,7 @@
 package mechanics.actions;
 
 import mechanics.Hub;
+import mechanics.actions.list.ActionList;
 import mechanics.cards.Card;
 import mechanics.effects.*;
 

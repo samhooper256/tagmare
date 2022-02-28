@@ -8,8 +8,9 @@ abstract class AbstractAction implements Action {
 		this.source = source;
 	}
 	
+	/** {@inheritDoc} <em>This method should only be overridden to provide a more specific return type.</em> */
 	@Override
-	public final ActionSource source() {
+	public ActionSource source() {
 		return source;
 	}
 	

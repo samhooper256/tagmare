@@ -1,6 +1,7 @@
 package mechanics.enemies.intents;
 
 import mechanics.actions.*;
+import mechanics.actions.list.ActionList;
 import mechanics.enemies.Enemy;
 
 public class BlockIntent implements Intent {

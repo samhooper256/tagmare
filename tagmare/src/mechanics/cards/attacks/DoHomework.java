@@ -1,6 +1,7 @@
 package mechanics.cards.attacks;
 
 import mechanics.actions.*;
+import mechanics.actions.list.ActionList;
 import mechanics.cards.*;
 import mechanics.effects.AttackEffects;
 import mechanics.enemies.Enemy;

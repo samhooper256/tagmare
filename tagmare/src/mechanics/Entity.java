@@ -12,4 +12,8 @@ public interface Entity extends ActionSource {
 	
 	ModifierSet modifiers();
 	
+	default void takeDamage(int damage) {
+		Utils.takeDamage(damage, health(), block());
+	}
+	
 }

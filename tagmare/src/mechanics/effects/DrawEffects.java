@@ -1,6 +1,6 @@
 package mechanics.effects;
 
-import mechanics.actions.ActionList;
+import mechanics.actions.list.ActionList;
 import mechanics.cards.Card;
 
 public final class DrawEffects {

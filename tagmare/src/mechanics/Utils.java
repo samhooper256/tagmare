@@ -6,10 +6,6 @@ public final class Utils {
 		
 	}
 	
-	public static void takeDamage(int damage, Entity entity) {
-		takeDamage(damage, entity.health(), entity.block());
-	}
-	
 	public static void takeDamage(int damage, Health health, Block block) {
 		int blocked = Math.min(damage, block.amount());
 		block.lose(blocked);

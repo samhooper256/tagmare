@@ -1,11 +1,16 @@
 package mechanics.actions;
 
 import mechanics.ActionStack;
+import mechanics.actions.list.*;
 
 public interface Action {
 
 	static ActionList list(Action... actions) {
-		return new ActionList(actions);
+		return ActionList.of(actions);
+	}
+	
+	static ActionListBuilder listBuilder() {
+		return ActionList.builder();
 	}
 	
 	/** Immutable. Returns the same object every time. */

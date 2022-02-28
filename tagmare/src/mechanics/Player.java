@@ -13,10 +13,6 @@ public class Player extends AbstractEntity {
 		super(STARTING_HEALTH);
 		deck = Deck.createStartingDeck();
 	}
-	
-	public void takeDamage(int damage) {
-		Utils.takeDamage(damage, health(), block());
-	}
 
 	@Override
 	public ActionSourceType type() {

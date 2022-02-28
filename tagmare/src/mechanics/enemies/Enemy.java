@@ -2,6 +2,7 @@ package mechanics.enemies;
 
 import mechanics.*;
 import mechanics.actions.*;
+import mechanics.actions.list.ActionList;
 import mechanics.enemies.intents.*;
 
 public interface Enemy extends Entity {
