@@ -1,11 +1,15 @@
 package mechanics.actions;
 
-import mechanics.Entity;
+import mechanics.*;
 import mechanics.modifiers.Modifier;
 
 /** Can be used to apply an {@link Modifier#integer() integer} {@link Modifier} or a non-integer one. */
 public class ApplyModifier extends AbstractTargettedAction {
 
+	public static ApplyModifier toPlayer(Modifier modifier, ActionSource source) {
+		return new ApplyModifier(modifier, source, Hub.player());
+	}
+	
 	private final Modifier modifier;
 	
 	public ApplyModifier(Modifier modifier, ActionSource source, Entity target) {

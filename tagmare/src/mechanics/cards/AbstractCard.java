@@ -9,7 +9,7 @@ public abstract class AbstractCard implements Card {
 	}
 	
 	@Override
-	public CardTag tag() {
+	public final CardTag tag() {
 		return tag;
 	}
 

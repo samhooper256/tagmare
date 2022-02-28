@@ -10,7 +10,8 @@ public enum CardTag {
 	REVIEW_NOTES("Review Notes", 1, false, ReviewNotes::new),
 	PROCRASTINATE("Procrastinate", 1, true, Procrastinate::new),
 	GRIND("Grind", 2, true, Grind::new),
-	QUIZLET("Quizlet", 1, true, Quizlet::new);
+	QUIZLET("Quizlet", 1, true, Quizlet::new),
+	RAGE("Rage", 1, true, Rage::new);
 	
 	private final String displayName;
 	private final boolean targetted;

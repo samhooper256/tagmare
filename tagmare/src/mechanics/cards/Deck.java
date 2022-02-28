@@ -18,9 +18,12 @@ public class Deck implements Iterable<Card> {
 //		CardTag.DO_HOMEWORK,
 //		CardTag.DO_HOMEWORK,
 //		CardTag.DO_HOMEWORK,
-		CardTag.QUIZLET,
-		CardTag.QUIZLET,
-		CardTag.QUIZLET,
+//		CardTag.QUIZLET,
+//		CardTag.QUIZLET,
+//		CardTag.QUIZLET,
+		CardTag.RAGE,
+		CardTag.RAGE,
+		CardTag.RAGE,
 		CardTag.DO_HOMEWORK,
 		CardTag.GRIND
 	);
