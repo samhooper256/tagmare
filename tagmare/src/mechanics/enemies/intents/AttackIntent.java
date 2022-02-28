@@ -10,7 +10,7 @@ public class AttackIntent implements Intent {
 	/** Unmodifiable. */
 	private final List<Strike> strikes;
 	
-	public AttackIntent(Enemy enemy, int... strikes) {
+	public AttackIntent(int... strikes) {
 		ArrayList<Strike> list = new ArrayList<>(strikes.length);
 		for(int damage : strikes)
 			list.add(new Strike(damage));

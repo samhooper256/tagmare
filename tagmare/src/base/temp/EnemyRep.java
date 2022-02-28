@@ -6,6 +6,7 @@ import base.VisualManager;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import mechanics.Health;
 import mechanics.cards.Card;
 import mechanics.enemies.Enemy;
 import utils.Nodes;
@@ -15,24 +16,23 @@ public class EnemyRep extends StackPane {
 	private static final double WIDTH = 100, HEIGHT = 100;
 	private static final Map<Enemy, EnemyRep> MAP = new HashMap<>();
 	
-	private final VBox vBox;
-	
 	public static EnemyRep of(Enemy enemy) {
 		if(!MAP.containsKey(enemy))
 			MAP.put(enemy, new EnemyRep(enemy));
 		return MAP.get(enemy);
 	}
 	
+	private final VBox vBox;
 	private final Enemy enemy;
-	private final Text health, intent;
+	private final Text healthAndBlock, intent;
 	
 	public EnemyRep(Enemy enemy) {
 		setBackground(Backgrounds.of(Color.RED));
 		this.enemy = enemy;
 		Text name = new Text(enemy.name());
-		health = new Text("UPDATE ME PLS");
+		healthAndBlock = new Text("UPDATE ME PLS");
 		intent = new Text("UPDATE ME PLS");
-		vBox = new VBox(name, health, intent);
+		vBox = new VBox(name, healthAndBlock, intent);
 		getChildren().add(vBox);
 		Nodes.setMaxSize(this, WIDTH, HEIGHT);
 		this.setOnMouseClicked(eh -> mouseClicked());
@@ -50,7 +50,8 @@ public class EnemyRep extends StackPane {
 	}
 	
 	public void update() {
-		health.setText(String.format("%d/%d", enemy().health().hp(), enemy().health().max()));
+		Health health = enemy().health();
+		healthAndBlock.setText(String.format("%d/%d (%d block)", health.hp(), health.max(), enemy().block().amount()));
 		intent.setText(enemy().intent().toString());
 	}
 	

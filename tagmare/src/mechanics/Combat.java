@@ -110,6 +110,9 @@ public final class Combat {
 		playerTurn = false;
 		List<Card> cards = hand().cards();
 		stack().push(new StartEnemyTurn());
+		List<Enemy> enemies = enemies();
+		for(int i = enemies.size() - 1; i >= 0; i--)
+			stack().push(new EOTEnemyLoseBlock(enemies.get(i)));
 		for(int i = cards.size() - 1; i >= 0; i--)
 			stack().push(new EOTDiscard(cards.get(i)));
 		resume();

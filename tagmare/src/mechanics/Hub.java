@@ -52,13 +52,17 @@ public final class Hub {
 		return combat().energy();
 	}
 
-	public static Block block() {
+	public static Block playerBlock() {
 		return player().block();
 	}
 	
 	/** Unmodifiable. */
 	public static List<Enemy> enemies() {
 		return combat().enemies();
+	}
+
+	public static int turn() {
+		return combat().turn();
 	}
 	
 }

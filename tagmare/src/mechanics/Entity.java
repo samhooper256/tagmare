@@ -7,4 +7,6 @@ public interface Entity extends ActionSource {
 
 	Health health();
 	
+	Block block();
+	
 }

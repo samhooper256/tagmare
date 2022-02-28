@@ -22,11 +22,7 @@ public class Player implements Entity {
 	}
 	
 	public void takeDamage(int damage) {
-		int blocked = Math.min(damage, block().amount());
-		block().lose(blocked);
-		damage -= blocked;
-		if(damage > 0)
-			health().lose(damage);
+		Utils.takeDamage(damage, health, block);
 	}
 	
 	public ModifierSet modifiers() {
@@ -38,15 +34,16 @@ public class Player implements Entity {
 		return ActionSourceType.PLAYER;
 	}
 
+	public Deck deck() {
+		return deck;
+	}
+	
 	@Override
 	public Health health() {
 		return health;
 	}
 	
-	public Deck deck() {
-		return deck;
-	}
-
+	@Override
 	public Block block() {
 		return block;
 	}

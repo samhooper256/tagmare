@@ -1,5 +1,6 @@
 package mechanics.enemies;
 
+import mechanics.Hub;
 import mechanics.enemies.intents.*;
 
 public class VocabQuiz extends AbstractEnemy {
@@ -12,7 +13,10 @@ public class VocabQuiz extends AbstractEnemy {
 	
 	@Override
 	protected Intent generateIntent() {
-		return new AttackIntent(this, 4);
+		if(Hub.turn() % 2 == 0)
+			return new AttackIntent(11);
+		else
+			return new BlockIntent(7);
 	}
 	
 	@Override

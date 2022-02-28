@@ -11,7 +11,7 @@ public class SOTLoseBlock extends AbstractAction {
 	
 	@Override
 	public void execute() {
-		Hub.block().set(0);
+		Hub.playerBlock().set(0);
 	}
 	
 }

@@ -6,11 +6,13 @@ import mechanics.enemies.intents.*;
 abstract class AbstractEnemy implements Enemy {
 
 	private final Health health;
+	private final Block block;
 	
 	protected Intent intent;
 	
 	protected AbstractEnemy(int maxHealth) {
 		health = new Health(maxHealth);
+		block = new Block();
 		intent = DoNothing.INSTANCE;
 	}
 	
@@ -25,6 +27,11 @@ abstract class AbstractEnemy implements Enemy {
 	@Override
 	public Health health() {
 		return health;
+	}
+	
+	@Override
+	public Block block() {
+		return block;
 	}
 	
 	@Override

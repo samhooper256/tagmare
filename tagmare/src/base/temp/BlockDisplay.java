@@ -11,7 +11,7 @@ public class BlockDisplay extends Text {
 	}
 	
 	public void update() {
-		setText(String.format("Block: %d", Hub.block().amount()));
+		setText(String.format("Block: %d", Hub.playerBlock().amount()));
 	}
 	
 }
