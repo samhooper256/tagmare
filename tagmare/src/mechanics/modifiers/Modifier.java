@@ -59,11 +59,19 @@ public interface Modifier {
 	}
 	
 	default void increment() {
-		setInteger(integer() + 1);
+		increment(1);
+	}
+	
+	default void increment(int amount) {
+		setInteger(integer() + amount);
 	}
 	
 	default void decrement() {
-		setInteger(integer() - 1);
+		decrement(1);
+	}
+	
+	default void decrement(int amount) {
+		setInteger(integer() - amount);
 	}
 	
 }

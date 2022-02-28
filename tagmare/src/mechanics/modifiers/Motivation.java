@@ -1,27 +1,9 @@
 package mechanics.modifiers;
 
-public class Motivation implements VisibleBuff {
+public class Motivation extends IntegerModifier implements VisibleBuff {
 
-	private int integer;
-	
-	/** Default {@link #integer()} value is {@code 1}. */
-	public Motivation() {
-		this(1);
-	}
-	
 	public Motivation(int integer) {
-		this.integer = integer;
-	}
-	
-	
-	@Override
-	public int integer() {
-		return integer;
-	}
-	
-	@Override
-	public void setInteger(int integer) {
-		this.integer = integer;
+		super(integer);
 	}
 
 	@Override

@@ -3,16 +3,12 @@ package mechanics.enemies;
 import mechanics.*;
 import mechanics.enemies.intents.*;
 
-abstract class AbstractEnemy implements Enemy {
+abstract class AbstractEnemy extends AbstractEntity implements Enemy {
 
-	private final Health health;
-	private final Block block;
-	
 	protected Intent intent;
 	
 	protected AbstractEnemy(int maxHealth) {
-		health = new Health(maxHealth);
-		block = new Block();
+		super(maxHealth);
 		intent = DoNothing.INSTANCE;
 	}
 	
@@ -23,16 +19,6 @@ abstract class AbstractEnemy implements Enemy {
 	
 	/** Assumes {@link Combat#turn()} has been incremented to the turn this {@link Intent} is for. */
 	protected abstract Intent generateIntent();
-	
-	@Override
-	public Health health() {
-		return health;
-	}
-	
-	@Override
-	public Block block() {
-		return block;
-	}
 	
 	@Override
 	public Intent intent() {

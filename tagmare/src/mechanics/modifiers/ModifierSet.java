@@ -28,9 +28,30 @@ public class ModifierSet implements Iterable<Modifier> {
 			throw new IllegalArgumentException(String.format("No modifier with tag: %s", tag));
 		return e;
 	}
+
+	/** Adds the given {@link Modifier} to this {@link ModifierSet}. If this set does not already
+	 * {@link #contains(ModifierTag) contain} the modifier's {@link ModifierTag}, this method has the same effect as
+	 * {@link #overwrite(Modifier)} and returns {@code true}. Otherwise, if the given modifier is an
+	 * {@link Modifier#isInteger() integer} modifier, adds the given modifier's {@link Modifier#integer()} value to the
+	 * value of the current modifier that is in this set and returns {@code true}. Otherwise, does nothing and returns
+	 * {@code false}. */
+	public boolean add(Modifier modifier) {
+		if(contains(modifier.tag())) {
+			if(modifier.isInteger()) {
+				getModifierOrThrow(modifier.tag()).increment(modifier.integer());
+				return true;
+			}
+			//do nothing - this modifier does not stack
+			return false;
+		}
+		else {
+			overwrite(modifier);
+			return true;
+		}
+	}
 	
-	public void overwrite(Modifier e) {
-		map.put(e.tag(), e);
+	public void overwrite(Modifier modifier) {
+		map.put(modifier.tag(), modifier);
 	}
 	
 	public int size() {
@@ -41,8 +62,8 @@ public class ModifierSet implements Iterable<Modifier> {
 		return map.isEmpty();
 	}
 
-	/** Returns {@code true} iff this {@link ModifierSet} has an {@link Modifier} with the given {@link ModifierTag}. Runs
-	 * in O(n). */
+	/** Returns {@code true} iff this {@link ModifierSet} has an {@link Modifier} with the given {@link ModifierTag}.
+	 * Runs in O(n). */
 	public boolean contains(ModifierTag tag) {
 		return getModifier(tag) != null;
 	}
