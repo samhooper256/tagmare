@@ -1,6 +1,6 @@
 package mechanics.actions;
 
-import mechanics.enemies.Enemy;
+import mechanics.Entity;
 import mechanics.modifiers.*;
 
 /** Removes the {@link Modifier} with the given {@link ModifierTag} from the {@link #target()}. If the modifier is
@@ -9,7 +9,7 @@ public class RemoveModifier extends AbstractTargettedAction {
 
 	private final ModifierTag tag;
 	
-	public RemoveModifier(ModifierTag tag, ActionSource source, Enemy target) {
+	public RemoveModifier(ModifierTag tag, ActionSource source, Entity target) {
 		super(source, target);
 		this.tag = tag;
 	}

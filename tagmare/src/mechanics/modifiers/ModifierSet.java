@@ -78,6 +78,19 @@ public class ModifierSet implements Iterable<Modifier> {
 			removeOrThrow(tag);
 	}
 	
+	public void increment(ModifierTag tag) {
+		increment(tag, 1);
+	}
+	
+	/** @throws IllegalArgumentException if {@code (!contains(tag))} or the modifier is not an
+	 * {@link Modifier#isInteger() integer} modifier. */
+	public void increment(ModifierTag tag, int amount) {
+		Modifier m = getModifierOrThrow(tag);
+		m.increment(amount);
+		if(m.integer() == 0)
+			removeOrThrow(tag);
+	}
+	
 	public int size() {
 		return map.size();
 	}

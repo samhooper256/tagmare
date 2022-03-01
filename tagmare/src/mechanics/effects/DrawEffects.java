@@ -17,8 +17,8 @@ public final class DrawEffects {
 		ModifierSet pmods = Hub.player().modifiers();
 		if(pmods.contains(ModifierTag.ENRAGED)) {
 			Enraged enraged = pmods.getModifierOrThrow(ModifierTag.ENRAGED);
-			pmods.decrement(ModifierTag.ENRAGED);
 			list.add(new ExplicitDiscard(card, enraged));
+			list.add(ChangeModifier.decrement(card, Hub.player(), ModifierTag.ENRAGED));
 		}
 		return list.build();
 	}

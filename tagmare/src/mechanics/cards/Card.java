@@ -4,18 +4,25 @@ import mechanics.*;
 import mechanics.actions.*;
 import mechanics.actions.list.ActionList;
 import mechanics.enemies.Enemy;
+import mechanics.modifiers.*;
 
-/** Cards use identity equality. */
+/** {@link Card Cards} must use identity equality. */
 public interface Card extends ActionSource, Comparable<Card> {
 	
 	Card copy();
 	
 	CardTag tag();
 	
-	/** The default implementation only checks if the {@link Player} has enough {@link Energy} and that the targetting
-	 * matches up. */
+	/** The default implementation only checks that
+	 * <ul>
+	 * <li>the {@link Player} has enough {@link Energy}</li>
+	 * <li>the targetting matches up (this is a targetting card and {@code enemy} is not {@code null} or this
+	 * is a non-targetting card and {@code enemy} is {@code null}) </li>
+	 * <li>the player does not have the {@link KnockedOut} modifier</li>
+	 * </ul>*/
 	default boolean isLegal(Enemy target) {
-		return (isTargetted() ^ (target == null)) && energyCost() <= Hub.energy().amount();
+		return (isTargetted() ^ (target == null)) && energyCost() <= Hub.energy().amount() &&
+				!Hub.player().modifiers().contains(ModifierTag.KNOCKED_OUT);
 	}
 	
 	/** if this {@link Card} is not {@link #isTargetted() targetted}, the parameter is ignored. */

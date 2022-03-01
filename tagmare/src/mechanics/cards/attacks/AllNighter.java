@@ -4,6 +4,7 @@ import mechanics.actions.*;
 import mechanics.actions.list.ActionList;
 import mechanics.cards.*;
 import mechanics.enemies.Enemy;
+import mechanics.modifiers.KnockedOut;
 
 public class AllNighter extends AbstractCard implements Attack {
 
@@ -18,7 +19,7 @@ public class AllNighter extends AbstractCard implements Attack {
 
 	@Override
 	public ActionList generateActions(Enemy target) {
-		return Action.list(new ForcedEndTurn());
+		return Action.list(new ForcedEndTurn(), ApplyModifier.toPlayer(new KnockedOut(), this));
 	}
 	
 }

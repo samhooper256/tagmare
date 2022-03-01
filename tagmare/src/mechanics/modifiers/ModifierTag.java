@@ -5,7 +5,8 @@ public enum ModifierTag {
 	AP_CLASSROOM("AP Classroom", false),
 	MOTIVATION("Motivation", true),
 	PROCRASTINATED("Procrastinated", true),
-	ENRAGED("Enraged", true);
+	ENRAGED("Enraged", true),
+	KNOCKED_OUT("Knocked Out", false);
 	
 	private final String name;
 	private final boolean isInteger;
