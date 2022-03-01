@@ -23,7 +23,8 @@ public final class Combat {
 	/** In order from left to right as they appear to the player. */
 	private final List<Enemy> enemies;
 	
-	private boolean running, playerTurn, enemyTurn;
+	private CombatState state;
+	private boolean running;
 	private int turn;
 	
 	public Combat() {
@@ -36,8 +37,7 @@ public final class Combat {
 		enemies = new ArrayList<>();
 		enemies.add(new VocabQuiz());
 		enemies.add(new APESProgressCheck());
-		playerTurn = false;
-		enemyTurn = false;
+		state = CombatState.PREP;
 		turn = 0;
 	}
 	
@@ -76,12 +76,11 @@ public final class Combat {
 			if(paused())
 				return;
 		}
-		if(playerTurn) { //we're waiting for the player to end their turn or play another card.
-			running = false;
+		if(state == CombatState.PLAYER_TO_ENEMY) { //player has ended their turn but the enemys' hasn't started yet.
+			pushEndTurnActions(); //calls resume
 		}
-		else if(enemyTurn) { //enemies have nothing else to do - start the player's next turn.
-			enemyTurn = false;
-			startPlayerTurn();
+		else if(state == CombatState.ENEMY_TURN) { //enemies have nothing else to do - start the player's next turn.
+			startPlayerTurn(); //calls resume
 		}
 		running = false;
 	}
@@ -90,7 +89,6 @@ public final class Combat {
 	 * Increments {@link #turn}. Calls {@link #resume()}. */
 	private void startPlayerTurn() {
 		turn++;
-		playerTurn = true;
 		stack().push(new GenerateSOT());
 		stack().push(new SetEnergy(DEFAULT_ENERGY));
 		for(int i = 1; i <= DEFAULT_DRAW; i++)
@@ -100,15 +98,7 @@ public final class Combat {
 		resume();
 	}
 	
-	public boolean canEndTurn() {
-		return !running() && stack().isEmpty();
-	}
-	
-	/** Calls {@link #resume()}. */
-	public void endPlayerTurn() {
-		if(!canEndTurn())
-			throw new IllegalStateException("Cannot end turn");
-		playerTurn = false;
+	private void pushEndTurnActions() {
 		List<Card> cards = hand().cards();
 		stack().push(new StartEnemyTurn());
 		List<Enemy> enemies = enemies();
@@ -118,11 +108,27 @@ public final class Combat {
 			stack().push(new EOTDiscard(cards.get(i)));
 		resume();
 	}
-
-	/** Assumes {@link #playerTurn} is {@code false}. Set {@link #enemyTurn} to {@code true}.
-	 * Does not call {@link #resume()}. Should only be called by {@link StartEnemyTurn}. */
+	
+	/** An "explicit" end turn is when the player requests the turn be ended (e.g. by clicking an "End Turn" button). */
+	public boolean canEndTurnExplicity() {
+		return !running() && stack().isEmpty();
+	}
+	
+	/** Calls {@link #resume()}. */
+	public void endPlayerTurn() {
+		if(!canEndTurnExplicity())
+			throw new IllegalStateException("Cannot end turn explicitly");
+		state = CombatState.PLAYER_TO_ENEMY;
+		//TODO if needed, we can add an action to the stack here whose only purpose is to notify the visual components
+		//that the turn has ended.
+		resume();
+	}
+	
+	/** Assumes the {@link #state} is {@link CombatState#PLAYER_TO_ENEMY}. Sets {@link #state} to
+	 * {@link CombatState#ENEMY_TURN}. Does not call {@link #resume()}. Should only be called by {@link StartEnemyTurn}.
+	 */
 	public void startEnemyTurn() {
-		enemyTurn = true;
+		state = CombatState.ENEMY_TURN;
 		List<Enemy> enemies = enemies();
 		for(int i = enemies.size() - 1; i >= 0; i--)
 			stack().pushReversed(enemies.get(i).getActions());

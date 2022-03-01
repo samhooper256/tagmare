@@ -11,14 +11,14 @@ public class EndTurnButton extends Button {
 	}
 	
 	private void mouseClicked() {
-		if(Hub.combat().canEndTurn())
+		if(Hub.combat().canEndTurnExplicity())
 			Hub.combat().endPlayerTurn();
 		else
 			System.out.println("Can't end turn");
 	}
 
 	public void update() {
-		setDisable(!Hub.combat().canEndTurn());
+		setDisable(!Hub.combat().canEndTurnExplicity());
 	}
 	
 }
