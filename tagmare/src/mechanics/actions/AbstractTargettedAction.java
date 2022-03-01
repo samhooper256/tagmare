@@ -2,6 +2,7 @@ package mechanics.actions;
 
 import mechanics.Entity;
 
+/** {@link #canExecute()} is equivalent to {@code super.canExecute() && !target().isDead()}. */
 abstract class AbstractTargettedAction extends AbstractAction implements TargettedAction {
 
 	private final Entity target;
@@ -15,6 +16,11 @@ abstract class AbstractTargettedAction extends AbstractAction implements Targett
 	@Override
 	public Entity target() {
 		return target;
+	}
+	
+	@Override
+	public boolean canExecute() {
+		return super.canExecute() && !target().isDead();
 	}
 	
 }

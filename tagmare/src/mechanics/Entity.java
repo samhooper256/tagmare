@@ -16,4 +16,8 @@ public interface Entity extends ActionSource {
 		Utils.takeDamage(damage, health(), block());
 	}
 	
+	default boolean isDead() {
+		return health().hp() == 0;
+	}
+	
 }

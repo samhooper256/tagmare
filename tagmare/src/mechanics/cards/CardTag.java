@@ -11,7 +11,8 @@ public enum CardTag {
 	PROCRASTINATE("Procrastinate", 1, true, Procrastinate::new),
 	GRIND("Grind", 2, true, Grind::new),
 	QUIZLET("Quizlet", 1, true, Quizlet::new),
-	RAGE("Rage", 1, true, Rage::new);
+	RAGE("Rage", 1, true, Rage::new),
+	ALL_NIGHTER("All-Nighter", 2, false, AllNighter::new);
 	
 	private final String displayName;
 	private final boolean targetted;

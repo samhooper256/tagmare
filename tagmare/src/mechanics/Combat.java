@@ -8,7 +8,8 @@ import mechanics.cards.*;
 import mechanics.enemies.*;
 
 //TODO support user input other than selecting/targetting cards. (e.g. YOGA).
-//TODO support some kind of "EndTurnFromCard" (ForcedEndTurn) action that ends your turn as a result of a card.
+//TODO One-Time cards (e.g. All-Nighter).
+//TODO Enemies can die.
 public final class Combat {
 
 	/** The default number of cards drawn per turn. */
@@ -26,6 +27,7 @@ public final class Combat {
 	private CombatState state;
 	private boolean running;
 	private int turn;
+	private Action mostRecentlyExecuted;
 	
 	public Combat() {
 		stack = new ActionStack();
@@ -39,6 +41,7 @@ public final class Combat {
 		enemies.add(new APESProgressCheck());
 		state = CombatState.PREP;
 		turn = 0;
+		mostRecentlyExecuted = null;
 	}
 	
 	/** The card won't actually be played until this {@link Combat} {@link #resume() resumes}.
@@ -70,11 +73,17 @@ public final class Combat {
 		if(!started())
 			throw new IllegalStateException("Not started");
 		running = true;
+		addClearsIfEnemyKilled(mostRecentlyExecuted);
 		while(!stack().isEmpty()) {
 			Action top = stack().pop();
-			VisualManager.executeAction(top);
-			if(paused())
-				return;
+			if(top.canExecute()) {
+				mostRecentlyExecuted = top;
+				VisualManager.executeAction(mostRecentlyExecuted);
+				if(paused())
+					return;
+				else
+					addClearsIfEnemyKilled(mostRecentlyExecuted);
+			}
 		}
 		if(state == CombatState.PLAYER_TO_ENEMY) { //player has ended their turn but the enemys' hasn't started yet.
 			pushEndTurnActions(); //calls resume
@@ -84,11 +93,22 @@ public final class Combat {
 		}
 		running = false;
 	}
+
+	/** Adds a {@link ClearEnemy} to the top of the {@link #stack()} for every {@link Enemy} killed by the given
+	 * {@link Action}. */
+	private void addClearsIfEnemyKilled(Action top) {
+		for(int i = enemies().size() - 1; i >= 0; i--) {
+			Enemy e = enemies().get(i);
+			if(e.isDead())
+				stack().push(new ClearEnemy(top, e));
+		}
+	}
 	
-	/** Assumes {@link #enemyTurn} is {@code false}. Sets {@link #playerTurn} to {@code true}.
-	 * Increments {@link #turn}. Calls {@link #resume()}. */
+	/** Assumes {@link #state} is {@link CombatState#ENEMY_TURN} or {@link CombatState#PREP}.
+	 * Sets the {@link #state} to {@link CombatState#PLAYER_TURN}. Increments {@link #turn}. Calls {@link #resume()}. */
 	private void startPlayerTurn() {
 		turn++;
+		state = CombatState.PLAYER_TURN;
 		stack().push(new GenerateSOT());
 		stack().push(new SetEnergy(DEFAULT_ENERGY));
 		for(int i = 1; i <= DEFAULT_DRAW; i++)
@@ -122,6 +142,11 @@ public final class Combat {
 		//TODO if needed, we can add an action to the stack here whose only purpose is to notify the visual components
 		//that the turn has ended.
 		resume();
+	}
+	
+	/** Should only be called by {@link ForcedEndTurn#execute()}. */
+	public void endPlayerTurnForcefully() {
+		state = CombatState.PLAYER_TO_ENEMY;
 	}
 	
 	/** Assumes the {@link #state} is {@link CombatState#PLAYER_TO_ENEMY}. Sets {@link #state} to
@@ -173,6 +198,13 @@ public final class Combat {
 	public void discardFromHandExplicitly(Card card) {
 		discardEOT(card);
 	}
+
+	/** Should only be called by {@link ClearEnemy#execute()}. */
+	public void clearEnemy(Enemy enemy) {
+		if(!enemies.remove(enemy))
+			throw new IllegalArgumentException(String.format("Enemy is not in this combat: %s", enemy));
+	}
+	
 	
 	/** Returns {@code 0} if the player's first turn hasn't started yet. */
 	public int turn() {

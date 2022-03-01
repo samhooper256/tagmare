@@ -6,6 +6,8 @@ import mechanics.actions.list.ActionList;
 import mechanics.cards.Attack;
 import mechanics.modifiers.*;
 
+/** Any added {@link Action Actions} are added between the actions listed on the card. (For example, if you play Grind
+ * and you have Keyboard Shortcuts, the extra 1 damage will be dealt after each of the 5 hits from Grind). */
 public final class AttackEffects {
 
 	private AttackEffects() {

@@ -9,7 +9,7 @@ abstract class AbstractEnemy extends AbstractEntity implements Enemy {
 	
 	protected AbstractEnemy(int maxHealth) {
 		super(maxHealth);
-		intent = DoNothing.INSTANCE;
+		intent = new DoNothing();
 	}
 	
 	@Override

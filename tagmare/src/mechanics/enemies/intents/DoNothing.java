@@ -5,9 +5,7 @@ import mechanics.enemies.Enemy;
 
 public class DoNothing implements Intent {
 
-	public static final DoNothing INSTANCE = new DoNothing();
-	
-	private DoNothing() {
+	public DoNothing() {
 		
 	}
 	
