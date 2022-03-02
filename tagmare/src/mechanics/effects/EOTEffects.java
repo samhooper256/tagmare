@@ -13,9 +13,8 @@ public final class EOTEffects {
 	
 	public static ActionList apply() {
 		ActionListBuilder list = Action.listBuilder();
-		if(Hub.player().modifiers().contains(ModifierTag.KNOCKED_OUT)) {
+		if(Hub.player().modifiers().contains(ModifierTag.KNOCKED_OUT))
 			list.add(new RemoveModifier(ModifierTag.KNOCKED_OUT, null, Hub.player()));
-		}
 		return list.build();
 	}
 	

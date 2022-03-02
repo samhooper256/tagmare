@@ -199,6 +199,13 @@ public final class Combat {
 		discardEOT(card);
 	}
 
+	/** Should only be called by {@link RemoveOTFromPlay#execute()}.
+	 * Throws an exception if the given {@link Card} was not in play. */
+	public void removeOTFromPlay(Card card) {
+		if(!cardsInPlay.remove(card))
+			throw new IllegalStateException(String.format("Not in play: %s", card));
+	}
+	
 	/** Should only be called by {@link ClearEnemy#execute()}. */
 	public void clearEnemy(Enemy enemy) {
 		if(!enemies.remove(enemy))

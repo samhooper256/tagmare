@@ -23,7 +23,10 @@ public final class PutCardInPlay extends AbstractTargettedAction {
 		Hub.combat().addCardToPlay(card);
 		Hub.hand().removeOrThrow(card);
 		ActionStack stack = Hub.stack();
-		stack.push(new NaturalDiscard(card));
+		if(card.isOneTime())
+			stack.push(new RemoveOTFromPlay(card));
+		else
+			stack.push(new NaturalDiscard(card));
 		stack.pushReversed(card.generateActions(target()));
 		stack.push(new SpendEnergy(card.energyCost(), card));
 	}
