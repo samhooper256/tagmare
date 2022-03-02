@@ -2,11 +2,11 @@ package mechanics;
 
 import java.util.*;
 
-import base.VisualManager;
 import mechanics.actions.*;
 import mechanics.cards.*;
 import mechanics.effects.EOTEffects;
 import mechanics.enemies.*;
+import visuals.VisualManager;
 
 //TODO support user input other than selecting/targetting cards. (e.g. YOGA).
 //TODO One-Time cards (e.g. All-Nighter).
@@ -257,6 +257,7 @@ public final class Combat {
 		return Collections.unmodifiableList(enemies);
 	}
 	
+	@SuppressWarnings("unused") //TODO remove this method eventually.
 	private void printStack() {
 		ListIterator<Action> itr = stack().iteratorAtTop();
 		while(itr.hasPrevious())

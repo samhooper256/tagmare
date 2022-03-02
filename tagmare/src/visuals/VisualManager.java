@@ -1,4 +1,4 @@
-package base;
+package visuals;
 
 import base.animations.*;
 import base.temp.*;

@@ -52,6 +52,10 @@ public class Deck implements Iterable<Card> {
 			throw new IllegalStateException(String.format("Card is not in Deck: %s", c));
 	}
 
+	public Card get(int index) {
+		return cards.get(index);
+	}
+	
 	/** Unmodifiable. */
 	public List<Card> cards() {
 		return Collections.unmodifiableList(cards);

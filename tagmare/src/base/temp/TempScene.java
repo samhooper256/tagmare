@@ -9,6 +9,10 @@ public class TempScene extends Scene {
 
 	public static final TempScene INSTANCE = new TempScene();
 	
+	public static TempScene get() {
+		return INSTANCE;
+	}
+	
 	public final Pane pane;
 	public final CardListDisplay deckDisplay, drawPileDisplay, discardPileDisplay;
 	public final HandDisplay handDisplay;

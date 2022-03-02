@@ -2,7 +2,6 @@ package base.temp;
 
 import java.util.*;
 
-import base.VisualManager;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -10,6 +9,7 @@ import mechanics.Health;
 import mechanics.cards.Card;
 import mechanics.enemies.Enemy;
 import utils.Nodes;
+import visuals.VisualManager;
 
 public class EnemyRep extends StackPane {
 

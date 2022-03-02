@@ -1,8 +1,8 @@
 package base.temp;
 
-import base.VisualManager;
 import javafx.scene.control.Button;
 import mechanics.cards.Card;
+import visuals.VisualManager;
 
 public class PlayCardButton extends Button {
 
