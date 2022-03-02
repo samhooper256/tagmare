@@ -1,11 +1,13 @@
 package mechanics;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import mechanics.actions.*;
 import mechanics.actions.list.ActionList;
+import utils.Iterators;
 
-public class ActionStack {
+/** {@link #iterator()} is unmodifiable. */
+public class ActionStack implements Iterable<Action> {
 
 	private final ArrayList<Action> list;
 	
@@ -61,6 +63,21 @@ public class ActionStack {
 	
 	public boolean isEmpty() {
 		return size() == 0;
+	}
+	
+	@Override
+	public Iterator<Action> iterator() {
+		return Iterators.unmodifiable(list.iterator());
+	}
+
+	/** Use {@link ListIterator#previous()} to go down the {@link ActionStack}. */
+	public ListIterator<Action> iteratorAtTop() {
+		return Iterators.unmodifiable(list.listIterator(list.size()));
+	}
+	
+	@Override
+	public String toString() {
+		return list.toString();
 	}
 	
 }

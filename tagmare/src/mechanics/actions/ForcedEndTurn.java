@@ -4,8 +4,8 @@ import mechanics.Hub;
 
 public class ForcedEndTurn extends AbstractAction {
 
-	public ForcedEndTurn() {
-		super(null);
+	public ForcedEndTurn(ActionSource source) {
+		super(source);
 	}
 	
 	@Override

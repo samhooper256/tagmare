@@ -1,6 +1,6 @@
 package utils;
 
-import java.util.Iterator;
+import java.util.*;
 
 public final class Iterators {
 
@@ -23,5 +23,57 @@ public final class Iterators {
 			
 		};
 	}
+	
+	public static <T> ListIterator<T> unmodifiable(ListIterator<T> itr) {
+		return new ListIterator<T>() {
+			
+			@Override
+			public boolean hasNext() {
+				return itr.hasNext();
+			}
+			
+			@Override
+			public T next() {
+				return itr.next();
+			}
+			
+			@Override
+			public T previous() {
+				return itr.previous();
+			}
+
+			@Override
+			public boolean hasPrevious() {
+				return itr.hasPrevious();
+			}
+
+			@Override
+			public int nextIndex() {
+				return itr.nextIndex();
+			}
+
+			@Override
+			public int previousIndex() {
+				return itr.previousIndex();
+			}
+
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException("remove");
+			}
+
+			@Override
+			public void set(T e) {
+				throw new UnsupportedOperationException("set");
+			}
+
+			@Override
+			public void add(T e) {
+				throw new UnsupportedOperationException("add");
+			}
+			
+		};
+	}
+	
 	
 }

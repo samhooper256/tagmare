@@ -14,4 +14,9 @@ abstract class AbstractAction implements Action {
 		return source;
 	}
 	
+	@Override
+	public String toString() {
+		return getClass().getSimpleName();
+	}
+	
 }

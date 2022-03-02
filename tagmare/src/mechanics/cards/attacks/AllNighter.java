@@ -8,6 +8,8 @@ import mechanics.modifiers.KnockedOut;
 
 public class AllNighter extends AbstractCard implements Attack {
 
+	private static final int DAMAGE = 28;
+	
 	public AllNighter() {
 		super(CardTag.ALL_NIGHTER);
 	}
@@ -19,7 +21,11 @@ public class AllNighter extends AbstractCard implements Attack {
 
 	@Override
 	public ActionList generateActions(Enemy target) {
-		return Action.list(new ForcedEndTurn(), ApplyModifier.toPlayer(new KnockedOut(), this));
+		return Action.list(
+			new DealDamageToAll(this, DAMAGE),
+			new ForcedEndTurn(this),
+			ApplyModifier.toPlayer(new KnockedOut(), this)
+		);
 	}
 	
 }

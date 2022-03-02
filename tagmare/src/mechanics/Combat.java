@@ -5,11 +5,11 @@ import java.util.*;
 import base.VisualManager;
 import mechanics.actions.*;
 import mechanics.cards.*;
+import mechanics.effects.EOTEffects;
 import mechanics.enemies.*;
 
 //TODO support user input other than selecting/targetting cards. (e.g. YOGA).
 //TODO One-Time cards (e.g. All-Nighter).
-//TODO Enemies can die.
 public final class Combat {
 
 	/** The default number of cards drawn per turn. */
@@ -85,18 +85,23 @@ public final class Combat {
 					addClearsIfEnemyKilled(mostRecentlyExecuted);
 			}
 		}
-		if(state == CombatState.PLAYER_TO_ENEMY) { //player has ended their turn but the enemys' hasn't started yet.
-			pushEndTurnActions(); //calls resume
+		if(state == CombatState.PLAYER_TO_ENEMY) {
+			stack().push(new StartEnemyTurn());
+			resume();
 		}
-		else if(state == CombatState.ENEMY_TURN) { //enemies have nothing else to do - start the player's next turn.
+		if(state == CombatState.ENEMY_TURN) { //enemies have nothing else to do - start the player's next turn.
 			startPlayerTurn(); //calls resume
 		}
-		running = false;
+		else {
+			running = false;
+		}
 	}
 
 	/** Adds a {@link ClearEnemy} to the top of the {@link #stack()} for every {@link Enemy} killed by the given
 	 * {@link Action}. */
 	private void addClearsIfEnemyKilled(Action top) {
+		if(top == null)
+			return;
 		for(int i = enemies().size() - 1; i >= 0; i--) {
 			Enemy e = enemies().get(i);
 			if(e.isDead())
@@ -118,15 +123,16 @@ public final class Combat {
 		resume();
 	}
 	
+	/** Does <em><strong>NOT</strong></em> call {@link #resume()}. */
 	private void pushEndTurnActions() {
 		List<Card> cards = hand().cards();
-		stack().push(new StartEnemyTurn());
 		List<Enemy> enemies = enemies();
 		for(int i = enemies.size() - 1; i >= 0; i--)
 			stack().push(new EOTEnemyLoseBlock(enemies.get(i)));
-		for(int i = cards.size() - 1; i >= 0; i--)
+		for(int i = cards.size() - 1; i >= 0; i--) {
 			stack().push(new EOTDiscard(cards.get(i)));
-		resume();
+		}
+		stack().pushReversed(EOTEffects.apply());
 	}
 	
 	/** An "explicit" end turn is when the player requests the turn be ended (e.g. by clicking an "End Turn" button). */
@@ -141,12 +147,15 @@ public final class Combat {
 		state = CombatState.PLAYER_TO_ENEMY;
 		//TODO if needed, we can add an action to the stack here whose only purpose is to notify the visual components
 		//that the turn has ended.
+		pushEndTurnActions();
 		resume();
 	}
 	
-	/** Should only be called by {@link ForcedEndTurn#execute()}. */
+	/** Should only be called by {@link ForcedEndTurn#execute()}. Does <em><strong>NOT</strong></em> call
+	 * {@link #resume()}.*/
 	public void endPlayerTurnForcefully() {
 		state = CombatState.PLAYER_TO_ENEMY;
+		pushEndTurnActions();
 	}
 	
 	/** Assumes the {@link #state} is {@link CombatState#PLAYER_TO_ENEMY}. Sets {@link #state} to
@@ -246,6 +255,13 @@ public final class Combat {
 	/** Unmodifiable. */
 	public List<Enemy> enemies() {
 		return Collections.unmodifiableList(enemies);
+	}
+	
+	private void printStack() {
+		ListIterator<Action> itr = stack().iteratorAtTop();
+		while(itr.hasPrevious())
+			System.out.println(itr.previous());
+		System.out.println();
 	}
 	
 }
