@@ -10,7 +10,6 @@ public final class VisualManagerImpl implements VisualManager {
 
 	@Override
 	public void executeAction(final Action action) {
-		System.out.printf("[VisualManagerImpl] executeAction %s%n", action);
 		if(action instanceof SimpleDrawRequest) {
 			Hub.combat().pause();
 			action.execute();

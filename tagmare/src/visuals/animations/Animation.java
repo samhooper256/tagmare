@@ -31,6 +31,9 @@ public interface Animation extends Updatable {
 	
 	Interpolator interpolator();
 	
+	/** Returns {@code this}. */
+	Animation setInterpolator(Interpolator interpolator);
+	
 	double rate();
 	
 	void setRate(double rate);

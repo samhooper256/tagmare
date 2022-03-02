@@ -10,7 +10,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import mechanics.Hub;
 import mechanics.cards.Card;
-import visuals.animations.Animation;
+import visuals.animations.*;
 import visuals.fxutils.Nodes;
 import visuals.hand.*;
 
@@ -18,8 +18,8 @@ public final class CardRepresentation extends StackPane implements Updatable {
 
 	public static final double WIDTH = 176, HEIGHT = WIDTH * 1.5;
 	
-	private static final Duration FOCUS_DURATION = Duration.seconds(1);
-	private static final double FOCUS_Y = GameScene.HEIGHT - HEIGHT - 100;
+	private static final Duration FOCUS_DURATION = Duration.millis(400);
+	private static final double FOCUS_Y = GameScene.HEIGHT - HEIGHT - 50;
 	private static final WeakHashMap<Card, CardRepresentation> MAP = new WeakHashMap<>();
 	
 	public static CardRepresentation of(Card card) {
@@ -32,6 +32,28 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		DOWN, TO_UP, UP, TO_DOWN;
 	}
 
+	private class DownAnimation extends CardMoveAnimation {
+
+		public DownAnimation(Duration duration) {
+			super(CardRepresentation.this, duration);
+			setInterpolator(Interpolator.bow(-1));
+			setFinish(CardRepresentation.this::downFinished);
+			setReverseFinish(CardRepresentation.this::downReverseFinished);
+		}
+		
+	}
+	
+	private class UpAnimation extends CardMoveAnimation {
+
+		public UpAnimation(Duration duration) {
+			super(CardRepresentation.this, duration);
+			setInterpolator(Interpolator.bow(1));
+			setFinish(CardRepresentation.this::upFinished);
+			setReverseFinish(CardRepresentation.this::upReverseFinished);
+		}
+		
+	}
+	
 	private final Card card;
 	private final Text name;
 	
@@ -62,22 +84,20 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		}
 		else {
 			if(hovered && state == State.DOWN) {
-				cma = new CardMoveAnimation(this, FOCUS_DURATION).setStart().setDest(getLayoutX(), FOCUS_Y)
-						.setFinish(this::upFinished).setReverseFinish(this::upReverseFinished);
+				cma = new UpAnimation(FOCUS_DURATION).setStart().setDest(getLayoutX(), FOCUS_Y);
 				state = State.TO_UP;
 				Animation.manager().add(cma);
 			}
 			else if(hovered && state == State.TO_DOWN) {
 				state = State.TO_UP;
-				cma.setRate(-1); //we're going down right now, so reverse it so we go back up.
+				cma.setRate(cma instanceof UpAnimation ? 1 : -1);
 			}
 			else if(!hovered && state == State.TO_UP) {
 				state = State.TO_DOWN;
-				cma.setRate(-1); //we're going up right now, so reverse it so we go back down.
+				cma.setRate(cma instanceof UpAnimation ? -1 : 1);
 			}
 			else if(!hovered && state == State.UP) {
-				cma = new CardMoveAnimation(this, FOCUS_DURATION).setStart().setDest(getLayoutX(), HandLayer.CARD_Y)
-						.setFinish(this::downFinished).setReverseFinish(this::downReverseFinished);
+				cma = new DownAnimation(FOCUS_DURATION).setStart().setDest(getLayoutX(), HandLayer.CARD_Y);
 				state = State.TO_DOWN;
 				Animation.manager().add(cma);
 			}
@@ -105,12 +125,10 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	}
 	
 	private void hoverEntered() {
-		System.out.printf("enter hover: %s%n", this);
 		hovered = true;
 	}
 	
 	private void hoverExited() {
-		System.out.printf("exit hover: %s%n", this);
 		hovered = false;
 	}
 	

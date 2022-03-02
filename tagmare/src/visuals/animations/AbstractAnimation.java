@@ -13,8 +13,8 @@ public abstract class AbstractAnimation implements Animation {
 	}
 	
 	private final long duration;
-	private final Interpolator interpolator;
 	
+	private Interpolator interpolator;
 	private double rate;
 	private long elapsed;
 	private boolean paused;
@@ -162,6 +162,12 @@ public abstract class AbstractAnimation implements Animation {
 		return interpolator;
 	}
 
+	@Override
+	public AbstractAnimation setInterpolator(Interpolator interpolator) {
+		this.interpolator = interpolator;
+		return this;
+	}
+	
 	@Override
 	public double rate() {
 		return rate;

@@ -10,9 +10,8 @@ public class CardMoveAnimation extends AbstractAnimation {
 	
 	private double destX, destY, startX, startY;
 	
-	/** The {@link #interpolator()} is {@link Interpolator#CBRT} by default.*/
 	public CardMoveAnimation(CardRepresentation cardRepresentation, Duration duration) {
-		this(cardRepresentation, duration, Interpolator.BOW_OUT_1);
+		this(cardRepresentation, duration, Interpolator.bow(.1));
 	}
 	
 	public CardMoveAnimation(CardRepresentation cardRepresentation, Duration duration, Interpolator interpolator) {

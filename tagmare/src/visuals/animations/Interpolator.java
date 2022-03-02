@@ -5,8 +5,10 @@ import java.util.function.DoubleUnaryOperator;
 public abstract class Interpolator implements DoubleUnaryOperator {
 
 	public static final Interpolator
+		CBRT = Interpolator.fromOperator(Math::cbrt, "CBRT"),
+		SQRT = Interpolator.fromOperator(Math::sqrt, "SQRT"),
 		LINEAR = new Interpolator() {
-		
+			
 			@Override
 			public double applyAsDouble(double operand) {
 				return operand;
@@ -18,9 +20,7 @@ public abstract class Interpolator implements DoubleUnaryOperator {
 			}
 			
 		},
-		SQRT = Interpolator.fromOperator(Math::sqrt, "SQRT"),
-		CBRT = Interpolator.fromOperator(Math::cbrt, "CBRT"),
-		BOW_OUT_1 = Interpolator.fromOperator(x -> 1.1 * x - .1 * x * x, "BOW_OUT_1");
+		SQUARED = Interpolator.fromOperator(x -> x * x, "SQUARED");
 	
 	public static Interpolator fromOperator(DoubleUnaryOperator duo) {
 		return new Interpolator() {
@@ -47,6 +47,10 @@ public abstract class Interpolator implements DoubleUnaryOperator {
 			}
 			
 		};
+	}
+	
+	public static Interpolator bow(double k) {
+		return fromOperator(x -> (1 + k) * x - k * x * x, String.format("BOW(%.2f)", k));
 	}
 	
 	public Interpolator() {
