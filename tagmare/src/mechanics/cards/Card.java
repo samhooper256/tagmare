@@ -40,6 +40,10 @@ public interface Card extends ActionSource, Comparable<Card> {
 		return tag().isOneTime();
 	}
 	
+	default String displayName() {
+		return tag().displayName();
+	}
+	
 	@Override
 	default ActionSourceType type() {
 		return ActionSourceType.CARD;

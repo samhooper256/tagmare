@@ -1,8 +1,8 @@
 package base.temp;
 
+import base.VisualManager;
 import javafx.scene.control.Button;
 import mechanics.cards.Card;
-import visuals.VisualManager;
 
 public class PlayCardButton extends Button {
 
@@ -19,7 +19,7 @@ public class PlayCardButton extends Button {
 		Card card = selected.card();
 		if(card.isTargetted())
 			return;
-		VisualManager.requestPlayCardFromHand(card);
+		VisualManager.get().requestPlayCardFromHand(card);
 	}
 	
 }

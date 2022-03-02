@@ -5,6 +5,7 @@ import java.util.WeakHashMap;
 import base.temp.Backgrounds;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import mechanics.cards.Card;
 import visuals.fxutils.Nodes;
 
@@ -21,11 +22,14 @@ public final class CardRepresentation extends StackPane {
 	}
 	
 	private final Card card;
+	private final Text name;
 	
 	private CardRepresentation(Card card) {
 		this.card = card;
+		name = new Text(card.tag().displayName());
 		Nodes.setPrefAndMaxSize(this, WIDTH, HEIGHT);
 		setBackground(Backgrounds.of(Color.BISQUE));
+		getChildren().addAll(name);
 	}
 	
 	public Card card() {

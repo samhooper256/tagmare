@@ -1,9 +1,11 @@
-package base.animations;
+package visuals.animations;
 
 import java.util.*;
 
 import base.Updatable;
 
+/** This class trusts that the same animation is not re-added when it is already in this {@link AnimationManager}.
+ * {@link Animation Animations} are automatically removed when they are {@link Animation#isFinished() finished}. */
 public class AnimationManager implements Updatable {
 
 	private static final AnimationManager INSTANCE = new AnimationManager();
@@ -32,6 +34,16 @@ public class AnimationManager implements Updatable {
 	
 	public void add(Animation animation) {
 		animations.add(animation);
+	}
+
+	public void addAll(Animation... animations) {
+		for(Animation animation : animations)
+			add(animation);
+	}
+
+	public void addAll(List<Animation> animations) {
+		for(Animation animation : animations)
+			add(animation);
 	}
 	
 }

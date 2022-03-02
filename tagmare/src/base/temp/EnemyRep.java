@@ -2,6 +2,7 @@ package base.temp;
 
 import java.util.*;
 
+import base.VisualManager;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -9,7 +10,6 @@ import mechanics.Health;
 import mechanics.cards.Card;
 import mechanics.enemies.Enemy;
 import utils.Nodes;
-import visuals.VisualManager;
 
 public class EnemyRep extends StackPane {
 
@@ -48,7 +48,7 @@ public class EnemyRep extends StackPane {
 		Card card = hcr.card();
 		if(!card.isTargetted())
 			return;
-		VisualManager.requestPlayCardFromHand(card, enemy);
+		VisualManager.get().requestPlayCardFromHand(card, enemy);
 	}
 	
 	public void update() {

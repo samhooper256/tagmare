@@ -1,4 +1,4 @@
-package base.animations;
+package visuals.animations;
 
 import java.util.Objects;
 

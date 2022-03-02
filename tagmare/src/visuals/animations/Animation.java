@@ -1,9 +1,14 @@
-package base.animations;
+package visuals.animations;
 
 import base.Updatable;
 
 public interface Animation extends Updatable {
 
+	/** Equivalent to {@link AnimationManager#get()}. */
+	static AnimationManager manager() {
+		return AnimationManager.get();
+	}
+	
 	void interpolate(double frac);
 	
 	void start();

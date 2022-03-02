@@ -1,4 +1,4 @@
-package base.animations;
+package visuals.animations;
 
 public interface FinisherAnimation extends Animation {
 

@@ -11,8 +11,11 @@ import mechanics.effects.DrawEffects;
  * discard piles are empty, does nothing. */
 public class SimpleDrawRequest extends AbstractAction {
 
+	private Card card;
+	
 	public SimpleDrawRequest() {
 		super(null);
+		card = null;
 	}
 
 	@Override
@@ -28,11 +31,17 @@ public class SimpleDrawRequest extends AbstractAction {
 			Hub.stack().push(new RefillDrawPile());
 		}
 		else {
-			Card card = draw.drawFromTop();
+			card = draw.drawFromTop();
 			Hub.hand().add(card);
 			Hub.stack().pushReversed(DrawEffects.apply(card));
 		}
 		
+	}
+	
+	/** Returns the {@link Card} that was drawn the last time {@link #execute()} was called. Returns {@code null} if
+	 * either {@code execute} has not been called or the last draw was unsuccessful. */
+	public Card getCard() {
+		return card;
 	}
 	
 }

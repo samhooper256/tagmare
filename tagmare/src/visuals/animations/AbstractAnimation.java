@@ -1,4 +1,4 @@
-package base.animations;
+package visuals.animations;
 
 import javafx.util.Duration;
 
@@ -6,11 +6,6 @@ import javafx.util.Duration;
  * {@link AbstractAnimation} to progress. */
 public abstract class AbstractAnimation implements Animation {
 
-	/** Equivalent to {@link AnimationManager#get()}. */
-	public static AnimationManager manager() {
-		return AnimationManager.get();
-	}
-	
 	private static long asNanos(Duration duration) {
 		if(duration.isIndefinite() || duration.isUnknown())
 			throw new IllegalArgumentException(String.format("Invalid duration: %s", duration));
@@ -33,10 +28,10 @@ public abstract class AbstractAnimation implements Animation {
 		paused = false;
 	}
 	
-	/** Does nothing if {@link #isPaused()}. */
+	/** Does nothing if {@link #isPaused()} or {@link #isFinished()}. */
 	@Override
 	public final void update(long diff) {
-		if(paused)
+		if(isPaused() || isFinished())
 			return;
 		elapsed += diff;
 		if(elapsed >= duration)

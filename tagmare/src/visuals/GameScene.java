@@ -3,11 +3,12 @@ package visuals;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.transform.Scale;
-import mechanics.Hub;
+import visuals.hand.HandLayer;
 
 public class GameScene extends Scene {
 	
-	private static final double DEFAULT_WIDTH = 1920, DEFAULT_HEIGHT = 1080;
+	public static final double WIDTH = 1920, HEIGHT = 1080;
+	
 	private static final GameScene INSTANCE = new GameScene();
 	
 	public static GameScene get() {
@@ -16,26 +17,31 @@ public class GameScene extends Scene {
 	
 	private final Pane content;
 	private final Scale scale;
+	private final HandLayer handLayer;
 	
 	private GameScene() {
-		super(new Pane(), DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		super(new Pane(), WIDTH, HEIGHT);
 		scale = new Scale();
-		scale.xProperty().bind(widthProperty().divide(DEFAULT_WIDTH));
-		scale.yProperty().bind(heightProperty().divide(DEFAULT_HEIGHT));
+		scale.xProperty().bind(widthProperty().divide(WIDTH));
+		scale.yProperty().bind(heightProperty().divide(HEIGHT));
 		content = new Pane();
 		content.getTransforms().add(scale);
 		root().getChildren().add(content);
 		
-		CardRepresentation cr = CardRepresentation.of(Hub.deck().get(0));
-		content().getChildren().add(cr);
+		handLayer = new HandLayer();
+		content.getChildren().addAll(handLayer);
+	}
+	
+	private Pane root() {
+		return (Pane) getRoot();
 	}
 
 	public Pane content() {
 		return content;
 	}
 	
-	private Pane root() {
-		return (Pane) getRoot();
+	public HandLayer handLayer() {
+		return handLayer;
 	}
 	
 }

@@ -1,6 +1,6 @@
 package base;
 
-import base.animations.AbstractAnimation;
+import visuals.animations.Animation;
 
 /** Provides the source of all update calls and the {@link Timer}.*/
 public final class Updater {
@@ -20,7 +20,7 @@ public final class Updater {
 	}
 	
 	public static void update(long diff) {
-		AbstractAnimation.manager().update(diff);
+		Animation.manager().update(diff);
 	}
 	
 }
