@@ -14,10 +14,12 @@ public class AnimationManager implements Updatable {
 		return INSTANCE;
 	}
 	
-	private final List<Animation> animations;
+	private final List<Animation> animations, cancelRequests, reverseRequests;
 	
 	private AnimationManager() {
 		animations = new ArrayList<>();
+		cancelRequests = new ArrayList<>();
+		reverseRequests = new ArrayList<>();
 	}
 
 	@Override
@@ -30,6 +32,23 @@ public class AnimationManager implements Updatable {
 			else
 				i++;
 		}
+		handleCancelRequests(); //handle cancel requests at the start and end.
+	}
+
+	private void handleCancelRequests() {
+		for(Animation a : cancelRequests)
+			animations.remove(a);
+		cancelRequests.clear();
+	}
+	
+	/** The given {@link Animation} will be removed at the start or end (whichever comes first) of the next
+	 * {@link #update(long) pulse}. */
+	public void cancel(Animation animation) {
+		cancelRequests.add(animation);
+	}
+	
+	public void reverse(Animation animaton) {
+		reverseRequests.add(animaton);
 	}
 	
 	public void add(Animation animation) {

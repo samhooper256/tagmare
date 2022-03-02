@@ -17,7 +17,7 @@ public final class VisualManagerImpl implements VisualManager {
 			SimpleDrawRequest a = (SimpleDrawRequest) action;
 			Card card = a.getCard();
 			if(card != null)
-				Vis.handLayer().startAddCardToRightAnimation(card, this::checkedResume);
+				Vis.handLayer().startAddCardToRightAnimation(card);
 		}
 		else {
 			action.execute();
@@ -28,6 +28,12 @@ public final class VisualManagerImpl implements VisualManager {
 	public boolean requestPlayCardFromHand(Card card, Enemy target) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	@Override
+	public void update(long diff) {
+		GameScene.get().update(diff);
+		VisualManager.super.update(diff);
 	}
 
 }

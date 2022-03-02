@@ -21,7 +21,7 @@ public final class TempVisualManager implements VisualManager {
 		Hi hi = TempScene.INSTANCE.hi;
 		hi.setOpacity(.2);
 		hi.setAction(action);
-		Animation.manager().add(new TestFade(hi).withFinisher(() -> animationFinisherWithExecute(action)));
+		Animation.manager().add(new TestFade(hi).setFinish(() -> animationFinisherWithExecute(action)));
 	}
 	
 	private void animationFinisherWithExecute(Action action) {

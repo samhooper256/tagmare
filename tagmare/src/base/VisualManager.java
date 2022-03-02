@@ -4,8 +4,9 @@ import mechanics.*;
 import mechanics.actions.Action;
 import mechanics.cards.Card;
 import mechanics.enemies.Enemy;
+import visuals.animations.Animation;
 
-public interface VisualManager {
+public interface VisualManager extends Updatable {
 
 	/** Returns the same object every time. */
 	static VisualManager get() {
@@ -29,6 +30,11 @@ public interface VisualManager {
 		if(Hub.combat().running())
 			throw new IllegalStateException("Cannot resume; Combat is running");
 		Hub.combat().resume();
+	}
+	
+	@Override
+	default void update(long diff) {
+		Animation.manager().update(diff);
 	}
 	
 }

@@ -18,7 +18,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setScene(USE_TEMP ? TempScene.get() : GameScene.get());
 		primaryStage.show();
-		primaryStage.setMaximized(true);
+//		primaryStage.setMaximized(true);
 		Hub.combat().start();
 		System.out.println(Hub.deck());
 		Updater.startTimer();

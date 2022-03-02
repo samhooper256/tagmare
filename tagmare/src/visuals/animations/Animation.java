@@ -9,6 +9,8 @@ public interface Animation extends Updatable {
 		return AnimationManager.get();
 	}
 	
+	/** The {@code double} passed here is <em><strong>AFTER</strong></em> having the {@link #interpolator()} applied
+	 * to it. Will always be called with {@code 1.0} for any given playthrough of this {@link AbstractAnimation}. */
 	void interpolate(double frac);
 	
 	void start();
@@ -19,8 +21,6 @@ public interface Animation extends Updatable {
 	
 	void unpause();
 	
-	FinisherAnimation withFinisher(Runnable finisher);
-	
 	boolean isRunning();
 	
 	boolean isFinished();
@@ -29,4 +29,22 @@ public interface Animation extends Updatable {
 	
 	long duration();
 	
+	Interpolator interpolator();
+	
+	double rate();
+	
+	void setRate(double rate);
+	
+	Runnable finishAction();
+	
+	/** Returns {@code this}. */
+	Animation setFinish(Runnable onFinish);
+	
+	/** An action that will be played when the animation is playing with a negative {@link #rate()} and reaches the
+	 * start of the animation. */
+	Runnable reverseFinishAction();
+	
+	/** Returns {@code this}. */
+	Animation setReverseFinish(Runnable reverseFinish);
+
 }

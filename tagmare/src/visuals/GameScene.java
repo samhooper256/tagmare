@@ -1,11 +1,12 @@
 package visuals;
 
-import javafx.scene.Scene;
+import base.Updatable;
+import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.transform.Scale;
 import visuals.hand.HandLayer;
 
-public class GameScene extends Scene {
+public class GameScene extends Scene implements Updatable {
 	
 	public static final double WIDTH = 1920, HEIGHT = 1080;
 	
@@ -30,6 +31,13 @@ public class GameScene extends Scene {
 		
 		handLayer = new HandLayer();
 		content.getChildren().addAll(handLayer);
+	}
+	
+	@Override
+	public void update(long diff) {
+		for(Node n : content.getChildren())
+			if(n instanceof Updatable)
+				((Updatable) n).update(diff);
 	}
 	
 	private Pane root() {

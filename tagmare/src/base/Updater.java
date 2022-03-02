@@ -1,7 +1,5 @@
 package base;
 
-import visuals.animations.Animation;
-
 /** Provides the source of all update calls and the {@link Timer}.*/
 public final class Updater {
 
@@ -20,7 +18,7 @@ public final class Updater {
 	}
 	
 	public static void update(long diff) {
-		Animation.manager().update(diff);
+		VisualManager.get().update(diff);
 	}
 	
 }

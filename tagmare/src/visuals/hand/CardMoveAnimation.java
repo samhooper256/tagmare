@@ -2,15 +2,21 @@ package visuals.hand;
 
 import javafx.util.Duration;
 import visuals.CardRepresentation;
-import visuals.animations.AbstractAnimation;
+import visuals.animations.*;
 
 public class CardMoveAnimation extends AbstractAnimation {
 
 	private final CardRepresentation cardRepresentation;
+	
 	private double destX, destY, startX, startY;
 	
+	/** The {@link #interpolator()} is {@link Interpolator#CBRT} by default.*/
 	public CardMoveAnimation(CardRepresentation cardRepresentation, Duration duration) {
-		super(duration);
+		this(cardRepresentation, duration, Interpolator.BOW_OUT_1);
+	}
+	
+	public CardMoveAnimation(CardRepresentation cardRepresentation, Duration duration, Interpolator interpolator) {
+		super(duration, interpolator);
 		this.cardRepresentation = cardRepresentation;
 	}
 	

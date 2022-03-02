@@ -1,21 +1,26 @@
 package visuals.hand;
 
+import base.*;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import mechanics.cards.*;
-import utils.Nodes;
 import visuals.*;
 import visuals.animations.*;
 
 /** Contains the {@link CardRepresentation CardRepresentations} for the player's {@link Hand}. */
-public class HandLayer extends Pane {
+public class HandLayer extends Pane implements Updatable {
 
-	private static final double SPACING = 12, CARD_Y = GameScene.HEIGHT - CardRepresentation.HEIGHT;
-	private static final double[][] X_COORDS = new double[Hand.MAX_SIZE + 1][];
+	public static final double CARD_Y = GameScene.HEIGHT - CardRepresentation.HEIGHT;
 	
-	static {
-		
-	}
+	private static final double SPACING = 12;
+	private static final double[][] X_COORDS = new double[Hand.MAX_SIZE + 1][];
+	private static final Duration
+			CARD_DRAW_DURATION = Duration.seconds(.75),
+			CARD_SHIFT_DURATION = CARD_DRAW_DURATION.multiply(2d / 3);
+	
+	private boolean addInProgress;
+	private Card cardBeingAdded;
 	
 	public HandLayer() {
 		for(int count = 0; count <= Hand.MAX_SIZE; count++) {
@@ -27,24 +32,32 @@ public class HandLayer extends Pane {
 		}
 	}
 	
-	public void startAddCardToRightAnimation(Card card, Runnable onFinish) {
-		CardRepresentation cr = CardRepresentation.of(card);
-		Nodes.setLayout(cr, 0, 0);
-		getChildren().add(cr);
-		Animation.manager().add(new CardMoveAnimation(cr, Duration.seconds(2)).setStart(0, 0).setDest(500, 500)
-				.withFinisher(onFinish));
+	@Override
+	public void update(long diff) {
+		for(Node n : getChildren())
+			if(n instanceof Updatable)
+				((Updatable) n).update(diff);
 	}
 	
-	private void addCardToRight(Card card) {
-		getChildren().add(CardRepresentation.of(card));
+	public void startAddCardToRightAnimation(Card card) {
+		addInProgress = true;
+		cardBeingAdded = card;
+		CardRepresentation cr = CardRepresentation.of(card);
+		getChildren().add(cr);
 		int count = cardCountForWidth();
-		double width = count * CardRepresentation.WIDTH + SPACING * (count - 1);
-		for(int i = 0; i < count; i++) {
-			double x = (GameScene.WIDTH * .5 - width * .5) + CardRepresentation.WIDTH * i + SPACING * i;
-			CardRepresentation cr = getRepresentation(i);
-			cr.setLayoutX(x);
-			cr.setLayoutY(CARD_Y);
+		double[] coords = X_COORDS[count];
+		Animation.manager().add(new CardMoveAnimation(cr, CARD_DRAW_DURATION).setStart(0, 400)
+				.setDest(coords[count - 1], CARD_Y).setFinish(this::addFinisher));
+		for(int i = 0; i < count - 1; i++) {
+			Animation.manager().add(new CardMoveAnimation(getRepresentation(i), CARD_SHIFT_DURATION, Interpolator.SQRT)
+					.setStart().setDest(coords[i], CARD_Y));
 		}
+	}
+	
+	private void addFinisher() {
+		VisualManager.get().checkedResume();
+		addInProgress = false;
+		cardBeingAdded = null;
 	}
 	
 	private int cardCountForWidth() {
@@ -53,6 +66,14 @@ public class HandLayer extends Pane {
 	
 	private CardRepresentation getRepresentation(int index) {
 		return (CardRepresentation) getChildren().get(index);
+	}
+	
+	public boolean addInProgress() {
+		return addInProgress;
+	}
+	
+	public Card cardBeingAdded() {
+		return cardBeingAdded;
 	}
 	
 }
