@@ -51,8 +51,8 @@ public class GameScene extends Scene implements Updatable {
 	}
 	
 	private void mouseMoved(MouseEvent me) {
-		mouseX = me.getX();
-		mouseY = me.getY();
+		mouseX = me.getX() * WIDTH / getWidth();
+		mouseY = me.getY() * HEIGHT / getHeight();
 	}
 	
 	private Pane root() {

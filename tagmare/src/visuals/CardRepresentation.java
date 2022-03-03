@@ -19,6 +19,9 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	
 	private static final Duration FOCUS_DURATION = Duration.millis(400);
 	private static final double FOCUS_Y = GameScene.HEIGHT - HEIGHT - 50;
+	/** If a {@link State#FLYING} card is released above this y (that is, when the mouse's y-coordinate is less than
+	 * this value), the card is played. Otherwise, the card returns to the hand and is not played.*/
+	private static final double MAX_RELEASE_Y = FOCUS_Y;
 	private static final WeakHashMap<Card, CardRepresentation> MAP = new WeakHashMap<>();
 	
 	public static CardRepresentation of(Card card) {
@@ -28,7 +31,7 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	}
 	
 	enum State {
-		DOWN, TO_UP, UP, TO_DOWN;
+		DOWN, TO_UP, UP, TO_DOWN, FLYING, FLYING_BACK, BEING_PLAYED;
 	}
 
 	private class DownAnimation extends CardMoveAnimation {
@@ -69,10 +72,11 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		Collections.addAll(faceUpChildren, new Sprite(Images.CARD_BASE), name);
 		faceDownChildren = new ArrayList<>();
 		Collections.addAll(faceDownChildren, new Sprite(Images.CARD_BACK));
-		setOnMouseEntered(eh -> hoverEntered());
-		setOnMouseExited(eh -> hoverExited());
 		state = State.DOWN;
 		hovered = false;
+		setOnMouseEntered(e -> hoverEntered());
+		setOnMouseExited(e -> hoverExited());
+		setOnMousePressed(e -> mousePressed());
 		setFaceUp();
 	}
 	
@@ -82,29 +86,38 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	
 	@Override
 	public void update(long diff) {
-		if(!canAnimate()) {
+		if(!canAnimate())
 			return;
+		if(state == State.FLYING) {
+			Nodes.setLayout(this, Vis.mouseX() - WIDTH * .5, Vis.mouseY() - HEIGHT * .5);
 		}
-		else {
-			if(hovered && state == State.DOWN) {
-				cma = new UpAnimation(FOCUS_DURATION).setStart().setDest(getLayoutX(), FOCUS_Y);
-				state = State.TO_UP;
-				Animation.manager().add(cma);
-			}
-			else if(hovered && state == State.TO_DOWN) {
-				state = State.TO_UP;
-				cma.setRate(cma instanceof UpAnimation ? 1 : -1);
-			}
-			else if(!hovered && state == State.TO_UP) {
-				state = State.TO_DOWN;
-				cma.setRate(cma instanceof UpAnimation ? -1 : 1);
-			}
-			else if(!hovered && state == State.UP) {
-				cma = new DownAnimation(FOCUS_DURATION).setStart().setDest(getLayoutX(), HandLayer.CARD_Y);
-				state = State.TO_DOWN;
-				Animation.manager().add(cma);
-			}
+		if(hovered && state == State.DOWN) {
+			cma = new UpAnimation(FOCUS_DURATION).setStart().setDest(getLayoutX(), FOCUS_Y);
+			state = State.TO_UP;
+			Animation.manager().add(cma);
 		}
+		else if(hovered && state == State.TO_DOWN) {
+			state = State.TO_UP;
+			cma.setRate(cma instanceof UpAnimation ? 1 : -1);
+		}
+		else if(!hovered && state == State.TO_UP) {
+			state = State.TO_DOWN;
+			cma.setRate(cma instanceof UpAnimation ? -1 : 1);
+		}
+		else if(!hovered && state == State.UP) {
+			cma = new DownAnimation(FOCUS_DURATION).setStart().setDest(getLayoutX(), HandLayer.CARD_Y);
+			state = State.TO_DOWN;
+			Animation.manager().add(cma);
+		}
+	}
+
+	private void mousePressed() {
+		if(cma != null)
+			Animation.manager().cancel(cma);
+		cma = null;
+		if(state == State.FLYING_BACK || state == State.BEING_PLAYED)
+			return; //you can't grab the card while it's flying back to your hand or while it's playing.
+		state = State.FLYING;
 	}
 
 	private boolean canAnimate() {
