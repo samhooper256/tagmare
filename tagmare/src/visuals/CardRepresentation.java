@@ -17,7 +17,7 @@ public final class CardRepresentation extends StackPane implements Updatable {
 
 	public static final double WIDTH = 176, HEIGHT = WIDTH * 1.5;
 	
-	private static final Duration FOCUS_DURATION = Duration.millis(400);
+	private static final Duration FOCUS_DURATION = Duration.millis(400), FLY_BACK_DURATION = Duration.millis(500);
 	private static final double FOCUS_Y = GameScene.HEIGHT - HEIGHT - 50;
 	/** If a {@link State#FLYING} card is released above this y (that is, when the mouse's y-coordinate is less than
 	 * this value), the card is played. Otherwise, the card returns to the hand and is not played.*/
@@ -56,6 +56,15 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		
 	}
 	
+	private class FlyBackAnimation extends CardMoveAnimation {
+		
+		public FlyBackAnimation() {
+			super(CardRepresentation.this, FLY_BACK_DURATION);
+			setInterpolator(Interpolator.LINEAR);
+			setFinish(CardRepresentation.this::flyBackFinished);
+		}
+	}
+	
 	private final Card card;
 	private final Text name;
 	private final List<Node> faceUpChildren, faceDownChildren;
@@ -91,6 +100,9 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		if(state == State.FLYING) {
 			Nodes.setLayout(this, Vis.mouseX() - WIDTH * .5, Vis.mouseY() - HEIGHT * .5);
 		}
+		else if(Vis.handLayer().hasFlying()) {
+			return;
+		}
 		if(hovered && state == State.DOWN) {
 			cma = new UpAnimation(FOCUS_DURATION).setStart().setDest(getLayoutX(), FOCUS_Y);
 			state = State.TO_UP;
@@ -112,12 +124,36 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	}
 
 	private void mousePressed() {
+		if(Vis.handLayer().hasFlying() && Vis.handLayer().flying() != this)
+			return;
 		if(cma != null)
 			Animation.manager().cancel(cma);
 		cma = null;
-		if(state == State.FLYING_BACK || state == State.BEING_PLAYED)
+ 		if(state == State.BEING_PLAYED) {
 			return; //you can't grab the card while it's flying back to your hand or while it's playing.
-		state = State.FLYING;
+		}
+		else if(state == State.FLYING) {
+			if(Vis.mouseY() > MAX_RELEASE_Y) {
+				startFlyBack();
+			}
+		}
+		else {
+			Vis.handLayer().setFlying(this);
+			state = State.FLYING;
+		}
+	}
+
+	private void startFlyBack() {
+		if(cma != null)
+			Animation.manager().cancel(cma);
+		Vis.handLayer().setFlying(null);
+		cma = new FlyBackAnimation().setStart().setDest(Vis.handLayer().xCoord(this), HandLayer.CARD_Y);
+		Animation.manager().add(cma);
+		state = State.FLYING_BACK;
+	}
+	
+	private void flyBackFinished() {
+		state = State.DOWN;
 	}
 
 	private boolean canAnimate() {

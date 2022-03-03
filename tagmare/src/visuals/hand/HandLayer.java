@@ -1,7 +1,7 @@
 package visuals.hand;
 
 import base.*;
-import javafx.scene.Node;
+import javafx.scene.*;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import mechanics.cards.*;
@@ -14,12 +14,16 @@ public class HandLayer extends Pane implements Updatable {
 	public static final double CARD_Y = GameScene.HEIGHT - CardRepresentation.HEIGHT;
 	
 	private static final double SPACING = 12;
+	/** Each row is the x-coordinates for a given size. */
 	private static final double[][] X_COORDS = new double[Hand.MAX_SIZE + 1][];
 	private static final Duration
 			CARD_DRAW_DURATION = Duration.seconds(.75),
 			CARD_SHIFT_DURATION = CARD_DRAW_DURATION.multiply(2d / 3);
 	
+	private final Group cardGroup;
+	
 	private boolean addInProgress;
+	private CardRepresentation flying;
 	private Card cardBeingAdded;
 	
 	public HandLayer() {
@@ -30,11 +34,13 @@ public class HandLayer extends Pane implements Updatable {
 				coords[i] = (GameScene.WIDTH * .5 - width * .5) + CardRepresentation.WIDTH * i + SPACING * i;
 			X_COORDS[count] = coords;
 		}
+		cardGroup = new Group();
+		getChildren().add(cardGroup);
 	}
 	
 	@Override
 	public void update(long diff) {
-		for(Node n : getChildren())
+		for(Node n : cardGroup.getChildren())
 			if(n instanceof Updatable)
 				((Updatable) n).update(diff);
 	}
@@ -44,7 +50,7 @@ public class HandLayer extends Pane implements Updatable {
 		cardBeingAdded = card;
 		CardRepresentation cr = CardRepresentation.of(card);
 		cr.setFaceUp();
-		getChildren().add(cr);
+		cardGroup.getChildren().add(cr);
 		int count = cardCountForWidth();
 		double[] coords = X_COORDS[count];
 		Animation.manager().add(new CardMoveAnimation(cr, CARD_DRAW_DURATION).setStart()
@@ -62,11 +68,20 @@ public class HandLayer extends Pane implements Updatable {
 	}
 	
 	private int cardCountForWidth() {
-		return getChildren().size();
+		return cardGroup.getChildren().size();
 	}
 	
 	private CardRepresentation getRepresentation(int index) {
-		return (CardRepresentation) getChildren().get(index);
+		return (CardRepresentation) cardGroup.getChildren().get(index);
+	}
+	
+	public double xCoord(CardRepresentation cr) {
+		int index = cardIndex(cr);
+		return X_COORDS[cardCountForWidth()][index];
+	}
+	
+	public int cardIndex(CardRepresentation cr) {
+		return cardGroup.getChildren().indexOf(cr);
 	}
 	
 	public boolean addInProgress() {
@@ -75,6 +90,20 @@ public class HandLayer extends Pane implements Updatable {
 	
 	public Card cardBeingAdded() {
 		return cardBeingAdded;
+	}
+	
+	public void setFlying(CardRepresentation cr) {
+		if(cr != null && !cardGroup.getChildren().contains(cr))
+			throw new IllegalArgumentException(String.format("Not in the HandLayer: %s", cr));
+		flying = cr;
+	}
+	
+	public boolean hasFlying() {
+		return flying != null;
+	}
+	
+	public CardRepresentation flying() {
+		return flying;
 	}
 	
 }
