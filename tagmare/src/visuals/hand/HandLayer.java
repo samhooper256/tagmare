@@ -43,10 +43,11 @@ public class HandLayer extends Pane implements Updatable {
 		addInProgress = true;
 		cardBeingAdded = card;
 		CardRepresentation cr = CardRepresentation.of(card);
+		cr.setFaceUp();
 		getChildren().add(cr);
 		int count = cardCountForWidth();
 		double[] coords = X_COORDS[count];
-		Animation.manager().add(new CardMoveAnimation(cr, CARD_DRAW_DURATION).setStart(0, 400)
+		Animation.manager().add(new CardMoveAnimation(cr, CARD_DRAW_DURATION).setStart()
 				.setDest(coords[count - 1], CARD_Y).setFinish(this::addFinisher));
 		for(int i = 0; i < count - 1; i++) {
 			Animation.manager().add(new CardMoveAnimation(getRepresentation(i), CARD_SHIFT_DURATION, Interpolator.SQRT)

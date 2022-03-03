@@ -2,9 +2,12 @@ package visuals;
 
 import base.Updatable;
 import javafx.scene.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.transform.Scale;
+import mechanics.Hub;
 import visuals.hand.HandLayer;
+import visuals.piles.PileLayer;
 
 public class GameScene extends Scene implements Updatable {
 	
@@ -19,6 +22,9 @@ public class GameScene extends Scene implements Updatable {
 	private final Pane content;
 	private final Scale scale;
 	private final HandLayer handLayer;
+	private final PileLayer pileLayer;
+	
+	private double mouseX, mouseY;
 	
 	private GameScene() {
 		super(new Pane(), WIDTH, HEIGHT);
@@ -30,7 +36,11 @@ public class GameScene extends Scene implements Updatable {
 		root().getChildren().add(content);
 		
 		handLayer = new HandLayer();
-		content.getChildren().addAll(handLayer);
+		pileLayer = new PileLayer();
+		content.getChildren().addAll(pileLayer, handLayer);
+		pileLayer.draw().setCards(Hub.deck().cards());
+		
+		setOnMouseMoved(this::mouseMoved);
 	}
 	
 	@Override
@@ -38,6 +48,11 @@ public class GameScene extends Scene implements Updatable {
 		for(Node n : content.getChildren())
 			if(n instanceof Updatable)
 				((Updatable) n).update(diff);
+	}
+	
+	private void mouseMoved(MouseEvent me) {
+		mouseX = me.getX();
+		mouseY = me.getY();
 	}
 	
 	private Pane root() {
@@ -50,6 +65,18 @@ public class GameScene extends Scene implements Updatable {
 	
 	public HandLayer handLayer() {
 		return handLayer;
+	}
+	
+	public PileLayer pileLayer() {
+		return pileLayer;
+	}
+	
+	public double mouseX() {
+		return mouseX;
+	}
+	
+	public double mouseY() {
+		return mouseY;
 	}
 	
 }

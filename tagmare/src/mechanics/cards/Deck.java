@@ -17,16 +17,16 @@ public class Deck implements Iterable<Card> {
 //		CardTag.PROCRASTINATE,
 		CardTag.PROCRASTINATE,
 		CardTag.DO_HOMEWORK,
-		CardTag.DO_HOMEWORK,
+		CardTag.DO_HOMEWORK
 //		CardTag.DO_HOMEWORK,
 //		CardTag.QUIZLET,
 //		CardTag.QUIZLET,
 //		CardTag.QUIZLET,
-		CardTag.RAGE,
-		CardTag.RAGE,
-		CardTag.RAGE,
-		CardTag.DO_HOMEWORK,
-		CardTag.GRIND
+//		CardTag.RAGE,
+//		CardTag.RAGE,
+//		CardTag.RAGE,
+//		CardTag.DO_HOMEWORK,
+//		CardTag.GRIND
 	);
 	
 	public static Deck createStartingDeck() {

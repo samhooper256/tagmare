@@ -8,6 +8,7 @@ public class PileLayer extends Pane {
 	
 	public PileLayer() {
 		this.draw = new DrawPileLayer();
+		getChildren().add(draw);
 	}
 	
 	public DrawPileLayer draw() {
