@@ -1,17 +1,16 @@
 package visuals;
 
-import java.util.WeakHashMap;
+import java.util.*;
 
 import base.Updatable;
-import base.temp.Backgrounds;
+import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import mechanics.Hub;
 import mechanics.cards.Card;
 import visuals.animations.*;
-import visuals.fxutils.Nodes;
+import visuals.fxutils.*;
 import visuals.hand.*;
 
 public final class CardRepresentation extends StackPane implements Updatable {
@@ -56,21 +55,25 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	
 	private final Card card;
 	private final Text name;
+	private final List<Node> faceUpChildren, faceDownChildren;
 	
 	private State state;
-	private boolean hovered;
+	private boolean hovered, faceUp;
 	private Animation cma;
 	
 	private CardRepresentation(Card card) {
 		this.card = card;
 		name = new Text(card.tag().displayName());
 		Nodes.setPrefAndMaxSize(this, WIDTH, HEIGHT);
-		setBackground(Backgrounds.of(Color.BISQUE));
-		getChildren().addAll(name);
+		faceUpChildren = new ArrayList<>();
+		Collections.addAll(faceUpChildren, new Sprite(Images.CARD_BASE), name);
+		faceDownChildren = new ArrayList<>();
+		Collections.addAll(faceDownChildren, new Sprite(Images.CARD_BACK));
 		setOnMouseEntered(eh -> hoverEntered());
 		setOnMouseExited(eh -> hoverExited());
 		state = State.DOWN;
 		hovered = false;
+		setFaceUp();
 	}
 	
 	public Card card() {
@@ -130,6 +133,33 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	
 	private void hoverExited() {
 		hovered = false;
+	}
+
+	public boolean isFaceUp() {
+		return faceUp;
+	}
+	
+	public boolean isFaceDown() {
+		return !faceUp;
+	}
+	
+	public void setFaceUp() {
+		if(!getChildren().isEmpty() && isFaceUp())
+			return;
+		faceUp = true;
+		setChildren(faceUpChildren);
+	}
+	
+	public void setFaceDown() {
+		if(!getChildren().isEmpty() && isFaceDown())
+			return;
+		faceUp = false;
+		setChildren(faceDownChildren);
+	}
+	
+	private void setChildren(List<Node> children) {
+		getChildren().clear();
+		getChildren().addAll(children);
 	}
 	
 }
