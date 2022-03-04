@@ -21,6 +21,18 @@ public final class VisualManagerImpl implements VisualManager {
 			Card card = a.getCard();
 			if(card != null)
 				Vis.handLayer().startAddCardToRightAnimation(card);
+			else
+				Hub.combat().resume();
+		}
+		else if(action instanceof EOTDiscard) {
+			Hub.combat().pause();
+			action.execute();
+			Card card = ((EOTDiscard) action).card();
+			CardRepresentation.of(card).startFlyToDiscard();
+		}
+		else if(action instanceof RefillDrawPile) {
+			action.execute();
+			Vis.pileLayer().draw().setCards(Hub.drawPile().trueOrder()); //TODO some kind of animation for this?
 		}
 		else {
 			waitingOnAnimation = false;

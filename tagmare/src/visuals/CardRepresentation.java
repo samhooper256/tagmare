@@ -2,7 +2,7 @@ package visuals;
 
 import java.util.*;
 
-import base.Updatable;
+import base.*;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -12,12 +12,16 @@ import mechanics.cards.Card;
 import visuals.animations.*;
 import visuals.fxutils.*;
 import visuals.hand.*;
+import visuals.piles.DiscardPileLayer;
 
 public final class CardRepresentation extends StackPane implements Updatable {
 
 	public static final double WIDTH = 176, HEIGHT = WIDTH * 1.5;
 	
-	private static final Duration FOCUS_DURATION = Duration.millis(400), FLY_BACK_DURATION = Duration.millis(500);
+	private static final Duration
+		FOCUS_DURATION = Duration.millis(400),
+		FLY_BACK_DURATION = Duration.millis(500),
+		FLY_TO_DISCARD_DURATION = Duration.millis(500);
 	private static final double FOCUS_Y = GameScene.HEIGHT - HEIGHT - 50;
 	/** If a {@link State#FLYING} card is released above this y (that is, when the mouse's y-coordinate is less than
 	 * this value), the card is played. Otherwise, the card returns to the hand and is not played.*/
@@ -31,7 +35,7 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	}
 	
 	enum State {
-		DOWN, TO_UP, UP, TO_DOWN, FLYING, FLYING_BACK, BEING_PLAYED;
+		DOWN, TO_UP, UP, TO_DOWN, FLYING, FLYING_BACK, BEING_PLAYED, FLYING_TO_DISCARD;
 	}
 
 	private class DownAnimation extends CardMoveAnimation {
@@ -63,6 +67,17 @@ public final class CardRepresentation extends StackPane implements Updatable {
 			setInterpolator(Interpolator.LINEAR);
 			setFinish(CardRepresentation.this::flyBackFinished);
 		}
+	}
+	
+	private class FlyToDiscardAnimation extends CardMoveAnimation {
+		
+		public FlyToDiscardAnimation() {
+			super(CardRepresentation.this, FLY_TO_DISCARD_DURATION);
+			setInterpolator(Interpolator.LINEAR);
+			setDest(DiscardPileLayer.CARD_X, DiscardPileLayer.CARD_Y);
+			setFinish(CardRepresentation.this::flyToDiscardFinished);
+		}
+		
 	}
 	
 	private final Card card;
@@ -129,7 +144,7 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		if(cma != null)
 			Animation.manager().cancel(cma);
 		cma = null;
- 		if(state == State.BEING_PLAYED) {
+ 		if(state == State.BEING_PLAYED || state == State.FLYING_TO_DISCARD || state == State.FLYING_BACK) {
 			return; //you can't grab the card while it's flying back to your hand or while it's playing.
 		}
 		else if(state == State.FLYING) {
@@ -155,7 +170,21 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	private void flyBackFinished() {
 		state = State.DOWN;
 	}
-
+	
+	public void startFlyToDiscard() {
+		if(cma != null)
+			Animation.manager().cancel(cma);
+		cma = new FlyToDiscardAnimation().setStart();
+		Animation.manager().add(cma);
+		state = State.FLYING_TO_DISCARD;
+	}
+	
+	private void flyToDiscardFinished() {
+		Vis.pileLayer().discard().addToTop(this);
+		state = State.DOWN;
+		Vis.manager().checkedResumeFromAnimation();
+	}
+	
 	private boolean canAnimate() {
 		return Hub.stack().isEmpty();
 	}

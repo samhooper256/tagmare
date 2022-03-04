@@ -1,10 +1,10 @@
 package visuals.info;
 
-import base.VisualManager;
+import base.*;
 import javafx.scene.control.Button;
 import mechanics.Hub;
 
-public class EndTurnButton extends Button {
+public class EndTurnButton extends Button implements Updatable {
 
 	public EndTurnButton() {
 		super("End Turn");
@@ -12,15 +12,17 @@ public class EndTurnButton extends Button {
 	}
 	
 	private void mouseClicked() {
-		System.out.printf("mouseclicked%n");
-		if(canBePressed()) {
-			System.out.printf("\tthrough%n");
+		if(canBePressed())
 			Hub.combat().endPlayerTurn();
-		}
 	}
-	
+
 	private boolean canBePressed() {
 		return Hub.combat().canEndTurnExplicity() && !VisualManager.get().waitingOnAnimation();
+	}
+
+	@Override
+	public void update(long diff) {
+		setDisable(!canBePressed());
 	}
 	
 }
