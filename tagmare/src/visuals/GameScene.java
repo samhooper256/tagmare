@@ -6,12 +6,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.transform.Scale;
 import mechanics.Hub;
+import visuals.debug.DebugLayer;
 import visuals.hand.HandLayer;
+import visuals.info.InfoLayer;
 import visuals.piles.PileLayer;
 
 public class GameScene extends Scene implements Updatable {
 	
-	public static final double WIDTH = 1920, HEIGHT = 1080;
+	public static final double WIDTH = 1920, HEIGHT = 1080, CENTER_X = WIDTH * .5, CENTER_Y = HEIGHT * .5;
 	
 	private static final GameScene INSTANCE = new GameScene();
 	
@@ -21,8 +23,10 @@ public class GameScene extends Scene implements Updatable {
 	
 	private final Pane content;
 	private final Scale scale;
+	private final InfoLayer infoLayer;
 	private final HandLayer handLayer;
 	private final PileLayer pileLayer;
+	private final DebugLayer debugLayer;
 	
 	private double mouseX, mouseY;
 	
@@ -35,9 +39,11 @@ public class GameScene extends Scene implements Updatable {
 		content.getTransforms().add(scale);
 		root().getChildren().add(content);
 		
+		infoLayer = new InfoLayer();
 		handLayer = new HandLayer();
 		pileLayer = new PileLayer();
-		content.getChildren().addAll(pileLayer, handLayer);
+		debugLayer = new DebugLayer();
+		content.getChildren().addAll(infoLayer, pileLayer, handLayer, debugLayer);
 		pileLayer.draw().setCards(Hub.deck().cards());
 		
 		setOnMouseMoved(this::mouseMoved);
@@ -69,6 +75,10 @@ public class GameScene extends Scene implements Updatable {
 	
 	public PileLayer pileLayer() {
 		return pileLayer;
+	}
+	
+	public DebugLayer debugLayer() {
+		return debugLayer;
 	}
 	
 	public double mouseX() {

@@ -26,15 +26,19 @@ public interface VisualManager extends Updatable {
 	 * Returns {@code false} iff the card could not be played. */
 	boolean requestPlayCardFromHand(Card card, Enemy target);
 	
-	default void checkedResume() {
-		if(Hub.combat().running())
-			throw new IllegalStateException("Cannot resume; Combat is running");
-		Hub.combat().resume();
-	}
-	
 	@Override
 	default void update(long diff) {
 		Animation.manager().update(diff);
+	}
+	
+	/** Optional operation. */
+	default void checkedResumeFromAnimation() {
+		throw new UnsupportedOperationException("checkedResumeFromAnimation");
+	}
+	
+	/** Optional operation. */
+	default boolean waitingOnAnimation() {
+		throw new UnsupportedOperationException("waitingOnAnimation");
 	}
 	
 }

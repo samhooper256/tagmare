@@ -4,8 +4,8 @@ import java.util.List;
 
 import javafx.scene.layout.Pane;
 import mechanics.cards.Card;
-import utils.Nodes;
 import visuals.CardRepresentation;
+import visuals.fxutils.Nodes;
 
 public class DrawPileLayer extends Pane {
 

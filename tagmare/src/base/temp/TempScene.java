@@ -3,7 +3,7 @@ package base.temp;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import mechanics.enemies.Enemy;
-import utils.Nodes;
+import visuals.fxutils.Nodes;
 
 public class TempScene extends Scene {
 

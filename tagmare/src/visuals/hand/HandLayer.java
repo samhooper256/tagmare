@@ -20,13 +20,7 @@ public class HandLayer extends Pane implements Updatable {
 			CARD_DRAW_DURATION = Duration.seconds(.75),
 			CARD_SHIFT_DURATION = CARD_DRAW_DURATION.multiply(2d / 3);
 	
-	private final Group cardGroup;
-	
-	private boolean addInProgress;
-	private CardRepresentation flying;
-	private Card cardBeingAdded;
-	
-	public HandLayer() {
+	static {
 		for(int count = 0; count <= Hand.MAX_SIZE; count++) {
 			double[] coords = new double[count];
 			double width = count * CardRepresentation.WIDTH + SPACING * (count - 1);
@@ -34,6 +28,15 @@ public class HandLayer extends Pane implements Updatable {
 				coords[i] = (GameScene.WIDTH * .5 - width * .5) + CardRepresentation.WIDTH * i + SPACING * i;
 			X_COORDS[count] = coords;
 		}
+	}
+	private final Group cardGroup;
+	
+	private boolean addInProgress;
+	private CardRepresentation flying;
+	private Card cardBeingAdded;
+	
+	public HandLayer() {
+		setPickOnBounds(false);
 		cardGroup = new Group();
 		getChildren().add(cardGroup);
 	}
@@ -62,7 +65,7 @@ public class HandLayer extends Pane implements Updatable {
 	}
 	
 	private void addFinisher() {
-		VisualManager.get().checkedResume();
+		VisualManager.get().checkedResumeFromAnimation();
 		addInProgress = false;
 		cardBeingAdded = null;
 	}

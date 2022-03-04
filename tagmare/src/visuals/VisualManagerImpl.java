@@ -8,8 +8,12 @@ import mechanics.enemies.Enemy;
 
 public final class VisualManagerImpl implements VisualManager {
 
+	private boolean waitingOnAnimation;
+	
 	@Override
 	public void executeAction(final Action action) {
+		waitingOnAnimation = true;
+		Vis.debugLayer().stackDisplay().update();
 		if(action instanceof SimpleDrawRequest) {
 			Hub.combat().pause();
 			action.execute();
@@ -19,6 +23,7 @@ public final class VisualManagerImpl implements VisualManager {
 				Vis.handLayer().startAddCardToRightAnimation(card);
 		}
 		else {
+			waitingOnAnimation = false;
 			action.execute();
 		}
 	}
@@ -33,6 +38,19 @@ public final class VisualManagerImpl implements VisualManager {
 	public void update(long diff) {
 		GameScene.get().update(diff);
 		VisualManager.super.update(diff);
+	}
+	
+	@Override
+	public void checkedResumeFromAnimation() {
+		if(Hub.combat().running())
+			throw new IllegalStateException("Cannot resume; Combat is running");
+		waitingOnAnimation = false;
+		Hub.combat().resume();
+	}
+	
+	@Override
+	public boolean waitingOnAnimation() {
+		return waitingOnAnimation;
 	}
 
 }

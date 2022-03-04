@@ -1,5 +1,6 @@
 package visuals;
 
+import visuals.debug.DebugLayer;
 import visuals.hand.HandLayer;
 import visuals.piles.PileLayer;
 
@@ -19,6 +20,10 @@ public final class Vis {
 	
 	public static PileLayer pileLayer() {
 		return gameScene().pileLayer();
+	}
+	
+	public static DebugLayer debugLayer() {
+		return gameScene().debugLayer();
 	}
 	
 	public static double mouseX() {

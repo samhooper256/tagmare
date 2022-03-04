@@ -9,7 +9,7 @@ import javafx.scene.text.Text;
 import mechanics.Health;
 import mechanics.cards.Card;
 import mechanics.enemies.Enemy;
-import utils.Nodes;
+import visuals.fxutils.Nodes;
 
 public class EnemyRep extends StackPane {
 

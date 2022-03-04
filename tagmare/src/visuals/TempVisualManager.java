@@ -46,4 +46,9 @@ public final class TempVisualManager implements VisualManager {
 		return false;
 	}
 	
+	@Override
+	public void checkedResumeFromAnimation() {
+		throw new UnsupportedOperationException("checkedResumeFromAnimation");
+	}
+	
 }
