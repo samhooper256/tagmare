@@ -26,6 +26,9 @@ public interface VisualManager extends Updatable {
 	 * Returns {@code false} iff the card could not be played. */
 	boolean requestPlayCardFromHand(Card card, Enemy target);
 	
+	/** @throws IllegalArgumentException if can't be played. */
+	void playCardFromHand(Card card, Enemy target);
+	
 	@Override
 	default void update(long diff) {
 		Animation.manager().update(diff);

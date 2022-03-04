@@ -28,7 +28,7 @@ public final class VisualManagerImpl implements VisualManager {
 			Hub.combat().pause();
 			action.execute();
 			Card card = ((EOTDiscard) action).card();
-			CardRepresentation.of(card).startFlyToDiscard();
+			CardRepresentation.of(card).startEOTToDiscard();
 		}
 		else if(action instanceof SetEnergy || action instanceof SpendEnergy) {
 			Hub.combat().pause();
@@ -47,8 +47,15 @@ public final class VisualManagerImpl implements VisualManager {
 
 	@Override
 	public boolean requestPlayCardFromHand(Card card, Enemy target) {
-		// TODO Auto-generated method stub
-		return false;
+		return false; //TODO
+	}
+	
+	@Override
+	public void playCardFromHand(Card card, Enemy target) {
+		if(Hub.combat().running() || !card.isLegal(target))
+			throw new IllegalArgumentException("Can't play");
+		Hub.combat().stackPlayCardFromHand(card, target);
+		Hub.combat().resume();
 	}
 	
 	@Override

@@ -21,7 +21,7 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	private static final Duration
 		FOCUS_DURATION = Duration.millis(400),
 		FLY_BACK_DURATION = Duration.millis(500),
-		FLY_TO_DISCARD_DURATION = Duration.millis(500);
+		FLY_TO_DISCARD_DURATION = Duration.millis(400);
 	private static final double FOCUS_Y = GameScene.HEIGHT - HEIGHT - 50;
 	/** If a {@link State#FLYING} card is released above this y (that is, when the mouse's y-coordinate is less than
 	 * this value), the card is played. Otherwise, the card returns to the hand and is not played.*/
@@ -69,13 +69,13 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		}
 	}
 	
-	private class FlyToDiscardAnimation extends CardMoveAnimation {
+	private class EOTDiscardAnimation extends CardMoveAnimation {
 		
-		public FlyToDiscardAnimation() {
+		public EOTDiscardAnimation() {
 			super(CardRepresentation.this, FLY_TO_DISCARD_DURATION);
 			setInterpolator(Interpolator.LINEAR);
 			setDest(DiscardPileLayer.CARD_X, DiscardPileLayer.CARD_Y);
-			setFinish(CardRepresentation.this::flyToDiscardFinished);
+			setFinish(CardRepresentation.this::eotDiscardFinished);
 		}
 		
 	}
@@ -151,6 +151,9 @@ public final class CardRepresentation extends StackPane implements Updatable {
 			if(Vis.mouseY() > MAX_RELEASE_Y) {
 				startFlyBack();
 			}
+			else {
+				startBeingPlayed();
+			}
 		}
 		else {
 			Vis.handLayer().setFlying(this);
@@ -171,15 +174,28 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		state = State.DOWN;
 	}
 	
-	public void startFlyToDiscard() {
+	private void startBeingPlayed() {
 		if(cma != null)
 			Animation.manager().cancel(cma);
-		cma = new FlyToDiscardAnimation().setStart();
+		cma = new ScaleAnimation(Duration.millis(500), this, .8);
+		cma.setFinish(this::beingPlayedFinished);
+		Animation.manager().add(cma);
+		state = State.BEING_PLAYED;
+	}
+	
+	private void beingPlayedFinished() {
+		Vis.manager().playCardFromHand(card, null);
+	}
+	
+	public void startEOTToDiscard() {
+		if(cma != null)
+			Animation.manager().cancel(cma);
+		cma = new EOTDiscardAnimation().setStart();
 		Animation.manager().add(cma);
 		state = State.FLYING_TO_DISCARD;
 	}
 	
-	private void flyToDiscardFinished() {
+	private void eotDiscardFinished() {
 		Vis.pileLayer().discard().addToTop(this);
 		state = State.DOWN;
 		Vis.manager().checkedResumeFromAnimation();

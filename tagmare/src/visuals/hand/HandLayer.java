@@ -17,7 +17,7 @@ public class HandLayer extends Pane implements Updatable {
 	/** Each row is the x-coordinates for a given size. */
 	private static final double[][] X_COORDS = new double[Hand.MAX_SIZE + 1][];
 	private static final Duration
-			CARD_DRAW_DURATION = Duration.seconds(.75),
+			CARD_DRAW_DURATION = Duration.millis(600),
 			CARD_SHIFT_DURATION = CARD_DRAW_DURATION.multiply(2d / 3);
 	
 	static {

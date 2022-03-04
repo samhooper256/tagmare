@@ -47,6 +47,12 @@ public final class TempVisualManager implements VisualManager {
 	}
 	
 	@Override
+	public void playCardFromHand(Card card, Enemy target) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
 	public void checkedResumeFromAnimation() {
 		throw new UnsupportedOperationException("checkedResumeFromAnimation");
 	}

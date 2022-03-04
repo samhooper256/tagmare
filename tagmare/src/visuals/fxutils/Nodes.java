@@ -29,4 +29,13 @@ public final class Nodes {
 		node.setLayoutY(y);
 	}
 	
+	public static void setScale(Region r, double factor) {
+		setScale(r, factor, factor);
+	}
+
+	public static void setScale(Region r, double x, double y) {
+		r.setScaleX(x);
+		r.setScaleY(y);
+	}
+	
 }
