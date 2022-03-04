@@ -81,6 +81,10 @@ public class GameScene extends Scene implements Updatable {
 		return debugLayer;
 	}
 	
+	public InfoLayer infoLayer() {
+		return infoLayer;
+	}
+	
 	public double mouseX() {
 		return mouseX;
 	}

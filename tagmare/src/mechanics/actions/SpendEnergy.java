@@ -13,10 +13,10 @@ public class SpendEnergy extends AbstractAction {
 	
 	@Override
 	public void execute() {
-		Hub.energy().decrease(amount());
+		Hub.energy().decrease(spentEnergy());
 	}
 
-	public int amount() {
+	public int spentEnergy() {
 		return amount;
 	}
 	

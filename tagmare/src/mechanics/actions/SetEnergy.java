@@ -4,20 +4,20 @@ import mechanics.Hub;
 
 public class SetEnergy extends AbstractAction {
 
-	private final int amount;
+	private final int destEnergy;
 	
-	public SetEnergy(int amount) {
+	public SetEnergy(int destEnergy) {
 		super(null);
-		this.amount = amount;
+		this.destEnergy = destEnergy;
 	}
 	
 	@Override
 	public void execute() {
-		Hub.energy().set(amount);
+		Hub.energy().set(destEnergy);
 	}
 
-	public int amount() {
-		return amount;
+	public int destEnergy() {
+		return destEnergy;
 	}
 	
 }

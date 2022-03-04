@@ -30,6 +30,11 @@ public final class VisualManagerImpl implements VisualManager {
 			Card card = ((EOTDiscard) action).card();
 			CardRepresentation.of(card).startFlyToDiscard();
 		}
+		else if(action instanceof SetEnergy || action instanceof SpendEnergy) {
+			Hub.combat().pause();
+			action.execute();
+			Vis.infoLayer().energyMeter().startEnergyChangeAnimation(Hub.energy().amount());
+		}
 		else if(action instanceof RefillDrawPile) {
 			action.execute();
 			Vis.pileLayer().draw().setCards(Hub.drawPile().trueOrder()); //TODO some kind of animation for this?

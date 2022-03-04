@@ -25,6 +25,7 @@ public class Energy {
 		this.amount = amount;
 	}
 	
+	/** @throws IllegalArgumentException if would go negative. */
 	public void decrease(int amount) {
 		set(this.amount - amount);
 	}

@@ -3,6 +3,7 @@ package visuals;
 import base.VisualManager;
 import visuals.debug.DebugLayer;
 import visuals.hand.HandLayer;
+import visuals.info.InfoLayer;
 import visuals.piles.PileLayer;
 
 public final class Vis {
@@ -29,6 +30,10 @@ public final class Vis {
 	
 	public static DebugLayer debugLayer() {
 		return gameScene().debugLayer();
+	}
+	
+	public static InfoLayer infoLayer() {
+		return gameScene().infoLayer();
 	}
 	
 	public static double mouseX() {

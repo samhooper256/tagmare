@@ -7,11 +7,14 @@ import visuals.fxutils.Nodes;
 public class InfoLayer extends Pane implements Updatable {
 
 	private final EndTurnButton endTurnButton;
+	private final EnergyMeter energyMeter;
 	
 	public InfoLayer() {
 		endTurnButton = new EndTurnButton();
-		Nodes.setLayout(endTurnButton, 100, 800);
-		getChildren().add(endTurnButton);
+		Nodes.setLayout(endTurnButton, 1600, 800);
+		energyMeter = new EnergyMeter();
+		Nodes.setLayout(energyMeter, 100, 800);
+		getChildren().addAll(endTurnButton, energyMeter);
 	}
 	
 	@Override
@@ -21,6 +24,10 @@ public class InfoLayer extends Pane implements Updatable {
 	
 	public EndTurnButton endTurnButton() {
 		return endTurnButton;
+	}
+	
+	public EnergyMeter energyMeter() {
+		return energyMeter;
 	}
 	
 }

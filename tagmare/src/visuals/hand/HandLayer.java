@@ -65,9 +65,9 @@ public class HandLayer extends Pane implements Updatable {
 	}
 	
 	private void addFinisher() {
-		VisualManager.get().checkedResumeFromAnimation();
 		addInProgress = false;
 		cardBeingAdded = null;
+		VisualManager.get().checkedResumeFromAnimation();
 	}
 	
 	private int cardCountForWidth() {
