@@ -12,7 +12,7 @@ public class DrawPileLayer extends Pane {
 	public static final double CARD_X = 100, CARD_Y = 100;
 	
 	public DrawPileLayer() {
-		
+		setMouseTransparent(true);
 	}
 	
 	public void setCards(List<Card> cardsBottomToTop) {

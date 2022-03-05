@@ -10,6 +10,7 @@ import visuals.fxutils.Nodes;
 public class EnemyLayer extends Pane {
 
 	public EnemyLayer() {
+		setPickOnBounds(false);
 		setupEnemies(Hub.combat().enemies());
 	}
 	

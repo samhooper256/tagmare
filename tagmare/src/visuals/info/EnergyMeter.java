@@ -43,6 +43,7 @@ public class EnergyMeter extends StackPane {
 
 	public EnergyMeter() {
 		setBackground(Backgrounds.of(Color.LIME));
+		setMouseTransparent(true);
 		Nodes.setPrefAndMaxSize(this, WIDTH, HEIGHT);
 		topText = new Text("E");
 		bottomText = new Text();

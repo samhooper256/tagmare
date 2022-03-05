@@ -15,9 +15,18 @@ public final class Nodes {
 		r.setMaxHeight(height);
 	}
 	
+	public static void setMinSize(Region r, double width, double height) {
+		r.setMinWidth(width);
+		r.setMinHeight(height);
+	}
+	
 	public static void setPrefSize(Region r, double width, double height) {
 		r.setPrefWidth(width);
 		r.setPrefHeight(height);
+	}
+	
+	public static void setPrefSize(Region r, double size) {
+		setPrefSize(r, size, size);
 	}
 	
 	public static void setPrefAndMaxSize(Region r, double width, double height) {

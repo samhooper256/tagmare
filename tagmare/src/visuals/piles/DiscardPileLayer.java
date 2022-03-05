@@ -9,7 +9,7 @@ public class DiscardPileLayer extends Pane {
 	public static final double CARD_X = GameScene.WIDTH - 100 - CardRepresentation.WIDTH, CARD_Y = 100;
 	
 	public DiscardPileLayer() {
-		
+		setMouseTransparent(true);
 	}
 	
 	public void addToTop(CardRepresentation cr) {

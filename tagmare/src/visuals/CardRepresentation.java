@@ -36,7 +36,7 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		return MAP.get(card);
 	}
 	
-	enum State {
+	public enum State {
 		DOWN, TO_UP, UP, TO_DOWN, TO_POISED, FLYING, FLYING_BACK, BEING_PLAYED, FLYING_TO_DISCARD;
 	}
 
@@ -181,12 +181,14 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		if(cma != null)
 			Animation.manager().cancel(cma);
 		Vis.handLayer().setSelected(null);
+		setMouseTransparent(true);
 		cma = new FlyBackAnimation().setStart().setDest(Vis.handLayer().xCoord(this), HandLayer.CARD_Y);
 		Animation.manager().add(cma);
 		state = State.FLYING_BACK;
 	}
 	
 	private void flyBackFinished() {
+		setMouseTransparent(false);
 		state = State.DOWN;
 	}
 	
@@ -240,10 +242,23 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		if(cma != null)
 			Animation.manager().cancel(cma);
 		cma = new ToPoisedAnimation().setStart().setDest(getLayoutX(), POISED_Y);
+		state = State.TO_POISED;
+		Vis.handLayer().setSelected(this);
 		Animation.manager().add(cma);
 		Vis.handLayer().arrow().displayFor(this);
 	}
 	
+	public void cancelPoise() {
+		if(state != State.TO_POISED)
+			return;
+		if(cma != null)
+			Animation.manager().cancel(cma);
+		Vis.handLayer().arrow().unbindAndHide();
+		Vis.handLayer().setSelected(null);
+		state = State.TO_DOWN;
+		cma = new DownAnimation(FOCUS_DURATION).setStart().setDest(getLayoutX(), HandLayer.CARD_Y);
+		Animation.manager().add(cma);
+	}
 	private boolean canAnimate() {
 		return Hub.stack().isEmpty();
 	}
@@ -297,6 +312,10 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	private void setChildren(List<Node> children) {
 		getChildren().clear();
 		getChildren().addAll(children);
+	}
+	
+	public State state() {
+		return state;
 	}
 	
 }

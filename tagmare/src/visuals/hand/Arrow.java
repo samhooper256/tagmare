@@ -15,6 +15,8 @@ public class Arrow extends Group implements Updatable {
 	public Arrow() {
 		line = new Line(200, 800, 800, 200);
 		setVisible(false);
+		setPickOnBounds(false);
+		setMouseTransparent(true);
 		cardRepresentation = null;
 		getChildren().add(line);
 	}

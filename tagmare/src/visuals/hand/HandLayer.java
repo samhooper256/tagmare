@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import mechanics.cards.*;
 import visuals.*;
+import visuals.CardRepresentation.State;
 import visuals.animations.*;
 import visuals.piles.DiscardPileLayer;
 
@@ -102,6 +103,14 @@ public class HandLayer extends Pane implements Updatable {
 			Animation.manager().add(new CardMoveAnimation(cr, CARD_SHIFT_DURATION,
 					Interpolator.SQRT).setStart().setDest(coords[ci], CARD_Y));
 			ci++;
+		}
+	}
+	
+	public void notifyClickedInDeadSpace() {
+		if(hasSelected()) {
+			if(selected().state() == State.TO_POISED) {
+				selected().cancelPoise(); //sets selected to null
+			}
 		}
 	}
 	
