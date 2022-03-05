@@ -24,7 +24,7 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		FOCUS_DURATION = Duration.millis(400),
 		FLY_BACK_DURATION = Duration.millis(500),
 		FLY_TO_DISCARD_DURATION = Duration.millis(400);
-	private static final double FOCUS_Y = GameScene.HEIGHT - HEIGHT - 50;
+	private static final double FOCUS_Y = GameScene.HEIGHT - HEIGHT - 50, POISED_Y = FOCUS_Y - 50;
 	/** If a {@link State#FLYING} card is released above this y (that is, when the mouse's y-coordinate is less than
 	 * this value), the card is played. Otherwise, the card returns to the hand and is not played.*/
 	private static final double MAX_RELEASE_Y = FOCUS_Y;
@@ -37,7 +37,7 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	}
 	
 	enum State {
-		DOWN, TO_UP, UP, TO_DOWN, FLYING, FLYING_BACK, BEING_PLAYED, FLYING_TO_DISCARD;
+		DOWN, TO_UP, UP, TO_DOWN, TO_POISED, FLYING, FLYING_BACK, BEING_PLAYED, FLYING_TO_DISCARD;
 	}
 
 	private class DownAnimation extends CardMoveAnimation {
@@ -54,10 +54,17 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	private class UpAnimation extends CardMoveAnimation {
 
 		public UpAnimation(Duration duration) {
-			super(CardRepresentation.this, duration);
-			setInterpolator(Interpolator.bow(1));
+			super(CardRepresentation.this, duration, Interpolator.bow(1));
 			setFinish(CardRepresentation.this::upFinished);
 			setReverseFinish(CardRepresentation.this::upReverseFinished);
+		}
+		
+	}
+	
+	private class ToPoisedAnimation extends CardMoveAnimation {
+		
+		public ToPoisedAnimation() {
+			super(CardRepresentation.this, FOCUS_DURATION, Interpolator.bow(1));
 		}
 		
 	}
@@ -117,7 +124,10 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		if(state == State.FLYING) {
 			Nodes.setLayout(this, Vis.mouseX() - WIDTH * .5, Vis.mouseY() - HEIGHT * .5);
 		}
-		else if(Vis.handLayer().hasFlying()) {
+		else if(state == State.TO_POISED) {
+			return;
+		}
+		else if(Vis.handLayer().hasSelected()) {
 			return;
 		}
 		if(hovered && state == State.DOWN) {
@@ -141,12 +151,13 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	}
 
 	private void mousePressed() {
-		if(Vis.handLayer().hasFlying() && Vis.handLayer().flying() != this)
+		if(Vis.handLayer().hasSelected() && Vis.handLayer().selected() != this)
 			return;
 		if(cma != null)
 			Animation.manager().cancel(cma);
 		cma = null;
- 		if(state == State.BEING_PLAYED || state == State.FLYING_TO_DISCARD || state == State.FLYING_BACK) {
+ 		if(state == State.BEING_PLAYED || state == State.FLYING_TO_DISCARD ||
+ 				state == State.FLYING_BACK || state == State.TO_POISED) {
 			return; //you can't grab the card while it's flying back to your hand or while it's playing.
 		}
 		else if(state == State.FLYING) {
@@ -158,15 +169,18 @@ public final class CardRepresentation extends StackPane implements Updatable {
 			}
 		}
 		else {
-			Vis.handLayer().setFlying(this);
-			state = State.FLYING;
+			Vis.handLayer().setSelected(this);
+			if(card.isTargetted())
+				startToPoised();
+			else
+				state = State.FLYING; //movement is handled in update(long).
 		}
 	}
 
 	private void startFlyBack() {
 		if(cma != null)
 			Animation.manager().cancel(cma);
-		Vis.handLayer().setFlying(null);
+		Vis.handLayer().setSelected(null);
 		cma = new FlyBackAnimation().setStart().setDest(Vis.handLayer().xCoord(this), HandLayer.CARD_Y);
 		Animation.manager().add(cma);
 		state = State.FLYING_BACK;
@@ -220,6 +234,13 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	
 	private void expandBackToNormalFinished() {
 		state = State.DOWN;
+	}
+	
+	private void startToPoised() {
+		if(cma != null)
+			Animation.manager().cancel(cma);
+		cma = new ToPoisedAnimation().setStart().setDest(getLayoutX(), POISED_Y);
+		Animation.manager().add(cma);
 	}
 	
 	private boolean canAnimate() {

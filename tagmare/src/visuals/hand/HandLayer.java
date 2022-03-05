@@ -36,7 +36,7 @@ public class HandLayer extends Pane implements Updatable {
 	private final Arrow arrow;
 	
 	private boolean addInProgress;
-	private CardRepresentation flying;
+	private CardRepresentation selected;
 	private Card cardBeingAdded;
 	
 	public HandLayer() {
@@ -77,7 +77,7 @@ public class HandLayer extends Pane implements Updatable {
 	}
 	
 	public void startNaturalDiscard() {
-		CardRepresentation flying = Objects.requireNonNull(flying());
+		CardRepresentation flying = Objects.requireNonNull(selected());
 		Animation.manager().add(new CardMoveAnimation(flying, CardRepresentation.SCALE_DURATION).setStart()
 				.setDest(DiscardPileLayer.CARD_X, DiscardPileLayer.CARD_Y).setFinish(this::naturalDiscardFinisher));
 		startReorganize();
@@ -85,8 +85,8 @@ public class HandLayer extends Pane implements Updatable {
 	}
 	
 	private void naturalDiscardFinisher() {
-		Vis.pileLayer().discard().addToTop(flying);
-		flying = null;
+		Vis.pileLayer().discard().addToTop(selected);
+		selected = null;
 		VisualManager.get().checkedResumeFromAnimation();
 	}
 	
@@ -97,7 +97,7 @@ public class HandLayer extends Pane implements Updatable {
 		int ci = 0;
 		for(int i = 0; i < count; i++) {
 			CardRepresentation cr = getRepresentation(i);
-			if(cr == flying)
+			if(cr == selected)
 				continue;
 			Animation.manager().add(new CardMoveAnimation(cr, CARD_SHIFT_DURATION,
 					Interpolator.SQRT).setStart().setDest(coords[ci], CARD_Y));
@@ -130,18 +130,18 @@ public class HandLayer extends Pane implements Updatable {
 		return cardBeingAdded;
 	}
 	
-	public void setFlying(CardRepresentation cr) {
+	public void setSelected(CardRepresentation cr) {
 		if(cr != null && !cardGroup.getChildren().contains(cr))
 			throw new IllegalArgumentException(String.format("Not in the HandLayer: %s", cr));
-		flying = cr;
+		selected = cr;
 	}
 	
-	public boolean hasFlying() {
-		return flying != null;
+	public boolean hasSelected() {
+		return selected != null;
 	}
 	
-	public CardRepresentation flying() {
-		return flying;
+	public CardRepresentation selected() {
+		return selected;
 	}
 	
 }
