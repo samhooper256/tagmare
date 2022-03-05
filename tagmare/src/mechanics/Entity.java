@@ -3,7 +3,7 @@ package mechanics;
 import mechanics.actions.ActionSource;
 import mechanics.modifiers.ModifierSet;
 
-/** There are two kinds of {@link Entity Entities}: {@link Player} and {@link Enemy}. */
+/** There are two kinds of {@link Entity Entities}: {@link Player} and {@link EnemyRepresentation}. */
 public interface Entity extends ActionSource {
 
 	Health health();

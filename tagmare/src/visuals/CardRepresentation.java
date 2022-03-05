@@ -18,6 +18,8 @@ public final class CardRepresentation extends StackPane implements Updatable {
 
 	public static final double WIDTH = 176, HEIGHT = WIDTH * 1.5;
 	
+	public static final Duration SCALE_DURATION = Duration.millis(500);
+	
 	private static final Duration
 		FOCUS_DURATION = Duration.millis(400),
 		FLY_BACK_DURATION = Duration.millis(500),
@@ -152,7 +154,7 @@ public final class CardRepresentation extends StackPane implements Updatable {
 				startFlyBack();
 			}
 			else {
-				startBeingPlayed();
+				requestStartBeingPlayed();
 			}
 		}
 		else {
@@ -174,10 +176,17 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		state = State.DOWN;
 	}
 	
+	private void requestStartBeingPlayed() {
+		if(card.isLegal(null))
+			startBeingPlayed();
+		else
+			startFlyBack();
+	}
+
 	private void startBeingPlayed() {
 		if(cma != null)
 			Animation.manager().cancel(cma);
-		cma = new ScaleAnimation(Duration.millis(500), this, .8);
+		cma = new ScaleAnimation(SCALE_DURATION, this, .8);
 		cma.setFinish(this::beingPlayedFinished);
 		Animation.manager().add(cma);
 		state = State.BEING_PLAYED;
@@ -199,6 +208,18 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		Vis.pileLayer().discard().addToTop(this);
 		state = State.DOWN;
 		Vis.manager().checkedResumeFromAnimation();
+	}
+	
+	public void startExpandBackToNormalSize() {
+		if(cma != null)
+			Animation.manager().cancel(cma);
+		cma = new ScaleAnimation(SCALE_DURATION, this, 1);
+		cma.setFinish(this::expandBackToNormalFinished);
+		Animation.manager().add(cma);
+	}
+	
+	private void expandBackToNormalFinished() {
+		state = State.DOWN;
 	}
 	
 	private boolean canAnimate() {

@@ -7,12 +7,17 @@ import visuals.fxutils.Nodes;
 public class ScaleAnimation extends AbstractAnimation {
 
 	private final Region region;
-	private final double factor;
+	private final double destScale, startScale;
 	
-	public ScaleAnimation(Duration duration, Region region, double factor) {
+	public ScaleAnimation(Duration duration, Region region, double destScale) {
+		this(duration, region, destScale, region.getScaleX());
+	}
+	
+	public ScaleAnimation(Duration duration, Region region, double destScale, double startScale) {
 		super(duration);
 		this.region = region;
-		this.factor = factor;
+		this.startScale = startScale;
+		this.destScale = destScale;
 	}
 	
 	public Region region() {
@@ -20,12 +25,12 @@ public class ScaleAnimation extends AbstractAnimation {
 	}
 	
 	public double factor() {
-		return factor;
+		return destScale;
 	}
 
 	@Override
 	public void interpolate(double frac) {
-		double f = 1 + (factor - 1) * frac;
+		double f = startScale + (destScale - startScale) * frac;
 		Nodes.setScale(region, f);
 	}
 	

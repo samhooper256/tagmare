@@ -1,5 +1,7 @@
 package visuals.hand;
 
+import java.util.Objects;
+
 import base.*;
 import javafx.scene.*;
 import javafx.scene.layout.Pane;
@@ -7,6 +9,7 @@ import javafx.util.Duration;
 import mechanics.cards.*;
 import visuals.*;
 import visuals.animations.*;
+import visuals.piles.DiscardPileLayer;
 
 /** Contains the {@link CardRepresentation CardRepresentations} for the player's {@link Hand}. */
 public class HandLayer extends Pane implements Updatable {
@@ -30,6 +33,7 @@ public class HandLayer extends Pane implements Updatable {
 		}
 	}
 	private final Group cardGroup;
+	private final Arrow arrow;
 	
 	private boolean addInProgress;
 	private CardRepresentation flying;
@@ -37,12 +41,14 @@ public class HandLayer extends Pane implements Updatable {
 	
 	public HandLayer() {
 		setPickOnBounds(false);
+		arrow = new Arrow();
 		cardGroup = new Group();
-		getChildren().add(cardGroup);
+		getChildren().addAll(arrow, cardGroup);
 	}
 	
 	@Override
 	public void update(long diff) {
+		arrow.update(diff);
 		for(Node n : cardGroup.getChildren())
 			if(n instanceof Updatable)
 				((Updatable) n).update(diff);
@@ -68,6 +74,35 @@ public class HandLayer extends Pane implements Updatable {
 		addInProgress = false;
 		cardBeingAdded = null;
 		VisualManager.get().checkedResumeFromAnimation();
+	}
+	
+	public void startNaturalDiscard() {
+		CardRepresentation flying = Objects.requireNonNull(flying());
+		Animation.manager().add(new CardMoveAnimation(flying, CardRepresentation.SCALE_DURATION).setStart()
+				.setDest(DiscardPileLayer.CARD_X, DiscardPileLayer.CARD_Y).setFinish(this::naturalDiscardFinisher));
+		startReorganize();
+		flying.startExpandBackToNormalSize();
+	}
+	
+	private void naturalDiscardFinisher() {
+		Vis.pileLayer().discard().addToTop(flying);
+		flying = null;
+		VisualManager.get().checkedResumeFromAnimation();
+	}
+	
+	
+	private void startReorganize() {
+		int count = cardCountForWidth();
+		double[] coords = X_COORDS[count - 1];
+		int ci = 0;
+		for(int i = 0; i < count; i++) {
+			CardRepresentation cr = getRepresentation(i);
+			if(cr == flying)
+				continue;
+			Animation.manager().add(new CardMoveAnimation(cr, CARD_SHIFT_DURATION,
+					Interpolator.SQRT).setStart().setDest(coords[ci], CARD_Y));
+			ci++;
+		}
 	}
 	
 	private int cardCountForWidth() {

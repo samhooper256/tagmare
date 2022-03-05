@@ -7,6 +7,7 @@ import javafx.scene.layout.*;
 import javafx.scene.transform.Scale;
 import mechanics.Hub;
 import visuals.debug.DebugLayer;
+import visuals.enemies.EnemyLayer;
 import visuals.hand.HandLayer;
 import visuals.info.InfoLayer;
 import visuals.piles.PileLayer;
@@ -23,6 +24,7 @@ public class GameScene extends Scene implements Updatable {
 	
 	private final Pane content;
 	private final Scale scale;
+	private final EnemyLayer enemyLayer;
 	private final InfoLayer infoLayer;
 	private final HandLayer handLayer;
 	private final PileLayer pileLayer;
@@ -39,11 +41,13 @@ public class GameScene extends Scene implements Updatable {
 		content.getTransforms().add(scale);
 		root().getChildren().add(content);
 		
+		enemyLayer = new EnemyLayer();
 		infoLayer = new InfoLayer();
 		handLayer = new HandLayer();
 		pileLayer = new PileLayer();
 		debugLayer = new DebugLayer();
-		content.getChildren().addAll(infoLayer, pileLayer, handLayer, debugLayer);
+		
+		content.getChildren().addAll(enemyLayer, infoLayer, pileLayer, handLayer, debugLayer);
 		pileLayer.draw().setCards(Hub.deck().cards());
 		
 		setOnMouseMoved(this::mouseMoved);
@@ -67,6 +71,10 @@ public class GameScene extends Scene implements Updatable {
 
 	public Pane content() {
 		return content;
+	}
+	
+	public EnemyLayer enemyLayer() {
+		return enemyLayer;
 	}
 	
 	public HandLayer handLayer() {

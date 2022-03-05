@@ -39,6 +39,11 @@ public final class VisualManagerImpl implements VisualManager {
 			action.execute();
 			Vis.pileLayer().draw().setCards(Hub.drawPile().trueOrder()); //TODO some kind of animation for this?
 		}
+		else if(action instanceof NaturalDiscard) {
+			Hub.combat().pause();
+			action.execute();
+			Vis.handLayer().startNaturalDiscard();
+		}
 		else {
 			waitingOnAnimation = false;
 			action.execute();
