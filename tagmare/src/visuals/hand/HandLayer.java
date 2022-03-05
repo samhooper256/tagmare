@@ -144,4 +144,8 @@ public class HandLayer extends Pane implements Updatable {
 		return selected;
 	}
 	
+	public Arrow arrow() {
+		return arrow;
+	}
+	
 }

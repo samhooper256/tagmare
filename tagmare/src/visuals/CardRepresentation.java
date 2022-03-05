@@ -241,6 +241,7 @@ public final class CardRepresentation extends StackPane implements Updatable {
 			Animation.manager().cancel(cma);
 		cma = new ToPoisedAnimation().setStart().setDest(getLayoutX(), POISED_Y);
 		Animation.manager().add(cma);
+		Vis.handLayer().arrow().displayFor(this);
 	}
 	
 	private boolean canAnimate() {

@@ -2,6 +2,7 @@ package visuals.fxutils;
 
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
+import javafx.scene.shape.Line;
 
 public final class Nodes {
 
@@ -36,6 +37,24 @@ public final class Nodes {
 	public static void setScale(Region r, double x, double y) {
 		r.setScaleX(x);
 		r.setScaleY(y);
+	}
+	
+	public static void setStart(Line line, double x, double y) {
+		line.setStartX(x);
+		line.setStartY(y);
+	}
+	
+	public static void setEnd(Line line, double x, double y) {
+		line.setEndX(x);
+		line.setEndY(y);
+	}
+	
+	public static double centerXMax(Region r) {
+		return r.getLayoutX() + r.getMaxWidth() * .5;
+	}
+	
+	public static double centerYMax(Region r) {
+		return r.getLayoutY() + r.getMaxHeight() * .5;
 	}
 	
 }
