@@ -28,6 +28,7 @@ public class EnemyRepresentation extends StackPane {
 	private final Enemy enemy;
 	private final VBox vBox, modifierBox;
 	private final Text name, healthAndBlock, intent, modifierLabel;
+	private final Pane sliceLayer;
 	
 	private EnemyRepresentation(Enemy enemy) {
 		this.enemy = enemy;
@@ -43,7 +44,8 @@ public class EnemyRepresentation extends StackPane {
 		modifierBox.setAlignment(Pos.TOP_CENTER);
 		vBox = new VBox(name, healthAndBlock, intent, modifierLabel, modifierBox);
 		vBox.setAlignment(Pos.CENTER);
-		getChildren().add(vBox);
+		sliceLayer = new Pane();
+		getChildren().addAll(vBox, sliceLayer);
 		setBackground(Backgrounds.of(Color.PINK));
 		Nodes.setPrefAndMaxSize(this, 300, 300);
 		setOnMouseClicked(me -> mouseClicked());
@@ -65,9 +67,13 @@ public class EnemyRepresentation extends StackPane {
 	}
 	
 	public void update() {
-		healthAndBlock.setText(getHealthAndBlockString());
+		updateHealthAndBlock();
 		intent.setText(getIntentString());
 		updateModifiers();
+	}
+
+	private void updateHealthAndBlock() {
+		healthAndBlock.setText(getHealthAndBlockString());
 	}
 
 	private void updateModifiers() {
@@ -79,6 +85,16 @@ public class EnemyRepresentation extends StackPane {
 			children.add(t);
 		}
 	}
+	
+	public void startSlice(int damage) {
+		updateHealthAndBlock();
+		sliceLayer.getChildren().clear();
+		Slice slice = new Slice(damage);
+		Nodes.setLayout(slice, getMaxWidth() * .5 - Slice.WIDTH * .5, getMaxHeight() * .5 - Slice.HEIGHT * .5);
+		sliceLayer.getChildren().add(slice);
+		slice.startAnimation();
+	}
+	
 	public Enemy enemy() {
 		return enemy;
 	}

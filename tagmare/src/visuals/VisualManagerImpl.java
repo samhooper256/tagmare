@@ -52,7 +52,13 @@ public final class VisualManagerImpl implements VisualManager {
 			action.execute();
 			Vis.handLayer().startNaturalDiscard();
 		}
-		else if(action instanceof DealDamage || action instanceof DealDamageToAll ||
+		else if(action instanceof DealDamage) {
+			DealDamage dd = (DealDamage) action;
+			Hub.combat().pause();
+			action.execute();
+			EnemyRepresentation.of(dd.target()).startSlice(dd.damage());
+		}
+		else if(action instanceof DealDamageToAll ||
 				action instanceof UpdateEnemyIntents || action instanceof ProcrastinatedDamage ||
 				action instanceof ApplyModifier || action instanceof ChangeModifier ||
 				action instanceof RemoveModifier) {

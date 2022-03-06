@@ -76,7 +76,6 @@ public abstract class AbstractAnimation implements Animation {
 	@Override
 	public abstract void interpolate(double frac);
 	
-	/** @throws IllegalStateException if {@link #isRunning()}. See {@link #restart()}. */
 	@Override
 	public void start() {
 		if(isRunning())
@@ -84,8 +83,6 @@ public abstract class AbstractAnimation implements Animation {
 		restart();
 	}
 	
-	/** Restarts and unpauses this animation at the beginning, whether or not it is currently
-	 * {@link #isRunning() running}.*/
 	@Override
 	public void restart() {
 		elapsed = 0;

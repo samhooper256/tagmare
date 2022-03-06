@@ -13,8 +13,11 @@ public interface Animation extends Updatable {
 	 * to it. Will always be called with {@code 1.0} for any given playthrough of this {@link AbstractAnimation}. */
 	void interpolate(double frac);
 	
+	/** Throws an {@code IllegalStateException} if {@link #isRunning()}; otherwise, just calls {@link #restart()}.  */
 	void start();
 	
+	/** Restarts and unpauses this animation at the beginning, whether or not it is currently
+	 * {@link #isRunning() running}.*/
 	void restart();
 	
 	void pause();

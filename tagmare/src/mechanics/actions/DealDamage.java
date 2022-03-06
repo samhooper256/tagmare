@@ -31,4 +31,9 @@ public class DealDamage extends AbstractTargettedAction {
 		this.damage = verifyDamage(amount);
 	}
 	
+	@Override
+	public Enemy target() {
+		return (Enemy) super.target();
+	}
+	
 }
