@@ -1,7 +1,9 @@
 package visuals.ribbon;
 
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import mechanics.Hub;
 import visuals.Sprite;
 import visuals.fxutils.*;
@@ -9,16 +11,17 @@ import visuals.fxutils.*;
 public class Shield extends StackPane {
 
 	public static final double WIDTH = 64, HEIGHT = 64;
-	public static final Font FONT = Buffs.FONT;
+	public static final Font FONT = HealthBar.FONT;
+	public static final Color TEXT_COLOR = HealthBar.TEXT_COLOR;
 	
 	private final Sprite icon;
-	private final Text text;
+	private final Label label;
 	
 	public Shield() {
 		icon = new Sprite(Images.SHIELD);
 		Nodes.setPrefAndMaxSize(this, WIDTH, HEIGHT);
-		text = Nodes.text("", FONT);
-		getChildren().addAll(icon, text);
+		label = Nodes.label(FONT, TEXT_COLOR);
+		getChildren().addAll(icon, label);
 		setVisible(false);
 	}
 	
@@ -35,7 +38,7 @@ public class Shield extends StackPane {
 	}
 	
 	private void showBlock(int block) {
-		text.setText(String.valueOf(block));
+		label.setText(String.valueOf(block));
 		setVisible(true);
 	}
 	

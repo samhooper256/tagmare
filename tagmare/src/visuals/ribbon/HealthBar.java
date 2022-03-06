@@ -4,6 +4,7 @@ import base.temp.Backgrounds;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import mechanics.*;
 import visuals.*;
 import visuals.fxutils.Nodes;
@@ -11,6 +12,8 @@ import visuals.fxutils.Nodes;
 public class HealthBar extends Pane {
 
 	public static final double HEIGHT = BottomRibbon.HEIGHT, RADIUS = 6;
+	public static final Font FONT = Fonts.UI_30;
+	public static final Color TEXT_COLOR = Color.WHITE;
 	
 	private final double width;
 	private final Region filled, back;
@@ -44,17 +47,13 @@ public class HealthBar extends Pane {
 	}
 	
 	private Label createHP() {
-		Label hp = new Label();
-		hp.setTextFill(Color.WHITE);
-		hp.setFont(Fonts.UI_30);
+		Label hp = Nodes.label(FONT, TEXT_COLOR);
 		hp.layoutYProperty().bind(hp.heightProperty().multiply(-.5).add(HEIGHT * .5));
 		return hp;
 	}
 	
 	private Label createMax() {
-		Label max = new Label();
-		max.setTextFill(Color.WHITE);
-		max.setFont(Fonts.UI_30);
+		Label max = Nodes.label(FONT, TEXT_COLOR);
 		max.layoutYProperty().bind(max.heightProperty().multiply(-.5).add(HEIGHT * .5));
 		max.layoutXProperty().bind(max.widthProperty().multiply(-1).add(width));
 		return max;

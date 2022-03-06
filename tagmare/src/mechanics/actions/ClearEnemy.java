@@ -33,4 +33,9 @@ public class ClearEnemy extends AbstractAction {
 		return enemy;
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("ClearEnemy[enemy=%s]", enemy);
+	}
+	
 }

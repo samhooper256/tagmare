@@ -3,6 +3,7 @@ package visuals.fxutils;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.text.*;
 
@@ -78,9 +79,24 @@ public final class Nodes {
 		return r.getLayoutY() + r.getMaxHeight() * .5;
 	}
 	
+	public static Label label(Font font) {
+		return label("", font);
+	}
+	
 	public static Label label(String text, Font font) {
 		Label l = new Label(text);
 		l.setFont(font);
+		return l;
+	}
+	
+	public static Label label(Font font, Paint textFill) {
+		return label("", font, textFill);
+	}
+	
+	public static Label label(String text, Font font, Paint textFill) {
+		Label l = new Label(text);
+		l.setFont(font);
+		l.setTextFill(textFill);
 		return l;
 	}
 	

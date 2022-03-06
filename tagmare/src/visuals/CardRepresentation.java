@@ -3,9 +3,10 @@ package visuals;
 import java.util.*;
 
 import base.*;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
+import javafx.scene.layout.*;
+import javafx.scene.text.*;
 import javafx.util.Duration;
 import mechanics.Hub;
 import mechanics.cards.Card;
@@ -17,15 +18,14 @@ import visuals.piles.DiscardPileLayer;
 import visuals.ribbon.BottomRibbon;
 
 public final class CardRepresentation extends StackPane implements Updatable {
-
 	
 	public static final double 
 			WIDTH = 176, HEIGHT = WIDTH * 1.5,
 			Y = BottomRibbon.Y - HEIGHT,
 			ATTACK_X = GameScene.CENTER_X - WIDTH * .5,
 			ATTACK_Y = 450;
-	
 	public static final Duration SCALE_DURATION = Duration.millis(500);
+	public static final Font NAME_FONT = Fonts.UI_18_BOLD, TEXT_FONT = Fonts.UI_14;
 	
 	private static final Duration
 		FOCUS_DURATION = Duration.millis(400),
@@ -116,7 +116,8 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	}
 	
 	private final Card card;
-	private final Text name;
+	private final VBox vBox;	
+	private final Text name, text;
 	private final List<Node> faceUpChildren, faceDownChildren;
 	
 	private State state;
@@ -126,11 +127,16 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	
 	private CardRepresentation(Card card) {
 		this.card = card;
-		name = new Text(card.tag().displayName());
-		name.setFont(Fonts.UI_14_BOLD);
+		name = new Text(card.tag().displayName() + "\n");
+		name.setWrappingWidth(WIDTH);
+		name.setFont(NAME_FONT);
+		text = Nodes.text(card.defaultText(), TEXT_FONT);
+		text.setWrappingWidth(WIDTH);
+		vBox = new VBox(name, text);
+		vBox.setAlignment(Pos.TOP_CENTER);
 		Nodes.setPrefAndMaxSize(this, WIDTH, HEIGHT);
 		faceUpChildren = new ArrayList<>();
-		Collections.addAll(faceUpChildren, new Sprite(Images.CARD_BASE), name);
+		Collections.addAll(faceUpChildren, new Sprite(Images.CARD_BASE), vBox);
 		faceDownChildren = new ArrayList<>();
 		Collections.addAll(faceDownChildren, new Sprite(Images.CARD_BACK));
 		state = State.DOWN;

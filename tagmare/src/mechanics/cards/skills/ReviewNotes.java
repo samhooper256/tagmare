@@ -8,7 +8,7 @@ import mechanics.enemies.Enemy;
 
 public class ReviewNotes extends AbstractCard implements Skill {
 
-	private static final int BLOCK = 5;
+	public static final int BLOCK = 5;
 	
 	public ReviewNotes() {
 		super(CardTag.REVIEW_NOTES);

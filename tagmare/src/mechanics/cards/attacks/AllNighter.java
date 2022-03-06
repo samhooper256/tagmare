@@ -8,7 +8,7 @@ import mechanics.modifiers.KnockedOut;
 
 public class AllNighter extends AbstractCard implements Attack {
 
-	private static final int DAMAGE = 28;
+	public static final int DAMAGE = 28;
 	
 	public AllNighter() {
 		super(CardTag.ALL_NIGHTER);

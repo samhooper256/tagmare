@@ -44,6 +44,10 @@ public interface Card extends ActionSource, Comparable<Card> {
 		return tag().displayName();
 	}
 	
+	default String defaultText() {
+		return tag().text().defaultText();
+	}
+	
 	@Override
 	default ActionSourceType type() {
 		return ActionSourceType.CARD;

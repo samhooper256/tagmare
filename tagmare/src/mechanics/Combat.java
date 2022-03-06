@@ -98,12 +98,13 @@ public final class Combat {
 	/** Adds a {@link ClearEnemy} to the top of the {@link #stack()} for every {@link Enemy} killed by the given
 	 * {@link Action}. */
 	private void addClearsIfEnemyKilled(Action top) {
-		if(top == null)
+		if(top == null || top instanceof ClearEnemy) //a ClearEnemy action cannot kill an enemy.
 			return;
 		for(int i = enemies().size() - 1; i >= 0; i--) {
 			Enemy e = enemies().get(i);
-			if(e.isDead())
+			if(e.isDead()) {
 				stack().push(new ClearEnemy(top, e));
+			}
 		}
 	}
 	
