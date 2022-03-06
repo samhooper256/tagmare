@@ -14,6 +14,10 @@ public class EnemyLayer extends Pane {
 		setupEnemies(Hub.combat().enemies());
 	}
 	
+	public void updateEnemiesShown() {
+		setupEnemies(Hub.enemies());
+	}
+	
 	private void setupEnemies(List<Enemy> enemies) {
 		getChildren().clear();
 		double x = 400;

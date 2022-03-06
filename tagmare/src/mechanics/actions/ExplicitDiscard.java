@@ -4,7 +4,7 @@ import mechanics.Hub;
 import mechanics.cards.Card;
 import mechanics.effects.ExplicitDiscardEffects;
 
-public class ExplicitDiscard extends AbstractAction {
+public class ExplicitDiscard extends AbstractAction implements HasCard {
 
 	private final Card card;
 	
@@ -19,6 +19,7 @@ public class ExplicitDiscard extends AbstractAction {
 		Hub.stack().pushReversed(ExplicitDiscardEffects.apply(card));
 	}
 	
+	@Override
 	public Card card() {
 		return card;
 	}

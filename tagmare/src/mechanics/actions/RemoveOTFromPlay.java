@@ -3,7 +3,7 @@ package mechanics.actions;
 import mechanics.Hub;
 import mechanics.cards.Card;
 
-public class RemoveOTFromPlay extends AbstractAction {
+public class RemoveOTFromPlay extends AbstractAction implements HasCard {
 
 	private final Card card;
 	
@@ -17,6 +17,7 @@ public class RemoveOTFromPlay extends AbstractAction {
 		Hub.combat().removeOTFromPlay(card);
 	}
 	
+	@Override
 	public Card card() {
 		return card;
 	}

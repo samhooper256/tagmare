@@ -5,6 +5,7 @@ import mechanics.Hub;
 import mechanics.actions.*;
 import mechanics.cards.Card;
 import mechanics.enemies.Enemy;
+import visuals.enemies.EnemyRepresentation;
 
 public final class VisualManagerImpl implements VisualManager {
 
@@ -24,10 +25,10 @@ public final class VisualManagerImpl implements VisualManager {
 			else
 				Hub.combat().resume();
 		}
-		else if(action instanceof EOTDiscard) {
+		else if(action instanceof EOTDiscard || action instanceof ExplicitDiscard) {
 			Hub.combat().pause();
 			action.execute();
-			Card card = ((EOTDiscard) action).card();
+			Card card = ((HasCard) action).card();
 			CardRepresentation.of(card).startEOTToDiscard();
 		}
 		else if(action instanceof SetEnergy || action instanceof SpendEnergy) {
@@ -44,12 +45,34 @@ public final class VisualManagerImpl implements VisualManager {
 			action.execute();
 			Vis.handLayer().startNaturalDiscard();
 		}
+		else if(action instanceof DealDamage || action instanceof DealDamageToAll ||
+				action instanceof UpdateEnemyIntents || action instanceof ProcrastinatedDamage ||
+				action instanceof ApplyModifier || action instanceof ChangeModifier ||
+				action instanceof RemoveModifier) {
+			waitingOnAnimation = false;
+			action.execute();
+			updateAllEnemies();
+		}
+		else if(action instanceof ClearEnemy) {
+			waitingOnAnimation = false;
+			action.execute();
+			Vis.enemyLayer().updateEnemiesShown();
+		}
+		else if(action instanceof TakeDamage) {
+			waitingOnAnimation = false;
+			action.execute();
+			Vis.ribbonLayer().bottom().update();
+		}
 		else {
 			waitingOnAnimation = false;
 			action.execute();
 		}
 	}
 
+	private void updateAllEnemies() {
+		for(Enemy e : Hub.enemies())
+			EnemyRepresentation.of(e).update();
+	}
 	@Override
 	public boolean requestPlayCardFromHand(Card card, Enemy target) {
 		return false; //TODO
@@ -58,7 +81,7 @@ public final class VisualManagerImpl implements VisualManager {
 	@Override
 	public void playCardFromHand(Card card, Enemy target) {
 		if(Hub.combat().running() || !card.isLegal(target))
-			throw new IllegalArgumentException("Can't play");
+			throw new IllegalArgumentException(String.format("Can't play. card=%s, target=%s", card, target));
 		Hub.combat().stackPlayCardFromHand(card, target);
 		Hub.combat().resume();
 	}

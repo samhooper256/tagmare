@@ -15,8 +15,6 @@ import visuals.piles.DiscardPileLayer;
 /** Contains the {@link CardRepresentation CardRepresentations} for the player's {@link Hand}. */
 public class HandLayer extends Pane implements Updatable {
 
-	public static final double CARD_Y = GameScene.HEIGHT - CardRepresentation.HEIGHT;
-	
 	private static final double SPACING = 12;
 	/** Each row is the x-coordinates for a given size. */
 	private static final double[][] X_COORDS = new double[Hand.MAX_SIZE + 1][];
@@ -64,10 +62,10 @@ public class HandLayer extends Pane implements Updatable {
 		int count = cardCountForWidth();
 		double[] coords = X_COORDS[count];
 		Animation.manager().add(new CardMoveAnimation(cr, CARD_DRAW_DURATION).setStart()
-				.setDest(coords[count - 1], CARD_Y).setFinish(this::addFinisher));
+				.setDest(coords[count - 1], CardRepresentation.Y).setFinish(this::addFinisher));
 		for(int i = 0; i < count - 1; i++) {
 			Animation.manager().add(new CardMoveAnimation(getRepresentation(i), CARD_SHIFT_DURATION, Interpolator.SQRT)
-					.setStart().setDest(coords[i], CARD_Y));
+					.setStart().setDest(coords[i], CardRepresentation.Y));
 		}
 	}
 	
@@ -101,7 +99,7 @@ public class HandLayer extends Pane implements Updatable {
 			if(cr == selected)
 				continue;
 			Animation.manager().add(new CardMoveAnimation(cr, CARD_SHIFT_DURATION,
-					Interpolator.SQRT).setStart().setDest(coords[ci], CARD_Y));
+					Interpolator.SQRT).setStart().setDest(coords[ci], CardRepresentation.Y));
 			ci++;
 		}
 	}

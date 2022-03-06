@@ -26,4 +26,8 @@ public class Block {
 		this.amount = Math.max(0, this.amount - amount);
 	}
 
+	public boolean isZero() {
+		return amount() == 0;
+	}
+	
 }

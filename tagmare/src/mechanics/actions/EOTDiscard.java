@@ -5,7 +5,7 @@ import mechanics.cards.Card;
 import mechanics.effects.EOTDiscardEffects;
 
 /** "End of turn" discard. */
-public class EOTDiscard extends AbstractAction {
+public class EOTDiscard extends AbstractAction implements HasCard {
 
 	private final Card card;
 	
@@ -20,6 +20,7 @@ public class EOTDiscard extends AbstractAction {
 		Hub.stack().pushReversed(EOTDiscardEffects.apply(card));
 	}
 	
+	@Override
 	public Card card() {
 		return card;
 	}

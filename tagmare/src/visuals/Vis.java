@@ -2,9 +2,11 @@ package visuals;
 
 import base.VisualManager;
 import visuals.debug.DebugLayer;
+import visuals.enemies.EnemyLayer;
 import visuals.hand.HandLayer;
 import visuals.info.InfoLayer;
 import visuals.piles.PileLayer;
+import visuals.ribbon.RibbonLayer;
 
 public final class Vis {
 	
@@ -24,6 +26,10 @@ public final class Vis {
 		return gameScene().handLayer();
 	}
 	
+	public static RibbonLayer ribbonLayer() {
+		return gameScene().ribbonLayer();
+	}
+	
 	public static PileLayer pileLayer() {
 		return gameScene().pileLayer();
 	}
@@ -34,6 +40,10 @@ public final class Vis {
 	
 	public static InfoLayer infoLayer() {
 		return gameScene().infoLayer();
+	}
+	
+	public static EnemyLayer enemyLayer() {
+		return gameScene().enemyLayer();
 	}
 	
 	public static double mouseX() {

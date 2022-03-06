@@ -12,6 +12,7 @@ import visuals.fxutils.Nodes;
 import visuals.hand.HandLayer;
 import visuals.info.InfoLayer;
 import visuals.piles.PileLayer;
+import visuals.ribbon.RibbonLayer;
 
 /* TODO
  * - if you click a targetted card and then click end turn
@@ -31,14 +32,15 @@ public class GameScene extends Scene implements Updatable {
 	private final Pane bottom;
 	private final EnemyLayer enemyLayer;
 	private final InfoLayer infoLayer;
-	private final HandLayer handLayer;
 	private final PileLayer pileLayer;
+	private final HandLayer handLayer;
+	private final RibbonLayer ribbonLayer;
 	private final DebugLayer debugLayer;
 	
 	private double mouseX, mouseY;
 	
 	private GameScene() {
-		super(new Pane(), WIDTH, HEIGHT);
+		super(new Pane(), WIDTH, HEIGHT - 20);
 		scale = new Scale();
 		scale.xProperty().bind(widthProperty().divide(WIDTH));
 		scale.yProperty().bind(heightProperty().divide(HEIGHT));
@@ -53,10 +55,11 @@ public class GameScene extends Scene implements Updatable {
 		enemyLayer = new EnemyLayer();
 		infoLayer = new InfoLayer();
 		handLayer = new HandLayer();
+		ribbonLayer = new RibbonLayer();
 		pileLayer = new PileLayer();
 		debugLayer = new DebugLayer();
 		
-		content.getChildren().addAll(bottom, enemyLayer, infoLayer, pileLayer, handLayer, debugLayer);
+		content.getChildren().addAll(bottom, enemyLayer, infoLayer, pileLayer, handLayer, ribbonLayer, debugLayer);
 		pileLayer.draw().setCards(Hub.deck().cards());
 		
 		setOnMouseMoved(this::mouseMoved);
@@ -86,12 +89,16 @@ public class GameScene extends Scene implements Updatable {
 		return enemyLayer;
 	}
 	
+	public PileLayer pileLayer() {
+		return pileLayer;
+	}
+	
 	public HandLayer handLayer() {
 		return handLayer;
 	}
 	
-	public PileLayer pileLayer() {
-		return pileLayer;
+	public RibbonLayer ribbonLayer() {
+		return ribbonLayer;
 	}
 	
 	public DebugLayer debugLayer() {

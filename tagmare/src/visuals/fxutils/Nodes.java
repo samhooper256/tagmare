@@ -34,6 +34,16 @@ public final class Nodes {
 		setMaxSize(r, width, height);
 	}
 	
+	public static void setPrefAndMaxWidth(Region r, double width) {
+		r.setPrefWidth(width);
+		r.setMaxWidth(width);
+	}
+	
+	public static void setPrefAndMaxHeight(Region r, double height) {
+		r.setPrefHeight(height);
+		r.setMaxHeight(height);
+	}
+	
 	public static void setLayout(Node node, double x, double y) {
 		node.setLayoutX(x);
 		node.setLayoutY(y);

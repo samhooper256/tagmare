@@ -4,7 +4,7 @@ import mechanics.*;
 import mechanics.cards.Card;
 import mechanics.enemies.Enemy;
 
-public final class PutCardInPlay extends AbstractTargettedAction {
+public final class PutCardInPlay extends AbstractTargettedAction implements HasCard {
 	
 	private final Card card;
 	
@@ -14,6 +14,7 @@ public final class PutCardInPlay extends AbstractTargettedAction {
 		this.card = card;
 	}
 
+	@Override
 	public Card card() {
 		return card;
 	}

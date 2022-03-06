@@ -22,6 +22,11 @@ public final class Health {
 		return hp;
 	}
 	
+	/** Returns the proportion of the {@link #max() max hp} that is filled by the {@link #hp() hp}. */
+	public double proportion() {
+		return (double) hp() / max();
+	}
+	
 	public void setMax(int max) {
 		if(max <= 0)
 			throw new IllegalArgumentException(String.format("max health is negative: %d", max));

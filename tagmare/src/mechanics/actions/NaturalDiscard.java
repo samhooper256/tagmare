@@ -5,7 +5,7 @@ import mechanics.actions.list.ActionList;
 import mechanics.cards.Card;
 import mechanics.effects.*;
 
-public class NaturalDiscard extends AbstractAction {
+public class NaturalDiscard extends AbstractAction implements HasCard {
 
 	private final Card card;
 	
@@ -23,6 +23,7 @@ public class NaturalDiscard extends AbstractAction {
 		Hub.stack().pushReversed(nd);
 	}
 	
+	@Override
 	public Card card() {
 		return card;
 	}

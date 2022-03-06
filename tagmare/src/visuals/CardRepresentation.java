@@ -9,14 +9,21 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import mechanics.Hub;
 import mechanics.cards.Card;
+import mechanics.enemies.Enemy;
 import visuals.animations.*;
 import visuals.fxutils.*;
 import visuals.hand.*;
 import visuals.piles.DiscardPileLayer;
+import visuals.ribbon.BottomRibbon;
 
 public final class CardRepresentation extends StackPane implements Updatable {
 
-	public static final double WIDTH = 176, HEIGHT = WIDTH * 1.5;
+	
+	public static final double 
+			WIDTH = 176, HEIGHT = WIDTH * 1.5,
+			Y = BottomRibbon.Y - HEIGHT,
+			ATTACK_X = GameScene.CENTER_X - WIDTH * .5,
+			ATTACK_Y = 450;
 	
 	public static final Duration SCALE_DURATION = Duration.millis(500);
 	
@@ -24,7 +31,7 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		FOCUS_DURATION = Duration.millis(400),
 		FLY_BACK_DURATION = Duration.millis(500),
 		FLY_TO_DISCARD_DURATION = Duration.millis(400);
-	private static final double FOCUS_Y = GameScene.HEIGHT - HEIGHT - 50, POISED_Y = FOCUS_Y - 50;
+	private static final double FOCUS_Y = Y - 50, POISED_Y = FOCUS_Y - 50;
 	/** If a {@link State#FLYING} card is released above this y (that is, when the mouse's y-coordinate is less than
 	 * this value), the card is played. Otherwise, the card returns to the hand and is not played.*/
 	private static final double MAX_RELEASE_Y = FOCUS_Y;
@@ -69,6 +76,15 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		
 	}
 	
+	private class ToAttackAnimation extends CardMoveAnimation {
+		
+		public ToAttackAnimation() {
+			super(CardRepresentation.this, SCALE_DURATION, Interpolator.LINEAR);
+			setDest(ATTACK_X, ATTACK_Y);
+			setFinish(CardRepresentation.this::beingPlayedFinished);
+		}
+	}
+	
 	private class FlyBackAnimation extends CardMoveAnimation {
 		
 		public FlyBackAnimation() {
@@ -96,10 +112,12 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	private State state;
 	private boolean hovered, faceUp;
 	private Animation cma;
+	private Enemy target;
 	
 	private CardRepresentation(Card card) {
 		this.card = card;
 		name = new Text(card.tag().displayName());
+		name.setFont(Fonts.UI_14_BOLD);
 		Nodes.setPrefAndMaxSize(this, WIDTH, HEIGHT);
 		faceUpChildren = new ArrayList<>();
 		Collections.addAll(faceUpChildren, new Sprite(Images.CARD_BASE), name);
@@ -144,7 +162,7 @@ public final class CardRepresentation extends StackPane implements Updatable {
 			cma.setRate(cma instanceof UpAnimation ? -1 : 1);
 		}
 		else if(!hovered && state == State.UP) {
-			cma = new DownAnimation(FOCUS_DURATION).setStart().setDest(getLayoutX(), HandLayer.CARD_Y);
+			cma = new DownAnimation(FOCUS_DURATION).setStart().setDest(getLayoutX(), Y);
 			state = State.TO_DOWN;
 			Animation.manager().add(cma);
 		}
@@ -182,7 +200,7 @@ public final class CardRepresentation extends StackPane implements Updatable {
 			Animation.manager().cancel(cma);
 		Vis.handLayer().setSelected(null);
 		setMouseTransparent(true);
-		cma = new FlyBackAnimation().setStart().setDest(Vis.handLayer().xCoord(this), HandLayer.CARD_Y);
+		cma = new FlyBackAnimation().setStart().setDest(Vis.handLayer().xCoord(this), Y);
 		Animation.manager().add(cma);
 		state = State.FLYING_BACK;
 	}
@@ -208,8 +226,27 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		state = State.BEING_PLAYED;
 	}
 	
+	public void requestStartBeingPlayed(Enemy target) {
+		if(card.isLegal(target))
+			startBeingPlayed(target);
+	}
+	
+	/** @param target must not be {@code null}. */
+	private void startBeingPlayed(Enemy target) {
+		if(!card.isTargetted())
+			throw new IllegalStateException(String.format("Not a targetted card: %s", card));
+		this.target = Objects.requireNonNull(target);
+		if(cma != null)
+			Animation.manager().cancel(cma);
+		Vis.handLayer().arrow().unbindAndHide();
+		cma = new ToAttackAnimation().setStart();
+		Animation.manager().add(cma);
+		state = State.BEING_PLAYED;
+	}
+	
 	private void beingPlayedFinished() {
-		Vis.manager().playCardFromHand(card, null);
+		Vis.manager().playCardFromHand(card, target);
+		target = null;
 	}
 	
 	public void startEOTToDiscard() {
@@ -256,7 +293,7 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		Vis.handLayer().arrow().unbindAndHide();
 		Vis.handLayer().setSelected(null);
 		state = State.TO_DOWN;
-		cma = new DownAnimation(FOCUS_DURATION).setStart().setDest(getLayoutX(), HandLayer.CARD_Y);
+		cma = new DownAnimation(FOCUS_DURATION).setStart().setDest(getLayoutX(), Y);
 		Animation.manager().add(cma);
 	}
 	private boolean canAnimate() {
