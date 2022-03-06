@@ -12,7 +12,8 @@ public final class Images {
 	
 	public static final Image
 		CARD_BACK = get("card_back.png"),
-		CARD_BASE = get("card_base.png");
+		CARD_BASE = get("card_base.png"),
+		SHIELD = get("shield.png");
 	
 	private Images() {}
 	

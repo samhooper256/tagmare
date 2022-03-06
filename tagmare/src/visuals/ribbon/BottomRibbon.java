@@ -13,6 +13,7 @@ public class BottomRibbon extends Pane {
 	private final HealthBar healthBar;
 	private final Buffs buffs;
 	private final Debuffs debuffs;
+	private final Shield shield;
 	
 	public BottomRibbon() {
 		setLayoutY(Y);
@@ -22,15 +23,19 @@ public class BottomRibbon extends Pane {
 		buffs = new Buffs();
 		debuffs = new Debuffs();
 		Nodes.setPrefAndMaxSize(buffs, GameScene.CENTER_X - HEALTH_BAR_WIDTH * .5, HEIGHT);
-		Nodes.setPrefAndMaxSize(debuffs, GameScene.CENTER_X - HEALTH_BAR_WIDTH * .5, HEIGHT);
 		debuffs.setLayoutX(GameScene.CENTER_X + HEALTH_BAR_WIDTH * .5);
-		getChildren().addAll(healthBar, buffs, debuffs);
+		Nodes.setPrefAndMaxSize(debuffs, GameScene.CENTER_X - HEALTH_BAR_WIDTH * .5, HEIGHT);
+		shield = new Shield();
+		shield.setLayoutX(GameScene.CENTER_X - Shield.WIDTH * .5);
+		shield.setLayoutY(-2);
+		getChildren().addAll(healthBar, buffs, debuffs, shield);
 	}
 	
-	/** updates {@link #healthBar()} and calls {@link #updateModifiers()}. */
+	/** updates {@link #healthBar()} and {@link #shield()} and calls {@link #updateModifiers()}. */
 	public void update() {
 		healthBar().update();
 		updateModifiers();
+		shield().update();
 	}
 	
 	public void updateModifiers() {
@@ -40,6 +45,10 @@ public class BottomRibbon extends Pane {
 
 	public HealthBar healthBar() {
 		return healthBar;
+	}
+
+	public Shield shield() {
+		return shield;
 	}
 	
 }

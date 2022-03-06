@@ -6,6 +6,7 @@ import mechanics.actions.*;
 import mechanics.cards.Card;
 import mechanics.enemies.Enemy;
 import visuals.enemies.EnemyRepresentation;
+import visuals.ribbon.BottomRibbon;
 
 public final class VisualManagerImpl implements VisualManager {
 
@@ -65,10 +66,12 @@ public final class VisualManagerImpl implements VisualManager {
 			action.execute();
 			Vis.enemyLayer().updateEnemiesShown();
 		}
-		else if(action instanceof TakeDamage) {
+		else if(action instanceof TakeDamage || action instanceof GainBlock) {
 			waitingOnAnimation = false;
 			action.execute();
-			Vis.ribbonLayer().bottom().update();
+			BottomRibbon br = Vis.ribbonLayer().bottom();
+			br.healthBar().update();
+			br.shield().update();
 		}
 		else {
 			waitingOnAnimation = false;
