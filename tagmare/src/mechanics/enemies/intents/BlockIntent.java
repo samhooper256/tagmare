@@ -1,33 +1,9 @@
 package mechanics.enemies.intents;
 
-import mechanics.actions.*;
-import mechanics.actions.list.ActionList;
-import mechanics.enemies.Enemy;
+public interface BlockIntent extends Intent {
 
-public class BlockIntent implements Intent {
-
-	private int amount;
+	int block();
 	
-	public BlockIntent(int amount) {
-		this.amount = amount;
-	}
-	
-	@Override
-	public ActionList getActions(Enemy enemy) {
-		return Action.list(new EnemyBlock(amount, enemy));
-	}
-
-	public int amount() {
-		return amount;
-	}
-
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-	
-	@Override
-	public String toString() {
-		return String.format("Block(%d)", amount);
-	}
+	void setBlock(int block);
 	
 }

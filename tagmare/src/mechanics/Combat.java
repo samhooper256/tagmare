@@ -36,8 +36,7 @@ public final class Combat {
 		hand = new Hand();
 		energy = new Energy();
 		enemies = new ArrayList<>();
-		enemies.add(new VocabQuiz());
-		enemies.add(new APESProgressCheck());
+		Collections.<Enemy>addAll(enemies, new VocabQuiz(), new APESProgressCheck(), new CalculusPracticeQuiz());
 		state = CombatState.PREP;
 		turn = 0;
 		mostRecentlyExecuted = null;
