@@ -10,7 +10,7 @@ import visuals.fxutils.Nodes;
 
 public class HealthBar extends Pane {
 
-	public static final double HEIGHT = 60, RADIUS = 6;
+	public static final double HEIGHT = BottomRibbon.HEIGHT, RADIUS = 6;
 	
 	private final double width;
 	private final Region filled, back;

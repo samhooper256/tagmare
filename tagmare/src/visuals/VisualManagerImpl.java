@@ -31,6 +31,12 @@ public final class VisualManagerImpl implements VisualManager {
 			Card card = ((HasCard) action).card();
 			CardRepresentation.of(card).startEOTToDiscard();
 		}
+		else if(action instanceof RemoveOTFromPlay) {
+			Hub.combat().pause();
+			action.execute();
+			Card card = ((HasCard) action).card();
+			CardRepresentation.of(card).startRemoveOT();
+		}
 		else if(action instanceof SetEnergy || action instanceof SpendEnergy) {
 			Hub.combat().pause();
 			action.execute();
@@ -52,6 +58,7 @@ public final class VisualManagerImpl implements VisualManager {
 			waitingOnAnimation = false;
 			action.execute();
 			updateAllEnemies();
+			Vis.ribbonLayer().bottom().updateModifiers();
 		}
 		else if(action instanceof ClearEnemy) {
 			waitingOnAnimation = false;

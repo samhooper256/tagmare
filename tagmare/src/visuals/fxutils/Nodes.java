@@ -1,8 +1,10 @@
 package visuals.fxutils;
 
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Line;
+import javafx.scene.text.*;
 
 public final class Nodes {
 
@@ -74,6 +76,18 @@ public final class Nodes {
 	
 	public static double centerYMax(Region r) {
 		return r.getLayoutY() + r.getMaxHeight() * .5;
+	}
+	
+	public static Label label(String text, Font font) {
+		Label l = new Label(text);
+		l.setFont(font);
+		return l;
+	}
+	
+	public static Text text(String text, Font font) {
+		Text l = new Text(text);
+		l.setFont(font);
+		return l;
 	}
 	
 }

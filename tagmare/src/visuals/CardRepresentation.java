@@ -30,7 +30,8 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	private static final Duration
 		FOCUS_DURATION = Duration.millis(400),
 		FLY_BACK_DURATION = Duration.millis(500),
-		FLY_TO_DISCARD_DURATION = Duration.millis(400);
+		FLY_TO_DISCARD_DURATION = Duration.millis(400),
+		REMOVE_OT_DURATION = Duration.millis(500);
 	private static final double FOCUS_Y = Y - 50, POISED_Y = FOCUS_Y - 50;
 	/** If a {@link State#FLYING} card is released above this y (that is, when the mouse's y-coordinate is less than
 	 * this value), the card is played. Otherwise, the card returns to the hand and is not played.*/
@@ -101,6 +102,15 @@ public final class CardRepresentation extends StackPane implements Updatable {
 			setInterpolator(Interpolator.LINEAR);
 			setDest(DiscardPileLayer.CARD_X, DiscardPileLayer.CARD_Y);
 			setFinish(CardRepresentation.this::eotDiscardFinished);
+		}
+		
+	}
+	
+	private class RemoveOTAnimation extends FadeAnimation {
+		
+		public RemoveOTAnimation() {
+			super(CardRepresentation.this, REMOVE_OT_DURATION, 1, 0);
+			setFinish(CardRepresentation.this::removeOTFinished);
 		}
 		
 	}
@@ -296,6 +306,21 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		cma = new DownAnimation(FOCUS_DURATION).setStart().setDest(getLayoutX(), Y);
 		Animation.manager().add(cma);
 	}
+	
+	public void startRemoveOT() {
+		if(cma != null)
+			Animation.manager().cancel(cma);
+		cma = new RemoveOTAnimation();
+		Animation.manager().add(cma);
+	}
+	
+	private void removeOTFinished() {
+		this.state = State.DOWN;
+		Vis.handLayer().removeOrThrow(this);
+		Vis.handLayer().setSelected(null);
+		Vis.manager().checkedResumeFromAnimation();
+	}
+	
 	private boolean canAnimate() {
 		return Hub.stack().isEmpty();
 	}

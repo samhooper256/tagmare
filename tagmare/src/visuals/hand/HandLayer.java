@@ -105,15 +105,19 @@ public class HandLayer extends Pane implements Updatable {
 	}
 	
 	public void notifyClickedInDeadSpace() {
-		if(hasSelected()) {
-			if(selected().state() == State.TO_POISED) {
-				selected().cancelPoise(); //sets selected to null
-			}
-		}
+		if(hasSelected() && selected().state() == State.TO_POISED)
+			selected().cancelPoise(); //sets selected to null
 	}
 	
 	private int cardCountForWidth() {
 		return cardGroup.getChildren().size();
+	}
+	
+	/** Removes the {@link CardRepresentation} as descendant node of this {@link HandLayer} only. */
+	public void removeOrThrow(CardRepresentation cr) {
+		if(!cardGroup.getChildren().remove(cr))
+			throw new IllegalArgumentException(String.format("Not in this HandLayer: %s.\nchildren=%s", cr,
+					getChildren()));
 	}
 	
 	private CardRepresentation getRepresentation(int index) {
