@@ -1,7 +1,7 @@
 package mechanics.enemies;
 
 import mechanics.enemies.intents.*;
-import mechanics.modifiers.APClassroom;
+import mechanics.modifiers.buffs.APClassroom;
 
 public class APESProgressCheck extends AbstractEnemy {
 

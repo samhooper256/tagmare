@@ -2,7 +2,6 @@ package visuals.enemies;
 
 import java.util.WeakHashMap;
 
-import base.temp.Backgrounds;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -13,7 +12,7 @@ import mechanics.Block;
 import mechanics.enemies.Enemy;
 import mechanics.modifiers.Modifier;
 import visuals.*;
-import visuals.fxutils.Nodes;
+import visuals.fxutils.*;
 
 public class EnemyRepresentation extends StackPane {
 
@@ -87,12 +86,16 @@ public class EnemyRepresentation extends StackPane {
 	}
 	
 	public void startSlice(int damage) {
+		startSlice(damage, true);
+	}
+	
+	public void startSlice(int damage, boolean checkedResume) {
 		updateHealthAndBlock();
 		sliceLayer.getChildren().clear();
 		Slice slice = new Slice(damage);
 		Nodes.setLayout(slice, getMaxWidth() * .5 - Slice.WIDTH * .5, getMaxHeight() * .5 - Slice.HEIGHT * .5);
 		sliceLayer.getChildren().add(slice);
-		slice.startAnimation();
+		slice.startAnimation(checkedResume);
 	}
 	
 	public Enemy enemy() {

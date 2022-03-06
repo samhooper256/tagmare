@@ -4,7 +4,7 @@ import mechanics.actions.*;
 import mechanics.actions.list.ActionList;
 import mechanics.cards.*;
 import mechanics.enemies.Enemy;
-import mechanics.modifiers.KnockedOut;
+import mechanics.modifiers.debuffs.KnockedOut;
 
 public class AllNighter extends AbstractCard implements Attack {
 

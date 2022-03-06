@@ -1,6 +1,6 @@
 package mechanics.modifiers;
 
-abstract class IntegerModifier extends AbstractModifier {
+public abstract class IntegerModifier extends AbstractModifier {
 	
 	private int integer;
 	

@@ -1,6 +1,7 @@
-package mechanics.modifiers;
+package mechanics.modifiers.debuffs;
 
 import mechanics.Player;
+import mechanics.modifiers.*;
 
 /** Only applies to the {@link Player}. */
 public class Enraged extends IntegerModifier implements VisibleDebuff {

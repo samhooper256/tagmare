@@ -1,4 +1,6 @@
-package mechanics.modifiers;
+package mechanics.modifiers.buffs;
+
+import mechanics.modifiers.*;
 
 public class Motivation extends IntegerModifier implements VisibleBuff {
 

@@ -1,4 +1,6 @@
-package mechanics.modifiers;
+package mechanics.modifiers.buffs;
+
+import mechanics.modifiers.*;
 
 public class APClassroom extends AbstractModifier implements VisibleBuff {
 

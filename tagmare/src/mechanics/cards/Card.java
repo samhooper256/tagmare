@@ -5,6 +5,7 @@ import mechanics.actions.*;
 import mechanics.actions.list.ActionList;
 import mechanics.enemies.Enemy;
 import mechanics.modifiers.*;
+import mechanics.modifiers.debuffs.KnockedOut;
 
 /** {@link Card Cards} must use identity equality. */
 public interface Card extends ActionSource, Comparable<Card> {

@@ -1,13 +1,12 @@
 package visuals.info;
 
-import base.temp.Backgrounds;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.util.Duration;
 import visuals.Vis;
 import visuals.animations.*;
-import visuals.fxutils.Nodes;
+import visuals.fxutils.*;
 
 public class EnergyMeter extends StackPane {
 	

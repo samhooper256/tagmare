@@ -44,9 +44,11 @@ public class Slice extends Group {
 	private SliceAnimation animation;
 	
 	private int damage;
+	private boolean checkedResume;
 	
 	public Slice(int damage) {
 		number = Nodes.label(FONT, COLOR);
+		checkedResume = true;
 		Nodes.setLayout(number, NX0, NY0);
 		setDamage(damage);
 		getChildren().add(number);
@@ -55,9 +57,10 @@ public class Slice extends Group {
 	/** Calls a {@link VisualManager#checkedResumeFromAnimation() checked resume} and removes this {@link Slice} from
 	 * its {@link #getParent() parent} when finished. A {@link Slice} can only be played once.
 	 * @throws IllegalStateException if has already been played. */
-	public void startAnimation() {
+	public void startAnimation(boolean checkedResume) {
 		if(animation != null)
 			throw new IllegalStateException("Animation has already started");
+		this.checkedResume = checkedResume;
 		animation = new SliceAnimation();
 		Animation.manager().add(animation);
 	}
@@ -73,7 +76,8 @@ public class Slice extends Group {
 			throw new IllegalArgumentException(String.format(
 				"Cannot remove this Slice from its parent. slice=%s, parent=%s", this, p));
 		children.remove(this);
-		Vis.manager().checkedResumeFromAnimation();
+		if(checkedResume)
+			Vis.manager().checkedResumeFromAnimation();
 	}
 
 	public void setDamage(int damage) {

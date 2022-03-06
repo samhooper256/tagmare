@@ -5,7 +5,7 @@ import mechanics.actions.list.ActionList;
 import mechanics.cards.*;
 import mechanics.effects.AttackEffects;
 import mechanics.enemies.Enemy;
-import mechanics.modifiers.Enraged;
+import mechanics.modifiers.debuffs.Enraged;
 
 public class Rage extends AbstractCard implements Attack {
 

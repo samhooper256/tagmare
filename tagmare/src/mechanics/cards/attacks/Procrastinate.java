@@ -4,7 +4,7 @@ import mechanics.actions.*;
 import mechanics.actions.list.ActionList;
 import mechanics.cards.*;
 import mechanics.enemies.Enemy;
-import mechanics.modifiers.Procrastinated;
+import mechanics.modifiers.debuffs.Procrastinated;
 
 public class Procrastinate extends AbstractCard implements Attack {
 	

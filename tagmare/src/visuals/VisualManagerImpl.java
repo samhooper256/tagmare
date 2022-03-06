@@ -1,5 +1,7 @@
 package visuals;
 
+import java.util.List;
+
 import base.VisualManager;
 import mechanics.Hub;
 import mechanics.actions.*;
@@ -52,16 +54,24 @@ public final class VisualManagerImpl implements VisualManager {
 			action.execute();
 			Vis.handLayer().startNaturalDiscard();
 		}
-		else if(action instanceof DealDamage) {
-			DealDamage dd = (DealDamage) action;
+		else if(action instanceof DealDamage || action instanceof ProcrastinatedDamage) {
+			HasDamage hd = (HasDamage) action;
+			Enemy target = (Enemy) ((TargettedAction) action).target();
 			Hub.combat().pause();
 			action.execute();
-			EnemyRepresentation.of(dd.target()).startSlice(dd.damage());
+			EnemyRepresentation.of(target).startSlice(hd.damage());
 		}
-		else if(action instanceof DealDamageToAll ||
-				action instanceof UpdateEnemyIntents || action instanceof ProcrastinatedDamage ||
-				action instanceof ApplyModifier || action instanceof ChangeModifier ||
-				action instanceof RemoveModifier) {
+		else if(action instanceof DealDamageToAll) {
+			HasDamage ddta = (DealDamageToAll) action;
+			Hub.combat().pause();
+			action.execute();
+			List<Enemy> enemies = Hub.enemies();
+			for(int i = 0; i < enemies.size() - 1; i++)
+				EnemyRepresentation.of(enemies.get(i)).startSlice(ddta.damage(), false);
+			EnemyRepresentation.of(enemies.get(enemies.size() - 1)).startSlice(ddta.damage(), true);
+		}
+		else if(action instanceof UpdateEnemyIntents || action instanceof RemoveModifier ||
+				action instanceof ApplyModifier || action instanceof ChangeModifier) {
 			waitingOnAnimation = false;
 			action.execute();
 			updateAllEnemies();

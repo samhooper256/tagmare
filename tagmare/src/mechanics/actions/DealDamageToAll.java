@@ -3,7 +3,7 @@ package mechanics.actions;
 import mechanics.Hub;
 import mechanics.enemies.Enemy;
 
-public class DealDamageToAll extends AbstractAction {
+public class DealDamageToAll extends AbstractAction implements HasDamage {
 
 	private int damage;
 	
@@ -23,8 +23,14 @@ public class DealDamageToAll extends AbstractAction {
 		return !Hub.enemies().isEmpty();
 	}
 	
+	@Override
 	public int damage() {
 		return damage;
+	}
+
+	@Override
+	public void setDamage(int damage) {
+		this.damage = damage;
 	}
 	
 }

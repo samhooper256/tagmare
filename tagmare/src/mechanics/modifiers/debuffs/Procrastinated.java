@@ -1,6 +1,7 @@
-package mechanics.modifiers;
+package mechanics.modifiers.debuffs;
 
 import mechanics.enemies.Enemy;
+import mechanics.modifiers.*;
 
 /** Only applies to {@link Enemy Enemies}. */
 public class Procrastinated extends IntegerModifier implements VisibleDebuff {

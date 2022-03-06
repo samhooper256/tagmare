@@ -1,10 +1,9 @@
 package visuals.ribbon;
 
-import base.temp.Backgrounds;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import visuals.GameScene;
-import visuals.fxutils.Nodes;
+import visuals.fxutils.*;
 
 public class BottomRibbon extends Pane {
 	

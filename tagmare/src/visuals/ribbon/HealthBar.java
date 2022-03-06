@@ -1,13 +1,12 @@
 package visuals.ribbon;
 
-import base.temp.Backgrounds;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import mechanics.*;
 import visuals.*;
-import visuals.fxutils.Nodes;
+import visuals.fxutils.*;
 
 public class HealthBar extends Pane {
 

@@ -1,4 +1,6 @@
-package mechanics.modifiers;
+package mechanics.modifiers.debuffs;
+
+import mechanics.modifiers.*;
 
 public class KnockedOut extends AbstractModifier implements VisibleDebuff {
 

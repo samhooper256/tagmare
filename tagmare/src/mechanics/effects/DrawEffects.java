@@ -5,6 +5,7 @@ import mechanics.actions.*;
 import mechanics.actions.list.*;
 import mechanics.cards.Card;
 import mechanics.modifiers.*;
+import mechanics.modifiers.debuffs.Enraged;
 
 public final class DrawEffects {
 

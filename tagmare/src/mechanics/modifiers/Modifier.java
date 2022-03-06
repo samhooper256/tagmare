@@ -1,6 +1,8 @@
 package mechanics.modifiers;
 
 import mechanics.actions.*;
+import mechanics.modifiers.buffs.*;
+import mechanics.modifiers.debuffs.Debuff;
 
 /** There are two kinds of {@link Modifier Modifiers}: {@link Buff Buffs} and {@link Debuff Debuffs}. All
  * {@link #isInteger() integer} modifiers are mutable. */

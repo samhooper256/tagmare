@@ -3,7 +3,6 @@ package base;
 import java.io.InputStream;
 import java.util.Optional;
 
-import base.temp.TempScene;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import mechanics.Hub;
@@ -11,7 +10,6 @@ import visuals.GameScene;
 
 public class Main extends Application {
 
-	public static final boolean USE_TEMP = false;
 	
 	private static final String RESOURCES_PREFIX = "/resources/";
 	
@@ -21,7 +19,7 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setScene(USE_TEMP ? TempScene.get() : GameScene.get());
+		primaryStage.setScene(GameScene.get());
 		primaryStage.show();
 //		primaryStage.setMaximized(true);
 		Hub.combat().start();
