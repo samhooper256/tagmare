@@ -3,7 +3,7 @@ package visuals.info;
 import base.*;
 import javafx.scene.control.Button;
 import mechanics.Hub;
-import visuals.Fonts;
+import visuals.*;
 
 public class EndTurnButton extends Button implements Updatable {
 
@@ -15,9 +15,14 @@ public class EndTurnButton extends Button implements Updatable {
 	
 	private void mouseClicked() {
 		if(canBePressed())
-			Hub.combat().endPlayerTurn();
+			endTurn();
 	}
 
+	private void endTurn() {
+		Vis.handLayer().notifyTurnEnded();
+		Hub.combat().endPlayerTurn();
+	}
+	
 	private boolean canBePressed() {
 		return Hub.combat().canEndTurnExplicity() && !VisualManager.get().waitingOnAnimation();
 	}

@@ -109,6 +109,11 @@ public class HandLayer extends Pane implements Updatable {
 			selected().cancelPoise(); //sets selected to null
 	}
 	
+	public void notifyTurnEnded() {
+		setSelected(null);
+		arrow.unbindAndHide();
+	}
+	
 	private int cardCountForWidth() {
 		return cardGroup.getChildren().size();
 	}
