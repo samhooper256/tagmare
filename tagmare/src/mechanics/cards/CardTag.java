@@ -20,7 +20,9 @@ public enum CardTag {
 	RAGE("Rage", 1, true, Rage::new,
 			ct(String.format("Deal W damage %d times. Immediately discard the next card you draw.", Rage.TIMES), Rage.DAMAGE)),
 	ALL_NIGHTER("All-Nighter", 2, false, AllNighter::new,
-			ct("Deal W damage to ALL enemies. End your turn. You cannot play any cards next turn.", AllNighter.DAMAGE), true);
+			ct("Deal W damage to ALL enemies. End your turn. You cannot play any cards next turn.", AllNighter.DAMAGE), true),
+	DEFENESTRATE("Defenestrate", 1, false, Defenestrate::new,
+			ct("Discard your hand. Deal W damage for each card discarded", Defenestrate.DAMAGE));
 	
 	private static CardText ct(String formattedString, int... defaultValuesOfVariables) {
 		return new CardText(formattedString, defaultValuesOfVariables);

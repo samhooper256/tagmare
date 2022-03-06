@@ -15,7 +15,8 @@ import visuals.piles.PileLayer;
 import visuals.ribbon.RibbonLayer;
 
 /* TODO
- * - if you click a targetted card and then click end turn
+ * - if you click a targetted card as it is being drawn from the draw pile (and maybe while it's discarded?) bad stuff
+ * happens.
  */
 public class GameScene extends Scene implements Updatable {
 	

@@ -10,15 +10,15 @@ public class Deck implements Iterable<Card> {
 //		CardTag.REVIEW_NOTES,
 //		CardTag.REVIEW_NOTES,
 //		CardTag.REVIEW_NOTES,
-		CardTag.REVIEW_NOTES,
-		CardTag.REVIEW_NOTES,
-		CardTag.ALL_NIGHTER,
+//		CardTag.REVIEW_NOTES,
+//		CardTag.REVIEW_NOTES,
+//		CardTag.ALL_NIGHTER,
 //		CardTag.PROCRASTINATE,
 //		CardTag.PROCRASTINATE,
-		CardTag.PROCRASTINATE,
+//		CardTag.PROCRASTINATE,
 //		CardTag.DO_HOMEWORK,
-		CardTag.DO_HOMEWORK,
-		CardTag.DO_HOMEWORK,
+//		CardTag.DO_HOMEWORK,
+//		CardTag.DO_HOMEWORK,
 //		CardTag.QUIZLET,
 		CardTag.QUIZLET,
 //		CardTag.QUIZLET,
@@ -27,9 +27,10 @@ public class Deck implements Iterable<Card> {
 		CardTag.RAGE,
 		CardTag.RAGE,
 //		CardTag.DO_HOMEWORK
+//		CardTag.GRIND,
+//		CardTag.GRIND,
 		CardTag.GRIND,
-		CardTag.GRIND,
-		CardTag.GRIND
+		CardTag.DEFENESTRATE
 	);
 	
 	public static Deck createStartingDeck() {

@@ -58,4 +58,9 @@ public class ActionList implements Iterable<Action> {
 		return list.size();
 	}
 	
+	@Override
+	public String toString() {
+		return list.toString();
+	}
+	
 }

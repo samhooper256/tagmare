@@ -5,7 +5,7 @@ import java.util.*;
 import base.VisualManager;
 import mechanics.actions.*;
 import mechanics.cards.*;
-import mechanics.effects.EOTEffects;
+import mechanics.effects.*;
 import mechanics.enemies.*;
 
 //TODO support user input other than selecting/targetting cards. (e.g. YOGA).
@@ -71,16 +71,14 @@ public final class Combat {
 		if(!started())
 			throw new IllegalStateException("Not started");
 		running = true;
-		addClearsIfEnemyKilled(mostRecentlyExecuted);
 		while(!stack().isEmpty()) {
 			Action top = stack().pop();
 			if(top.canExecute()) {
 				mostRecentlyExecuted = top;
 				VisualManager.get().executeAction(mostRecentlyExecuted);
+				addClearsIfEnemyKilled(mostRecentlyExecuted);
 				if(paused())
 					return;
-				else
-					addClearsIfEnemyKilled(mostRecentlyExecuted);
 			}
 		}
 		if(state == CombatState.PLAYER_TO_ENEMY) {
@@ -94,7 +92,7 @@ public final class Combat {
 			running = false;
 		}
 	}
-
+	
 	/** Adds a {@link ClearEnemy} to the top of the {@link #stack()} for every {@link Enemy} killed by the given
 	 * {@link Action}. */
 	private void addClearsIfEnemyKilled(Action top) {

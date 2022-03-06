@@ -6,7 +6,8 @@ public enum ModifierTag {
 	MOTIVATION("Motivation", true),
 	PROCRASTINATED("Procrastinated", true),
 	ENRAGED("Enraged", true),
-	KNOCKED_OUT("Knocked Out", false);
+	KNOCKED_OUT("Knocked Out", false),
+	DEFENESTRATING("Defenestrating", true);
 	
 	private final String name;
 	private final boolean isInteger;

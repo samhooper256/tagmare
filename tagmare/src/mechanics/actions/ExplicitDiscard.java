@@ -24,4 +24,9 @@ public class ExplicitDiscard extends AbstractAction implements HasCard {
 		return card;
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("ExplicitDiscard[card=%s]", card);
+	}
+	
 }
