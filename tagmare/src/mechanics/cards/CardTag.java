@@ -16,7 +16,7 @@ public enum CardTag {
 	GRIND("Grind", 2, true, Grind::new,
 			ct(String.format("Deal W damage %d times.", Grind.TIMES), Grind.DAMAGE)),
 	QUIZLET("Quizlet", 1, true, Quizlet::new,
-			ct(String.format("Deal W damage. Can only be used on AP Classroom assignments.", Quizlet.DAMAGE))),
+			ct("Deal W damage. Can only be used on AP Classroom assignments.", Quizlet.DAMAGE)),
 	RAGE("Rage", 1, true, Rage::new,
 			ct(String.format("Deal W damage %d times. Immediately discard the next card you draw.", Rage.TIMES), Rage.DAMAGE)),
 	ALL_NIGHTER("All-Nighter", 2, false, AllNighter::new,
