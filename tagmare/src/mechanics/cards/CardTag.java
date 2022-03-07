@@ -22,7 +22,9 @@ public enum CardTag {
 	ALL_NIGHTER("All-Nighter", 2, false, AllNighter::new,
 			ct("Deal W damage to ALL enemies. End your turn. You cannot play any cards next turn.", AllNighter.DAMAGE), true),
 	DEFENESTRATE("Defenestrate", 1, false, Defenestrate::new,
-			ct("Discard your hand. Deal W damage for each card discarded", Defenestrate.DAMAGE));
+			ct("Discard your hand. Deal W damage for each card discarded", Defenestrate.DAMAGE)),
+	WRITE_NONSENSE("Write Nonsense", 1, true, WriteNonsense::new,
+			ct(String.format("Deal W damage. At the end of your turn, take %d damage", WriteNonsense.NONSENSE), WriteNonsense.DAMAGE));
 	
 	private static CardText ct(String formattedString, int... defaultValuesOfVariables) {
 		return new CardText(formattedString, defaultValuesOfVariables);

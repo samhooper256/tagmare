@@ -127,7 +127,7 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	
 	private CardRepresentation(Card card) {
 		this.card = card;
-		name = new Text(card.tag().displayName() + "\n");
+		name = new Text(String.format("%s (%d)\n", card.displayName(), card.energyCost()));
 		name.setWrappingWidth(WIDTH);
 		name.setFont(NAME_FONT);
 		text = Nodes.text(card.defaultText(), TEXT_FONT);

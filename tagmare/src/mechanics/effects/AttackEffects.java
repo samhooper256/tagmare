@@ -3,12 +3,13 @@ package mechanics.effects;
 import mechanics.*;
 import mechanics.actions.*;
 import mechanics.actions.list.ActionList;
-import mechanics.cards.Attack;
+import mechanics.cards.*;
 import mechanics.modifiers.*;
 import mechanics.modifiers.buffs.Motivation;
 
-/** Any added {@link Action Actions} are added between the actions listed on the card. (For example, if you play Grind
- * and you have Keyboard Shortcuts, the extra 1 damage will be dealt after each of the 5 hits from Grind). */
+/** These are effects that apply to (and therefore modify) the actions produced by a {@link Card}. Attack effects
+ * <em>do not</em> add or remove any actions from the list actions a card produces; rather, attack effects simply
+ * modify those actions. */
 public final class AttackEffects {
 
 	private AttackEffects() {
