@@ -25,11 +25,16 @@ public class AnimationManager implements Updatable {
 	public void update(long diff) {
 		for(int i = 0; i < animations.size(); ) {
 			Animation a = animations.get(i);
-			a.update(diff);
-			if(a.isFinished())
-				animations.remove(i);
-			else
-				i++;
+			if(cancelRequests.contains(a)) {
+				i++; // a previous animation may have cancelled this one.
+			}
+			else {
+				a.update(diff);
+				if(a.isFinished())
+					animations.remove(i);
+				else
+					i++;
+			}
 		}
 		handleCancelRequests(); //handle cancel requests at the start and end.
 	}

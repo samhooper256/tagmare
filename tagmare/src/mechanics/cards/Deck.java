@@ -10,11 +10,13 @@ public class Deck implements Iterable<Card> {
 //		CardTag.values()
 		CardTag.WRITE_NONSENSE,
 //		CardTag.WRITE_NONSENSE,
-		CardTag.POMODORO,
+//		CardTag.POMODORO,
+		CardTag.DIVIDE_AND_CONQUER,
 //		CardTag.CTRL_F,
-		CardTag.BLUFF,
+//		CardTag.BLUFF,
 		CardTag.REVIEW_NOTES,
-		CardTag.PUSH_THROUGH
+		CardTag.PUSH_THROUGH,
+		CardTag.FREE_TIME
 //		CardTag.DO_HOMEWORK
 	);
 	

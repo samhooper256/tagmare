@@ -214,10 +214,11 @@ public final class Combat {
 	
 	/** Should only be called by {@link ClearEnemy#execute()}. */
 	public void clearEnemy(Enemy enemy) {
+		if(enemy.isAlive())
+			throw new IllegalArgumentException(String.format("Enemy is alive: %s", enemy));
 		if(!enemies.remove(enemy))
 			throw new IllegalArgumentException(String.format("Enemy is not in this combat: %s", enemy));
 	}
-	
 	
 	/** Returns {@code 0} if the player's first turn hasn't started yet. */
 	public int turn() {

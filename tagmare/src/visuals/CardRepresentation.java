@@ -203,11 +203,11 @@ public final class CardRepresentation extends StackPane implements Updatable {
 			}
 		}
 		else {
-			Vis.handLayer().setSelected(this);
 			if(card.isTargetted())
 				startToPoised();
 			else
 				state = State.FLYING; //movement is handled in update(long).
+			Vis.handLayer().setSelected(this);
 		}
 	}
 
