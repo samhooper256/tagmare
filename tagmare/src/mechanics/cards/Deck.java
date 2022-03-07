@@ -11,7 +11,8 @@ public class Deck implements Iterable<Card> {
 		CardTag.WRITE_NONSENSE,
 //		CardTag.WRITE_NONSENSE,
 		CardTag.POMODORO,
-		CardTag.CTRL_F,
+//		CardTag.CTRL_F,
+		CardTag.BLUFF,
 		CardTag.REVIEW_NOTES,
 		CardTag.PUSH_THROUGH
 //		CardTag.DO_HOMEWORK

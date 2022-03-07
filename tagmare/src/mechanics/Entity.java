@@ -20,4 +20,8 @@ public interface Entity extends ActionSource {
 		return health().hp() == 0;
 	}
 	
+	default boolean isAlive() {
+		return !isDead();
+	}
+	
 }

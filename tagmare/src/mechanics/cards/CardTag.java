@@ -30,7 +30,9 @@ public enum CardTag {
 	CTRL_F("Ctrl+F", 1, true, CtrlF::new,
 			String.format("Remove %d health from an enemy.", CtrlF.HEALTH_LOSS)),
 	POMODORO("Pomodoro", 2, true, Pomodoro::new,
-			ct("Deal W damage. The next card you play this turn cannot be an attack and must not require more than 1 energy.", Pomodoro.DAMAGE));
+			ct("Deal W damage. The next card you play this turn cannot be an attack and must not require more than 1 energy.", Pomodoro.DAMAGE)),
+	BLUFF("Bluff", 1, true, Bluff::new,
+			ct("Deal W damage. If this does not kill the enemy, discard a random card from your hand", Bluff.DAMAGE));
 	
 	private static CardText ct(String formattedString, int... defaultValuesOfVariables) {
 		return new CardText(formattedString, defaultValuesOfVariables);
