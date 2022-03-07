@@ -43,11 +43,12 @@ public final class Health {
 
 	/** Sets {@link #hp()} to {@code 0} if it would go negative. */
 	public void lose(int hp) {
-		setHP(Math.max(0, this.hp - hp));
+		gain(-hp);
 	}
 	
 	/** Sets {@link #hp()} to {@link #max()} if it would go over. */
 	public void gain(int hp) {
-		setHP(Math.min(max, this.hp + hp));
+		setHP(Math.max(0, Math.min(max, this.hp + hp)));
 	}
+	
 }

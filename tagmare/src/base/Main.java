@@ -1,7 +1,7 @@
 package base;
 
 import java.io.InputStream;
-import java.util.Optional;
+import java.util.*;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -9,7 +9,6 @@ import mechanics.Hub;
 import visuals.GameScene;
 
 public class Main extends Application {
-
 	
 	private static final String RESOURCES_PREFIX = "/resources/";
 	
@@ -21,6 +20,15 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setScene(GameScene.get());
 		primaryStage.show();
+		Scanner in = new Scanner(System.in);
+		Thread t = new Thread(() -> {
+			while(in.hasNextLine()) {
+				in.nextLine();
+				GameScene.get().debugPrint();
+			}
+			in.close();
+		});
+		t.start();
 //		primaryStage.setMaximized(true);
 		Hub.combat().start();
 		System.out.println(Hub.deck());

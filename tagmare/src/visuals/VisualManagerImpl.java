@@ -3,7 +3,7 @@ package visuals;
 import java.util.List;
 
 import base.VisualManager;
-import mechanics.Hub;
+import mechanics.*;
 import mechanics.actions.*;
 import mechanics.cards.Card;
 import mechanics.enemies.Enemy;
@@ -60,6 +60,20 @@ public final class VisualManagerImpl implements VisualManager {
 			Hub.combat().pause();
 			action.execute();
 			EnemyRepresentation.of(target).startSlice(hd.damage());
+		}
+		else if(action instanceof ChangeHealth) {
+			ChangeHealth ch = (ChangeHealth) action;
+			Hub.combat().pause();
+			action.execute();
+			Entity target = ch.target();
+			if(ch.amount() < 0 && target instanceof Enemy) {
+				EnemyRepresentation.of((Enemy) target).startSlice(-ch.amount());
+			}
+			else {
+				updateAllEnemies();
+				Vis.ribbonLayer().bottom().update();
+				Hub.combat().resume();
+			}
 		}
 		else if(action instanceof DealDamageToAll) {
 			HasDamage ddta = (DealDamageToAll) action;

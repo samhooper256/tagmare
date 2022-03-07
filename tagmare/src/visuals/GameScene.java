@@ -118,4 +118,9 @@ public class GameScene extends Scene implements Updatable {
 		return mouseY;
 	}
 	
+	public void debugPrint() {
+		System.out.printf("=============================================%n");
+		handLayer().debugPrint();
+		System.out.printf("=============================================%n");
+	}
 }

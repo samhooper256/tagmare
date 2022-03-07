@@ -16,7 +16,9 @@ public final class EOTEffects {
 		ActionListBuilder list = Action.listBuilder();
 		ModifierSet pmods = Hub.player().modifiers();
 		if(pmods.contains(ModifierTag.KNOCKED_OUT))
-			list.add(new RemoveModifier(ModifierTag.KNOCKED_OUT, null, Hub.player()));
+			list.add(RemoveModifier.fromPlayer(ModifierTag.KNOCKED_OUT, null));
+		if(pmods.contains(ModifierTag.TOMATOED))
+			list.add(RemoveModifier.fromPlayer(ModifierTag.TOMATOED, null));
 		if(pmods.contains(ModifierTag.NONSENSE)) {
 			Nonsense n = pmods.getModifierOrThrow(ModifierTag.NONSENSE);
 			list.add(new TakeDamage(n.integer(), n));

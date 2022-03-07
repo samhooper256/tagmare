@@ -386,4 +386,12 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		return state;
 	}
 	
+	public void debugPrint(String prefix) {
+		System.out.printf("%sCardRepresentation for card=%s%n", prefix, card);
+		System.out.printf("%sstate=%s%n", prefix, state);
+		System.out.printf("%shovered=%s%n", prefix, hovered);
+		System.out.printf("%scma=%s%n", prefix, cma);
+		System.out.printf("%starget=%s%n", prefix, target);
+	}
+	
 }

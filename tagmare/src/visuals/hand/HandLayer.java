@@ -3,6 +3,7 @@ package visuals.hand;
 import java.util.Objects;
 
 import base.*;
+import javafx.collections.ObservableList;
 import javafx.scene.*;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
@@ -164,4 +165,15 @@ public class HandLayer extends Pane implements Updatable {
 		return arrow;
 	}
 	
+	public void debugPrint() {
+		System.out.printf("HandLayer // selected=%s, cardBeingAdded=%s%n", selected, cardBeingAdded);
+		ObservableList<Node> cgc = cardGroup.getChildren();
+		System.out.printf("cardGroup.getChildren() (%d):%n", cgc.size());
+		System.out.println();
+		for(Node n : cardGroup.getChildren()) {
+			((CardRepresentation) n).debugPrint("\t");
+			System.out.println();
+		}
+		
+	}
 }

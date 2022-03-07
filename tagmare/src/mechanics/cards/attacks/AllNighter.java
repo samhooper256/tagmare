@@ -3,6 +3,7 @@ package mechanics.cards.attacks;
 import mechanics.actions.*;
 import mechanics.actions.list.ActionList;
 import mechanics.cards.*;
+import mechanics.effects.AttackEffects;
 import mechanics.enemies.Enemy;
 import mechanics.modifiers.debuffs.KnockedOut;
 
@@ -21,7 +22,7 @@ public class AllNighter extends AbstractCard implements Attack {
 
 	@Override
 	public ActionList generateActions(Enemy target) {
-		return Action.list(
+		return AttackEffects.apply(this,
 			new DealDamageToAll(this, DAMAGE),
 			new ForcedEndTurn(this),
 			ApplyModifier.toPlayer(new KnockedOut(), this)

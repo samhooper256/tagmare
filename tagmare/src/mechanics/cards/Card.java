@@ -5,7 +5,7 @@ import mechanics.actions.*;
 import mechanics.actions.list.ActionList;
 import mechanics.enemies.Enemy;
 import mechanics.modifiers.*;
-import mechanics.modifiers.debuffs.KnockedOut;
+import mechanics.modifiers.debuffs.*;
 
 /** {@link Card Cards} must use identity equality. */
 public interface Card extends ActionSource, Comparable<Card> {
@@ -20,10 +20,16 @@ public interface Card extends ActionSource, Comparable<Card> {
 	 * <li>the targetting matches up (this is a targetting card and {@code enemy} is not {@code null} or this
 	 * is a non-targetting card and {@code enemy} is {@code null}) </li>
 	 * <li>the player does not have the {@link KnockedOut} modifier</li>
+	 * <li>if the player has the {@link Tomatoed} modifier, it {@link Tomatoed#satisfies(Card) satisfies} its
+	 * constraints</li>
 	 * </ul>*/
 	default boolean isLegal(Enemy target) {
-		return (isTargetted() ^ (target == null)) && energyCost() <= Hub.energy().amount() &&
-				!Hub.player().modifiers().contains(ModifierTag.KNOCKED_OUT);
+		ModifierSet pmods = Hub.player().modifiers();
+		boolean result = (isTargetted() ^ (target == null)) && energyCost() <= Hub.energy().amount() &&
+				!pmods.contains(ModifierTag.KNOCKED_OUT);
+		if(pmods.contains(ModifierTag.TOMATOED))
+			result &= Tomatoed.satisfies(this);
+		return result;
 	}
 	
 	/** if this {@link Card} is not {@link #isTargetted() targetted}, the parameter is ignored. */
