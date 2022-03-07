@@ -322,8 +322,8 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	
 	private void removeOTFinished() {
 		this.state = State.DOWN;
+		Vis.handLayer().removeFromInPlayOrThrow(card);
 		Vis.handLayer().removeOrThrow(this);
-		Vis.handLayer().setSelected(null);
 		Vis.manager().checkedResumeFromAnimation();
 	}
 	

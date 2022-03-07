@@ -33,10 +33,13 @@ public enum CardTag {
 			ct("Deal W damage. The next card you play this turn cannot be an attack and must not require more than 1 energy.", Pomodoro.DAMAGE)),
 	BLUFF("Bluff", 1, true, Bluff::new,
 			ct("Deal W damage. If this does not kill the enemy, discard a random card from your hand", Bluff.DAMAGE)),
-	FREE_TIME("Free Time", 1, true, FreeTime::new,
+	FREE_TIME("Free Time", 0, true, FreeTime::new,
 			ct("Deal W damage. Gain X block.", FreeTime.DAMAGE, FreeTime.BLOCK)),
 	DIVIDE_AND_CONQUER("Divide and Conquer", 1, false, DivideAndConquer::new,
-			ct(String.format("Deal W damage to a random enemy %d times", DivideAndConquer.TIMES), DivideAndConquer.DAMAGE));
+			ct(String.format("Deal W damage to a random enemy %d times", DivideAndConquer.TIMES), DivideAndConquer.DAMAGE)),
+	BEFORE_MIDNIGHT("Before Midnight", 1, true, BeforeMidnight::new,
+			ct(String.format("Deal W damage and draw %d card. Can only be played if you have played %d or fewer cards this turn.",
+			BeforeMidnight.DRAW, BeforeMidnight.MAX_CARDS_PLAYED), BeforeMidnight.DAMAGE));
 	
 	private static CardText ct(String formattedString, int... defaultValuesOfVariables) {
 		return new CardText(formattedString, defaultValuesOfVariables);

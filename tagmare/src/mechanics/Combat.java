@@ -24,8 +24,8 @@ public final class Combat {
 	private final List<Enemy> enemies;
 	
 	private CombatState state;
-	private boolean running;
-	private int turn;
+	private volatile boolean running;
+	private int turn, cardsPlayedThisTurn;
 	private Action mostRecentlyExecuted;
 	
 	public Combat() {
@@ -39,17 +39,18 @@ public final class Combat {
 		Collections.<Enemy>addAll(enemies, new VocabQuiz(), new APESProgressCheck(), new CalculusPracticeQuiz());
 		state = CombatState.PREP;
 		turn = 0;
+		cardsPlayedThisTurn = 0;
 		mostRecentlyExecuted = null;
 	}
 	
 	/** The card won't actually be played until this {@link Combat} {@link #resume() resumes}.
 	 * @throws IllegalStateException if the given {@link Card} is not in the {@link Hand}.
 	 * @throws IllegalStateException if the given {@link Enemy} is non-{@code null} and is not an enemy in this combat.
-	 * @throws IllegalStateException if {@link #running()}.
+	 * @throws IllegalStateException if {@link #isRunning()}.
 	 * @throws IllegalStateException if {@code 
 	 * (card.isTargetted() && target == null || !card.isTargetted() && target != null)}*/
 	public void stackPlayCardFromHand(Card card, Enemy target) {
-		if(running())
+		if(isRunning())
 			throw new IllegalStateException("Running");
 		if(!hand().contains(card))
 			throw new IllegalStateException(String.format("Card is not in hand: %s", card));
@@ -107,9 +108,11 @@ public final class Combat {
 	}
 	
 	/** Assumes {@link #state} is {@link CombatState#ENEMY_TURN} or {@link CombatState#PREP}.
-	 * Sets the {@link #state} to {@link CombatState#PLAYER_TURN}. Increments {@link #turn}. Calls {@link #resume()}. */
+	 * Sets the {@link #state} to {@link CombatState#PLAYER_TURN}. Increments {@link #turn} and sets
+	 * {@link #cardsPlayedThisTurn()} to {@code 0}. Calls {@link #resume()}. */
 	private void startPlayerTurn() {
 		turn++;
+		cardsPlayedThisTurn = 0;
 		state = CombatState.PLAYER_TURN;
 		stack().push(new GenerateSOT());
 		stack().push(new SetEnergy(DEFAULT_ENERGY));
@@ -134,7 +137,7 @@ public final class Combat {
 	
 	/** An "explicit" end turn is when the player requests the turn be ended (e.g. by clicking an "End Turn" button). */
 	public boolean canEndTurnExplicity() {
-		return !running() && stack().isEmpty();
+		return !isRunning() && stack().isEmpty();
 	}
 	
 	/** Calls {@link #resume()}. */
@@ -169,12 +172,12 @@ public final class Combat {
 		running = false;
 	}
 	
-	public boolean running() {
+	public boolean isRunning() {
 		return running;
 	}
 	
 	public boolean paused() {
-		return !running();
+		return !isRunning();
 	}
 	
 	public boolean started() {
@@ -182,10 +185,12 @@ public final class Combat {
 	}
 	
 	/** This method simply adds {@code card} to {@link #cardsInPlay()}; it does not play the given {@link Card} or
-	 * cause it to be played. Throws an exception if the given card is already in play. */
+	 * cause it to be played. Increments {@link #cardsPlayedThisTurn()}. Throws an exception if the given card is
+	 * already in play. */
 	public void addCardToPlay(Card card) {
 		if(!cardsInPlay.add(card))
 			throw new IllegalStateException(String.format("Already in play: %s", card));
+		cardsPlayedThisTurn++;
 	}
 	
 	/** Throws an exception if the given {@link Card} was not in play. */
@@ -223,6 +228,10 @@ public final class Combat {
 	/** Returns {@code 0} if the player's first turn hasn't started yet. */
 	public int turn() {
 		return turn;
+	}
+	
+	public int cardsPlayedThisTurn() {
+		return cardsPlayedThisTurn;
 	}
 	
 	public ActionStack stack() {

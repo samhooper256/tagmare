@@ -1,6 +1,6 @@
 package visuals.hand;
 
-import java.util.Objects;
+import java.util.*;
 
 import base.*;
 import javafx.collections.ObservableList;
@@ -32,17 +32,33 @@ public class HandLayer extends Pane implements Updatable {
 			X_COORDS[count] = coords;
 		}
 	}
+	
+	private class NaturalDiscardAnimation extends CardMoveAnimation {
+		
+		public NaturalDiscardAnimation(CardRepresentation cr) {
+			super(cr, CardRepresentation.SCALE_DURATION);
+			setDest(DiscardPileLayer.CARD_X, DiscardPileLayer.CARD_Y);
+			setFinish(this::finisher);
+		}
+		
+		private void finisher() {
+			naturalDiscardFinisher(super.cardRepresentation());
+		}
+	}
+	
 	private final Group cardGroup;
 	private final Arrow arrow;
 	
 	private boolean addInProgress;
 	private CardRepresentation selected;
 	private Card cardBeingAdded;
+	private Set<Card> cardsInPlay;
 	
 	public HandLayer() {
 		setPickOnBounds(false);
 		arrow = new Arrow();
 		cardGroup = new Group();
+		cardsInPlay = new HashSet<>();
 		getChildren().addAll(arrow, cardGroup);
 	}
 	
@@ -65,7 +81,10 @@ public class HandLayer extends Pane implements Updatable {
 		Animation.manager().add(new CardMoveAnimation(cr, CARD_DRAW_DURATION).setStart()
 				.setDest(coords[count - 1], CardRepresentation.Y).setFinish(this::addFinisher));
 		for(int i = 0; i < count - 1; i++) {
-			Animation.manager().add(new CardMoveAnimation(getRepresentation(i), CARD_SHIFT_DURATION, Interpolator.SQRT)
+			CardRepresentation irep = getRepresentation(i);
+			if(cardsInPlay.contains(irep.card()))
+				continue;
+			Animation.manager().add(new CardMoveAnimation(irep, CARD_SHIFT_DURATION, Interpolator.SQRT)
 					.setStart().setDest(coords[i], CardRepresentation.Y));
 		}
 	}
@@ -76,28 +95,34 @@ public class HandLayer extends Pane implements Updatable {
 		VisualManager.get().checkedResumeFromAnimation();
 	}
 	
-	public void startNaturalDiscard() {
-		CardRepresentation flying = Objects.requireNonNull(selected());
-		Animation.manager().add(new CardMoveAnimation(flying, CardRepresentation.SCALE_DURATION).setStart()
-				.setDest(DiscardPileLayer.CARD_X, DiscardPileLayer.CARD_Y).setFinish(this::naturalDiscardFinisher));
+	public void startNaturalDiscard(Card card) {
+		if(!cardsInPlay.contains(card))
+			throw new IllegalArgumentException(String.format("Not in play: %s", card));
+		CardRepresentation cr = CardRepresentation.of(card);
+		Animation.manager().add(new NaturalDiscardAnimation(cr).setStart());
 		startReorganize();
-		flying.startExpandBackToNormalSize();
+		cr.startExpandBackToNormalSize();
 	}
 	
-	private void naturalDiscardFinisher() {
-		Vis.pileLayer().discard().addToTop(selected);
-		selected = null;
+	private void naturalDiscardFinisher(CardRepresentation cr) {
+		Vis.handLayer().removeFromInPlayOrThrow(cr.card());
+		Vis.pileLayer().discard().addToTop(cr);
+		setSelected(null);
 		VisualManager.get().checkedResumeFromAnimation();
 	}
 	
 	
 	private void startReorganize() {
 		int count = cardCountForWidth();
-		double[] coords = X_COORDS[count - 1];
+		int countExcludingPlaying = count;
+		for(int i = 0; i < count; i++)
+			if(cardsInPlay.contains(getRepresentation(i).card()))
+				countExcludingPlaying--;
+		double[] coords = X_COORDS[countExcludingPlaying];
 		int ci = 0;
 		for(int i = 0; i < count; i++) {
 			CardRepresentation cr = getRepresentation(i);
-			if(cr == selected)
+			if(cardsInPlay.contains(cr.card()))
 				continue;
 			Animation.manager().add(new CardMoveAnimation(cr, CARD_SHIFT_DURATION,
 					Interpolator.SQRT).setStart().setDest(coords[ci], CardRepresentation.Y));
@@ -124,6 +149,19 @@ public class HandLayer extends Pane implements Updatable {
 		if(!cardGroup.getChildren().remove(cr))
 			throw new IllegalArgumentException(String.format("Not in this HandLayer: %s.\nchildren=%s", cr,
 					getChildren()));
+	}
+	
+	public void moveSelectedToInPlay(Card card) {
+		if(card == null || card != selected().card())
+			throw new IllegalArgumentException(
+					String.format("card is not the selected one (card=%s, selected=%s)", card, selected));
+		setSelected(null);
+		cardsInPlay.add(card);
+	}
+	
+	public void removeFromInPlayOrThrow(Card card) {
+		if(!cardsInPlay.remove(card))
+			throw new IllegalArgumentException(String.format("Not in play: %s", card));
 	}
 	
 	private CardRepresentation getRepresentation(int index) {

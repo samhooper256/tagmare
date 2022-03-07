@@ -22,7 +22,7 @@ public interface VisualManager extends Updatable {
 	}
 	
 	/** Checks the legality of the given {@link Card}. If legal and the {@link Hub#combat() combat} is not
-	 * {@link Combat#running() running}, adds playing the card to the {@link ActionStack}.
+	 * {@link Combat#isRunning() running}, adds playing the card to the {@link ActionStack}.
 	 * Returns {@code false} iff the card could not be played. */
 	boolean requestPlayCardFromHand(Card card, Enemy target);
 	

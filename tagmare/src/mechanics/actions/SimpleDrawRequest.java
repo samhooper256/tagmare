@@ -14,10 +14,14 @@ public class SimpleDrawRequest extends AbstractAction {
 	private Card card;
 	
 	public SimpleDrawRequest() {
-		super(null);
-		card = null;
+		this(null);
 	}
 
+	public SimpleDrawRequest(ActionSource source) {
+		super(source);
+		card = null;
+	}
+	
 	@Override
 	public void execute() {
 		if(Hub.hand().isFull())

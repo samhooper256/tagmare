@@ -16,8 +16,9 @@ public class Deck implements Iterable<Card> {
 //		CardTag.BLUFF,
 		CardTag.REVIEW_NOTES,
 		CardTag.PUSH_THROUGH,
-		CardTag.FREE_TIME
-//		CardTag.DO_HOMEWORK
+		CardTag.FREE_TIME,
+		CardTag.BEFORE_MIDNIGHT,
+		CardTag.DO_HOMEWORK
 	);
 	
 	public static Deck createStartingDeck() {

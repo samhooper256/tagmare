@@ -3,9 +3,10 @@ package base;
 import java.io.InputStream;
 import java.util.*;
 
-import javafx.application.Application;
+import javafx.application.*;
 import javafx.stage.Stage;
 import mechanics.Hub;
+import mechanics.actions.DealDamage;
 import visuals.GameScene;
 
 public class Main extends Application {
@@ -23,11 +24,29 @@ public class Main extends Application {
 		Scanner in = new Scanner(System.in);
 		Thread t = new Thread(() -> {
 			while(in.hasNextLine()) {
-				in.nextLine();
-				GameScene.get().debugPrint();
+				String line = in.nextLine();
+				if(line.startsWith("deal ")) {
+					String[] split = line.trim().split(" +");
+					if(split.length != 4 || !split[2].equals("to"))
+						continue;
+					int damage = Integer.parseInt(split[1]), enemyIndex = Integer.parseInt(split[3]);
+					if(Hub.combat().isRunning()) {
+						System.out.printf("<!!!> Failed; Combat is running.%n");
+					}
+					else {
+						Platform.runLater(() -> {
+							Hub.stack().push(new DealDamage(damage, null, Hub.enemies().get(enemyIndex)));
+							Hub.combat().resume();
+						});
+					}
+				}
+				else {
+					GameScene.get().debugPrint();
+				}
 			}
 			in.close();
 		});
+		t.setDaemon(true);
 		t.start();
 //		primaryStage.setMaximized(true);
 		Hub.combat().start();

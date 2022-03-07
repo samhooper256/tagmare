@@ -18,6 +18,10 @@ public final class VisualManagerImpl implements VisualManager {
 	public void executeAction(final Action action) {
 		waitingOnAnimation = true;
 		Vis.debugLayer().stackDisplay().update();
+		if(action instanceof PutCardInPlay) {
+			Card card = ((HasCard) action).card();
+			Vis.handLayer().moveSelectedToInPlay(card);
+		}
 		if(action instanceof SimpleDrawRequest) {
 			Hub.combat().pause();
 			action.execute();
@@ -51,8 +55,9 @@ public final class VisualManagerImpl implements VisualManager {
 		}
 		else if(action instanceof NaturalDiscard) {
 			Hub.combat().pause();
+			HasCard hc = ((HasCard) action);
 			action.execute();
-			Vis.handLayer().startNaturalDiscard();
+			Vis.handLayer().startNaturalDiscard(hc.card());
 		}
 		else if(action instanceof DealDamage || action instanceof ProcrastinatedDamage) {
 			HasDamage hd = (HasDamage) action;
@@ -120,7 +125,7 @@ public final class VisualManagerImpl implements VisualManager {
 	
 	@Override
 	public void playCardFromHand(Card card, Enemy target) {
-		if(Hub.combat().running() || !card.isLegal(target))
+		if(Hub.combat().isRunning() || !card.isLegal(target))
 			throw new IllegalArgumentException(String.format("Can't play. card=%s, target=%s", card, target));
 		Hub.combat().stackPlayCardFromHand(card, target);
 		Hub.combat().resume();
@@ -134,7 +139,7 @@ public final class VisualManagerImpl implements VisualManager {
 	
 	@Override
 	public void checkedResumeFromAnimation() {
-		if(Hub.combat().running())
+		if(Hub.combat().isRunning())
 			throw new IllegalStateException("Cannot resume; Combat is running");
 		waitingOnAnimation = false;
 		Hub.combat().resume();
