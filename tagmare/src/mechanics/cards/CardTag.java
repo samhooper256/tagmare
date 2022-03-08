@@ -3,7 +3,7 @@ package mechanics.cards;
 import java.util.function.Supplier;
 
 import mechanics.cards.attacks.*;
-import mechanics.cards.skills.ReviewNotes;
+import mechanics.cards.skills.*;
 
 public enum CardTag {
 	//Texts should be punctuated.
@@ -39,7 +39,10 @@ public enum CardTag {
 			ct(String.format("Deal W damage to a random enemy %d times", DivideAndConquer.TIMES), DivideAndConquer.DAMAGE)),
 	BEFORE_MIDNIGHT("Before Midnight", 1, true, BeforeMidnight::new,
 			ct(String.format("Deal W damage and draw %d card. Can only be played if you have played %d or fewer cards this turn.",
-			BeforeMidnight.DRAW, BeforeMidnight.MAX_CARDS_PLAYED), BeforeMidnight.DAMAGE));
+			BeforeMidnight.DRAW, BeforeMidnight.MAX_CARDS_PLAYED), BeforeMidnight.DAMAGE)),
+	MOTIVATIONAL_VIDEO("Motivational Video", 0, false, MotivationalVideo::new,
+			ct(String.format("Your next attack deal W additional damage. Decrease the effectiveness of all Motivational"
+			+ " Videos by 1 for the rest of this combat.", MotivationalVideo.BASE_EFFECTIVENESS)));
 	
 	private static CardText ct(String formattedString, int... defaultValuesOfVariables) {
 		return new CardText(formattedString, defaultValuesOfVariables);

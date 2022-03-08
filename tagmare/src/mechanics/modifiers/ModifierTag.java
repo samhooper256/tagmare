@@ -9,7 +9,8 @@ public enum ModifierTag {
 	KNOCKED_OUT("Knocked Out", false),
 	DEFENESTRATING("Defenestrating", true),
 	NONSENSE("Nonsense", true),
-	TOMATOED("Tomatoed", false);
+	TOMATOED("Tomatoed", false),
+	DISCIPLINE("Discipline", true);
 	
 	private final String name;
 	private final boolean isInteger;

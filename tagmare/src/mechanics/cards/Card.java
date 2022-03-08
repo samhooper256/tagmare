@@ -51,8 +51,10 @@ public interface Card extends ActionSource, Comparable<Card> {
 		return tag().displayName();
 	}
 	
-	default String defaultText() {
-		return tag().text().defaultText();
+	CardText text();
+	
+	default void updateText() {
+		text().update(this);
 	}
 	
 	@Override

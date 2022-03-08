@@ -5,7 +5,7 @@ import mechanics.actions.*;
 import mechanics.actions.list.ActionList;
 import mechanics.cards.*;
 import mechanics.modifiers.*;
-import mechanics.modifiers.buffs.Motivation;
+import mechanics.modifiers.buffs.*;
 
 /** These are effects that apply to (and therefore modify) the actions produced by a {@link Card}. Attack effects
  * <em>do not</em> add or remove any actions from the list actions a card produces; rather, attack effects simply
@@ -24,15 +24,22 @@ public final class AttackEffects {
 	
 	/** Returns the given {@link Action} after (possibly) mutating it. */
 	public static Action applyToSingle(Attack card, Action action) {
-		Player p = Hub.player();
-		ModifierSet mods = p.modifiers();
-		Motivation motivation = mods.getModifier(ModifierTag.MOTIVATION);
-		if(motivation != null && action instanceof DealDamage) {
+		if(action instanceof DealDamage) {
 			DealDamage dd = (DealDamage) action;
-			dd.setDamage(dd.damage() + motivation.integer());
+			dd.setDamage(getModifiedDamage(card, dd.damage()));
 		}
-		//TODO add Discipline
 		return action;
+	}
+	
+	public static int getModifiedDamage(Attack card, int damage) {
+		ModifierSet pmods = Hub.player().modifiers();
+		double result = damage;
+		Motivation m = pmods.getModifier(ModifierTag.MOTIVATION), d = pmods.getModifier(ModifierTag.DISCIPLINE);
+		if(m != null)
+			result += m.integer();
+		if(d != null)
+			result *= (1 + Discipline.PERCENT * d.integer());
+		return (int) Math.round(result);
 	}
 	
 }

@@ -53,10 +53,12 @@ public class Deck implements Iterable<Card> {
 		return Collections.unmodifiableList(cards);
 	}
 	
-	/** The returned copy is modifiable. */
+	/** The returned {@link List} is modifiable; changes in the returned list do not affect this {@link Deck}.
+	 * Every {@link Card} is a {@link Card#copy() copy} of the card from the {@link Deck}. */
 	public List<Card> shuffledCopyOfCards() {
 		List<Card> copy = new ArrayList<>(cards);
 		Collections.shuffle(copy, RNG.SOURCE);
+		copy.replaceAll(Card::copy);
 		return copy;
 	}
 	

@@ -130,7 +130,7 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		name = new Text(String.format("%s (%d)\n", card.displayName(), card.energyCost()));
 		name.setWrappingWidth(WIDTH);
 		name.setFont(NAME_FONT);
-		text = Nodes.text(card.defaultText(), TEXT_FONT);
+		text = Nodes.text(card.text().defaultText(), TEXT_FONT);
 		text.setWrappingWidth(WIDTH);
 		vBox = new VBox(name, text);
 		vBox.setAlignment(Pos.TOP_CENTER);
@@ -329,6 +329,10 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	
 	private boolean canAnimate() {
 		return Hub.stack().isEmpty();
+	}
+
+	public void updateText() {
+		card.updateText();
 	}
 	
 	private void upFinished() {
