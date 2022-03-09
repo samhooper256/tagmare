@@ -34,7 +34,8 @@ public final class AttackEffects {
 	public static int getModifiedDamage(Attack card, int damage) {
 		ModifierSet pmods = Hub.player().modifiers();
 		double result = damage;
-		Motivation m = pmods.getModifier(ModifierTag.MOTIVATION), d = pmods.getModifier(ModifierTag.DISCIPLINE);
+		Motivation m = pmods.getModifier(ModifierTag.MOTIVATION);
+		Discipline d = pmods.getModifier(ModifierTag.DISCIPLINE);
 		if(m != null)
 			result += m.integer();
 		if(d != null)

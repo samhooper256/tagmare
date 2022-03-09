@@ -6,6 +6,10 @@ public class Discipline extends IntegerModifier implements VisibleBuff {
 
 	public static final double PERCENT = .1;
 	
+	public Discipline() {
+		this(1);
+	}
+	
 	public Discipline(int integer) {
 		super(integer);
 	}
