@@ -12,7 +12,7 @@ public class InfoLayer extends Pane implements Updatable {
 	public InfoLayer() {
 		setPickOnBounds(false);
 		endTurnButton = new EndTurnButton();
-		Nodes.setLayout(endTurnButton, 1600, 800);
+		Nodes.setLayout(endTurnButton, 1600, 700);
 		energyMeter = new EnergyMeter();
 		Nodes.setLayout(energyMeter, 100, 800);
 		getChildren().addAll(endTurnButton, energyMeter);

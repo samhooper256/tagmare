@@ -5,6 +5,7 @@ import visuals.debug.DebugLayer;
 import visuals.enemies.EnemyLayer;
 import visuals.hand.HandLayer;
 import visuals.info.InfoLayer;
+import visuals.inquiry.InquiryLayer;
 import visuals.piles.PileLayer;
 import visuals.ribbon.RibbonLayer;
 
@@ -44,6 +45,10 @@ public final class Vis {
 	
 	public static EnemyLayer enemyLayer() {
 		return gameScene().enemyLayer();
+	}
+	
+	public static InquiryLayer inquiryLayer() {
+		return gameScene().inquiryLayer();
 	}
 	
 	public static double mouseX() {

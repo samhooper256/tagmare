@@ -1,6 +1,6 @@
 package visuals;
 
-import java.util.List;
+import java.util.*;
 
 import base.VisualManager;
 import javafx.scene.Node;
@@ -114,6 +114,14 @@ public final class VisualManagerImpl implements VisualManager {
 			BottomRibbon br = Vis.ribbonLayer().bottom();
 			br.healthBar().update();
 			br.shield().update();
+		}
+		else if(action instanceof SetInquiry) {
+			waitingOnAnimation = false;
+			action.execute();
+			SetInquiry si = (SetInquiry) action;
+//			if(!Hub.combat().requestSupplyCardsToInquiry(Arrays.asList(Hub.hand().get(0))))
+//				throw new IllegalStateException("oof");
+			Vis.inquiryLayer().startInquiry(si.inquiry());
 		}
 		else {
 			waitingOnAnimation = false;

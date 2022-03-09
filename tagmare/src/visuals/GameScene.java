@@ -10,12 +10,14 @@ import visuals.enemies.EnemyLayer;
 import visuals.fxutils.Nodes;
 import visuals.hand.HandLayer;
 import visuals.info.InfoLayer;
+import visuals.inquiry.InquiryLayer;
 import visuals.piles.PileLayer;
 import visuals.ribbon.RibbonLayer;
 
 /* TODO
  * - if you click a targetted card as it is being drawn from the draw pile (and maybe while it's discarded?) bad stuff
  * happens.
+ * - if you hover over a card while they're reorganizing, they get slightly offset in the x direction.
  */
 public class GameScene extends Scene implements Updatable {
 	
@@ -33,6 +35,7 @@ public class GameScene extends Scene implements Updatable {
 	private final EnemyLayer enemyLayer;
 	private final InfoLayer infoLayer;
 	private final PileLayer pileLayer;
+	private final InquiryLayer inquiryLayer;
 	private final HandLayer handLayer;
 	private final RibbonLayer ribbonLayer;
 	private final DebugLayer debugLayer;
@@ -54,12 +57,14 @@ public class GameScene extends Scene implements Updatable {
 		bottom.setOnMousePressed(eh -> Vis.handLayer().notifyClickedInDeadSpace());
 		enemyLayer = new EnemyLayer();
 		infoLayer = new InfoLayer();
+		pileLayer = new PileLayer();
+		inquiryLayer = new InquiryLayer();
 		handLayer = new HandLayer();
 		ribbonLayer = new RibbonLayer();
-		pileLayer = new PileLayer();
 		debugLayer = new DebugLayer();
 		
-		content.getChildren().addAll(bottom, enemyLayer, infoLayer, pileLayer, handLayer, ribbonLayer, debugLayer);
+		content.getChildren().addAll(bottom, enemyLayer, infoLayer, pileLayer, inquiryLayer,
+				handLayer, ribbonLayer, debugLayer);
 		
 		setOnMouseMoved(this::mouseMoved);
 	}
@@ -90,6 +95,10 @@ public class GameScene extends Scene implements Updatable {
 	
 	public PileLayer pileLayer() {
 		return pileLayer;
+	}
+	
+	public InquiryLayer inquiryLayer() {
+		return inquiryLayer;
 	}
 	
 	public HandLayer handLayer() {

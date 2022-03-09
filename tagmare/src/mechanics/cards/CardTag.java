@@ -46,7 +46,9 @@ public enum CardTag {
 			+ " Videos by 1 for the rest of this combat.", MotivationalVideo.BASE_EFFECTIVENESS)),
 	DISCIPLINE("Discipline", 1, false, Discipline::new,
 			ct(String.format("Attacks deal %.0f%% more damage for the rest of this combat.", 
-			mechanics.modifiers.buffs.Discipline.PERCENT * 100)));
+			mechanics.modifiers.buffs.Discipline.PERCENT * 100))),
+	YOGA("Yoga", 1, false, Yoga::new,
+			"Do some stuff");
 	
 	private static CardText ct(String formattedString, int... defaultValuesOfVariables) {
 		return new CardText(formattedString, defaultValuesOfVariables);

@@ -22,8 +22,8 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	public static final double 
 			WIDTH = 176, HEIGHT = WIDTH * 1.5,
 			Y = BottomRibbon.Y - HEIGHT,
-			ATTACK_X = GameScene.CENTER_X - WIDTH * .5,
-			ATTACK_Y = 450;
+			ATTACK_X = GameScene.CENTER_X - WIDTH * .5, ATTACK_Y = 450,
+			TOP_X = GameScene.CENTER_X - WIDTH * .5, TOP_Y = 20;
 	public static final Duration SCALE_DURATION = Duration.millis(500);
 	public static final Font NAME_FONT = Fonts.UI_18_BOLD, TEXT_FONT = Fonts.UI_14;
 	
@@ -31,7 +31,8 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		FOCUS_DURATION = Duration.millis(400),
 		FLY_BACK_DURATION = Duration.millis(500),
 		FLY_TO_DISCARD_DURATION = Duration.millis(400),
-		REMOVE_OT_DURATION = Duration.millis(500);
+		REMOVE_OT_DURATION = Duration.millis(500),
+		TO_TOP_DURATION = Duration.millis(500);
 	private static final double FOCUS_Y = Y - 50, POISED_Y = FOCUS_Y - 50;
 	/** If a {@link State#FLYING} card is released above this y (that is, when the mouse's y-coordinate is less than
 	 * this value), the card is played. Otherwise, the card returns to the hand and is not played.*/
@@ -113,6 +114,14 @@ public final class CardRepresentation extends StackPane implements Updatable {
 			setFinish(CardRepresentation.this::removeOTFinished);
 		}
 		
+	}
+	
+	private class ToTopAnimation extends CardMoveAnimation {
+		
+		public ToTopAnimation() {
+			super(CardRepresentation.this, TO_TOP_DURATION);
+			setDest(TOP_X, TOP_Y);
+		}
 	}
 	
 	private final Card card;
@@ -325,6 +334,15 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		Vis.handLayer().removeFromInPlayOrThrow(card);
 		Vis.handLayer().removeOrThrow(this);
 		Vis.manager().checkedResumeFromAnimation();
+	}
+	
+	public void startFlyToTop() {
+		if(state != State.BEING_PLAYED)
+			throw new IllegalStateException(String.format("State is %s", state));
+		if(cma != null)
+			Animation.manager().cancel(cma);
+		cma = new ToTopAnimation().setStart();
+		Animation.manager().add(cma);
 	}
 	
 	private boolean canAnimate() {

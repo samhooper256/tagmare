@@ -14,4 +14,12 @@ public final class Colls {
 		return Collections.unmodifiableList(Arrays.asList(items));
 	}
 	
+	public static <T> T last(List<T> list) {
+		return list.get(list.size() - 1);
+	}
+
+	public static <T> T any(Collection<T> coll) {
+		return coll.iterator().next();
+	}
+	
 }

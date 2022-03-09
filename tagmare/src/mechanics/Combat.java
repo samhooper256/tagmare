@@ -7,6 +7,7 @@ import mechanics.actions.*;
 import mechanics.cards.*;
 import mechanics.effects.*;
 import mechanics.enemies.*;
+import mechanics.input.CardInquiry;
 
 //TODO support user input other than selecting/targetting cards. (e.g. YOGA).
 public final class Combat {
@@ -27,6 +28,7 @@ public final class Combat {
 	private volatile boolean running;
 	private int turn, cardsPlayedThisTurn;
 	private Action mostRecentlyExecuted;
+	private CardInquiry cardInquiry;
 	
 	public Combat() {
 		stack = new ActionStack();
@@ -78,6 +80,8 @@ public final class Combat {
 				mostRecentlyExecuted = top;
 				VisualManager.get().executeAction(mostRecentlyExecuted);
 				addClearsIfEnemyKilled(mostRecentlyExecuted);
+				if(mostRecentlyExecuted instanceof CardAccepting)
+					clearInquiry();
 				if(paused())
 					return;
 			}
@@ -168,6 +172,18 @@ public final class Combat {
 			stack().pushReversed(enemies.get(i).getActions());
 	}
 
+	/** Return {@code false} if the cards cannot be passed to the {@link CardAccepting} action for any reason.
+	 * Calls {@link #resume()}. */
+	public boolean requestSupplyCardsToInquiry(List<Card> cards) {
+		if(cardInquiry() != null && paused() && !stack().isEmpty() && stack().peek() instanceof CardAccepting &&
+				cardInquiry().selection().validate(cards)) {
+			((CardAccepting) stack().peek()).setCards(cards);
+			resume();
+			return true;
+		}
+		return false;
+	}
+	
 	public void pause() {
 		running = false;
 	}
@@ -274,6 +290,30 @@ public final class Combat {
 	
 	public Energy energy() {
 		return energy;
+	}
+	
+	/** Returns {@code null} if not {@link #setInquiry(CardInquiry) set}. */
+	public CardInquiry cardInquiry() {
+		return cardInquiry;
+	}
+	
+	/** Pauses the {@link Combat}. @throws NullPointerException if {@code inquiry} is {@code null}. */
+	public void setInquiry(CardInquiry inquiry) {
+		Objects.requireNonNull(inquiry);
+		if(cardInquiry() != null)
+			throw new IllegalStateException(String.format("Combat already has an active inquiry: %s", cardInquiry()));
+		if(stack().isEmpty())
+			throw new IllegalStateException("Stack is empty");
+		if(!(stack().peek() instanceof CardAccepting))
+			throw new IllegalStateException(String.format("The top Action on the stack is not CardAccepting; it is: %s", 
+					stack().peek()));
+		this.cardInquiry = inquiry;
+		pause();
+	}
+	
+	/** Sets {@link #cardInquiry()} to {@code null}. */
+	public void clearInquiry() {
+		cardInquiry = null;
 	}
 	
 	/** Unmodifiable. */
