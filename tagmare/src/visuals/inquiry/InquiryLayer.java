@@ -1,29 +1,40 @@
 package visuals.inquiry;
 
-import javafx.scene.control.Button;
+import java.util.*;
+
+import javafx.collections.ObservableList;
+import javafx.scene.*;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import mechanics.Hub;
-import mechanics.input.CardInquiry;
+import mechanics.cards.Card;
+import mechanics.input.*;
 import utils.Colls;
 import visuals.*;
 import visuals.fxutils.*;
+import visuals.hand.HandLayer;
 
 /** Invisible by default. */
 public class InquiryLayer extends Pane {
 
-	public static final double CONFIRM_WIDTH = 80, CONFIRM_HEIGHT = 30, CONFIRM_Y = 650;
+	public static final double PHANTOM_Y = 350, CONFIRM_WIDTH = 80, CONFIRM_HEIGHT = 30, CONFIRM_Y = 650;
 	
 	private final Button confirm;
+	private final Group phantomGroup;
 	
 	private CardInquiry inquiry;
 	
 	public InquiryLayer() {
 		confirm = new Button();
+		confirm.setText("Confirm");
+		confirm.setOnAction(ae -> confirmAction());
+		phantomGroup = new Group();
 		Nodes.setPrefAndMaxSize(this, GameScene.WIDTH, GameScene.HEIGHT);
 		Nodes.setLayout(confirm, GameScene.CENTER_X - CONFIRM_WIDTH * .5, CONFIRM_Y);
+		Nodes.setPrefAndMaxSize(confirm, CONFIRM_WIDTH, CONFIRM_HEIGHT);
 		setBackground(Backgrounds.of(Color.grayRgb(120, 0.5)));
-		getChildren().add(confirm);
+		getChildren().addAll(confirm, phantomGroup);
 		setOpacity(0);
 		setVisible(false);
 	}
@@ -33,6 +44,60 @@ public class InquiryLayer extends Pane {
 		CardRepresentation.of(Colls.any(Hub.combat().cardsInPlay())).startFlyToTop();
 		setOpacity(1);
 		setVisible(true);
+	}
+	
+	public void clickedCardFromHand(Card card) {
+		ObservableList<Node> c = phantomGroup.getChildren();
+		if(inquiry.selection() instanceof RangeSelection && c.size() == ((RangeSelection) inquiry.selection()).max())
+			return;
+		PhantomCard pc = PhantomCard.of(card);
+		if(!c.contains(pc)) {
+			double[] coords = HandLayer.X_COORDS[c.size() + 1];
+			pc.setLayoutY(PHANTOM_Y);
+			pc.updateText();
+			for(int i = 0; i < c.size(); i++)
+				c.get(i).setLayoutX(coords[i]);
+			pc.setLayoutX(coords[coords.length - 1]);
+			c.add(pc);
+		}
+	}
+	
+	public void clickedPhantom(Card card) {
+		ObservableList<Node> c = phantomGroup.getChildren();
+		PhantomCard pc = PhantomCard.of(card);
+		if(c.contains(pc)) {
+			c.remove(pc);
+			double[] coords = HandLayer.X_COORDS[c.size()];
+			for(int i = 0; i < c.size(); i++)
+				c.get(i).setLayoutX(coords[i]);
+		}
+	}
+	
+	public Group phantomGroup() {
+		return phantomGroup;
+	}
+	
+	/** Modifiable (changes do not affect this). Returns the {@link Card Cards} that are shown as phantoms. */
+	public List<Card> cards() {
+		ObservableList<Node> c = phantomGroup.getChildren();
+		List<Card> cards = new ArrayList<>(c.size());
+		for(Node n : c)
+			cards.add(((PhantomCard) n).card());
+		return cards;
+	}
+	
+	private void confirmAction() {
+		List<Card> cards = cards();
+		if(Hub.combat().canSupplyCardsToInquiry(cards)) {
+			phantomGroup.getChildren().clear();
+			setVisible(false);
+			inquiry = null;
+			Hub.combat().requestSupplyCardsToInquiry(cards);
+		}
+	}
+	
+	public boolean isActive() {
+		return inquiry != null;
 	}
 	
 }

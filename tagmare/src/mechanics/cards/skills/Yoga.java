@@ -9,7 +9,7 @@ import mechanics.input.SRHInquiry;
 
 public class Yoga extends AbstractCard implements Skill {
 
-	public static final int DRAW = 3;
+	public static final int DRAW = 3, MIN_DISCARD = 1, MAX_DISCARD = 3;
 	
 	public Yoga() {
 		super(CardTag.YOGA);

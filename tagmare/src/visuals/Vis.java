@@ -51,6 +51,10 @@ public final class Vis {
 		return gameScene().inquiryLayer();
 	}
 	
+	public static boolean inquiryActive() {
+		return inquiryLayer().isActive();
+	}
+	
 	public static double mouseX() {
 		return gameScene().mouseX();
 	}

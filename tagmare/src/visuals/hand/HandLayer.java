@@ -16,9 +16,10 @@ import visuals.piles.DiscardPileLayer;
 /** Contains the {@link CardRepresentation CardRepresentations} for the player's {@link Hand}. */
 public class HandLayer extends Pane implements Updatable {
 
-	private static final double SPACING = 12;
 	/** Each row is the x-coordinates for a given size. */
-	private static final double[][] X_COORDS = new double[Hand.MAX_SIZE + 1][];
+	public static final double[][] X_COORDS = new double[Hand.MAX_SIZE + 1][];
+	
+	private static final double SPACING = 12;
 	private static final Duration
 			CARD_DRAW_DURATION = Duration.millis(600),
 			CARD_SHIFT_DURATION = CARD_DRAW_DURATION.multiply(2d / 3);

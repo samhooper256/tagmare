@@ -48,7 +48,7 @@ public enum CardTag {
 			ct(String.format("Attacks deal %.0f%% more damage for the rest of this combat.", 
 			mechanics.modifiers.buffs.Discipline.PERCENT * 100))),
 	YOGA("Yoga", 1, false, Yoga::new,
-			"Do some stuff");
+			String.format("Draw %d cards. Discard between %d and %d cards.", Yoga.DRAW, Yoga.MIN_DISCARD, Yoga.MAX_DISCARD));
 	
 	private static CardText ct(String formattedString, int... defaultValuesOfVariables) {
 		return new CardText(formattedString, defaultValuesOfVariables);

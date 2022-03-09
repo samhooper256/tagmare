@@ -2,11 +2,8 @@ package visuals;
 
 import java.util.*;
 
-import base.*;
-import javafx.geometry.Pos;
+import base.Updatable;
 import javafx.scene.Node;
-import javafx.scene.layout.*;
-import javafx.scene.text.*;
 import javafx.util.Duration;
 import mechanics.Hub;
 import mechanics.cards.Card;
@@ -17,15 +14,13 @@ import visuals.hand.*;
 import visuals.piles.DiscardPileLayer;
 import visuals.ribbon.BottomRibbon;
 
-public final class CardRepresentation extends StackPane implements Updatable {
+public final class CardRepresentation extends AbstractCardRepresentation implements Updatable {
 	
 	public static final double 
-			WIDTH = 176, HEIGHT = WIDTH * 1.5,
 			Y = BottomRibbon.Y - HEIGHT,
 			ATTACK_X = GameScene.CENTER_X - WIDTH * .5, ATTACK_Y = 450,
 			TOP_X = GameScene.CENTER_X - WIDTH * .5, TOP_Y = 20;
 	public static final Duration SCALE_DURATION = Duration.millis(500);
-	public static final Font NAME_FONT = Fonts.UI_18_BOLD, TEXT_FONT = Fonts.UI_14;
 	
 	private static final Duration
 		FOCUS_DURATION = Duration.millis(400),
@@ -124,10 +119,7 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		}
 	}
 	
-	private final Card card;
-	private final VBox vBox;	
-	private final Text name, text;
-	private final List<Node> faceUpChildren, faceDownChildren;
+	private final List<Node> faceDownChildren;
 	
 	private State state;
 	private boolean hovered, faceUp;
@@ -135,29 +127,16 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	private Enemy target;
 	
 	private CardRepresentation(Card card) {
-		this.card = card;
-		name = new Text(String.format("%s (%d)\n", card.displayName(), card.energyCost()));
-		name.setWrappingWidth(WIDTH);
-		name.setFont(NAME_FONT);
-		text = Nodes.text(card.text().defaultText(), TEXT_FONT);
-		text.setWrappingWidth(WIDTH);
-		vBox = new VBox(name, text);
-		vBox.setAlignment(Pos.TOP_CENTER);
+		super(card);
 		Nodes.setPrefAndMaxSize(this, WIDTH, HEIGHT);
-		faceUpChildren = new ArrayList<>();
-		Collections.addAll(faceUpChildren, new Sprite(Images.CARD_BASE), vBox);
 		faceDownChildren = new ArrayList<>();
 		Collections.addAll(faceDownChildren, new Sprite(Images.CARD_BACK));
 		state = State.DOWN;
 		hovered = false;
+		faceUp = true;
 		setOnMouseEntered(e -> hoverEntered());
 		setOnMouseExited(e -> hoverExited());
 		setOnMousePressed(e -> mousePressed());
-		setFaceUp();
-	}
-	
-	public Card card() {
-		return card;
 	}
 	
 	@Override
@@ -194,6 +173,10 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	}
 
 	private void mousePressed() {
+		if(Vis.inquiryActive()) {
+			Vis.inquiryLayer().clickedCardFromHand(card);
+			return;
+		}
 		if(Vis.handLayer().hasSelected() && Vis.handLayer().selected() != this)
 			return;
 		if(cma != null)
@@ -349,11 +332,6 @@ public final class CardRepresentation extends StackPane implements Updatable {
 		return Hub.stack().isEmpty();
 	}
 
-	public void updateText() {
-		card.updateText();
-		text.setText(card.text().displayText());
-	}
-	
 	private void upFinished() {
 		state = State.UP;
 	}
@@ -398,11 +376,6 @@ public final class CardRepresentation extends StackPane implements Updatable {
 			return;
 		faceUp = false;
 		setChildren(faceDownChildren);
-	}
-	
-	private void setChildren(List<Node> children) {
-		getChildren().clear();
-		getChildren().addAll(children);
 	}
 	
 	public State state() {

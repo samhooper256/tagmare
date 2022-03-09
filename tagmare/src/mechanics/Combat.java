@@ -175,13 +175,17 @@ public final class Combat {
 	/** Return {@code false} if the cards cannot be passed to the {@link CardAccepting} action for any reason.
 	 * Calls {@link #resume()}. */
 	public boolean requestSupplyCardsToInquiry(List<Card> cards) {
-		if(cardInquiry() != null && paused() && !stack().isEmpty() && stack().peek() instanceof CardAccepting &&
-				cardInquiry().selection().validate(cards)) {
+		if(canSupplyCardsToInquiry(cards)) {
 			((CardAccepting) stack().peek()).setCards(cards);
 			resume();
 			return true;
 		}
 		return false;
+	}
+
+	public boolean canSupplyCardsToInquiry(List<Card> cards) {
+		return cardInquiry() != null && paused() && !stack().isEmpty() && stack().peek() instanceof CardAccepting &&
+				cardInquiry().selection().validate(cards);
 	}
 	
 	public void pause() {
