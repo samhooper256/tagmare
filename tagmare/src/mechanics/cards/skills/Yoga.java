@@ -25,7 +25,7 @@ public class Yoga extends AbstractCard implements Skill {
 		Action[] actions = new Action[DRAW + 2];
 		for(int i = 0; i < DRAW; i++)
 			actions[i] = new SimpleDrawRequest();
-		actions[DRAW] = new SetInquiry(new SRHInquiry(1, 3), this);
+		actions[DRAW] = new SetInquiry(new SRHInquiry(1, 3, "to discard"), this);
 		actions[DRAW + 1] = new YogaDiscard(this);
 		return SkillEffects.apply(this, actions);
 	}

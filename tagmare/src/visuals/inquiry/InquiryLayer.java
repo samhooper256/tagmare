@@ -18,29 +18,33 @@ import visuals.hand.HandLayer;
 /** Invisible by default. */
 public class InquiryLayer extends Pane {
 
-	public static final double PHANTOM_Y = 350, CONFIRM_WIDTH = 80, CONFIRM_HEIGHT = 30, CONFIRM_Y = 650;
+	public static final double
+		PHANTOM_Y = 350,
+		CONFIRM_Y = 650, CONFIRM_WIDTH = 80, CONFIRM_HEIGHT = 30;
 	
+	private final Instructions instructions;
 	private final Button confirm;
 	private final Group phantomGroup;
 	
 	private CardInquiry inquiry;
 	
 	public InquiryLayer() {
-		confirm = new Button();
-		confirm.setText("Confirm");
+		confirm = new Button("Confirm");
 		confirm.setOnAction(ae -> confirmAction());
+		instructions = new Instructions();
 		phantomGroup = new Group();
 		Nodes.setPrefAndMaxSize(this, GameScene.WIDTH, GameScene.HEIGHT);
 		Nodes.setLayout(confirm, GameScene.CENTER_X - CONFIRM_WIDTH * .5, CONFIRM_Y);
 		Nodes.setPrefAndMaxSize(confirm, CONFIRM_WIDTH, CONFIRM_HEIGHT);
-		setBackground(Backgrounds.of(Color.grayRgb(120, 0.5)));
-		getChildren().addAll(confirm, phantomGroup);
+		setBackground(Backgrounds.of(Color.grayRgb(0, 0.5)));
+		getChildren().addAll(confirm, phantomGroup, instructions);
 		setOpacity(0);
 		setVisible(false);
 	}
 	
 	public void startInquiry(CardInquiry inquiry) {
 		this.inquiry = inquiry;
+		instructions.setText(inquiry.displayText());
 		CardRepresentation.of(Colls.any(Hub.combat().cardsInPlay())).startFlyToTop();
 		setOpacity(1);
 		setVisible(true);

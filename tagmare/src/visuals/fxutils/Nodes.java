@@ -106,4 +106,15 @@ public final class Nodes {
 		return l;
 	}
 	
+	public static Text text(Font font, Paint textFill) {
+		return text("", font, textFill);
+	}
+	
+	public static Text text(String text, Font font, Paint textFill) {
+		Text l = new Text(text);
+		l.setFont(font);
+		l.setFill(textFill);
+		return l;
+	}
+	
 }

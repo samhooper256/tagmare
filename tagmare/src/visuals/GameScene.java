@@ -1,6 +1,6 @@
 package visuals;
 
-import base.Updatable;
+import base.*;
 import javafx.scene.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -65,6 +65,8 @@ public class GameScene extends Scene implements Updatable {
 		
 		content.getChildren().addAll(bottom, enemyLayer, infoLayer, pileLayer, inquiryLayer,
 				handLayer, ribbonLayer, debugLayer);
+		
+		getStylesheets().add(Main.class.getResource(Main.RESOURCES_PREFIX + "style.css").toExternalForm());
 		
 		setOnMouseMoved(this::mouseMoved);
 	}

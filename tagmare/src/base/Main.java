@@ -11,7 +11,7 @@ import visuals.*;
 
 public class Main extends Application {
 	
-	private static final String RESOURCES_PREFIX = "/resources/";
+	public static final String RESOURCES_PREFIX = "/resources/";
 	
 	public static void main(String[] args) {
 		launch(args);
