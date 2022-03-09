@@ -1,7 +1,6 @@
 package mechanics.actions;
 
 import mechanics.Hub;
-import mechanics.actions.list.ActionList;
 import mechanics.cards.Card;
 import mechanics.effects.*;
 
@@ -17,10 +16,8 @@ public class NaturalDiscard extends AbstractAction implements HasCard {
 	@Override
 	public void execute() {
 		Hub.combat().discardNaturally(card);
-		ActionList pc = PlayCardEffects.apply(card);
-		Hub.stack().pushReversed(pc);
-		ActionList nd = NaturalDiscardEffects.apply(card);
-		Hub.stack().pushReversed(nd);
+		Hub.stack().pushReversed(PlayCardEffects.apply(card));
+		Hub.stack().pushReversed(NaturalDiscardEffects.apply(card));
 	}
 	
 	@Override

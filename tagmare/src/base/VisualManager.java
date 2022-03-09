@@ -17,15 +17,6 @@ public interface VisualManager extends Updatable {
 	 * {@link ActionStack}. */
 	void executeAction(Action action);
 	
-	default void requestPlayCardFromHand(Card card) {
-		requestPlayCardFromHand(card, null);
-	}
-	
-	/** Checks the legality of the given {@link Card}. If legal and the {@link Hub#combat() combat} is not
-	 * {@link Combat#isRunning() running}, adds playing the card to the {@link ActionStack}.
-	 * Returns {@code false} iff the card could not be played. */
-	boolean requestPlayCardFromHand(Card card, Enemy target);
-	
 	/** @throws IllegalArgumentException if can't be played. */
 	void playCardFromHand(Card card, Enemy target);
 	
@@ -43,5 +34,7 @@ public interface VisualManager extends Updatable {
 	default boolean waitingOnAnimation() {
 		throw new UnsupportedOperationException("waitingOnAnimation");
 	}
+	
+	void startCombat(Combat c);
 	
 }

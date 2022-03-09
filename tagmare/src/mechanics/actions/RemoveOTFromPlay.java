@@ -2,6 +2,7 @@ package mechanics.actions;
 
 import mechanics.Hub;
 import mechanics.cards.Card;
+import mechanics.effects.PlayCardEffects;
 
 public class RemoveOTFromPlay extends AbstractAction implements HasCard {
 
@@ -15,6 +16,7 @@ public class RemoveOTFromPlay extends AbstractAction implements HasCard {
 	@Override
 	public void execute() {
 		Hub.combat().removeOTFromPlay(card);
+		Hub.stack().pushReversed(PlayCardEffects.apply(card));
 	}
 	
 	@Override

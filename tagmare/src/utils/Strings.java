@@ -39,7 +39,7 @@ public final class Strings {
 	}
 	
 	public static boolean containsOnlyDigits(String s, int startInclusive) {
-		return containsOnlyDigits(s, 0, s.length());
+		return containsOnlyDigits(s, startInclusive, s.length());
 	}
 	
 	public static boolean containsOnlyDigits(String s, int startInclusive, int endExclusive) {

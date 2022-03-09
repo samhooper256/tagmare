@@ -2,6 +2,7 @@ package visuals.piles;
 
 import java.util.List;
 
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import mechanics.cards.Card;
 import visuals.CardRepresentation;
@@ -15,7 +16,7 @@ public class DrawPileLayer extends Pane {
 		setMouseTransparent(true);
 	}
 	
-	public void setCards(List<Card> cardsBottomToTop) {
+	public void setCards(Iterable<Card> cardsBottomToTop) {
 		getChildren().clear();
 		for(Card card : cardsBottomToTop) {
 			CardRepresentation cr = CardRepresentation.of(card);
@@ -23,6 +24,10 @@ public class DrawPileLayer extends Pane {
 			Nodes.setLayout(cr, CARD_X, CARD_Y);
 			getChildren().add(cr);
 		}
+	}
+	
+	public List<Node> cardRepresentations() {
+		return getChildren();
 	}
 	
 }

@@ -3,6 +3,7 @@ package visuals;
 import java.util.List;
 
 import base.VisualManager;
+import javafx.scene.Node;
 import mechanics.*;
 import mechanics.actions.*;
 import mechanics.cards.Card;
@@ -95,6 +96,12 @@ public final class VisualManagerImpl implements VisualManager {
 			action.execute();
 			updateAllEnemies();
 			Vis.ribbonLayer().bottom().updateModifiers();
+			updateAllTexts();
+		}
+		else if(action instanceof DecreaseMotivationalVideoEffectiveness) {
+			waitingOnAnimation = false;
+			action.execute();
+			updateAllTexts();
 		}
 		else if(action instanceof ClearEnemy) {
 			waitingOnAnimation = false;
@@ -118,9 +125,22 @@ public final class VisualManagerImpl implements VisualManager {
 		for(Enemy e : Hub.enemies())
 			EnemyRepresentation.of(e).update();
 	}
-	@Override
-	public boolean requestPlayCardFromHand(Card card, Enemy target) {
-		return false; //TODO
+	
+	private void updateAllTexts() {
+		for(Node n : Vis.handLayer().cardGroup().getChildren()) {
+			CardRepresentation cr = (CardRepresentation) n;
+			if(Hub.deck().cards().contains(cr.card()))
+				throw new IllegalStateException(String.format("%s should not be in cardGroup", cr.card()));
+			cr.updateText();
+		}
+		for(Node n : Vis.pileLayer().draw().cardRepresentations()) {
+			CardRepresentation cr = (CardRepresentation) n;
+			if(Hub.deck().cards().contains(cr.card()))
+				throw new IllegalStateException(String.format("%s should not be in draw", cr.card()));
+			cr.updateText();
+		}
+		for(Node n : Vis.pileLayer().discard().cardRepresentations())
+			((CardRepresentation) n).updateText();
 	}
 	
 	@Override
@@ -131,6 +151,13 @@ public final class VisualManagerImpl implements VisualManager {
 		Hub.combat().resume();
 	}
 	
+	
+	@Override
+	public void startCombat(Combat c) {
+		c.start();
+		Vis.pileLayer().draw().setCards(c.drawPile());
+	}
+
 	@Override
 	public void update(long diff) {
 		GameScene.get().update(diff);

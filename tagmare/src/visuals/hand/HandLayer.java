@@ -106,7 +106,7 @@ public class HandLayer extends Pane implements Updatable {
 	
 	private void naturalDiscardFinisher(CardRepresentation cr) {
 		Vis.handLayer().removeFromInPlayOrThrow(cr.card());
-		Vis.pileLayer().discard().addToTop(cr);
+		Vis.pileLayer().discard().addToTop(cr); //this removes cr as a child of cardGroup.
 		setSelected(null);
 		VisualManager.get().checkedResumeFromAnimation();
 	}
@@ -201,6 +201,11 @@ public class HandLayer extends Pane implements Updatable {
 	
 	public Arrow arrow() {
 		return arrow;
+	}
+	
+	/** All {@link Group#getChildren() children} are {@link CardRepresentation CardRepresentations}. */
+	public Group cardGroup() {
+		return cardGroup;
 	}
 	
 	public void debugPrint() {

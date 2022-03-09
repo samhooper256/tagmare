@@ -207,7 +207,8 @@ public final class Combat {
 	
 	/** Assumes the given {@link Card} is in the {@link Hand}. */
 	public void discardFromHandExplicitly(Card card) {
-		discardEOT(card);
+		hand().removeOrThrow(card);
+		discardPile().addToTop(card);
 	}
 
 	/** Should only be called by {@link RemoveOTFromPlay#execute()}.
@@ -241,6 +242,22 @@ public final class Combat {
 	/** Unmodifiable. */
 	public Set<Card> cardsInPlay() {
 		return Collections.unmodifiableSet(cardsInPlay);
+	}
+	
+	/** Returns a {@link Set} of all {@link Card Cards} that are currently in this {@link Combat}. This includes all
+	 * cards in the discard pile, draw pile, and hand, as well as cards that are currently being played. This does
+	 * not include OT cards that have been used, nor does it include cards from the {@link Deck}. */
+	public Set<Card> cardsInCombat() {
+		Set<Card> cards = new HashSet<>();
+		for(Card c : cardsInPlay)
+			cards.add(c);
+		for(Card c : hand())
+			cards.add(c);
+		for(Card c : drawPile())
+			cards.add(c);
+		for(Card c : discardPile())
+			cards.add(c);
+		return cards;
 	}
 	
 	public DrawPile drawPile() {

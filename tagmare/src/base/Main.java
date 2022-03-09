@@ -7,7 +7,7 @@ import javafx.application.*;
 import javafx.stage.Stage;
 import mechanics.Hub;
 import mechanics.actions.DealDamage;
-import visuals.GameScene;
+import visuals.*;
 
 public class Main extends Application {
 	
@@ -49,7 +49,7 @@ public class Main extends Application {
 		t.setDaemon(true);
 		t.start();
 //		primaryStage.setMaximized(true);
-		Hub.combat().start();
+		Vis.manager().startCombat(Hub.combat());
 		System.out.println(Hub.deck());
 		Updater.startTimer();
 	}

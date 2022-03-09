@@ -5,7 +5,6 @@ import javafx.scene.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.transform.Scale;
-import mechanics.Hub;
 import visuals.debug.DebugLayer;
 import visuals.enemies.EnemyLayer;
 import visuals.fxutils.Nodes;
@@ -61,7 +60,6 @@ public class GameScene extends Scene implements Updatable {
 		debugLayer = new DebugLayer();
 		
 		content.getChildren().addAll(bottom, enemyLayer, infoLayer, pileLayer, handLayer, ribbonLayer, debugLayer);
-		pileLayer.draw().setCards(Hub.deck().cards());
 		
 		setOnMouseMoved(this::mouseMoved);
 	}

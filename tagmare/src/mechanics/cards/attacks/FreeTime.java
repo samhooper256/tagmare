@@ -8,7 +8,7 @@ import mechanics.enemies.Enemy;
 
 public class FreeTime extends AbstractCard implements Attack {
 
-	public static final int DAMAGE = 4, BLOCK = 4;
+	public static final int DAMAGE = 3, BLOCK = 3;
 	
 	public FreeTime() {
 		super(CardTag.FREE_TIME);

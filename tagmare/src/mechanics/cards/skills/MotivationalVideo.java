@@ -1,8 +1,11 @@
 package mechanics.cards.skills;
 
+import mechanics.actions.*;
 import mechanics.actions.list.ActionList;
 import mechanics.cards.*;
+import mechanics.effects.SkillEffects;
 import mechanics.enemies.Enemy;
+import mechanics.modifiers.buffs.Motivation;
 
 public class MotivationalVideo extends AbstractCard implements Skill {
 
@@ -20,6 +23,10 @@ public class MotivationalVideo extends AbstractCard implements Skill {
 		this.effectiveness = BASE_EFFECTIVENESS;
 	}
 	
+	public void decreaseEffectiveness() {
+		effectiveness = Math.max(0, effectiveness - 1);
+	}
+	
 	@Override
 	public Card copy() {
 		return new MotivationalVideo(effectiveness);
@@ -27,8 +34,25 @@ public class MotivationalVideo extends AbstractCard implements Skill {
 
 	@Override
 	public ActionList generateActions(Enemy target) {
-		// TODO Auto-generated method stub
-		return null;
+		return SkillEffects.apply(this,
+			ApplyModifier.toPlayer(new Motivation(effectiveness()), this),
+			new DecreaseMotivationalVideoEffectiveness(this)
+		);
+	}
+	
+	@Override
+	public void updateText() {
+		super.updateText();
+		text().set("W", effectiveness);
+	}
+	
+	public int effectiveness() {
+		return effectiveness;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("MotivationalVideo@%x", hashCode());
 	}
 
 }

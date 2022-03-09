@@ -333,6 +333,7 @@ public final class CardRepresentation extends StackPane implements Updatable {
 
 	public void updateText() {
 		card.updateText();
+		text.setText(card.text().displayText());
 	}
 	
 	private void upFinished() {
@@ -388,6 +389,11 @@ public final class CardRepresentation extends StackPane implements Updatable {
 	
 	public State state() {
 		return state;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("CR[%s]", card);
 	}
 	
 	public void debugPrint(String prefix) {

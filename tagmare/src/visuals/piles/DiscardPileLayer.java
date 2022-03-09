@@ -1,5 +1,8 @@
 package visuals.piles;
 
+import java.util.List;
+
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import visuals.*;
 import visuals.fxutils.Nodes;
@@ -16,6 +19,10 @@ public class DiscardPileLayer extends Pane {
 		Nodes.setLayout(cr, CARD_X, CARD_Y);
 		cr.setFaceDown();
 		getChildren().add(cr);
+	}
+	
+	public List<Node> cardRepresentations() {
+		return getChildren();
 	}
 	
 }
