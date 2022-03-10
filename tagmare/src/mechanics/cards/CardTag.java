@@ -53,7 +53,9 @@ public enum CardTag {
 	TAKE_A_BREAK("Take A Break", 1, false, TakeABreak::new,
 			ct(String.format("End your turn. At the start of next turn, gain %d Concentration.", TakeABreak.CONCENTRATION)), true),
 	PLANNER("Planner", 1, false, Planner::new,
-			ct("At the start of next turn, gain B0 block.", Planner.BLOCK));
+			ct("At the start of next turn, gain B0 block.", Planner.BLOCK)),
+	STUDY("Study", 1, false, Study::new,
+			ct("Gain B0 block.", Study.BLOCK));
 	
 	private static CardText ct(String formattedString, int... defaultValuesOfVariables) {
 		return new CardText(formattedString, defaultValuesOfVariables);
