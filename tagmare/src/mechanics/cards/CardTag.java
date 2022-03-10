@@ -66,7 +66,10 @@ public enum CardTag {
 	EXCUSE("Excuse", 0, true, Excuse::new,
 			ct("Cancel an enemy's attack. Increase the energy cost of all Excuses by 1."), true),
 	MEMORIZE("Memorize", 1, false, Memorize::new,
-			ct("Gain B0 block. You can no longer gain block from skills this turn", Memorize.BLOCK));
+			ct("Gain B0 block. You can no longer gain block from skills this turn", Memorize.BLOCK)),
+	RESERVES("Reserves", 0, false, Reserves::new,
+			ct(String.format("Lose your remaining energy. At the start of next turn, gain this much energy plus %d.",
+			Reserves.ADDITIONAL)));
 	
 	private static CardText ct(String formattedString, int... defaultValuesOfVariables) {
 		return new CardText(formattedString, defaultValuesOfVariables);

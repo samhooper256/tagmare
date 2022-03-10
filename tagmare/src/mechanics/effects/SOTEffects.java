@@ -23,6 +23,11 @@ public final class SOTEffects {
 			list.add(new ChangeEnergy(-tired.integer(), tired));
 			list.add(RemoveModifier.fromPlayer(TIRED, null));
 		}
+		if(pmods.contains(RESERVES)) {
+			Modifier r = pmods.getModifierOrThrow(RESERVES);
+			list.add(new ChangeEnergy(r.integer(), r));
+			list.add(RemoveModifier.fromPlayer(RESERVES, null));
+		}
 		if(pmods.contains(PLANNING_AHEAD)) {
 			Modifier pa = pmods.getModifierOrThrow(PLANNING_AHEAD);
 			list.add(new GainBlock(pa.integer(), pa));
