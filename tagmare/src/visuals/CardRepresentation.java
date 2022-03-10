@@ -11,7 +11,6 @@ import mechanics.enemies.Enemy;
 import visuals.animations.*;
 import visuals.fxutils.*;
 import visuals.hand.*;
-import visuals.piles.DiscardPileLayer;
 import visuals.ribbon.BottomRibbon;
 
 public final class CardRepresentation extends AbstractCardRepresentation implements Updatable {
@@ -25,7 +24,6 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 	private static final Duration
 		FOCUS_DURATION = Duration.millis(400),
 		FLY_BACK_DURATION = Duration.millis(500),
-		FLY_TO_DISCARD_DURATION = Duration.millis(400),
 		REMOVE_OT_DURATION = Duration.millis(500),
 		TO_TOP_DURATION = Duration.millis(500);
 	private static final double FOCUS_Y = Y - 50, POISED_Y = FOCUS_Y - 50;
@@ -89,17 +87,6 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 			setInterpolator(Interpolator.LINEAR);
 			setFinish(CardRepresentation.this::flyBackFinished);
 		}
-	}
-	
-	private class EOTDiscardAnimation extends CardMoveAnimation {
-		
-		public EOTDiscardAnimation() {
-			super(CardRepresentation.this, FLY_TO_DISCARD_DURATION);
-			setInterpolator(Interpolator.LINEAR);
-			setDest(DiscardPileLayer.CARD_X, DiscardPileLayer.CARD_Y);
-			setFinish(CardRepresentation.this::eotDiscardFinished);
-		}
-		
 	}
 	
 	private class RemoveOTAnimation extends FadeAnimation {
@@ -177,10 +164,10 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 			Vis.inquiryLayer().clickedCardFromHand(card);
 			return;
 		}
-		if(Vis.handLayer().hasSelected() && Vis.handLayer().selected() != this)
+		if(	(Vis.handLayer().addInProgress()) ||
+			(Vis.handLayer().hasSelected() && Vis.handLayer().selected() != this))
 			return;
-		if(cma != null)
-			Animation.manager().cancel(cma);
+		cancelAnimation();
 		cma = null;
  		if(state == State.BEING_PLAYED || state == State.FLYING_TO_DISCARD ||
  				state == State.FLYING_BACK || state == State.TO_POISED) {
@@ -204,8 +191,7 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 	}
 
 	private void startFlyBack() {
-		if(cma != null)
-			Animation.manager().cancel(cma);
+		cancelAnimation();
 		Vis.handLayer().setSelected(null);
 		setMouseTransparent(true);
 		cma = new FlyBackAnimation().setStart().setDest(Vis.handLayer().xCoord(this), Y);
@@ -226,8 +212,7 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 	}
 
 	private void startBeingPlayed() {
-		if(cma != null)
-			Animation.manager().cancel(cma);
+		cancelAnimation();
 		cma = new ScaleAnimation(SCALE_DURATION, this, .8);
 		cma.setFinish(this::beingPlayedFinished);
 		Animation.manager().add(cma);
@@ -244,8 +229,7 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 		if(!card.isTargetted())
 			throw new IllegalStateException(String.format("Not a targetted card: %s", card));
 		this.target = Objects.requireNonNull(target);
-		if(cma != null)
-			Animation.manager().cancel(cma);
+		cancelAnimation();
 		Vis.handLayer().arrow().unbindAndHide();
 		cma = new ToAttackAnimation().setStart();
 		Animation.manager().add(cma);
@@ -257,23 +241,8 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 		target = null;
 	}
 	
-	public void startEOTToDiscard() {
-		if(cma != null)
-			Animation.manager().cancel(cma);
-		cma = new EOTDiscardAnimation().setStart();
-		Animation.manager().add(cma);
-		state = State.FLYING_TO_DISCARD;
-	}
-	
-	private void eotDiscardFinished() {
-		Vis.pileLayer().discard().addToTop(this);
-		state = State.DOWN;
-		Vis.manager().checkedResumeFromAnimation();
-	}
-	
 	public void startExpandBackToNormalSize() {
-		if(cma != null)
-			Animation.manager().cancel(cma);
+		cancelAnimation();
 		cma = new ScaleAnimation(SCALE_DURATION, this, 1);
 		cma.setFinish(this::expandBackToNormalFinished);
 		Animation.manager().add(cma);
@@ -284,8 +253,7 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 	}
 	
 	private void startToPoised() {
-		if(cma != null)
-			Animation.manager().cancel(cma);
+		cancelAnimation();
 		cma = new ToPoisedAnimation().setStart().setDest(getLayoutX(), POISED_Y);
 		state = State.TO_POISED;
 		Vis.handLayer().setSelected(this);
@@ -296,8 +264,7 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 	public void cancelPoise() {
 		if(state != State.TO_POISED)
 			return;
-		if(cma != null)
-			Animation.manager().cancel(cma);
+		cancelAnimation();
 		Vis.handLayer().arrow().unbindAndHide();
 		Vis.handLayer().setSelected(null);
 		state = State.TO_DOWN;
@@ -306,8 +273,7 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 	}
 	
 	public void startRemoveOT() {
-		if(cma != null)
-			Animation.manager().cancel(cma);
+		cancelAnimation();
 		cma = new RemoveOTAnimation();
 		Animation.manager().add(cma);
 	}
@@ -326,6 +292,11 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 			Animation.manager().cancel(cma);
 		cma = new ToTopAnimation().setStart();
 		Animation.manager().add(cma);
+	}
+	
+	public void cancelAnimation() {
+		if(cma != null)
+			Animation.manager().cancel(cma);
 	}
 	
 	private boolean canAnimate() {
@@ -380,6 +351,10 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 	
 	public State state() {
 		return state;
+	}
+	
+	public void setState(State state) {
+		this.state = state;
 	}
 	
 	@Override

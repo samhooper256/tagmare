@@ -7,11 +7,13 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import mechanics.Hub;
 import mechanics.cards.Card;
 import mechanics.input.*;
 import utils.Colls;
 import visuals.*;
+import visuals.animations.*;
 import visuals.fxutils.*;
 import visuals.hand.HandLayer;
 
@@ -21,6 +23,36 @@ public class InquiryLayer extends Pane {
 	public static final double
 		PHANTOM_Y = 350,
 		CONFIRM_Y = 650, CONFIRM_WIDTH = 80, CONFIRM_HEIGHT = 30;
+
+	private static final Duration FADE_DURATION = Duration.millis(500);
+	
+	private class FadeIn extends FadeAnimation {
+		
+		public FadeIn() {
+			super(InquiryLayer.this, FADE_DURATION, 0, 1);
+			setFinish(() -> setMouseTransparent(false));
+		}
+		
+	}
+	
+	private class FadeOut extends FadeAnimation {
+		
+		private final List<Card> cardsToSend;
+		
+		public FadeOut(List<Card> cardsToSend) {
+			super(InquiryLayer.this, FADE_DURATION, 1, 0);
+			this.cardsToSend = cardsToSend;
+			setFinish(this::finish);
+		}
+		
+		private void finish() {
+			phantomGroup.getChildren().clear();
+			setVisible(false);
+			inquiry = null;
+			Hub.combat().requestSupplyCardsToInquiry(cardsToSend);
+		}
+		
+	}
 	
 	private final Instructions instructions;
 	private final Button confirm;
@@ -40,14 +72,16 @@ public class InquiryLayer extends Pane {
 		getChildren().addAll(confirm, phantomGroup, instructions);
 		setOpacity(0);
 		setVisible(false);
+		setMouseTransparent(true);
 	}
-	
+
+	//Assumes opacity is 0.
 	public void startInquiry(CardInquiry inquiry) {
 		this.inquiry = inquiry;
 		instructions.setText(inquiry.displayText());
 		CardRepresentation.of(Colls.any(Hub.combat().cardsInPlay())).startFlyToTop();
-		setOpacity(1);
 		setVisible(true);
+		Animation.manager().add(new FadeIn());
 	}
 	
 	public void clickedCardFromHand(Card card) {
@@ -67,6 +101,8 @@ public class InquiryLayer extends Pane {
 	}
 	
 	public void clickedPhantom(Card card) {
+		if(isMouseTransparent())
+			return;
 		ObservableList<Node> c = phantomGroup.getChildren();
 		PhantomCard pc = PhantomCard.of(card);
 		if(c.contains(pc)) {
@@ -93,10 +129,8 @@ public class InquiryLayer extends Pane {
 	private void confirmAction() {
 		List<Card> cards = cards();
 		if(Hub.combat().canSupplyCardsToInquiry(cards)) {
-			phantomGroup.getChildren().clear();
-			setVisible(false);
-			inquiry = null;
-			Hub.combat().requestSupplyCardsToInquiry(cards);
+			setMouseTransparent(true);
+			Animation.manager().add(new FadeOut(cards));
 		}
 	}
 	

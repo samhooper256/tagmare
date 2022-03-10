@@ -37,7 +37,7 @@ public final class VisualManagerImpl implements VisualManager {
 			Hub.combat().pause();
 			action.execute();
 			Card card = ((HasCard) action).card();
-			CardRepresentation.of(card).startEOTToDiscard();
+			Vis.handLayer().startEOTToDiscard(card);
 		}
 		else if(action instanceof RemoveOTFromPlay) {
 			Hub.combat().pause();

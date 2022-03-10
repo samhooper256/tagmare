@@ -22,7 +22,8 @@ public class HandLayer extends Pane implements Updatable {
 	private static final double SPACING = 12;
 	private static final Duration
 			CARD_DRAW_DURATION = Duration.millis(600),
-			CARD_SHIFT_DURATION = CARD_DRAW_DURATION.multiply(2d / 3);
+			CARD_SHIFT_DURATION = CARD_DRAW_DURATION.multiply(2d / 3),
+			FLY_TO_DISCARD_DURATION = Duration.millis(500);
 	
 	static {
 		for(int count = 0; count <= Hand.MAX_SIZE; count++) {
@@ -37,7 +38,7 @@ public class HandLayer extends Pane implements Updatable {
 	private class NaturalDiscardAnimation extends CardMoveAnimation {
 		
 		public NaturalDiscardAnimation(CardRepresentation cr) {
-			super(cr, CardRepresentation.SCALE_DURATION);
+			super(cr, FLY_TO_DISCARD_DURATION);
 			setDest(DiscardPileLayer.CARD_X, DiscardPileLayer.CARD_Y);
 			setFinish(this::finisher);
 		}
@@ -47,6 +48,21 @@ public class HandLayer extends Pane implements Updatable {
 		}
 	}
 	
+	private class EOTDiscardAnimation extends CardMoveAnimation {
+		
+		public EOTDiscardAnimation(CardRepresentation cr) {
+			super(cr, FLY_TO_DISCARD_DURATION);
+			setStart();
+			setDest(DiscardPileLayer.CARD_X, DiscardPileLayer.CARD_Y);
+			setFinish(this::finisher);
+		}
+		
+		private void finisher() {
+			EOTDiscardFinisher(super.cardRepresentation());
+		}
+		
+	}
+
 	private final Group cardGroup;
 	private final Arrow arrow;
 	
@@ -112,6 +128,18 @@ public class HandLayer extends Pane implements Updatable {
 		VisualManager.get().checkedResumeFromAnimation();
 	}
 	
+	public void startEOTToDiscard(Card card) {
+		CardRepresentation cr = CardRepresentation.of(card);
+		cr.cancelAnimation();
+		Animation.manager().add(new EOTDiscardAnimation(cr));
+		cr.setState(State.FLYING_TO_DISCARD);
+	}
+	
+	private void EOTDiscardFinisher(CardRepresentation cr) {
+		Vis.pileLayer().discard().addToTop(cr);
+		cr.setState(State.DOWN);
+		Vis.manager().checkedResumeFromAnimation();
+	}
 	
 	private void startReorganize() {
 		int count = cardCountForWidth();
