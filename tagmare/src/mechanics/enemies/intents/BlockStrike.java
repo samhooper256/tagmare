@@ -5,7 +5,7 @@ import mechanics.actions.list.ActionList;
 import mechanics.enemies.Enemy;
 
 /** An intent that involves both a block and a single {@link Strike}. */
-public class BlockStrike implements BlockIntent {
+public class BlockStrike implements BlockIntent, AttackIntent {
 
 	private int block;
 	private Strike strike;

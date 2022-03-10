@@ -8,6 +8,10 @@ import mechanics.enemies.intents.*;
 public interface Enemy extends Entity {
 
 	String name();
+
+	/** Used to explicitly set this {@link Enemy Enemy's} {@link #intent()}. Note that {@link #updateIntent()} should
+	 * be used to give the enemy a new {@link Intent} for a new turn. */
+	void setIntent(Intent intent);
 	
 	/** Updates this {@link Enemy Enemy's} {@link #intent()} for the current turn. Assumes that {@link Combat#turn()}
 	 * has been incremented to the turn the {@code Intent} is for. */

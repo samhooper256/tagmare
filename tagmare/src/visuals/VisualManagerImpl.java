@@ -3,7 +3,6 @@ package visuals;
 import java.util.*;
 
 import base.VisualManager;
-import javafx.scene.Node;
 import mechanics.*;
 import mechanics.actions.*;
 import mechanics.cards.Card;
@@ -98,7 +97,12 @@ public final class VisualManagerImpl implements VisualManager {
 			Vis.ribbonLayer().bottom().updateModifiers();
 			updateAllTexts();
 		}
-		else if(action instanceof DecreaseMotivationalVideoEffectiveness) {
+		else if(action instanceof CancelIntent) {
+			waitingOnAnimation = false;
+			action.execute();
+			updateAllEnemies();
+		}
+		else if(action instanceof DecreaseMotivationalVideoEffectiveness || action instanceof IncreaseExcuseCost) {
 			waitingOnAnimation = false;
 			action.execute();
 			updateAllTexts();
@@ -140,20 +144,8 @@ public final class VisualManagerImpl implements VisualManager {
 	}
 	
 	private void updateAllTexts() {
-		for(Node n : Vis.handLayer().cardGroup().getChildren()) {
-			CardRepresentation cr = (CardRepresentation) n;
-			if(Hub.deck().cards().contains(cr.card()))
-				throw new IllegalStateException(String.format("%s should not be in cardGroup", cr.card()));
-			cr.updateText();
-		}
-		for(Node n : Vis.pileLayer().draw().cardRepresentations()) {
-			CardRepresentation cr = (CardRepresentation) n;
-			if(Hub.deck().cards().contains(cr.card()))
-				throw new IllegalStateException(String.format("%s should not be in draw", cr.card()));
-			cr.updateText();
-		}
-		for(Node n : Vis.pileLayer().discard().cardRepresentations())
-			((CardRepresentation) n).updateText();
+		for(Card c : Hub.combat().cardsInCombat())
+			CardRepresentation.of(c).updateText();
 	}
 	
 	@Override

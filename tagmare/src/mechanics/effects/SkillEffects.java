@@ -37,7 +37,9 @@ public final class SkillEffects {
 	public static int getModifiedBlock(Skill card, int block) {
 		ModifierSet pmods = Hub.player().modifiers();
 		int result = block;
-		if(pmods.contains(CONCENTRATION))
+		if(pmods.contains(MEMORIZING))
+			result = 0;
+		else if(pmods.contains(CONCENTRATION))
 			result += pmods.getModifierOrThrow(CONCENTRATION).integer();
 		return result;
 	}

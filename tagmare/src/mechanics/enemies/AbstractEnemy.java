@@ -25,4 +25,9 @@ abstract class AbstractEnemy extends AbstractEntity implements Enemy {
 		return intent;
 	}
 	
+	@Override
+	public void setIntent(Intent intent) {
+		this.intent = intent;
+	}
+	
 }

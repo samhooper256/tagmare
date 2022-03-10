@@ -14,7 +14,8 @@ public enum ModifierTag {
 	ON_LEAVE("On Leave", true),
 	CONCENTRATION("Concentration", true),
 	PLANNING_AHEAD("Planning Ahead", true),
-	TIRED("Tired", true);
+	TIRED("Tired", true),
+	MEMORIZING("Memorizing", false);
 	
 	private final String name;
 	private final boolean isInteger;

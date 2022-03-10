@@ -14,7 +14,7 @@ public class VocabQuiz extends AbstractEnemy {
 	@Override
 	protected Intent generateIntent() {
 		if(Hub.turn() % 2 == 0)
-			return new AttackIntent(11);
+			return new StrikeIntent(11);
 		else
 			return new BasicBlock(7);
 	}

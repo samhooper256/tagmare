@@ -10,4 +10,8 @@ public interface Intent {
 
 	public ActionList getActions(Enemy enemy);
 	
+	default boolean isAttack() {
+		return this instanceof AttackIntent;
+	}
+	
 }

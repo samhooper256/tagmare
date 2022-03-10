@@ -19,7 +19,7 @@ public class APESProgressCheck extends AbstractEnemy {
 
 	@Override
 	protected Intent generateIntent() {
-		return new AttackIntent(6);
+		return new StrikeIntent(6);
 	}
 	
 }

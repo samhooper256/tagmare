@@ -25,7 +25,8 @@ public abstract class AbstractCardRepresentation extends StackPane {
 	
 	public AbstractCardRepresentation(Card card) {
 		this.card = card;
-		name = new Text(String.format("%s (%d)\n", card.displayName(), card.energyCost()));
+		name = new Text();
+		updateName();
 		name.setWrappingWidth(WIDTH);
 		name.setFont(NAME_FONT);
 		text = Nodes.text(card.text().defaultText(), TEXT_FONT);
@@ -43,7 +44,12 @@ public abstract class AbstractCardRepresentation extends StackPane {
 	
 	public void updateText() {
 		card().updateText();
+		updateName();
 		text.setText(card.text().displayText());
+	}
+	
+	private void updateName() {
+		name.setText(String.format("%s (%d)\n", card.displayName(), card.energyCost()));
 	}
 	
 	protected void setChildren(List<Node> children) {
