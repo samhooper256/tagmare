@@ -2,8 +2,7 @@ package mechanics.actions;
 
 import mechanics.*;
 
-/** The energy change resulting from this {@link Action} must not make the {@link Energy} go negative; otherwise, an
- * exception will be thrown. */
+/** The energy change resulting from this {@link Action} will go to {@code 0} instead of going negative. */
 public class ChangeEnergy extends AbstractAction {
 
 	private int amount;
@@ -15,7 +14,8 @@ public class ChangeEnergy extends AbstractAction {
 	
 	@Override
 	public void execute() {
-		Hub.combat().energy().increase(amount());
+		Energy e = Hub.combat().energy();
+		e.increase(Math.max(-e.amount(), amount()));
 	}
 
 	public int amount() {

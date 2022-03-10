@@ -60,7 +60,9 @@ public enum CardTag {
 			ct(String.format("Gain %d energy.", Caffeine.ENERGY)), true),
 	READ_FOR_FUN("Read for Fun", 1, false, ReadForFun::new,
 			ct(String.format("Gain B0 block. Draw %d %s", ReadForFun.DRAW, English.plural("card", ReadForFun.DRAW)),
-			ReadForFun.BLOCK));
+			ReadForFun.BLOCK)),
+	CRAM("Cram", 2, false, Cram::new,
+			ct("Gain B0 block. Gain 1 Tired.", Cram.BLOCK));
 	
 	private static CardText ct(String formattedString, int... defaultValuesOfVariables) {
 		return new CardText(formattedString, defaultValuesOfVariables);

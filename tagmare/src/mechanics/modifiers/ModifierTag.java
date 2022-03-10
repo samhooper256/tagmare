@@ -13,7 +13,8 @@ public enum ModifierTag {
 	DISCIPLINE("Discipline", true),
 	ON_LEAVE("On Leave", true),
 	CONCENTRATION("Concentration", true),
-	PLANNING_AHEAD("Planning Ahead", true);
+	PLANNING_AHEAD("Planning Ahead", true),
+	TIRED("Tired", true);
 	
 	private final String name;
 	private final boolean isInteger;

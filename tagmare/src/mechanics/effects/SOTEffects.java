@@ -18,6 +18,11 @@ public final class SOTEffects {
 	public static ActionList apply() {
 		ActionListBuilder list = Action.listBuilder();
 		ModifierSet pmods = Hub.player().modifiers();
+		if(pmods.contains(TIRED)) {
+			Modifier tired = pmods.getModifierOrThrow(TIRED);
+			list.add(new ChangeEnergy(-tired.integer(), tired));
+			list.add(RemoveModifier.fromPlayer(TIRED, null));
+		}
 		if(pmods.contains(PLANNING_AHEAD)) {
 			Modifier pa = pmods.getModifierOrThrow(PLANNING_AHEAD);
 			list.add(new GainBlock(pa.integer(), pa));
