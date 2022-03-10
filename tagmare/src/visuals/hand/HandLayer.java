@@ -142,7 +142,7 @@ public class HandLayer extends Pane implements Updatable {
 		Vis.manager().checkedResumeFromAnimation();
 	}
 	
-	private void startReorganize() {
+	public void startReorganize() {
 		int count = cardCountForWidth();
 		int countExcludingPlaying = count;
 		for(int i = 0; i < count; i++)

@@ -18,7 +18,9 @@ public class Deck implements Iterable<Card> {
 		CardTag.REVIEW_NOTES,
 		CardTag.CAFFEINE,
 		CardTag.CAFFEINE,
-		CardTag.YOGA
+		CardTag.YOGA,
+		CardTag.READ_FOR_FUN,
+		CardTag.READ_FOR_FUN
 	);
 	
 	public static Deck createStartingDeck() {

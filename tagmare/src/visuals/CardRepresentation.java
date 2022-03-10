@@ -276,6 +276,7 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 		cancelAnimation();
 		cma = new RemoveOTAnimation();
 		Animation.manager().add(cma);
+		Vis.handLayer().startReorganize();
 	}
 	
 	private void removeOTFinished() {
