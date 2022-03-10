@@ -45,7 +45,7 @@ public final class VisualManagerImpl implements VisualManager {
 			Card card = ((HasCard) action).card();
 			CardRepresentation.of(card).startRemoveOT();
 		}
-		else if(action instanceof SetEnergy || action instanceof SpendEnergy) {
+		else if(action instanceof SetEnergy || action instanceof ChangeEnergy) {
 			Hub.combat().pause();
 			action.execute();
 			Vis.infoLayer().energyMeter().startEnergyChangeAnimation(Hub.energy().amount());

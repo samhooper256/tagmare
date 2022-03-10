@@ -30,6 +30,7 @@ public class Energy {
 		set(this.amount - amount);
 	}
 	
+	/** @throws IllegalArgumentException if would go negative. */
 	public void increase(int amount) {
 		set(this.amount + amount);
 	}

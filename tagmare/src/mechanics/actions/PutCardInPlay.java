@@ -29,7 +29,7 @@ public final class PutCardInPlay extends AbstractTargettedAction implements HasC
 		else
 			stack.push(new NaturalDiscard(card));
 		stack.pushReversed(card.generateActions(target()));
-		stack.push(new SpendEnergy(card.energyCost(), card));
+		stack.push(new ChangeEnergy(-card.energyCost(), card));
 	}
 	
 	@Override

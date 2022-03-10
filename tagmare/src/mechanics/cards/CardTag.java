@@ -55,7 +55,9 @@ public enum CardTag {
 	PLANNER("Planner", 1, false, Planner::new,
 			ct("At the start of next turn, gain B0 block.", Planner.BLOCK)),
 	STUDY("Study", 1, false, Study::new,
-			ct("Gain B0 block.", Study.BLOCK));
+			ct("Gain B0 block.", Study.BLOCK)),
+	CAFFEINE("Caffeine", 0, false, Caffeine::new,
+			ct(String.format("Gain %d energy.", Caffeine.ENERGY)), true);
 	
 	private static CardText ct(String formattedString, int... defaultValuesOfVariables) {
 		return new CardText(formattedString, defaultValuesOfVariables);
