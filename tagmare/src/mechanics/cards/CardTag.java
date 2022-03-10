@@ -14,7 +14,7 @@ public enum CardTag {
 	REVIEW_NOTES("Review Notes", 1, false, ReviewNotes::new,
 			ct("Gain B0 block.", ReviewNotes.BLOCK)),
 	PROCRASTINATE("Procrastinate", 1, true, Procrastinate::new,
-			String.format("Next turn, deal %d damage. This damage cannot be increased or decreased.", Procrastinate.DAMAGE)),
+			String.format("Next turn, deal %d damage. Motivation and Discipline do not apply to this card.", Procrastinate.DAMAGE)),
 	GRIND("Grind", 2, true, Grind::new,
 			ct(String.format("Deal D0 damage %d times.", Grind.TIMES), Grind.DAMAGE)),
 	QUIZLET("Quizlet", 1, true, Quizlet::new,
@@ -51,7 +51,9 @@ public enum CardTag {
 	YOGA("Yoga", 1, false, Yoga::new,
 			String.format("Draw %d cards. Discard between %d and %d cards.", Yoga.DRAW, Yoga.MIN_DISCARD, Yoga.MAX_DISCARD)),
 	TAKE_A_BREAK("Take A Break", 1, false, TakeABreak::new,
-			ct(String.format("End your turn. At the start of next turn, gain %d Concentration.", TakeABreak.CONCENTRATION)), true);
+			ct(String.format("End your turn. At the start of next turn, gain %d Concentration.", TakeABreak.CONCENTRATION)), true),
+	PLANNER("Planner", 1, false, Planner::new,
+			ct("At the start of next turn, gain B0 block.", Planner.BLOCK));
 	
 	private static CardText ct(String formattedString, int... defaultValuesOfVariables) {
 		return new CardText(formattedString, defaultValuesOfVariables);

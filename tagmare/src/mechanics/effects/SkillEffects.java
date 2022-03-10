@@ -5,6 +5,7 @@ import mechanics.actions.*;
 import mechanics.actions.list.ActionList;
 import mechanics.cards.*;
 import mechanics.modifiers.ModifierSet;
+import mechanics.modifiers.buffs.PlanningAhead;
 
 import static mechanics.modifiers.ModifierTag.*;
 
@@ -25,6 +26,10 @@ public final class SkillEffects {
 		if(action instanceof GainBlock) {
 			GainBlock gb = (GainBlock) action;
 			gb.setBlock(getModifiedBlock(card, gb.block()));
+		}
+		if(action instanceof ApplyModifier && ((ApplyModifier) action).modifier() instanceof PlanningAhead) {
+			PlanningAhead pa = (PlanningAhead) ((ApplyModifier) action).modifier();
+			pa.setInteger(getModifiedBlock(card, pa.integer()));
 		}
 		return action;
 	}

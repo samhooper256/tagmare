@@ -12,7 +12,8 @@ public enum ModifierTag {
 	TOMATOED("Tomatoed", false),
 	DISCIPLINE("Discipline", true),
 	ON_LEAVE("On Leave", true),
-	CONCENTRATION("Concentration", true);
+	CONCENTRATION("Concentration", true),
+	PLANNING_AHEAD("Planning Ahead", true);
 	
 	private final String name;
 	private final boolean isInteger;

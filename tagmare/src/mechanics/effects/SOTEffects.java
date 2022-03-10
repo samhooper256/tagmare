@@ -18,6 +18,11 @@ public final class SOTEffects {
 	public static ActionList apply() {
 		ActionListBuilder list = Action.listBuilder();
 		ModifierSet pmods = Hub.player().modifiers();
+		if(pmods.contains(PLANNING_AHEAD)) {
+			Modifier pa = pmods.getModifierOrThrow(PLANNING_AHEAD);
+			list.add(new GainBlock(pa.integer(), pa));
+			list.add(RemoveModifier.fromPlayer(PLANNING_AHEAD, null));
+		}
 		if(pmods.contains(ON_LEAVE)) {
 			Modifier ol = pmods.getModifierOrThrow(ON_LEAVE);
 			list.add(ApplyModifier.toPlayer(new Concentration(ol.integer()), ol));
