@@ -9,7 +9,7 @@ import mechanics.effects.*;
 import mechanics.enemies.*;
 import mechanics.input.CardInquiry;
 
-//TODO support user input other than selecting/targetting cards. (e.g. YOGA).
+//TODO should Concentration apply to Free Time?
 public final class Combat {
 
 	/** The default number of cards drawn per turn. */

@@ -112,6 +112,8 @@ public class HandLayer extends Pane implements Updatable {
 		VisualManager.get().checkedResumeFromAnimation();
 	}
 	
+	/** Does not set {@link #selected()} to {@code null} since that has already been done by
+	 * {@link #moveSelectedToInPlay(Card)}. */
 	public void startNaturalDiscard(Card card) {
 		if(!cardsInPlay.contains(card))
 			throw new IllegalArgumentException(String.format("Not in play: %s", card));
@@ -124,7 +126,6 @@ public class HandLayer extends Pane implements Updatable {
 	private void naturalDiscardFinisher(CardRepresentation cr) {
 		Vis.handLayer().removeFromInPlayOrThrow(cr.card());
 		Vis.pileLayer().discard().addToTop(cr); //this removes cr as a child of cardGroup.
-		setSelected(null);
 		VisualManager.get().checkedResumeFromAnimation();
 	}
 	
@@ -181,9 +182,9 @@ public class HandLayer extends Pane implements Updatable {
 	}
 	
 	public void moveSelectedToInPlay(Card card) {
-		if(card == null || card != selected().card())
+		if(card == null || selected() == null || card != selected().card())
 			throw new IllegalArgumentException(
-					String.format("card is not the selected one (card=%s, selected=%s)", card, selected));
+					String.format("card is not the selected one (card=%s, selected=%s)", card, selected()));
 		setSelected(null);
 		cardsInPlay.add(card);
 	}

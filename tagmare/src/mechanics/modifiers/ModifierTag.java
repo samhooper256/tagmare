@@ -10,7 +10,9 @@ public enum ModifierTag {
 	DEFENESTRATING("Defenestrating", true),
 	NONSENSE("Nonsense", true),
 	TOMATOED("Tomatoed", false),
-	DISCIPLINE("Discipline", true);
+	DISCIPLINE("Discipline", true),
+	ON_LEAVE("On Leave", true),
+	CONCENTRATION("Concentration", true);
 	
 	private final String name;
 	private final boolean isInteger;

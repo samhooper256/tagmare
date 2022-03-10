@@ -2,7 +2,7 @@ package mechanics.cards;
 
 import java.util.*;
 
-import mechanics.effects.AttackEffects;
+import mechanics.effects.*;
 import utils.Strings;
 
 public final class CardText {
@@ -154,6 +154,9 @@ public final class CardText {
 		if(card instanceof Attack)
 			for(int i = 0; i < Dcount(); i++)
 				damages.set(i, AttackEffects.getModifiedDamage((Attack) card, defaultDamages.get(i)));
+		if(card instanceof Skill)
+			for(int i = 0; i < Bcount(); i++)
+				blocks.set(i, SkillEffects.getModifiedBlock((Skill) card, defaultBlocks.get(i)));
 	}
 	
 }

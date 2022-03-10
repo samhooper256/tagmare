@@ -80,12 +80,12 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 		}
 	}
 	
-	private class FlyBackAnimation extends CardMoveAnimation {
+	private class FlyBackToHandAnimation extends CardMoveAnimation {
 		
-		public FlyBackAnimation() {
+		public FlyBackToHandAnimation() {
 			super(CardRepresentation.this, FLY_BACK_DURATION);
 			setInterpolator(Interpolator.LINEAR);
-			setFinish(CardRepresentation.this::flyBackFinished);
+			setFinish(CardRepresentation.this::flyBackToHandFinished);
 		}
 	}
 	
@@ -175,7 +175,7 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 		}
 		else if(state == State.FLYING) {
 			if(Vis.mouseY() > MAX_RELEASE_Y) {
-				startFlyBack();
+				startFlyBackToHand();
 			}
 			else {
 				requestStartBeingPlayed();
@@ -190,16 +190,16 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 		}
 	}
 
-	private void startFlyBack() {
+	private void startFlyBackToHand() {
 		cancelAnimation();
 		Vis.handLayer().setSelected(null);
 		setMouseTransparent(true);
-		cma = new FlyBackAnimation().setStart().setDest(Vis.handLayer().xCoord(this), Y);
+		cma = new FlyBackToHandAnimation().setStart().setDest(Vis.handLayer().xCoord(this), Y);
 		Animation.manager().add(cma);
 		state = State.FLYING_BACK;
 	}
 	
-	private void flyBackFinished() {
+	private void flyBackToHandFinished() {
 		setMouseTransparent(false);
 		state = State.DOWN;
 	}
@@ -208,7 +208,7 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 		if(card.isLegal(null))
 			startBeingPlayed();
 		else
-			startFlyBack();
+			startFlyBackToHand();
 	}
 
 	private void startBeingPlayed() {

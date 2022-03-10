@@ -3,6 +3,7 @@ package mechanics.cards;
 import java.util.function.Supplier;
 
 import mechanics.cards.attacks.*;
+import mechanics.cards.passives.TakeABreak;
 import mechanics.cards.skills.*;
 import utils.English;
 
@@ -48,7 +49,9 @@ public enum CardTag {
 			ct(String.format("Attacks deal %.0f%% more damage for the rest of this combat.", 
 			mechanics.modifiers.buffs.Discipline.PERCENT * 100))),
 	YOGA("Yoga", 1, false, Yoga::new,
-			String.format("Draw %d cards. Discard between %d and %d cards.", Yoga.DRAW, Yoga.MIN_DISCARD, Yoga.MAX_DISCARD));
+			String.format("Draw %d cards. Discard between %d and %d cards.", Yoga.DRAW, Yoga.MIN_DISCARD, Yoga.MAX_DISCARD)),
+	TAKE_A_BREAK("Take A Break", 1, false, TakeABreak::new,
+			ct(String.format("End your turn. At the start of next turn, gain %d Concentration.", TakeABreak.CONCENTRATION)), true);
 	
 	private static CardText ct(String formattedString, int... defaultValuesOfVariables) {
 		return new CardText(formattedString, defaultValuesOfVariables);

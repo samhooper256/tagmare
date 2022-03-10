@@ -115,6 +115,11 @@ public final class VisualManagerImpl implements VisualManager {
 			br.healthBar().update();
 			br.shield().update();
 		}
+		else if(action instanceof SOTLoseBlock) {
+			waitingOnAnimation = false;
+			action.execute();
+			Vis.ribbonLayer().bottom().shield().update();
+		}
 		else if(action instanceof SetInquiry) {
 			waitingOnAnimation = false;
 			action.execute();
