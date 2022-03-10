@@ -10,7 +10,7 @@ public class Memorizing extends AbstractModifier implements VisibleDebuff {
 	
 	@Override
 	public ModifierTag tag() {
-		return null;
+		return ModifierTag.MEMORIZING;
 	}
 
 }
