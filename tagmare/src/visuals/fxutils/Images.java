@@ -12,7 +12,10 @@ public final class Images {
 	
 	public static final Image
 		CARD_BACK = get("card_back.png"),
-		CARD_BASE = get("card_base.png"),
+		ATTACK_BASE = get("attack_base.png"),
+		PASSIVE_BASE = get("passive_base.png"),
+		SKILL_BASE = get("skill_base.png"),
+		CARD_BORDER = get("card_border.png"),
 		SHIELD = get("shield.png");
 	
 	private Images() {}
