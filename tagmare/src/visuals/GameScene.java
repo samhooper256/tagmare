@@ -18,6 +18,9 @@ import visuals.ribbon.RibbonLayer;
  * - if you click a targetted card as it is being drawn from the draw pile (and maybe while it's discarded?) bad stuff
  * happens.
  * - if you hover over a card while they're reorganizing, they get slightly offset in the x direction.
+ * - cards need to reorganize as soon as one is put into play. Right now, if you have 9 cards and 1 card in play, drawing
+ * a new card doesn't show up to the player (I think). Maybe have a different Group for cards that are in play, that
+ * way the same layout calculations can be used for the cards not in play?
  */
 public class GameScene extends Scene implements Updatable {
 	

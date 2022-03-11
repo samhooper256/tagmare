@@ -69,7 +69,9 @@ public enum CardTag {
 			ct("Gain B0 block. You can no longer gain block from skills this turn", Memorize.BLOCK)),
 	RESERVES("Reserves", 0, false, Reserves::new,
 			ct(String.format("Lose your remaining energy. At the start of next turn, gain this much energy plus %d.",
-			Reserves.ADDITIONAL)));
+			Reserves.ADDITIONAL))),
+	PACK_LUNCH("Pack Lunch", 1, false, PackLunch::new,
+			ct("Next turn, gain 1 additional energy and draw 1 additional card."));
 	
 	private static CardText ct(String formattedString, int... defaultValuesOfVariables) {
 		return new CardText(formattedString, defaultValuesOfVariables);

@@ -16,7 +16,8 @@ public enum ModifierTag {
 	PLANNING_AHEAD("Planning Ahead", true),
 	TIRED("Tired", true),
 	MEMORIZING("Memorizing", false),
-	RESERVES("Reserves", true);
+	RESERVES("Reserves", true),
+	PACKED("Packed", true);
 	
 	private final String name;
 	private final boolean isInteger;

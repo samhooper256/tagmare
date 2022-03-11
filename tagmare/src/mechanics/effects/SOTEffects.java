@@ -28,6 +28,13 @@ public final class SOTEffects {
 			list.add(new ChangeEnergy(r.integer(), r));
 			list.add(RemoveModifier.fromPlayer(RESERVES, null));
 		}
+		if(pmods.contains(PACKED)) {
+			Modifier p = pmods.getModifierOrThrow(PACKED);
+			list.add(new ChangeEnergy(p.integer(), p));
+			for(int i = 0; i < p.integer(); i++)
+				list.add(new SimpleDrawRequest(p));
+			list.add(RemoveModifier.fromPlayer(PACKED, null));
+		}
 		if(pmods.contains(PLANNING_AHEAD)) {
 			Modifier pa = pmods.getModifierOrThrow(PLANNING_AHEAD);
 			list.add(new GainBlock(pa.integer(), pa));
