@@ -14,6 +14,9 @@ public class Deck implements Iterable<Card> {
 		CardTag.TAKE_A_BREAK,
 		CardTag.DISCIPLINE,
 		CardTag.RAGE,
+		CardTag.MOTIVATIONAL_VIDEO,
+		CardTag.MOTIVATIONAL_VIDEO,
+		CardTag.MOTIVATIONAL_VIDEO,
 		CardTag.RAGE
 	);
 	

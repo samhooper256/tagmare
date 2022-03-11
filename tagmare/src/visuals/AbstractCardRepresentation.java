@@ -16,6 +16,8 @@ import visuals.fxutils.*;
 /** Not {@link Updatable}. */
 public abstract class AbstractCardRepresentation extends StackPane {
 
+	public static final String CSS = "card", NAME_CSS = "name", DESCRIPTION_CSS = "description";
+	
 	public static final double  WIDTH = 176, HEIGHT = WIDTH * 1.5;
 	
 	private static final double
@@ -31,7 +33,7 @@ public abstract class AbstractCardRepresentation extends StackPane {
 	
 	private final VBox nameWrap, textWrap, energyWrap;
 	private final Label name, energy;
-	private final Text text;
+	private final Text description;
 	private final Pane imagePane;
 	private final Sprite base, border, energyTab, imageBorder, image;
 	protected final List<Node> faceUpChildren;
@@ -39,12 +41,14 @@ public abstract class AbstractCardRepresentation extends StackPane {
 	
 	public AbstractCardRepresentation(Card card) {
 		this.card = card;
-		name = Nodes.label(NAME_FONT);
+		name = new Label();
+		name.getStyleClass().add(NAME_CSS);
 		name.setWrapText(true);
 		updateName();
-		text = Nodes.text(card.text().displayText(), TEXT_FONT);
-		text.setWrappingWidth(TEXT_WRAP_WIDTH);
-		text.setTextAlignment(TextAlignment.CENTER);
+		description = new Text(card.text().displayText());
+		description.setWrappingWidth(TEXT_WRAP_WIDTH);
+		description.setTextAlignment(TextAlignment.CENTER);
+		description.getStyleClass().add(DESCRIPTION_CSS);
 		energy = Nodes.label(NAME_FONT, ENERGY_COLOR);
 		energy.setText("1");
 		energyWrap = new VBox(energy);
@@ -55,7 +59,7 @@ public abstract class AbstractCardRepresentation extends StackPane {
 		nameWrap = new VBox(name);
 		nameWrap.setAlignment(Pos.TOP_CENTER);
 		nameWrap.setPadding(new Insets(NAME_WRAP_TOP_PADDING, 0, 0, 0));
-		textWrap = new VBox(text);
+		textWrap = new VBox(description);
 		textWrap.setAlignment(Pos.TOP_CENTER);
 		textWrap.setPadding(new Insets(TEXT_WRAP_TOP_PADDING, 0, 0, 0));
 		image = new Sprite(Images.forCard(card));
@@ -65,6 +69,7 @@ public abstract class AbstractCardRepresentation extends StackPane {
 		faceUpChildren = new ArrayList<>();
 		Collections.addAll(faceUpChildren, base, border, energyTab, energyWrap, nameWrap, textWrap, imageBorder, imagePane);
 		getChildren().addAll(faceUpChildren);
+		getStyleClass().add(CSS);
 	}
 	
 	private Image baseImage(Card card) {
@@ -84,7 +89,8 @@ public abstract class AbstractCardRepresentation extends StackPane {
 	public void updateText() {
 		card().updateText();
 		updateName();
-//		text.setText(card.text().displayText());
+		description.setText(card.text().displayText());
+		energy.setText(String.valueOf(card.energyCost()));
 	}
 	
 	private void updateName() {

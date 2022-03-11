@@ -1,3 +1,15 @@
+@font-face {
+	src: url("fonts/ArefRuqaaBold.ttf"); /* Aref Ruqaa*/
+}
+
+.card .name {
+	-fx-font: 14 "Aref Ruqaa";
+}
+
+.card .description {
+	-fx-font: 14 "Georgia";
+}
+
 .inquiry-instructions .text {
 	-fx-stroke: black;
     -fx-stroke-width: 1px;

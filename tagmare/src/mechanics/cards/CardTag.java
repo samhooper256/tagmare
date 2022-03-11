@@ -43,14 +43,15 @@ public enum CardTag {
 			ct(String.format("Deal D0 damage and draw %d %s. Can only be played if you have played %d or fewer cards this turn.",
 			BeforeMidnight.DRAW, English.plural("card", BeforeMidnight.DRAW), BeforeMidnight.MAX_CARDS_PLAYED), BeforeMidnight.DAMAGE)),
 	MOTIVATIONAL_VIDEO("Motivational Video", 0, false, MotivationalVideo::new,
-			ct("Your next attack deals W additional damage. Decrease the effectiveness of all Motivational"
+			ct("Gain W Motivation. Decrease the effectiveness of all Motivational"
 			+ " Videos by 1 for the rest of this combat.", MotivationalVideo.BASE_EFFECTIVENESS)),
 	DISCIPLINE("Discipline", 1, false, Discipline::new,
 			ct(String.format("Attacks deal %.0f%% more damage for the rest of this combat.", 
 			mechanics.modifiers.buffs.Discipline.PERCENT * 100))),
 	YOGA("Yoga", 1, false, Yoga::new,
 			String.format("Draw %d cards. Discard between %d and %d cards.", Yoga.DRAW, Yoga.MIN_DISCARD, Yoga.MAX_DISCARD)),
-	TAKE_A_BREAK("Take A Break", 1, false, TakeABreak::new,
+	//font is weird so we have an extra space in the name. It is intentional.
+	TAKE_A_BREAK("Take  A Break", 1, false, TakeABreak::new,
 			ct(String.format("End your turn. At the start of next turn, gain %d Concentration.", TakeABreak.CONCENTRATION)), true),
 	PLANNER("Planner", 1, false, Planner::new,
 			ct("At the start of next turn, gain B0 block.", Planner.BLOCK)),
