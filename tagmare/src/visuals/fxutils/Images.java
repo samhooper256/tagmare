@@ -1,7 +1,10 @@
 package visuals.fxutils;
 
+import java.util.*;
+
 import base.Main;
 import javafx.scene.image.*;
+import mechanics.cards.*;
 
 /**
  * Utility class for creating {@link javafx.scene.image.Image} objects from resource files and working with
@@ -16,9 +19,24 @@ public final class Images {
 		PASSIVE_BASE = get("passive_base.png"),
 		SKILL_BASE = get("skill_base.png"),
 		CARD_BORDER = get("card_border.png"),
+		CARD_ENERGY_TAB = get("card_energy_tab.png"),
+		CARD_IMAGE_BORDER = get("card_image_border.png"),
+		TEST_IMAGE = get("test_image.png"),
+		DISCIPLINE_CARD = get("discipline_card.png"),
 		SHIELD = get("shield.png");
 	
+	private static final Map<CardTag, Image> CARD_IMAGE_MAP = new HashMap<>();
+	
+	static {
+		CARD_IMAGE_MAP.put(CardTag.DISCIPLINE, DISCIPLINE_CARD);
+	}
+	
 	private Images() {}
+	
+	public static Image forCard(Card c) {
+		Image image = CARD_IMAGE_MAP.get(c.tag());
+		return image == null ? TEST_IMAGE : image;
+	}
 	
 	/**
 	 * Returns the image given by {@code filename} by invoking {@link Image#Image(java.io.InputStream)} with
