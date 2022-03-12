@@ -151,7 +151,8 @@ public final class VisualManagerImpl implements VisualManager {
 	@Override
 	public void playCardFromHand(Card card, Enemy target) {
 		if(Hub.combat().isRunning() || !card.isLegal(target))
-			throw new IllegalArgumentException(String.format("Can't play. card=%s, target=%s", card, target));
+			throw new IllegalArgumentException(
+			String.format("Can't play. card=%s, target=%s, running=%b", card, target, Hub.combat().isRunning()));
 		Hub.combat().stackPlayCardFromHand(card, target);
 		Hub.combat().resume();
 	}

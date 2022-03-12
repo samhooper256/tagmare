@@ -5,6 +5,7 @@ import mechanics.actions.*;
 import mechanics.actions.list.*;
 import mechanics.cards.*;
 import mechanics.cards.attacks.Pomodoro;
+import mechanics.cards.skills.Copy;
 import mechanics.modifiers.*;
 
 import static mechanics.modifiers.ModifierTag.*;
@@ -23,9 +24,8 @@ public final class PlayCardEffects {
 			list.add(RemoveModifier.fromPlayer(TOMATOED, null));
 		if(card instanceof Attack && pmods.contains(MOTIVATION))
 			list.add(RemoveModifier.fromPlayer(MOTIVATION, null));
-		if(pmods.contains(CHEATING)) {
-			
-		}
+		if(pmods.contains(CHEATING) && (!(card instanceof Copy) || pmods.getModifierOrThrow(CHEATING).integer() > 1))
+			Hub.combat().stackPlayBypassedCard(card.copy());
 		return list.build();
 	}
 	

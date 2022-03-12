@@ -8,6 +8,7 @@ import mechanics.cards.*;
 import mechanics.effects.*;
 import mechanics.enemies.*;
 import mechanics.input.CardInquiry;
+import utils.RNG;
 
 //TODO should Concentration apply to Free Time?
 public final class Combat {
@@ -65,7 +66,21 @@ public final class Combat {
 	
 	/** A target will be randomly generated. */
 	public void stackPlayBypassedCard(Card card) {
-		
+		//First, find a target.
+		Enemy target = null;
+		target_finder:
+		if(card.isTargetted()) {
+			List<Enemy> perm = RNG.perm(enemies);
+			//Pass 1: Find a target that would be legal for this card.
+			for(Enemy e : perm) {
+				if(card.isLegal(e)) {
+					target = e;
+					break target_finder;
+				}
+			}
+			target = perm.get(0);
+		}
+		stack().push(new PutBypassedCardInPlay(card, null, target));
 	}
 	
 	
@@ -337,6 +352,12 @@ public final class Combat {
 		while(itr.hasPrevious())
 			System.out.println(itr.previous());
 		System.out.println();
+	}
+	
+	public void debugPrint() {
+		System.out.printf("===Combat====================================%n");
+		hand().debugPrint();
+		System.out.printf("=============================================%n");
 	}
 	
 }

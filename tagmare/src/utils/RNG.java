@@ -19,4 +19,12 @@ public final class RNG {
 			throw new IllegalArgumentException("Empty list");
 		return list.get(intExclusive(list.size()));
 	}
+	
+	/** Returned {@link List} is modifiable; modifications will not affect the given list. */
+	public static <T> List<T> perm(List<T> list) {
+		ArrayList<T> perm = new ArrayList<>(list);
+		Collections.shuffle(perm, SOURCE);
+		return perm;
+	}
+	
 }

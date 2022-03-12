@@ -42,6 +42,7 @@ public class Main extends Application {
 				}
 				else {
 					GameScene.get().debugPrint();
+					Hub.combat().debugPrint();
 				}
 			}
 			in.close();

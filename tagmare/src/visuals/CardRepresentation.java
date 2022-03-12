@@ -215,6 +215,8 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 		cancelAnimation();
 		cma = new ScaleAnimation(SCALE_DURATION, this, .8);
 		cma.setFinish(this::beingPlayedFinished);
+		Vis.handLayer().transferToPlayGroup(this);
+		Vis.handLayer().startReorganize();
 		Animation.manager().add(cma);
 		state = State.BEING_PLAYED;
 	}
@@ -231,6 +233,8 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 		this.target = Objects.requireNonNull(target);
 		cancelAnimation();
 		Vis.handLayer().arrow().unbindAndHide();
+		Vis.handLayer().transferToPlayGroup(this);
+		Vis.handLayer().startReorganize();
 		cma = new ToAttackAnimation().setStart();
 		Animation.manager().add(cma);
 		state = State.BEING_PLAYED;

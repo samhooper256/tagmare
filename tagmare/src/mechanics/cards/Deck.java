@@ -9,14 +9,18 @@ public class Deck implements Iterable<Card> {
 	private static final List<CardTag> STARTING_DECK = Colls.ulist(
 //		CardTag.values()
 		CardTag.STUDY,
-		CardTag.STUDY,
-		CardTag.TAKE_A_BREAK,
-		CardTag.TAKE_A_BREAK,
+		CardTag.READ_FOR_FUN,
+//		CardTag.TAKE_A_BREAK,
 		CardTag.DISCIPLINE,
-		CardTag.RAGE,
-		CardTag.MOTIVATIONAL_VIDEO,
-		CardTag.MOTIVATIONAL_VIDEO,
-		CardTag.MOTIVATIONAL_VIDEO,
+//		CardTag.MOTIVATIONAL_VIDEO,
+		CardTag.YOGA,
+		CardTag.YOGA,
+		CardTag.YOGA,
+		CardTag.RESERVES,
+		CardTag.CAFFEINE,
+		CardTag.CAFFEINE,
+		CardTag.PACK_LUNCH,
+		CardTag.COPY,
 		CardTag.RAGE
 	);
 	

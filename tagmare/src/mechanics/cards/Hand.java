@@ -69,4 +69,11 @@ public class Hand implements Iterable<Card> {
 		return String.format("Hand%s", cards);
 	}
 	
+	public void debugPrint() {
+		System.out.printf("Hand (left to right):%n");
+		for(Card c : cards)
+			System.out.printf("- %s%n", c);
+		System.out.println();
+	}
+	
 }

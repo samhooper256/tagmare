@@ -14,7 +14,7 @@ public class InfoLayer extends Pane implements Updatable {
 		endTurnButton = new EndTurnButton();
 		Nodes.setLayout(endTurnButton, 1600, 650);
 		energyMeter = new EnergyMeter();
-		Nodes.setLayout(energyMeter, 100, 800);
+		Nodes.setLayout(energyMeter, 100, 650);
 		getChildren().addAll(endTurnButton, energyMeter);
 	}
 	

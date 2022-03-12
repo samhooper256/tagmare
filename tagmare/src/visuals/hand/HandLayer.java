@@ -63,7 +63,7 @@ public class HandLayer extends Pane implements Updatable {
 		
 	}
 
-	private final Group cardGroup;
+	private final Group cardGroup, playGroup;
 	private final Arrow arrow;
 	
 	private boolean addInProgress;
@@ -75,10 +75,16 @@ public class HandLayer extends Pane implements Updatable {
 		setPickOnBounds(false);
 		arrow = new Arrow();
 		cardGroup = new Group();
+		playGroup = new Group();
 		cardsInPlay = new HashSet<>();
-		getChildren().addAll(arrow, cardGroup);
+		getChildren().addAll(arrow, cardGroup, playGroup);
 	}
 	
+	public void transferToPlayGroup(CardRepresentation cr) {
+		if(!cardGroup.getChildren().contains(cr))
+			throw new IllegalStateException(String.format("Not in cardGroup: %s", cr));
+		playGroup.getChildren().add(cr); //this will remove cr from cardGroup.
+	}
 	@Override
 	public void update(long diff) {
 		arrow.update(diff);
@@ -218,6 +224,7 @@ public class HandLayer extends Pane implements Updatable {
 	public void setSelected(CardRepresentation cr) {
 		if(cr != null && !cardGroup.getChildren().contains(cr))
 			throw new IllegalArgumentException(String.format("Not in the HandLayer: %s", cr));
+		System.out.printf("set selected: %s%n", cr);
 		selected = cr;
 	}
 	
