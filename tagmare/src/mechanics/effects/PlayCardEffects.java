@@ -7,6 +7,8 @@ import mechanics.cards.*;
 import mechanics.cards.attacks.Pomodoro;
 import mechanics.modifiers.*;
 
+import static mechanics.modifiers.ModifierTag.*;
+
 public final class PlayCardEffects {
 
 	private PlayCardEffects() {
@@ -17,10 +19,13 @@ public final class PlayCardEffects {
 		ActionListBuilder list = Action.listBuilder();
 		ModifierSet pmods = Hub.player().modifiers();
 		//check that it's not Pomodoro so we don't remove the Tomatoed debuff right after we apply it:
-		if(!(card instanceof Pomodoro) && pmods.contains(ModifierTag.TOMATOED))
-			list.add(RemoveModifier.fromPlayer(ModifierTag.TOMATOED, null));
-		if(card instanceof Attack && pmods.contains(ModifierTag.MOTIVATION))
-			list.add(RemoveModifier.fromPlayer(ModifierTag.MOTIVATION, null));
+		if(!(card instanceof Pomodoro) && pmods.contains(TOMATOED))
+			list.add(RemoveModifier.fromPlayer(TOMATOED, null));
+		if(card instanceof Attack && pmods.contains(MOTIVATION))
+			list.add(RemoveModifier.fromPlayer(MOTIVATION, null));
+		if(pmods.contains(CHEATING)) {
+			
+		}
 		return list.build();
 	}
 	

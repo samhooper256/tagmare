@@ -17,7 +17,8 @@ public enum ModifierTag {
 	TIRED("Tired", true),
 	MEMORIZING("Memorizing", false),
 	RESERVES("Reserves", true),
-	PACKED("Packed", true);
+	PACKED("Packed", true),
+	CHEATING("Cheating", true);
 	
 	private final String name;
 	private final boolean isInteger;

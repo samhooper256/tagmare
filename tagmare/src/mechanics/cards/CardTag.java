@@ -72,7 +72,9 @@ public enum CardTag {
 			ct(String.format("Lose your remaining energy. At the start of next turn, gain this much energy plus %d.",
 			Reserves.ADDITIONAL))),
 	PACK_LUNCH("Pack Lunch", 1, false, PackLunch::new,
-			ct("Next turn, gain 1 additional energy and draw 1 additional card."));
+			ct("Next turn, gain 1 additional energy and draw 1 additional card.")),
+	COPY("Copy", 1, false, Copy::new,
+			ct("Your next card is played twice. Add a Guilt to the top of your draw pile."), true);
 	
 	private static CardText ct(String formattedString, int... defaultValuesOfVariables) {
 		return new CardText(formattedString, defaultValuesOfVariables);

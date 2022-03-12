@@ -63,6 +63,12 @@ public final class Combat {
 		stack().push(new PutCardInPlay(card, Hub.player(), target));
 	}
 	
+	/** A target will be randomly generated. */
+	public void stackPlayBypassedCard(Card card) {
+		
+	}
+	
+	
 	public void start() {
 		if(turn > 0)
 			throw new IllegalStateException(String.format("Already started (turn=%d)", turn));

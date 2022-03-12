@@ -4,6 +4,7 @@ import mechanics.*;
 import mechanics.cards.Card;
 import mechanics.enemies.Enemy;
 
+/** Does not check/verify the legality of the {@link #card()}. */
 public final class PutCardInPlay extends AbstractTargettedAction implements HasCard {
 	
 	private final Card card;
