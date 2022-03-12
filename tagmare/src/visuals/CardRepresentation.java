@@ -25,8 +25,9 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 		FOCUS_DURATION = Duration.millis(400),
 		FLY_BACK_DURATION = Duration.millis(500),
 		REMOVE_OT_DURATION = Duration.millis(500),
-		TO_TOP_DURATION = Duration.millis(500);
-	private static final double FOCUS_Y = Y - 50, POISED_Y = FOCUS_Y - 50;
+		TO_TOP_DURATION = Duration.millis(500),
+		BYPASS_INTRO_DURATION = Duration.millis(500);
+	private static final double FOCUS_Y = Y - 50, POISED_Y = FOCUS_Y - 50, DEST_PLAY_SCALE = .8;
 	/** If a {@link State#FLYING} card is released above this y (that is, when the mouse's y-coordinate is less than
 	 * this value), the card is played. Otherwise, the card returns to the hand and is not played.*/
 	private static final double MAX_RELEASE_Y = FOCUS_Y;
@@ -104,6 +105,20 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 			super(CardRepresentation.this, TO_TOP_DURATION);
 			setDest(TOP_X, TOP_Y);
 		}
+	}
+	
+	private class BypassIntroAnimation extends AbstractAnimation {
+
+		public BypassIntroAnimation() {
+			super(BYPASS_INTRO_DURATION);
+		}
+		
+		@Override
+		public void interpolate(double frac) {
+			setOpacity(frac);
+			Nodes.setScale(CardRepresentation.this, 1 - frac + frac * DEST_PLAY_SCALE);
+		}
+		
 	}
 	
 	private final List<Node> faceDownChildren;
@@ -212,8 +227,9 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 	}
 
 	private void startBeingPlayed() {
+		System.out.printf("[enter] startBeingPlayed%n");
 		cancelAnimation();
-		cma = new ScaleAnimation(SCALE_DURATION, this, .8);
+		cma = new ScaleAnimation(SCALE_DURATION, this, DEST_PLAY_SCALE);
 		cma.setFinish(this::beingPlayedFinished);
 		Vis.handLayer().transferToPlayGroup(this);
 		Vis.handLayer().startReorganize();
@@ -243,6 +259,17 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 	private void beingPlayedFinished() {
 		Vis.manager().playCardFromHand(card, target);
 		target = null;
+	}
+	
+	public void startBeingBypassPlayed() {
+		cancelAnimation();
+		setOpacity(0);
+		Nodes.setLayout(this, GameScene.CENTER_X - WIDTH * .5, GameScene.CENTER_Y - HEIGHT * .5);
+		if(!Vis.handLayer().playGroup().getChildren().add(this))
+			throw new IllegalStateException(String.format("Already in playGroup: %s", this));
+		cma = new BypassIntroAnimation();
+		Animation.manager().add(cma);
+		state = State.BEING_PLAYED;
 	}
 	
 	public void startExpandBackToNormalSize() {

@@ -19,10 +19,16 @@ public final class VisualManagerImpl implements VisualManager {
 		waitingOnAnimation = true;
 		Vis.debugLayer().stackDisplay().update();
 		if(action instanceof PutCardInPlay) {
+			action.execute();
 			Card card = ((HasCard) action).card();
 			Vis.handLayer().moveSelectedToInPlay(card);
 		}
-		if(action instanceof SimpleDrawRequest) {
+		else if(action instanceof PutBypassedCardInPlay) {
+			Hub.combat().pause();
+			action.execute();
+			CardRepresentation.of(((HasCard) action).card()).startBeingBypassPlayed();
+		}
+		else if(action instanceof SimpleDrawRequest) {
 			Hub.combat().pause();
 			action.execute();
 			SimpleDrawRequest a = (SimpleDrawRequest) action;

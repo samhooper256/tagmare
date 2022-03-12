@@ -84,6 +84,7 @@ public class HandLayer extends Pane implements Updatable {
 		if(!cardGroup.getChildren().contains(cr))
 			throw new IllegalStateException(String.format("Not in cardGroup: %s", cr));
 		playGroup.getChildren().add(cr); //this will remove cr from cardGroup.
+		System.out.printf("transferred %s%n", cr);
 	}
 	@Override
 	public void update(long diff) {
@@ -182,7 +183,7 @@ public class HandLayer extends Pane implements Updatable {
 	
 	/** Removes the {@link CardRepresentation} as descendant node of this {@link HandLayer} only. */
 	public void removeOrThrow(CardRepresentation cr) {
-		if(!cardGroup.getChildren().remove(cr))
+		if(!cardGroup.getChildren().remove(cr) && !playGroup.getChildren().remove(cr))
 			throw new IllegalArgumentException(String.format("Not in this HandLayer: %s.\nchildren=%s", cr,
 					getChildren()));
 	}
@@ -224,7 +225,6 @@ public class HandLayer extends Pane implements Updatable {
 	public void setSelected(CardRepresentation cr) {
 		if(cr != null && !cardGroup.getChildren().contains(cr))
 			throw new IllegalArgumentException(String.format("Not in the HandLayer: %s", cr));
-		System.out.printf("set selected: %s%n", cr);
 		selected = cr;
 	}
 	
@@ -243,6 +243,11 @@ public class HandLayer extends Pane implements Updatable {
 	/** All {@link Group#getChildren() children} are {@link CardRepresentation CardRepresentations}. */
 	public Group cardGroup() {
 		return cardGroup;
+	}
+	
+	/** All {@link Group#getChildren() children} are {@link CardRepresentation CardRepresentations}. */
+	public Group playGroup() {
+		return playGroup;
 	}
 	
 	public void debugPrint() {
