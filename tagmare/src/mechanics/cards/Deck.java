@@ -10,9 +10,10 @@ public class Deck implements Iterable<Card> {
 		CardTag.COPY,
 		CardTag.YOGA,
 		CardTag.BLUFF,
-		CardTag.ALL_NIGHTER,
+		CardTag.CAFFEINE,
 		CardTag.BEFORE_MIDNIGHT,
-		CardTag.DO_HOMEWORK
+		CardTag.TAKE_A_BREAK,
+		CardTag.STUDY
 	);
 	
 	public static Deck createStartingDeck() {

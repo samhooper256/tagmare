@@ -356,6 +356,10 @@ public final class Combat {
 		return Collections.unmodifiableList(enemies);
 	}
 	
+	public CombatState state() {
+		return state;
+	}
+	
 	@SuppressWarnings("unused") //TODO remove this method eventually.
 	private void printStack() {
 		ListIterator<Action> itr = stack().iteratorAtTop();
