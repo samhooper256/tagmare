@@ -35,6 +35,6 @@ public interface VisualManager extends Updatable {
 		throw new UnsupportedOperationException("waitingOnAnimation");
 	}
 	
-	void startCombat(Combat c);
+	void startNextCombat();
 	
 }

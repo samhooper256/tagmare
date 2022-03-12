@@ -5,12 +5,14 @@ import java.util.*;
 import base.VisualManager;
 import mechanics.actions.*;
 import mechanics.cards.*;
+import mechanics.cards.singed.Guilt;
 import mechanics.effects.*;
 import mechanics.enemies.*;
 import mechanics.input.CardInquiry;
 import utils.RNG;
 
 //TODO should Concentration apply to Free Time?
+//TODO Guilt card needs to actually work.
 public final class Combat {
 
 	/** The default number of cards drawn per turn. */
@@ -43,6 +45,7 @@ public final class Combat {
 		state = CombatState.PREP;
 		turn = 0;
 		cardsPlayedThisTurn = 0;
+		running = false;
 		mostRecentlyExecuted = null;
 	}
 	
@@ -84,11 +87,12 @@ public final class Combat {
 	}
 	
 	
-	public void start() {
-		if(turn > 0)
+	/** Must call {@link #resume()} after calling this method for the player's first turn to start. */
+	public void startWithoutResuming() {
+		if(started())
 			throw new IllegalStateException(String.format("Already started (turn=%d)", turn));
 		drawPile.addAllToTop(Hub.deck().shuffledCopyOfCards());
-		startPlayerTurn();
+		stackStartPlayerTurn(); //increments turn; does not call resume().
 	}
 	
 	public void resume() {
@@ -112,7 +116,8 @@ public final class Combat {
 			resume();
 		}
 		if(state == CombatState.ENEMY_TURN) { //enemies have nothing else to do - start the player's next turn.
-			startPlayerTurn(); //calls resume
+			stackStartPlayerTurn();
+			resume();
 		}
 		else {
 			running = false;
@@ -134,8 +139,8 @@ public final class Combat {
 	
 	/** Assumes {@link #state} is {@link CombatState#ENEMY_TURN} or {@link CombatState#PREP}.
 	 * Sets the {@link #state} to {@link CombatState#PLAYER_TURN}. Increments {@link #turn} and sets
-	 * {@link #cardsPlayedThisTurn()} to {@code 0}. Calls {@link #resume()}. */
-	private void startPlayerTurn() {
+	 * {@link #cardsPlayedThisTurn()} to {@code 0}. Does not call {@link #resume()}. */
+	private void stackStartPlayerTurn() {
 		turn++;
 		cardsPlayedThisTurn = 0;
 		state = CombatState.PLAYER_TURN;
@@ -145,7 +150,6 @@ public final class Combat {
 			stack().push(new SimpleDrawRequest());
 		stack().push(new UpdateEnemyIntents());
 		stack().push(new SOTLoseBlock());
-		resume();
 	}
 	
 	/** Does <em><strong>NOT</strong></em> call {@link #resume()}. */
@@ -155,7 +159,13 @@ public final class Combat {
 		for(int i = enemies.size() - 1; i >= 0; i--)
 			stack().push(new EOTEnemyLoseBlock(enemies.get(i)));
 		for(int i = cards.size() - 1; i >= 0; i--) {
-			stack().push(new EOTDiscard(cards.get(i)));
+			Card c = cards.get(i);
+			if(c instanceof Guilt) {
+				stack().push(new ReturnToDrawPile(c, null));
+			}
+			else {
+				stack().push(new EOTDiscard(c));
+			}
 		}
 		stack().pushReversed(EOTEffects.apply());
 	}

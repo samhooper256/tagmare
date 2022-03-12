@@ -11,7 +11,7 @@ import mechanics.cards.*;
 import visuals.*;
 import visuals.CardRepresentation.State;
 import visuals.animations.*;
-import visuals.combat.piles.DiscardPileLayer;
+import visuals.combat.piles.*;
 
 /** Contains the {@link CardRepresentation CardRepresentations} for the player's {@link Hand}. */
 public class HandLayer extends Pane implements Updatable {
@@ -23,7 +23,8 @@ public class HandLayer extends Pane implements Updatable {
 	private static final Duration
 			CARD_DRAW_DURATION = Duration.millis(600),
 			CARD_SHIFT_DURATION = CARD_DRAW_DURATION.multiply(2d / 3),
-			FLY_TO_DISCARD_DURATION = Duration.millis(500);
+			FLY_TO_DISCARD_DURATION = Duration.millis(500),
+			FLY_TO_DRAW_DURATION = FLY_TO_DISCARD_DURATION;
 	
 	static {
 		for(int count = 0; count <= Hand.MAX_SIZE; count++) {
@@ -59,6 +60,17 @@ public class HandLayer extends Pane implements Updatable {
 		
 		private void finisher() {
 			EOTDiscardFinisher(super.cardRepresentation());
+		}
+		
+	}
+	
+	private class ReturnToDrawPileAnimation extends CardMoveAnimation {
+		
+		public ReturnToDrawPileAnimation(CardRepresentation cr) {
+			super(cr, FLY_TO_DRAW_DURATION);
+			setStart();
+			setDest(DrawPileLayer.CARD_X, DrawPileLayer.CARD_Y);
+			setFinish(() -> returnToDrawPileFinisher(cr));
 		}
 		
 	}
@@ -141,7 +153,7 @@ public class HandLayer extends Pane implements Updatable {
 		VisualManager.get().checkedResumeFromAnimation();
 	}
 	
-	public void startEOTToDiscard(Card card) {
+	public void startEOTDiscard(Card card) {
 		CardRepresentation cr = CardRepresentation.of(card);
 		cr.cancelAnimation();
 		Animation.manager().add(new EOTDiscardAnimation(cr));
@@ -150,6 +162,21 @@ public class HandLayer extends Pane implements Updatable {
 	
 	private void EOTDiscardFinisher(CardRepresentation cr) {
 		Vis.pileLayer().discard().addToTop(cr);
+		cr.setState(State.DOWN);
+		Vis.manager().checkedResumeFromAnimation();
+	}
+	
+	public void startReturnToDrawPile(Card card) {
+		CardRepresentation cr = CardRepresentation.of(card);
+		if(!cardGroup.getChildren().contains(cr))
+			throw new IllegalStateException(String.format("Not in HandLayer's cardGroup: %s", cr));
+		cr.cancelAnimation();
+		Animation.manager().add(new ReturnToDrawPileAnimation(cr));
+		cr.setState(State.FLYING_TO_DRAW);
+	}
+	
+	private void returnToDrawPileFinisher(CardRepresentation cr) {
+		Vis.pileLayer().draw().addToTop(cr);
 		cr.setState(State.DOWN);
 		Vis.manager().checkedResumeFromAnimation();
 	}

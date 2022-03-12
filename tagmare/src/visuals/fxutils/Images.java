@@ -14,6 +14,12 @@ import mechanics.cards.*;
 public final class Images {
 	
 	public static final Image
+		//calendar:
+		CALENDAR = get("calendar.png"),
+		CALENDAR_TOP_RIBBON = get("calendar_top_ribbon.png"),
+		CALENDAR_BOTTOM_RIBBON = get("calendar_bottom_ribbon.png"),
+		DESK = get("desk.png"),
+		//cards/combat:
 		CARD_BACK = get("card_back.png"),
 		ATTACK_BASE = get("attack_base.png"),
 		PASSIVE_BASE = get("passive_base.png"),
@@ -25,6 +31,7 @@ public final class Images {
 		TEST_IMAGE = get("test_image.png"),
 		DISCIPLINE_CARD = get("discipline_card.png"),
 		SHIELD = get("shield.png");
+		
 	
 	private static final Map<CardTag, Image> CARD_IMAGE_MAP = new HashMap<>();
 	

@@ -40,7 +40,7 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 	}
 	
 	public enum State {
-		DOWN, TO_UP, UP, TO_DOWN, TO_POISED, FLYING, FLYING_BACK, BEING_PLAYED, FLYING_TO_DISCARD;
+		DOWN, TO_UP, UP, TO_DOWN, TO_POISED, FLYING, FLYING_BACK, BEING_PLAYED, FLYING_TO_DISCARD, FLYING_TO_DRAW;
 	}
 
 	private class DownAnimation extends CardMoveAnimation {
@@ -185,7 +185,7 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 			return;
 		cancelAnimation();
 		cma = null;
- 		if(state == State.BEING_PLAYED || state == State.FLYING_TO_DISCARD ||
+ 		if(state == State.BEING_PLAYED || state == State.FLYING_TO_DISCARD || state == State.FLYING_TO_DRAW ||
  				state == State.FLYING_BACK || state == State.TO_POISED) {
 			return; //you can't grab the card while it's flying back to your hand or while it's playing.
 		}

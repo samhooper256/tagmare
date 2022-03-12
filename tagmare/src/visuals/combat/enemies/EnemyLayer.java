@@ -11,11 +11,14 @@ public class EnemyLayer extends Pane {
 
 	public EnemyLayer() {
 		setPickOnBounds(false);
-		setupEnemies(Hub.combat().enemies());
 	}
 	
 	public void updateEnemiesShown() {
 		setupEnemies(Hub.enemies());
+	}
+
+	public void setupEnemies() {
+		setupEnemies(Hub.combat().enemies());
 	}
 	
 	private void setupEnemies(List<Enemy> enemies) {

@@ -47,13 +47,19 @@ public final class VisualManagerImpl implements VisualManager {
 			Hub.combat().pause();
 			action.execute();
 			Card card = ((HasCard) action).card();
-			Vis.handLayer().startEOTToDiscard(card);
+			Vis.handLayer().startEOTDiscard(card);
 		}
 		else if(action instanceof RemoveOTFromPlay) {
 			Hub.combat().pause();
 			action.execute();
 			Card card = ((HasCard) action).card();
 			CardRepresentation.of(card).startRemoveOT();
+		}
+		else if(action instanceof ReturnToDrawPile) {
+			Hub.combat().pause();
+			action.execute();
+			Card card = ((HasCard) action).card();
+			Vis.handLayer().startReturnToDrawPile(card);
 		}
 		else if(action instanceof SetEnergy || action instanceof ChangeEnergy) {
 			Hub.combat().pause();
@@ -170,9 +176,13 @@ public final class VisualManagerImpl implements VisualManager {
 	
 	
 	@Override
-	public void startCombat(Combat c) {
-		c.start();
-		Vis.pileLayer().draw().setCards(c.drawPile());
+	public void startNextCombat() {
+		GameInstance gi = Hub.instance();
+		gi.moveToInCombat();
+		Combat c = gi.combat();
+		c.startWithoutResuming();
+		Vis.gameScene().showCombat(c);
+		c.resume();
 	}
 
 	@Override

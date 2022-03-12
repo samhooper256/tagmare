@@ -20,10 +20,15 @@ public final class Hub {
 		return INSTANCE;
 	}
 	
+	public static Calendar calendar() {
+		return instance().calendar();
+	}
+	
 	public static Player player() {
 		return instance().player();
 	}
 	
+	/** Returns {@code null} if no current combat. */
 	public static Combat combat() {
 		return instance().combat();
 	}

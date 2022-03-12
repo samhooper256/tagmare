@@ -50,7 +50,6 @@ public class Main extends Application {
 		t.setDaemon(true);
 		t.start();
 //		primaryStage.setMaximized(true);
-		Vis.manager().startCombat(Hub.combat());
 		System.out.println(Hub.deck());
 		Updater.startTimer();
 	}

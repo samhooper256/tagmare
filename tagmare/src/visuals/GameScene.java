@@ -7,13 +7,17 @@ import javafx.scene.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.transform.Scale;
+import mechanics.Combat;
+import visuals.calendar.CalendarLayer;
+import visuals.calendar.bottomribbon.BottomRibbonLayer;
+import visuals.calendar.topribbon.TopRibbonLayer;
 import visuals.combat.debug.DebugLayer;
 import visuals.combat.enemies.EnemyLayer;
 import visuals.combat.hand.HandLayer;
 import visuals.combat.info.InfoLayer;
 import visuals.combat.inquiry.InquiryLayer;
 import visuals.combat.piles.PileLayer;
-import visuals.combat.ribbon.RibbonLayer;
+import visuals.combat.ribbon.*;
 import visuals.fxutils.Nodes;
 
 /* TODO
@@ -33,6 +37,13 @@ public class GameScene extends Scene implements Updatable {
 	
 	private final Pane content;
 	private final Scale scale;
+	
+	//Calendar:
+	private final CalendarLayer calendarLayer;
+	private final BottomRibbonLayer bottomRibbonLayer;
+	private final TopRibbonLayer topRibbonLayer;
+	
+	//Combat:
 	private final Pane bottom;
 	private final EnemyLayer enemyLayer;
 	private final InfoLayer infoLayer;
@@ -42,7 +53,7 @@ public class GameScene extends Scene implements Updatable {
 	private final RibbonLayer ribbonLayer;
 	private final DebugLayer debugLayer;
 	
-	private final List<Node> combatChildren;
+	private final List<Node> calendarChildren, combatChildren;
 	
 	private double mouseX, mouseY;
 	
@@ -54,6 +65,12 @@ public class GameScene extends Scene implements Updatable {
 		content = new Pane();
 		content.getTransforms().add(scale);
 		root().getChildren().add(content);
+		
+		calendarLayer = new CalendarLayer();
+		bottomRibbonLayer = new BottomRibbonLayer();
+		topRibbonLayer = new TopRibbonLayer();
+		calendarChildren = new ArrayList<>();
+		Collections.addAll(calendarChildren, calendarLayer, topRibbonLayer, bottomRibbonLayer);
 		
 		bottom = new Pane();
 		Nodes.setMinSize(bottom, Double.MAX_VALUE, Double.MAX_VALUE);
@@ -71,7 +88,7 @@ public class GameScene extends Scene implements Updatable {
 		Collections.addAll(combatChildren, bottom, enemyLayer, infoLayer, pileLayer, inquiryLayer,
 				handLayer, ribbonLayer, debugLayer);
 		
-		content.getChildren().addAll(combatChildren);
+		content.getChildren().addAll(calendarChildren);
 		getStylesheets().add(Main.class.getResource(Main.RESOURCES_PREFIX + "style.css").toExternalForm());
 		
 		setOnMouseMoved(this::mouseMoved);
@@ -89,12 +106,23 @@ public class GameScene extends Scene implements Updatable {
 		mouseY = me.getY() * HEIGHT / getHeight();
 	}
 	
+	public void showCombat(Combat c) {
+		content.getChildren().clear();
+		content.getChildren().addAll(combatChildren);
+		pileLayer().draw().setCards(c.drawPile());
+		enemyLayer().setupEnemies();
+	}
+	
 	private Pane root() {
 		return (Pane) getRoot();
 	}
 
 	public Pane content() {
 		return content;
+	}
+	
+	public CalendarLayer calendarLayer() {
+		return calendarLayer;
 	}
 	
 	public EnemyLayer enemyLayer() {
