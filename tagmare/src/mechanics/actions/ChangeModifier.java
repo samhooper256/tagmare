@@ -1,11 +1,16 @@
 package mechanics.actions;
 
-import mechanics.Entity;
+import mechanics.*;
 import mechanics.modifiers.*;
 
 /** Changes the {@link Modifier#integer() integer} by the given {@link #amount()}. */
 public class ChangeModifier extends AbstractTargettedAction {
 
+	/** Decreases the modifier by {@code 1}. */
+	public static ChangeModifier decrementPlayer(ActionSource source, ModifierTag tag) {
+		return decrement(source, Hub.player(), tag);
+	}
+	
 	/** Decreases the modifier by {@code 1}. */
 	public static ChangeModifier decrement(ActionSource source, Entity target, ModifierTag tag) {
 		return new ChangeModifier(source, target, tag, -1);

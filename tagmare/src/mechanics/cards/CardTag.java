@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import mechanics.cards.attacks.*;
 import mechanics.cards.passives.TakeABreak;
+import mechanics.cards.singed.Guilt;
 import mechanics.cards.skills.*;
 import utils.English;
 
@@ -74,7 +75,9 @@ public enum CardTag {
 	PACK_LUNCH("Pack Lunch", 1, false, PackLunch::new,
 			ct("Next turn, gain 1 additional energy and draw 1 additional card.")),
 	COPY("Copy", 1, false, Copy::new,
-			ct("Your next card is played twice. Add a Guilt to the top of your draw pile."), true);
+			ct("Your next card (that's not Copy) is played twice. Add a Guilt to the top of your draw pile."), true),
+	GUILT("Guilt", -1, false, Guilt::new,
+			ct("Unplayable. If this card is in your hand at the end of your turn, put it on top of your draw pile."));
 	
 	private static CardText ct(String formattedString, int... defaultValuesOfVariables) {
 		return new CardText(formattedString, defaultValuesOfVariables);

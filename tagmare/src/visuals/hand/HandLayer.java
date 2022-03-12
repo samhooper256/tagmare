@@ -84,8 +84,13 @@ public class HandLayer extends Pane implements Updatable {
 		if(!cardGroup.getChildren().contains(cr))
 			throw new IllegalStateException(String.format("Not in cardGroup: %s", cr));
 		playGroup.getChildren().add(cr); //this will remove cr from cardGroup.
-		System.out.printf("transferred %s%n", cr);
 	}
+	
+	public void addToCardsInPlay(Card card) {
+		if(!cardsInPlay.add(card))
+			throw new IllegalArgumentException(String.format("Already in cardsInPlay: %s", card));
+	}
+	
 	@Override
 	public void update(long diff) {
 		arrow.update(diff);

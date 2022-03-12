@@ -17,13 +17,17 @@ public class DrawPileLayer extends Pane {
 	}
 	
 	public void setCards(Iterable<Card> cardsBottomToTop) {
+		System.out.printf("setCards(%s)%n", cardsBottomToTop);
 		getChildren().clear();
-		for(Card card : cardsBottomToTop) {
-			CardRepresentation cr = CardRepresentation.of(card);
-			cr.setFaceDown();
-			Nodes.setLayout(cr, CARD_X, CARD_Y);
-			getChildren().add(cr);
-		}
+		for(Card card : cardsBottomToTop)
+			addCardToTop(card);
+	}
+
+	public void addCardToTop(Card card) {
+		CardRepresentation cr = CardRepresentation.of(card);
+		cr.setFaceDown();
+		Nodes.setLayout(cr, CARD_X, CARD_Y);
+		getChildren().add(cr);
 	}
 	
 	public List<Node> cardRepresentations() {

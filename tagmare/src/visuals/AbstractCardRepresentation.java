@@ -79,7 +79,9 @@ public abstract class AbstractCardRepresentation extends StackPane {
 			return Images.SKILL_BASE;
 		if(card instanceof Passive)
 			return Images.PASSIVE_BASE;
-		throw new UnsupportedOperationException(String.format("Attack type: %s", card.getClass().getSimpleName()));
+		if(card instanceof Singed)
+			return Images.SINGED_BASE;
+		throw new UnsupportedOperationException(String.format("Card type: %s", card.getClass().getSimpleName()));
 	}
 	
 	public Card card() {
@@ -90,7 +92,7 @@ public abstract class AbstractCardRepresentation extends StackPane {
 		card().updateText();
 		updateName();
 		description.setText(card.text().displayText());
-		energy.setText(String.valueOf(card.energyCost()));
+		energy.setText(card.energyCost() < 0 ? "" : String.valueOf(card.energyCost()));
 	}
 	
 	private void updateName() {

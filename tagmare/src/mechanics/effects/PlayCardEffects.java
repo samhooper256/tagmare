@@ -24,8 +24,11 @@ public final class PlayCardEffects {
 			list.add(RemoveModifier.fromPlayer(TOMATOED, null));
 		if(card instanceof Attack && pmods.contains(MOTIVATION))
 			list.add(RemoveModifier.fromPlayer(MOTIVATION, null));
-		if(pmods.contains(CHEATING) && (!(card instanceof Copy) || pmods.getModifierOrThrow(CHEATING).integer() > 1))
-			Hub.combat().stackPlayBypassedCard(card.copy());
+		if(pmods.contains(CHEATING) && !(card instanceof Copy)) {
+			list.add(ChangeModifier.decrementPlayer(null, CHEATING));
+			list.add(Hub.combat().getPlayBypassedCardAction(card.copy()));
+			
+		}
 		return list.build();
 	}
 	

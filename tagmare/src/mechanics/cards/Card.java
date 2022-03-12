@@ -35,8 +35,17 @@ public interface Card extends ActionSource, Comparable<Card> {
 	/** if this {@link Card} is not {@link #isTargetted() targetted}, the parameter is ignored. */
 	ActionList generateActions(Enemy target);
 	
+	/** Returns {@code -1} iff this card is not {@link #isPlayable() playable}; otherwise, returns a non-negative
+	 * number. */
 	default int energyCost() {
 		return tag().energyCost();
+	}
+	
+	/** Note that playability and legality are different things. Unplayable cards can never be played under any
+	 * circumstances; Illegal cards cannot be played under the current circumstances/target (but may be playable under
+	 * with different circumstances or with a different target). */
+	default boolean isPlayable() {
+		return energyCost() >= 0;
 	}
 	
 	default boolean isTargetted() {

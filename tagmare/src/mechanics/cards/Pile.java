@@ -19,6 +19,7 @@ public abstract class Pile implements Iterable<Card> {
 		Collections.shuffle(trueOrder, RNG.SOURCE);
 	}
 	
+	/** The top of the {@link DrawPile} is where cards are drawn from. */
 	public void addToTop(Card card) {
 		addToSorted(card);
 		trueOrder.add(card);

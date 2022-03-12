@@ -17,6 +17,7 @@ public final class Images {
 		CARD_BACK = get("card_back.png"),
 		ATTACK_BASE = get("attack_base.png"),
 		PASSIVE_BASE = get("passive_base.png"),
+		SINGED_BASE = get("singed_base.png"),
 		SKILL_BASE = get("skill_base.png"),
 		CARD_BORDER = get("card_border.png"),
 		CARD_ENERGY_TAB = get("card_energy_tab.png"),

@@ -111,6 +111,7 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 
 		public BypassIntroAnimation() {
 			super(BYPASS_INTRO_DURATION);
+			setFinish(CardRepresentation.this::bypassFinished);
 		}
 		
 		@Override
@@ -227,7 +228,6 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 	}
 
 	private void startBeingPlayed() {
-		System.out.printf("[enter] startBeingPlayed%n");
 		cancelAnimation();
 		cma = new ScaleAnimation(SCALE_DURATION, this, DEST_PLAY_SCALE);
 		cma.setFinish(this::beingPlayedFinished);
@@ -267,9 +267,14 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 		Nodes.setLayout(this, GameScene.CENTER_X - WIDTH * .5, GameScene.CENTER_Y - HEIGHT * .5);
 		if(!Vis.handLayer().playGroup().getChildren().add(this))
 			throw new IllegalStateException(String.format("Already in playGroup: %s", this));
+		Vis.handLayer().addToCardsInPlay(card);
 		cma = new BypassIntroAnimation();
 		Animation.manager().add(cma);
 		state = State.BEING_PLAYED;
+	}
+	
+	private void bypassFinished() {
+		Vis.manager().checkedResumeFromAnimation();
 	}
 	
 	public void startExpandBackToNormalSize() {

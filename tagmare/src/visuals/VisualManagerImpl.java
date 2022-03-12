@@ -28,6 +28,11 @@ public final class VisualManagerImpl implements VisualManager {
 			action.execute();
 			CardRepresentation.of(((HasCard) action).card()).startBeingBypassPlayed();
 		}
+		else if(action instanceof PlaceCardOnTopOfDrawPile) {
+			waitingOnAnimation = false;
+			action.execute();
+			Vis.pileLayer().draw().addCardToTop(((HasCard) action).card());
+		}
 		else if(action instanceof SimpleDrawRequest) {
 			Hub.combat().pause();
 			action.execute();

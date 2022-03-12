@@ -65,7 +65,7 @@ public final class Combat {
 	}
 	
 	/** A target will be randomly generated. */
-	public void stackPlayBypassedCard(Card card) {
+	public Action getPlayBypassedCardAction(Card card) {
 		//First, find a target.
 		Enemy target = null;
 		target_finder:
@@ -80,7 +80,7 @@ public final class Combat {
 			}
 			target = perm.get(0);
 		}
-		stack().push(new PutBypassedCardInPlay(card, null, target));
+		return new PutBypassedCardInPlay(card, null, target);
 	}
 	
 	
