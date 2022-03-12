@@ -1,4 +1,4 @@
-package visuals.hand;
+package visuals.combat.hand;
 
 import base.Updatable;
 import javafx.scene.Group;

@@ -1,4 +1,4 @@
-package visuals.hand;
+package visuals.combat.hand;
 
 import java.util.*;
 
@@ -11,7 +11,7 @@ import mechanics.cards.*;
 import visuals.*;
 import visuals.CardRepresentation.State;
 import visuals.animations.*;
-import visuals.piles.DiscardPileLayer;
+import visuals.combat.piles.DiscardPileLayer;
 
 /** Contains the {@link CardRepresentation CardRepresentations} for the player's {@link Hand}. */
 public class HandLayer extends Pane implements Updatable {

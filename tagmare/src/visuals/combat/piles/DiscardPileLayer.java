@@ -1,4 +1,4 @@
-package visuals.piles;
+package visuals.combat.piles;
 
 import java.util.List;
 

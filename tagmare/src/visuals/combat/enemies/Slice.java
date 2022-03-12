@@ -1,4 +1,4 @@
-package visuals.enemies;
+package visuals.combat.enemies;
 
 import java.util.function.DoubleUnaryOperator;
 

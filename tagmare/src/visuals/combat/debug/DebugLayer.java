@@ -1,4 +1,4 @@
-package visuals.debug;
+package visuals.combat.debug;
 
 import javafx.scene.layout.Pane;
 import visuals.GameScene;

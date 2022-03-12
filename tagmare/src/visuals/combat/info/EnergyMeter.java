@@ -1,4 +1,4 @@
-package visuals.info;
+package visuals.combat.info;
 
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;

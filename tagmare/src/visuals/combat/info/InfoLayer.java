@@ -1,4 +1,4 @@
-package visuals.info;
+package visuals.combat.info;
 
 import base.Updatable;
 import javafx.scene.layout.Pane;

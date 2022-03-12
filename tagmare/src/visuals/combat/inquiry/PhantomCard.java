@@ -1,8 +1,9 @@
-package visuals;
+package visuals.combat.inquiry;
 
 import java.util.*;
 
 import mechanics.cards.Card;
+import visuals.*;
 
 public class PhantomCard extends AbstractCardRepresentation {
 

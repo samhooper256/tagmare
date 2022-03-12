@@ -1,13 +1,13 @@
 package visuals;
 
 import base.VisualManager;
-import visuals.debug.DebugLayer;
-import visuals.enemies.EnemyLayer;
-import visuals.hand.HandLayer;
-import visuals.info.InfoLayer;
-import visuals.inquiry.InquiryLayer;
-import visuals.piles.PileLayer;
-import visuals.ribbon.RibbonLayer;
+import visuals.combat.debug.DebugLayer;
+import visuals.combat.enemies.EnemyLayer;
+import visuals.combat.hand.HandLayer;
+import visuals.combat.info.InfoLayer;
+import visuals.combat.inquiry.InquiryLayer;
+import visuals.combat.piles.PileLayer;
+import visuals.combat.ribbon.RibbonLayer;
 
 public final class Vis {
 	

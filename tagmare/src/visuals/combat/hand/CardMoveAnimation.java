@@ -1,4 +1,4 @@
-package visuals.hand;
+package visuals.combat.hand;
 
 import javafx.util.Duration;
 import visuals.CardRepresentation;

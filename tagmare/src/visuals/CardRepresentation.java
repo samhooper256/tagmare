@@ -9,9 +9,9 @@ import mechanics.Hub;
 import mechanics.cards.Card;
 import mechanics.enemies.Enemy;
 import visuals.animations.*;
+import visuals.combat.hand.*;
+import visuals.combat.ribbon.BottomRibbon;
 import visuals.fxutils.*;
-import visuals.hand.*;
-import visuals.ribbon.BottomRibbon;
 
 public final class CardRepresentation extends AbstractCardRepresentation implements Updatable {
 	

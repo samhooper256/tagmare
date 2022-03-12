@@ -1,4 +1,4 @@
-package visuals.ribbon;
+package visuals.combat.ribbon;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.*;

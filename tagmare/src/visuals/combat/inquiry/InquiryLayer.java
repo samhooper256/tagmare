@@ -1,4 +1,4 @@
-package visuals.inquiry;
+package visuals.combat.inquiry;
 
 import java.util.*;
 
@@ -14,8 +14,8 @@ import mechanics.input.*;
 import utils.Colls;
 import visuals.*;
 import visuals.animations.*;
+import visuals.combat.hand.HandLayer;
 import visuals.fxutils.*;
-import visuals.hand.HandLayer;
 
 /** Invisible by default. */
 public class InquiryLayer extends Pane {

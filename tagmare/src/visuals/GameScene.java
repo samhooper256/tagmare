@@ -1,18 +1,20 @@
 package visuals;
 
+import java.util.*;
+
 import base.*;
 import javafx.scene.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.transform.Scale;
-import visuals.debug.DebugLayer;
-import visuals.enemies.EnemyLayer;
+import visuals.combat.debug.DebugLayer;
+import visuals.combat.enemies.EnemyLayer;
+import visuals.combat.hand.HandLayer;
+import visuals.combat.info.InfoLayer;
+import visuals.combat.inquiry.InquiryLayer;
+import visuals.combat.piles.PileLayer;
+import visuals.combat.ribbon.RibbonLayer;
 import visuals.fxutils.Nodes;
-import visuals.hand.HandLayer;
-import visuals.info.InfoLayer;
-import visuals.inquiry.InquiryLayer;
-import visuals.piles.PileLayer;
-import visuals.ribbon.RibbonLayer;
 
 /* TODO
  * - if you click a targetted card as it is being drawn from the draw pile (and maybe while it's discarded?) bad stuff
@@ -40,6 +42,8 @@ public class GameScene extends Scene implements Updatable {
 	private final RibbonLayer ribbonLayer;
 	private final DebugLayer debugLayer;
 	
+	private final List<Node> combatChildren;
+	
 	private double mouseX, mouseY;
 	
 	private GameScene() {
@@ -63,9 +67,11 @@ public class GameScene extends Scene implements Updatable {
 		ribbonLayer = new RibbonLayer();
 		debugLayer = new DebugLayer();
 		
-		content.getChildren().addAll(bottom, enemyLayer, infoLayer, pileLayer, inquiryLayer,
+		combatChildren = new ArrayList<>();
+		Collections.addAll(combatChildren, bottom, enemyLayer, infoLayer, pileLayer, inquiryLayer,
 				handLayer, ribbonLayer, debugLayer);
 		
+		content.getChildren().addAll(combatChildren);
 		getStylesheets().add(Main.class.getResource(Main.RESOURCES_PREFIX + "style.css").toExternalForm());
 		
 		setOnMouseMoved(this::mouseMoved);

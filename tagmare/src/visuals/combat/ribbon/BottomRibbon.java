@@ -1,4 +1,4 @@
-package visuals.ribbon;
+package visuals.combat.ribbon;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;

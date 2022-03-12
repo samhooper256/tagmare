@@ -1,4 +1,4 @@
-package visuals.ribbon;
+package visuals.combat.ribbon;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
