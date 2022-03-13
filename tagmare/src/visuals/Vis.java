@@ -1,7 +1,7 @@
 package visuals;
 
 import base.VisualManager;
-import visuals.calendar.CalendarLayer;
+import visuals.calendar.*;
 import visuals.combat.debug.DebugLayer;
 import visuals.combat.enemies.EnemyLayer;
 import visuals.combat.hand.HandLayer;
@@ -22,6 +22,10 @@ public final class Vis {
 
 	public static GameScene gameScene() {
 		return GameScene.get();
+	}
+	
+	public static CalendarEye calendarEye() {
+		return gameScene().calendarEye();
 	}
 	
 	public static CalendarLayer calendarLayer() {

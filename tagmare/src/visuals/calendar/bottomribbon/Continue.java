@@ -12,7 +12,7 @@ final class Continue extends Button {
 	
 	public void mouseClicked() {
 		setDisable(true);
-		Vis.manager().startNextCombat();
+		Vis.calendarEye().startTransition();
 	}
 	
 }

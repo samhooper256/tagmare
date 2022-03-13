@@ -12,7 +12,6 @@ import mechanics.input.CardInquiry;
 import utils.RNG;
 
 //TODO should Concentration apply to Free Time?
-//TODO Guilt card needs to actually work.
 public final class Combat {
 
 	/** The default number of cards drawn per turn. */

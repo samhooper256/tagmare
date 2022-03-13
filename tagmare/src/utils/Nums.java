@@ -14,4 +14,8 @@ public final class Nums {
 		return value;
 	}
 	
+	public static double lerp(double frac, double a, double b) {
+		return a + (b - a) * frac;
+	}
+	
 }

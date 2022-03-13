@@ -4,11 +4,11 @@ import java.util.*;
 
 import base.*;
 import javafx.scene.*;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.transform.Scale;
 import mechanics.Combat;
-import visuals.calendar.CalendarLayer;
+import visuals.calendar.*;
 import visuals.calendar.bottomribbon.BottomRibbonLayer;
 import visuals.calendar.topribbon.TopRibbonLayer;
 import visuals.combat.debug.DebugLayer;
@@ -24,6 +24,8 @@ import visuals.fxutils.Nodes;
  * - if you click a targetted card as it is being drawn from the draw pile (and maybe while it's discarded?) bad stuff
  * happens.
  * - if you hover over a card while they're reorganizing, they get slightly offset in the x direction.
+ * - the combat starts before the eye is done opening; it looks kind of "rushed" - add a delay there. Maybe Eyes
+ * have a second action that runs when it is fully done opening?
  */
 public class GameScene extends Scene implements Updatable {
 	
@@ -35,10 +37,11 @@ public class GameScene extends Scene implements Updatable {
 		return INSTANCE;
 	}
 	
-	private final Pane content;
+	private final Pane content, lowerContent;
 	private final Scale scale;
-	
+
 	//Calendar:
+	private final CalendarEye calendarEye;
 	private final CalendarLayer calendarLayer;
 	private final BottomRibbonLayer bottomRibbonLayer;
 	private final TopRibbonLayer topRibbonLayer;
@@ -88,7 +91,10 @@ public class GameScene extends Scene implements Updatable {
 		Collections.addAll(combatChildren, bottom, enemyLayer, infoLayer, pileLayer, inquiryLayer,
 				handLayer, ribbonLayer, debugLayer);
 		
-		content.getChildren().addAll(calendarChildren);
+		lowerContent = new Pane();
+		lowerContent.getChildren().addAll(calendarChildren);
+		calendarEye = new CalendarEye();
+		content.getChildren().addAll(lowerContent, calendarEye);
 		getStylesheets().add(Main.class.getResource(Main.RESOURCES_PREFIX + "style.css").toExternalForm());
 		
 		setOnMouseMoved(this::mouseMoved);
@@ -96,7 +102,7 @@ public class GameScene extends Scene implements Updatable {
 	
 	@Override
 	public void update(long diff) {
-		for(Node n : content.getChildren())
+		for(Node n : lowerContent.getChildren())
 			if(n instanceof Updatable)
 				((Updatable) n).update(diff);
 	}
@@ -107,8 +113,8 @@ public class GameScene extends Scene implements Updatable {
 	}
 	
 	public void showCombat(Combat c) {
-		content.getChildren().clear();
-		content.getChildren().addAll(combatChildren);
+		lowerContent.getChildren().clear();
+		lowerContent.getChildren().addAll(combatChildren);
 		pileLayer().draw().setCards(c.drawPile());
 		enemyLayer().setupEnemies();
 	}
@@ -116,9 +122,9 @@ public class GameScene extends Scene implements Updatable {
 	private Pane root() {
 		return (Pane) getRoot();
 	}
-
-	public Pane content() {
-		return content;
+	
+	public CalendarEye calendarEye() {
+		return calendarEye;
 	}
 	
 	public CalendarLayer calendarLayer() {
