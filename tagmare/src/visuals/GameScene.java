@@ -11,6 +11,7 @@ import mechanics.combat.Combat;
 import visuals.calendar.*;
 import visuals.calendar.bottomribbon.BottomRibbonLayer;
 import visuals.calendar.topribbon.TopRibbonLayer;
+import visuals.combat.CombatEye;
 import visuals.combat.debug.DebugLayer;
 import visuals.combat.enemies.EnemyLayer;
 import visuals.combat.hand.HandLayer;
@@ -38,14 +39,14 @@ public class GameScene extends Scene implements Updatable {
 		return INSTANCE;
 	}
 	
-	private final Pane content, lowerContent;
+	private final Pane content, lowerContent, eyeLayer;
 	private final Scale scale;
 
 	//Calendar:
-	private final CalendarEye calendarEye;
 	private final CalendarLayer calendarLayer;
 	private final BottomRibbonLayer bottomRibbonLayer;
 	private final TopRibbonLayer topRibbonLayer;
+	private final CalendarEye calendarEye;
 	
 	//Combat:
 	private final Pane bottom;
@@ -57,6 +58,7 @@ public class GameScene extends Scene implements Updatable {
 	private final RibbonLayer ribbonLayer;
 	private final WinLayer winLayer;
 	private final DebugLayer debugLayer;
+	private final CombatEye combatEye;
 	
 	private final List<Node> calendarChildren, combatChildren;
 	
@@ -97,7 +99,10 @@ public class GameScene extends Scene implements Updatable {
 		lowerContent = new Pane();
 		lowerContent.getChildren().addAll(calendarChildren);
 		calendarEye = new CalendarEye();
-		content.getChildren().addAll(lowerContent, calendarEye);
+		combatEye = new CombatEye();
+		eyeLayer = new Pane(calendarEye, combatEye);
+		eyeLayer.setPickOnBounds(false);
+		content.getChildren().addAll(lowerContent, eyeLayer);
 		getStylesheets().add(Main.class.getResource(Main.RESOURCES_PREFIX + "style.css").toExternalForm());
 		
 		setOnMouseMoved(this::mouseMoved);
@@ -118,8 +123,12 @@ public class GameScene extends Scene implements Updatable {
 	public void showCombat(Combat c) {
 		lowerContent.getChildren().clear();
 		lowerContent.getChildren().addAll(combatChildren);
-		pileLayer().draw().setCards(c.drawPile());
-		enemyLayer().setupEnemies();
+	}
+	
+	public void showCalendar() {
+		lowerContent.getChildren().clear();
+		lowerContent.getChildren().addAll(calendarChildren);
+		bottomRibbonLayer.continueButton().reEnable(); //TODO this should be in a method called CalendarManager.setupCalendar(...)?
 	}
 	
 	private Pane root() {
@@ -164,6 +173,10 @@ public class GameScene extends Scene implements Updatable {
 	
 	public DebugLayer debugLayer() {
 		return debugLayer;
+	}
+	
+	public CombatEye combatEye() {
+		return combatEye;
 	}
 	
 	public double mouseX() {

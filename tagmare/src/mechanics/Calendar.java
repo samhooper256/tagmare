@@ -3,6 +3,7 @@ package mechanics;
 import java.util.*;
 
 import mechanics.combat.Combat;
+import mechanics.enemies.APESProgressCheck;
 
 public final class Calendar {
 
@@ -14,8 +15,12 @@ public final class Calendar {
 	
 	public Calendar() {
 		List<Combat> combatsModifiable = new ArrayList<>();
-		for(int i = 0; i < WEEKS; i++)
-			combatsModifiable.add(new Combat());
+		for(int i = 0; i < WEEKS; i++) {
+			if(i == 1)
+				combatsModifiable.add(new Combat(new APESProgressCheck()));
+			else
+				combatsModifiable.add(new Combat());
+		}
 		combats = Collections.unmodifiableList(combatsModifiable);
 		index = 0;
 	}
@@ -34,6 +39,16 @@ public final class Calendar {
 	 * {@link #combats()}. 0-based. */
 	public int index() {
 		return index;
+	}
+	
+	public boolean hasMoreWeeks() {
+		return index < WEEKS - 1;
+	}
+	
+	public void incrementIndex() {
+		if(!hasMoreWeeks())
+			throw new IllegalStateException(String.format("No more weeks; index=%d", index));
+		index++;
 	}
 	
 }

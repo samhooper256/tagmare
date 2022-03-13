@@ -2,7 +2,6 @@ package visuals.combat.enemies;
 
 import java.util.function.DoubleUnaryOperator;
 
-import base.VisualManager;
 import javafx.collections.ObservableList;
 import javafx.scene.*;
 import javafx.scene.control.Label;

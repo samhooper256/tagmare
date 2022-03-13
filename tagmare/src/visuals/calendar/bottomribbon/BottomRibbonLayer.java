@@ -22,4 +22,8 @@ public class BottomRibbonLayer extends Pane {
 		getChildren().addAll(ribbon, continueButton);
 	}
 	
+	public Continue continueButton() {
+		return continueButton;
+	}
+	
 }

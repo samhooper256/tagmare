@@ -13,8 +13,13 @@ public class SkipArrow extends Sprite {
 	public SkipArrow() {
 		super(Images.SKIP_ARROW);
 		Nodes.setLayout(this, GameScene.CENTER_X - WIDTH * .5, Y);
+		setOnMouseClicked(me -> mouseClicked());
 		setOnMouseEntered(me -> hoverEntered());
 		setOnMouseExited(me -> hoverExited());
+	}
+	
+	private void mouseClicked() {
+		Vis.combatEye().startTransition();
 	}
 	
 	private void hoverEntered() {

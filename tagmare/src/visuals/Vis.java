@@ -1,7 +1,7 @@
 package visuals;
 
-import base.VisualManager;
 import visuals.calendar.*;
+import visuals.combat.CombatEye;
 import visuals.combat.debug.DebugLayer;
 import visuals.combat.enemies.EnemyLayer;
 import visuals.combat.hand.HandLayer;
@@ -28,6 +28,7 @@ public final class Vis {
 	public static CalendarEye calendarEye() {
 		return gameScene().calendarEye();
 	}
+	
 	
 	public static CalendarLayer calendarLayer() {
 		return gameScene().calendarLayer();
@@ -67,6 +68,10 @@ public final class Vis {
 	
 	public static boolean inquiryActive() {
 		return inquiryLayer().isActive();
+	}
+	
+	public static CombatEye combatEye() {
+		return gameScene().combatEye();
 	}
 	
 	public static double mouseX() {

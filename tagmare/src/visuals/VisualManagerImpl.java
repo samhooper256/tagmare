@@ -2,12 +2,12 @@ package visuals;
 
 import java.util.*;
 
-import base.VisualManager;
 import mechanics.*;
 import mechanics.actions.*;
 import mechanics.cards.Card;
 import mechanics.combat.Combat;
 import mechanics.enemies.Enemy;
+import visuals.combat.CombatManager;
 import visuals.combat.enemies.EnemyRepresentation;
 import visuals.combat.ribbon.BottomRibbon;
 
@@ -187,6 +187,7 @@ public final class VisualManagerImpl implements VisualManager {
 		gi.moveToInCombat();
 		Combat c = gi.combat();
 		c.startWithoutResuming();
+		CombatManager.setupCombat(c);
 		Vis.gameScene().showCombat(c);
 		c.resume();
 	}
@@ -203,6 +204,12 @@ public final class VisualManagerImpl implements VisualManager {
 			throw new IllegalStateException("Cannot resume; Combat is running");
 		waitingOnAnimation = false;
 		Hub.combat().resume();
+	}
+	
+	@Override
+	public void exitWonCombat() {
+		Hub.instance().exitWonCombat();
+		Vis.gameScene().showCalendar();
 	}
 	
 	@Override

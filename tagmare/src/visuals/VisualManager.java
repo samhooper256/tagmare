@@ -1,5 +1,6 @@
-package base;
+package visuals;
 
+import base.*;
 import mechanics.*;
 import mechanics.actions.Action;
 import mechanics.cards.Card;
@@ -36,5 +37,7 @@ public interface VisualManager extends Updatable {
 	}
 	
 	void startNextCombat();
+	
+	void exitWonCombat();
 	
 }

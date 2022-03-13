@@ -1,5 +1,7 @@
 package base;
 
+import visuals.VisualManager;
+
 /** Provides the source of all update calls and the {@link Timer}.*/
 public final class Updater {
 

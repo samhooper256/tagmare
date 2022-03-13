@@ -1,6 +1,4 @@
-package base;
-
-import visuals.*;
+package visuals;
 
 final class VisualManagerHolder {
 

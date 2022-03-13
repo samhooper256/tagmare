@@ -2,7 +2,6 @@ package mechanics.combat;
 
 import java.util.*;
 
-import base.VisualManager;
 import mechanics.*;
 import mechanics.actions.*;
 import mechanics.cards.*;
@@ -11,6 +10,7 @@ import mechanics.effects.*;
 import mechanics.enemies.*;
 import mechanics.input.CardInquiry;
 import utils.RNG;
+import visuals.VisualManager;
 
 //TODO should Concentration apply to Free Time?
 public final class Combat {
@@ -35,6 +35,10 @@ public final class Combat {
 	private CardInquiry cardInquiry;
 	
 	public Combat() {
+		this(new VocabQuiz());
+	}
+	
+	public Combat(Enemy... startingEnemies) {
 		stack = new ActionStack();
 		cardsInPlay = new HashSet<>();
 		drawPile = new DrawPile();
@@ -44,7 +48,7 @@ public final class Combat {
 		enemies = new ArrayList<>();
 		reward = new CombatReward();
 //		Collections.<Enemy>addAll(enemies, new VocabQuiz(), new APESProgressCheck(), new CalculusPracticeQuiz());
-		Collections.<Enemy>addAll(enemies, new VocabQuiz());
+		Collections.<Enemy>addAll(enemies, startingEnemies);
 		state = CombatState.PREP;
 		turn = 0;
 		cardsPlayedThisTurn = 0;
