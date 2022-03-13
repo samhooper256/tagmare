@@ -10,12 +10,13 @@ import visuals.fxutils.Nodes;
 
 public class RewardCard extends AbstractCardRepresentation implements Updatable {
 	
-	private static final Duration
+	public static final Duration
 		INTRO_1_DURATION = Duration.millis(600),
 		INTRO_DELAY = Duration.millis(300),
-		INTRO_2_DURATION = Duration.millis(600);
+		INTRO_2_DURATION = Duration.millis(600),
+		OUTRO_DURATION = Duration.millis(600);
 	
-	private static final double DEST_Y = GameScene.CENTER_Y - HEIGHT * .5;
+	private static final double Y = GameScene.CENTER_Y - HEIGHT * .5;
 	/** Distance from {@link GameScene#CENTER_X} to the center of the {@link Position#LEFT} (or {@link Position#RIGHT})
 	 * card. */
 	private static final double CENTER_DIST = 300;
@@ -43,7 +44,7 @@ public class RewardCard extends AbstractCardRepresentation implements Updatable 
 
 		@Override
 		public void interpolate(double frac) {
-			setLayoutY(Nums.lerp(frac, GameScene.HEIGHT, DEST_Y));
+			setLayoutY(Nums.lerp(frac, GameScene.HEIGHT, Y));
 		}
 		
 	}
@@ -71,16 +72,41 @@ public class RewardCard extends AbstractCardRepresentation implements Updatable 
 		
 	}
 	
+	private class UpOutro extends AbstractAnimation {
+		
+		public UpOutro() {
+			super(OUTRO_DURATION);
+		}
+
+		@Override
+		public void interpolate(double frac) {
+			setLayoutY(Nums.lerp(frac, Y, -HEIGHT));
+		}
+
+	}
+	
+	private class DownOutro extends AbstractAnimation {
+		
+		public DownOutro() {
+			super(OUTRO_DURATION);
+		}
+
+		@Override
+		public void interpolate(double frac) {
+			setLayoutY(Nums.lerp(frac, Y, GameScene.HEIGHT));
+		}
+
+	}
+
 	private final Position position;
 	
-	private boolean hovered, introInProgres;
+	private boolean hovered, introInProgres, clicked;
 	
 	public RewardCard(Card card, Position position) {
 		super(card);
 		setVisible(false);
 		this.position = position;
-		introInProgres = false;
-		hovered = false;
+		introInProgres = hovered = clicked = false;
 		setOnMouseClicked(me -> mouseClicked());
 		setOnMouseEntered(me -> hoverEntered());
 		setOnMouseExited(me -> hoverExited());
@@ -106,6 +132,14 @@ public class RewardCard extends AbstractCardRepresentation implements Updatable 
 		introInProgres = false;
 	}
 	
+	public void startUpOutro() {
+		Animation.manager().add(new UpOutro());
+	}
+	
+	public void startDownOutro() {
+		Animation.manager().add(new DownOutro());
+	}
+	
 	@Override
 	public void update(long diff) {
 		if(introInProgres)
@@ -118,7 +152,10 @@ public class RewardCard extends AbstractCardRepresentation implements Updatable 
 	}
 	
 	private void mouseClicked() {
-		
+		if(introInProgres || clicked)
+			return;
+		clicked = true;
+		Vis.winLayer().selectAndExit(this);
 	}
 	
 	private void hoverEntered() {

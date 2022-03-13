@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import mechanics.Calendar;
 import utils.Nums;
 import visuals.*;
 import visuals.calendar.bottomribbon.BottomRibbonLayer;
@@ -40,7 +41,7 @@ public class CalendarLayer extends Pane {
 		calendar.setLayoutX(X);
 		content = new Group(desk, calendar);
 		content.setLayoutY(Y);
-		for(int i = 0; i < 30; i++) {
+		for(int i = 0; i < Calendar.WEEKS; i++) {
 			Text l = new Text(String.valueOf(i + "weeeeE"));
 			Nodes.setLayout(l, TEXT_X, WEEK_1_Y + WEEK_SPACING * i);
 			content.getChildren().add(l);
