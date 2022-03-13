@@ -29,6 +29,7 @@ public final class Images {
 		CARD_ENERGY_TAB = get("card_energy_tab.png"),
 		CARD_IMAGE_BORDER = get("card_image_border.png"),
 		TEST_IMAGE = get("test_image.png"),
+		CARD_BACKLIGHT = get("card_backlight.png"),
 		DISCIPLINE_CARD = get("discipline_card.png"),
 		SHIELD = get("shield.png"),
 		SKIP_ARROW = get("skip_arrow.png"),

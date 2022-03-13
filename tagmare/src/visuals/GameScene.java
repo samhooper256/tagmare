@@ -44,7 +44,7 @@ public class GameScene extends Scene implements Updatable {
 	private final Scale scale;
 
 	//Galleries:
-	private final Gallery deckGallery;
+	private final Gallery deckGallery, drawPileGallery, discardPileGallery;
 	
 	//Calendar:
 	private final CalendarLayer calendarLayer;
@@ -109,7 +109,9 @@ public class GameScene extends Scene implements Updatable {
 		eyeLayer.setPickOnBounds(false);
 		
 		deckGallery = new Gallery("Deck");
-		galleryLayer = new Pane(deckGallery);
+		drawPileGallery = new Gallery("Draw Pile", "Cards are not shown in the order they will be drawn.");
+		discardPileGallery = new Gallery("Discard Pile", "Cards are shown in the order they were discarded.");
+		galleryLayer = new Pane(deckGallery, drawPileGallery, discardPileGallery);
 		galleryLayer.setPickOnBounds(false);
 		
 		content.getChildren().addAll(lowerContent, galleryLayer, eyeLayer);
@@ -191,6 +193,14 @@ public class GameScene extends Scene implements Updatable {
 	
 	public Gallery deckGallery() {
 		return deckGallery;
+	}
+	
+	public Gallery drawPileGallery() {
+		return drawPileGallery;
+	}
+	
+	public Gallery discardPileGallery() {
+		return discardPileGallery;
 	}
 	
 	public double mouseX() {

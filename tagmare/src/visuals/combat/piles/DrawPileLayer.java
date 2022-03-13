@@ -1,40 +1,21 @@
 package visuals.combat.piles;
 
-import java.util.List;
+import javafx.scene.input.MouseEvent;
+import mechanics.Hub;
+import visuals.*;
 
-import javafx.scene.Node;
-import javafx.scene.layout.Pane;
-import mechanics.cards.Card;
-import visuals.CardRepresentation;
-import visuals.fxutils.Nodes;
-
-public class DrawPileLayer extends Pane {
+public class DrawPileLayer extends PileSublayer {
 
 	public static final double CARD_X = 100, CARD_Y = 100;
 	
 	public DrawPileLayer() {
-		setMouseTransparent(true);
+		super(CARD_X, CARD_Y);
 	}
 	
-	public void setCards(Iterable<Card> cardsBottomToTop) {
-		getChildren().clear();
-		for(Card card : cardsBottomToTop)
-			addCardToTop(card);
-	}
-
-	public void addCardToTop(Card card) {
-		CardRepresentation cr = CardRepresentation.of(card);
-		addToTop(cr);
-	}
-
-	public void addToTop(CardRepresentation cr) {
-		cr.setFaceDown();
-		Nodes.setLayout(cr, CARD_X, CARD_Y);
-		getChildren().add(cr);
-	}
-	
-	public List<Node> cardRepresentations() {
-		return getChildren();
+	@Override
+	protected void clicked(MouseEvent me) {
+		Vis.drawPileGallery().startIntro(Hub.drawPile().sorted());
+		me.consume(); //don't let it get passed to anything else.
 	}
 	
 }

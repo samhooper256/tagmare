@@ -49,6 +49,7 @@ public abstract class Pile implements Iterable<Card> {
 	private void addToSorted(Card card) {
 		if(sorted.contains(card))
 			throw new IllegalStateException(String.format("Duplicate card added: %s", card));
+		Collections.sort(sorted);
 		sorted.add(card);
 	}
 	
@@ -78,6 +79,10 @@ public abstract class Pile implements Iterable<Card> {
 	/** Unmodifiable. Updated dynamically. The cards are in order from the bottom of the pile to the top. */
 	public List<Card> trueOrder() {
 		return Collections.unmodifiableList(trueOrder);
+	}
+	
+	public List<Card> sorted() {
+		return Collections.unmodifiableList(sorted);
 	}
 	
 	@Override

@@ -1,9 +1,5 @@
-@font-face {
-	src: url("fonts/ArefRuqaaBold.ttf"); /* Aref Ruqaa*/
-}
-
 .card .name {
-	-fx-font: 14 "Aref Ruqaa";
+	-fx-font: 14 "Georgia";
 }
 
 .card .description {

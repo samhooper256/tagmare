@@ -1,32 +1,21 @@
 package visuals.combat.piles;
 
-import java.util.List;
-
-import javafx.scene.Node;
-import javafx.scene.layout.Pane;
+import javafx.scene.input.MouseEvent;
+import mechanics.Hub;
 import visuals.*;
-import visuals.fxutils.Nodes;
 
-public class DiscardPileLayer extends Pane {
+public class DiscardPileLayer extends PileSublayer {
 
 	public static final double CARD_X = GameScene.WIDTH - 100 - CardRepresentation.WIDTH, CARD_Y = 100;
 	
 	public DiscardPileLayer() {
-		setMouseTransparent(true);
+		super(CARD_X, CARD_Y);
 	}
-	
-	public void addToTop(CardRepresentation cr) {
-		Nodes.setLayout(cr, CARD_X, CARD_Y);
-		cr.setFaceDown();
-		getChildren().add(cr);
-	}
-	
-	public void clear() {
-		getChildren().clear();
-	}
-	
-	public List<Node> cardRepresentations() {
-		return getChildren();
+
+	@Override
+	protected void clicked(MouseEvent me) {
+		Vis.discardPileGallery().startIntro(Hub.discardPile());
+		me.consume(); //don't let it get passed to anything else.
 	}
 	
 }

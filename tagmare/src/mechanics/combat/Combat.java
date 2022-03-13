@@ -169,14 +169,12 @@ public final class Combat {
 		List<Enemy> enemies = enemies();
 		for(int i = enemies.size() - 1; i >= 0; i--)
 			stack().push(new EOTEnemyLoseBlock(enemies.get(i)));
-		for(int i = cards.size() - 1; i >= 0; i--) {
+		for(int i = cards.size() - 1; i >= 0; i--) { //iterate in reverse order so the discards happen in L-to-R order.
 			Card c = cards.get(i);
-			if(c instanceof Guilt) {
+			if(c instanceof Guilt)
 				stack().push(new ReturnToDrawPile(c, null));
-			}
-			else {
+			else
 				stack().push(new EOTDiscard(c));
-			}
 		}
 		stack().pushReversed(EOTEffects.apply());
 	}

@@ -93,11 +93,16 @@ public class Gallery extends Pane {
 	}
 	
 	public Gallery(String description) {
+		this(description, "");
+	}
+	
+	/** Any additional text should be punctuated and should not start with leading whitespace.
+	 * Pass an empty string for no additional text. */
+	public Gallery(String description, String additionalTipText) {
 		glass = new GalleryGlass();
 		glass.setOnMouseClicked(me -> glassClicked());
-		tip = new OrderTip();
-		cardGroup = new Group();
-		cardGroup.setLayoutY(TOP_Y);
+		tip = new OrderTip(additionalTipText);
+		cardGroup = new Group(); //y is set whenever startIntro() is called.
 		this.description = new GalleryDescription(description);
 		introInProgress = false;
 		cardCount = 0;
@@ -123,6 +128,10 @@ public class Gallery extends Pane {
 
 	public void setDescription(String text) {
 		description.setText(text);
+	}
+	
+	public void setAdditionalTipText(String additionalTipText) {
+		tip.setAdditionalTipText(additionalTipText);
 	}
 	
 	public void startIntro(Iterable<Card> cards) {
@@ -176,7 +185,7 @@ public class Gallery extends Pane {
 	}
 	
 	private double minYOffset() {
-		return GameScene.HEIGHT - bottomY() - BOTTOM_MARGIN;
+		return Math.min(0, GameScene.HEIGHT - bottomY() - BOTTOM_MARGIN);
 	}
 	
 }

@@ -79,6 +79,14 @@ public final class Vis {
 		return gameScene().deckGallery();
 	}
 	
+	public static Gallery drawPileGallery() {
+		return gameScene().drawPileGallery();
+	}
+	
+	public static Gallery discardPileGallery() {
+		return gameScene().discardPileGallery();
+	}
+	
 	public static double mouseX() {
 		return gameScene().mouseX();
 	}

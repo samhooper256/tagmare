@@ -176,6 +176,8 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 	}
 
 	private void mousePressed() {
+		if(!Vis.handLayer().contains(this)) //this will happen if the user clicks on a card in the draw/discard pile.
+			return;
 		if(Vis.inquiryActive()) {
 			Vis.inquiryLayer().clickedCardFromHand(card);
 			return;
