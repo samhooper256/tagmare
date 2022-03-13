@@ -9,6 +9,7 @@ import visuals.combat.info.InfoLayer;
 import visuals.combat.inquiry.InquiryLayer;
 import visuals.combat.piles.PileLayer;
 import visuals.combat.ribbon.RibbonLayer;
+import visuals.combat.win.WinLayer;
 
 public final class Vis {
 	
@@ -42,6 +43,10 @@ public final class Vis {
 	
 	public static PileLayer pileLayer() {
 		return gameScene().pileLayer();
+	}
+
+	public static WinLayer winLayer() {
+		return gameScene().winLayer();
 	}
 	
 	public static DebugLayer debugLayer() {

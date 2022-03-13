@@ -2,6 +2,8 @@ package mechanics;
 
 import java.util.*;
 
+import mechanics.combat.Combat;
+
 public final class Calendar {
 
 	public static final int WEEKS = 36;

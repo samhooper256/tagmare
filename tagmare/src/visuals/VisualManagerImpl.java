@@ -6,6 +6,7 @@ import base.VisualManager;
 import mechanics.*;
 import mechanics.actions.*;
 import mechanics.cards.Card;
+import mechanics.combat.Combat;
 import mechanics.enemies.Enemy;
 import visuals.combat.enemies.EnemyRepresentation;
 import visuals.combat.ribbon.BottomRibbon;
@@ -148,6 +149,11 @@ public final class VisualManagerImpl implements VisualManager {
 //			if(!Hub.combat().requestSupplyCardsToInquiry(Arrays.asList(Hub.hand().get(0))))
 //				throw new IllegalStateException("oof");
 			Vis.inquiryLayer().startInquiry(si.inquiry());
+		}
+		else if(action instanceof WinCombat) {
+			waitingOnAnimation = false;
+			action.execute();
+			Vis.winLayer().startCardReward();
 		}
 		else {
 			waitingOnAnimation = false;

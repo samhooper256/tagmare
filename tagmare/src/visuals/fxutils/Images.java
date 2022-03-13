@@ -30,7 +30,9 @@ public final class Images {
 		CARD_IMAGE_BORDER = get("card_image_border.png"),
 		TEST_IMAGE = get("test_image.png"),
 		DISCIPLINE_CARD = get("discipline_card.png"),
-		SHIELD = get("shield.png");
+		SHIELD = get("shield.png"),
+		SKIP_ARROW = get("skip_arrow.png"),
+		SKIP_ARROW_HOVERED = get("skip_arrow_hovered.png");
 		
 	
 	private static final Map<CardTag, Image> CARD_IMAGE_MAP = new HashMap<>();

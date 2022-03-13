@@ -24,9 +24,9 @@ public final class AttackEffects {
 	
 	/** Returns the given {@link Action} after (possibly) mutating it. */
 	public static Action applyToSingle(Attack card, Action action) {
-		if(action instanceof DealDamage) {
-			DealDamage dd = (DealDamage) action;
-			dd.setDamage(getModifiedDamage(card, dd.damage()));
+		if(action instanceof DealDamage || action instanceof DealDamageToAll) {
+			HasDamage hd = (HasDamage) action;
+			hd.setDamage(getModifiedDamage(card, hd.damage()));
 		}
 		return action;
 	}

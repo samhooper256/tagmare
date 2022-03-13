@@ -14,3 +14,8 @@
 	-fx-stroke: black;
     -fx-stroke-width: 1px;
 }
+
+.skip-label {
+	-fx-font: oblique 36 "Georgia";
+	-fx-text-fill: white;
+}

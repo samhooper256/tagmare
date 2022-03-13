@@ -7,7 +7,7 @@ import javafx.scene.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.transform.Scale;
-import mechanics.Combat;
+import mechanics.combat.Combat;
 import visuals.calendar.*;
 import visuals.calendar.bottomribbon.BottomRibbonLayer;
 import visuals.calendar.topribbon.TopRibbonLayer;
@@ -18,6 +18,7 @@ import visuals.combat.info.InfoLayer;
 import visuals.combat.inquiry.InquiryLayer;
 import visuals.combat.piles.PileLayer;
 import visuals.combat.ribbon.*;
+import visuals.combat.win.WinLayer;
 import visuals.fxutils.Nodes;
 
 /* TODO
@@ -54,6 +55,7 @@ public class GameScene extends Scene implements Updatable {
 	private final InquiryLayer inquiryLayer;
 	private final HandLayer handLayer;
 	private final RibbonLayer ribbonLayer;
+	private final WinLayer winLayer;
 	private final DebugLayer debugLayer;
 	
 	private final List<Node> calendarChildren, combatChildren;
@@ -85,11 +87,12 @@ public class GameScene extends Scene implements Updatable {
 		inquiryLayer = new InquiryLayer();
 		handLayer = new HandLayer();
 		ribbonLayer = new RibbonLayer();
+		winLayer = new WinLayer();
 		debugLayer = new DebugLayer();
 		
 		combatChildren = new ArrayList<>();
 		Collections.addAll(combatChildren, bottom, enemyLayer, infoLayer, pileLayer, inquiryLayer,
-				handLayer, ribbonLayer, debugLayer);
+				handLayer, ribbonLayer, winLayer, debugLayer);
 		
 		lowerContent = new Pane();
 		lowerContent.getChildren().addAll(calendarChildren);
@@ -135,6 +138,10 @@ public class GameScene extends Scene implements Updatable {
 		return enemyLayer;
 	}
 	
+	public InfoLayer infoLayer() {
+		return infoLayer;
+	}
+	
 	public PileLayer pileLayer() {
 		return pileLayer;
 	}
@@ -151,12 +158,12 @@ public class GameScene extends Scene implements Updatable {
 		return ribbonLayer;
 	}
 	
-	public DebugLayer debugLayer() {
-		return debugLayer;
+	public WinLayer winLayer() {
+		return winLayer;
 	}
 	
-	public InfoLayer infoLayer() {
-		return infoLayer;
+	public DebugLayer debugLayer() {
+		return debugLayer;
 	}
 	
 	public double mouseX() {

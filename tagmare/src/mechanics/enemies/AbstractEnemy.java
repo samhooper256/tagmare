@@ -1,6 +1,7 @@
 package mechanics.enemies;
 
 import mechanics.*;
+import mechanics.combat.Combat;
 import mechanics.enemies.intents.*;
 
 abstract class AbstractEnemy extends AbstractEntity implements Enemy {

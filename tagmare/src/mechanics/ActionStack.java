@@ -65,6 +65,10 @@ public class ActionStack implements Iterable<Action> {
 		return size() == 0;
 	}
 	
+	public void clear() {
+		list.clear();
+	}
+	
 	@Override
 	public Iterator<Action> iterator() {
 		return Iterators.unmodifiable(list.iterator());

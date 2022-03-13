@@ -18,4 +18,8 @@ public class Sprite extends StackPane {
 		Nodes.setPrefAndMaxSize(this, width, height);
 	}
 	
+	public void setImage(Image image) {
+		resizableImage.setImage(image);
+	}
+	
 }

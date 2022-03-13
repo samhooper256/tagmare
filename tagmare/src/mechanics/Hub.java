@@ -3,6 +3,7 @@ package mechanics;
 import java.util.List;
 
 import mechanics.cards.*;
+import mechanics.combat.Combat;
 import mechanics.enemies.Enemy;
 
 /** A bunch of utility methods. */

@@ -1,8 +1,9 @@
-package mechanics;
+package mechanics.combat;
 
 import java.util.*;
 
 import base.VisualManager;
+import mechanics.*;
 import mechanics.actions.*;
 import mechanics.cards.*;
 import mechanics.cards.singed.Guilt;
@@ -25,6 +26,7 @@ public final class Combat {
 	private final Energy energy;
 	/** In order from left to right as they appear to the player. */
 	private final List<Enemy> enemies;
+	private final CombatReward reward;
 	
 	private CombatState state;
 	private volatile boolean running;
@@ -40,12 +42,53 @@ public final class Combat {
 		hand = new Hand();
 		energy = new Energy();
 		enemies = new ArrayList<>();
-		Collections.<Enemy>addAll(enemies, new VocabQuiz(), new APESProgressCheck(), new CalculusPracticeQuiz());
+		reward = new CombatReward();
+//		Collections.<Enemy>addAll(enemies, new VocabQuiz(), new APESProgressCheck(), new CalculusPracticeQuiz());
+		Collections.<Enemy>addAll(enemies, new VocabQuiz());
 		state = CombatState.PREP;
 		turn = 0;
 		cardsPlayedThisTurn = 0;
 		running = false;
 		mostRecentlyExecuted = null;
+	}
+	
+	/** Must call {@link #resume()} after calling this method for the player's first turn to start. */
+	public void startWithoutResuming() {
+		if(started())
+			throw new IllegalStateException(String.format("Already started (turn=%d)", turn));
+		drawPile.addAllToTop(Hub.deck().shuffledCopyOfCards());
+		stackStartPlayerTurn(); //increments turn; does not call resume().
+	}
+	
+	public void resume() {
+		if(!started())
+			throw new IllegalStateException("Not started");
+		running = true;
+		while(!stack().isEmpty()) {
+			Action top = stack().pop();
+			if(top.canExecute()) {
+				mostRecentlyExecuted = top;
+				VisualManager.get().executeAction(mostRecentlyExecuted);
+				addClearsIfEnemyKilled(mostRecentlyExecuted);
+				if(mostRecentlyExecuted instanceof ClearEnemy && enemies().size() == 0)
+					stack().push(new WinCombat());
+				if(mostRecentlyExecuted instanceof CardAccepting)
+					clearInquiry();
+				if(paused())
+					return;
+			}
+		}
+		if(state == CombatState.PLAYER_TO_ENEMY) {
+			stack().push(new StartEnemyTurn());
+			resume();
+		}
+		if(state == CombatState.ENEMY_TURN) { //enemies have nothing else to do - start the player's next turn.
+			stackStartPlayerTurn();
+			resume();
+		}
+		else {
+			running = false;
+		}
 	}
 	
 	/** The card won't actually be played until this {@link Combat} {@link #resume() resumes}.
@@ -83,44 +126,6 @@ public final class Combat {
 			target = perm.get(0);
 		}
 		return new PutBypassedCardInPlay(card, null, target);
-	}
-	
-	
-	/** Must call {@link #resume()} after calling this method for the player's first turn to start. */
-	public void startWithoutResuming() {
-		if(started())
-			throw new IllegalStateException(String.format("Already started (turn=%d)", turn));
-		drawPile.addAllToTop(Hub.deck().shuffledCopyOfCards());
-		stackStartPlayerTurn(); //increments turn; does not call resume().
-	}
-	
-	public void resume() {
-		if(!started())
-			throw new IllegalStateException("Not started");
-		running = true;
-		while(!stack().isEmpty()) {
-			Action top = stack().pop();
-			if(top.canExecute()) {
-				mostRecentlyExecuted = top;
-				VisualManager.get().executeAction(mostRecentlyExecuted);
-				addClearsIfEnemyKilled(mostRecentlyExecuted);
-				if(mostRecentlyExecuted instanceof CardAccepting)
-					clearInquiry();
-				if(paused())
-					return;
-			}
-		}
-		if(state == CombatState.PLAYER_TO_ENEMY) {
-			stack().push(new StartEnemyTurn());
-			resume();
-		}
-		if(state == CombatState.ENEMY_TURN) { //enemies have nothing else to do - start the player's next turn.
-			stackStartPlayerTurn();
-			resume();
-		}
-		else {
-			running = false;
-		}
 	}
 	
 	/** Adds a {@link ClearEnemy} to the top of the {@link #stack()} for every {@link Enemy} killed by the given
@@ -216,6 +221,12 @@ public final class Combat {
 	public boolean canSupplyCardsToInquiry(List<Card> cards) {
 		return cardInquiry() != null && paused() && !stack().isEmpty() && stack().peek() instanceof CardAccepting &&
 				cardInquiry().selection().validate(cards);
+	}
+	
+	/** Should be called by {@link WinCombat#execute()} only. */
+	public void winCombatAction() {
+		state = CombatState.WON;
+		stack().clear();
 	}
 	
 	public void pause() {
@@ -357,6 +368,10 @@ public final class Combat {
 	
 	public CombatState state() {
 		return state;
+	}
+	
+	public CombatReward reward() {
+		return reward;
 	}
 	
 	@SuppressWarnings("unused") //TODO remove this method eventually.

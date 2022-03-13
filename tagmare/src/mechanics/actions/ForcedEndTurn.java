@@ -1,6 +1,7 @@
 package mechanics.actions;
 
 import mechanics.*;
+import mechanics.combat.CombatState;
 
 /** {@link #canExecute() Can't execute} if it is not the player's turn. */
 public class ForcedEndTurn extends AbstractAction {
