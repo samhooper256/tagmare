@@ -10,6 +10,8 @@ import utils.English;
 
 public enum CardTag {
 	//Texts should be punctuated.
+	//font is weird so we have extra spaces in some of the names. It is intentional. TODO maybe don't break the
+	//visuals|mechanics barrier so much? (Before Midnight, Take A Break)
 	DO_HOMEWORK("Do Homework", 1, true, DoHomework::new,
 			ct("Deal D0 damage.", DoHomework.DAMAGE)),
 	REVIEW_NOTES("Review Notes", 1, false, ReviewNotes::new,
@@ -40,7 +42,7 @@ public enum CardTag {
 			ct("Deal D0 damage. Gain B0 block.", FreeTime.DAMAGE, FreeTime.BLOCK)),
 	DIVIDE_AND_CONQUER("Divide and Conquer", 1, false, DivideAndConquer::new,
 			ct(String.format("Deal D0 damage to a random enemy %d times", DivideAndConquer.TIMES), DivideAndConquer.DAMAGE)),
-	BEFORE_MIDNIGHT("Before Midnight", 1, true, BeforeMidnight::new,
+	BEFORE_MIDNIGHT("Before  Midnight", 1, true, BeforeMidnight::new,
 			ct(String.format("Deal D0 damage and draw %d %s. Can only be played if you have played %d or fewer cards this turn.",
 			BeforeMidnight.DRAW, English.plural("card", BeforeMidnight.DRAW), BeforeMidnight.MAX_CARDS_PLAYED), BeforeMidnight.DAMAGE)),
 	MOTIVATIONAL_VIDEO("Motivational Video", 0, false, MotivationalVideo::new,
@@ -51,7 +53,6 @@ public enum CardTag {
 			mechanics.modifiers.buffs.Discipline.PERCENT * 100))),
 	YOGA("Yoga", 1, false, Yoga::new,
 			String.format("Draw %d cards. Discard between %d and %d cards.", Yoga.DRAW, Yoga.MIN_DISCARD, Yoga.MAX_DISCARD)),
-	//font is weird so we have an extra space in the name. It is intentional.
 	TAKE_A_BREAK("Take  A Break", 1, false, TakeABreak::new,
 			ct(String.format("End your turn. At the start of next turn, gain %d Concentration.", TakeABreak.CONCENTRATION)), true),
 	PLANNER("Planner", 1, false, Planner::new,
