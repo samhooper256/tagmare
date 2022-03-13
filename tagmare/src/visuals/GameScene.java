@@ -21,6 +21,7 @@ import visuals.combat.piles.PileLayer;
 import visuals.combat.ribbon.*;
 import visuals.combat.win.WinLayer;
 import visuals.fxutils.Nodes;
+import visuals.gallery.Gallery;
 
 /* TODO
  * - if you click a targetted card as it is being drawn from the draw pile (and maybe while it's discarded?) bad stuff
@@ -39,9 +40,12 @@ public class GameScene extends Scene implements Updatable {
 		return INSTANCE;
 	}
 	
-	private final Pane content, lowerContent, eyeLayer;
+	private final Pane content, lowerContent, galleryLayer, eyeLayer;
 	private final Scale scale;
 
+	//Galleries:
+	private final Gallery deckGallery;
+	
 	//Calendar:
 	private final CalendarLayer calendarLayer;
 	private final BottomRibbonLayer bottomRibbonLayer;
@@ -98,11 +102,17 @@ public class GameScene extends Scene implements Updatable {
 		
 		lowerContent = new Pane();
 		lowerContent.getChildren().addAll(calendarChildren);
+		
 		calendarEye = new CalendarEye();
 		combatEye = new CombatEye();
 		eyeLayer = new Pane(calendarEye, combatEye);
 		eyeLayer.setPickOnBounds(false);
-		content.getChildren().addAll(lowerContent, eyeLayer);
+		
+		deckGallery = new Gallery("Deck");
+		galleryLayer = new Pane(deckGallery);
+		galleryLayer.setPickOnBounds(false);
+		
+		content.getChildren().addAll(lowerContent, galleryLayer, eyeLayer);
 		getStylesheets().add(Main.class.getResource(Main.RESOURCES_PREFIX + "style.css").toExternalForm());
 		
 		setOnMouseMoved(this::mouseMoved);
@@ -177,6 +187,10 @@ public class GameScene extends Scene implements Updatable {
 	
 	public CombatEye combatEye() {
 		return combatEye;
+	}
+	
+	public Gallery deckGallery() {
+		return deckGallery;
 	}
 	
 	public double mouseX() {

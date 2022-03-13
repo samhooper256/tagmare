@@ -27,6 +27,7 @@ public final class Fonts {
 		GEORGIA_14_BOLD = Font.font("Georgia", FontWeight.BOLD, 14),
 		GEORGIA_18 = Font.font("Georgia", 18),
 		GEORGIA_18_BOLD = Font.font("Georgia", FontWeight.BOLD, 18),
+		GEORGIA_18_ITALIC = Font.font("Georgia", FontPosture.ITALIC, 18),
 		GEORGIA_24 = Font.font("Georgia", 24),
 		GEORGIA_24_BOLD = Font.font("Georgia", FontWeight.BOLD, 24),
 		GEORGIA_30 = Font.font("Georgia", 30),

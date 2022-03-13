@@ -155,6 +155,7 @@ public class WinLayer extends Pane implements Updatable {
 	public void selectAndExit(RewardCard rc) {
 		if(!getChildren().contains(rc))
 			throw new IllegalArgumentException(String.format("Not in this WinLayer: %s", rc));
+		Hub.deck().add(rc.card());
 		for(RewardCard o : Arrays.asList(left, center, right))
 			if(o != rc)
 				o.startDownOutro();

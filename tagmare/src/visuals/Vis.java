@@ -10,6 +10,7 @@ import visuals.combat.inquiry.InquiryLayer;
 import visuals.combat.piles.PileLayer;
 import visuals.combat.ribbon.RibbonLayer;
 import visuals.combat.win.WinLayer;
+import visuals.gallery.Gallery;
 
 public final class Vis {
 	
@@ -72,6 +73,10 @@ public final class Vis {
 	
 	public static CombatEye combatEye() {
 		return gameScene().combatEye();
+	}
+	
+	public static Gallery deckGallery() {
+		return gameScene().deckGallery();
 	}
 	
 	public static double mouseX() {
