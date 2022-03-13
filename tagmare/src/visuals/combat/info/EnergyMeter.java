@@ -16,8 +16,11 @@ public class EnergyMeter extends StackPane {
 	
 	private class EnergyChangeAnimation extends AbstractAnimation {
 
+		private final int dest;
+		
 		public EnergyChangeAnimation(int dest) {
 			super(ENERGY_CHANGE_DURATION);
+			this.dest = dest;
 			bottomText.setText(String.valueOf(dest));
 			setFinish(this::finish);
 		}
@@ -29,10 +32,7 @@ public class EnergyMeter extends StackPane {
 		}
 		
 		private void finish() {
-			String bt = bottomText.getText();
-			bottomText.setOpacity(0);
-			topText.setOpacity(1);
-			topText.setText(bt);
+			setEnergy(dest);
 			Vis.manager().checkedResumeFromAnimation();
 		}
 		
@@ -54,5 +54,12 @@ public class EnergyMeter extends StackPane {
 	public void startEnergyChangeAnimation(int dest) {
 		Animation.manager().add(new EnergyChangeAnimation(dest));
 	}
-
+	
+	public void setEnergy(int energy) {
+		topText.setText(String.valueOf(energy));
+		topText.setOpacity(1);
+		bottomText.setText("");
+		bottomText.setOpacity(0);
+	}
+	
 }

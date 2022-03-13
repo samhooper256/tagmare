@@ -50,4 +50,12 @@ public class BottomRibbon extends Pane {
 		return shield;
 	}
 	
+	public Buffs buffs() {
+		return buffs;
+	}
+	
+	public Debuffs debuffs() {
+		return debuffs;
+	}
+	
 }

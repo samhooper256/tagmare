@@ -32,7 +32,7 @@ public class Shield extends StackPane {
 	public void update() {
 		int block = Hub.player().block().amount();
 		if(block == 0)
-			setVisible(false);
+			hide();
 		else
 			showBlock(block);
 	}
@@ -40,6 +40,10 @@ public class Shield extends StackPane {
 	private void showBlock(int block) {
 		label.setText(String.valueOf(block));
 		setVisible(true);
+	}
+	
+	public void hide() {
+		setVisible(false);
 	}
 	
 }

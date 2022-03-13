@@ -26,11 +26,15 @@ public class Debuffs extends HBox {
 	}
 	
 	public void update() {
-		ObservableList<Node> children = getChildren();
-		children.subList(1, children.size()).clear();
+		clear();
 		for(Modifier m : Hub.player().modifiers())
 			if(m.isDebuff())
-				children.add(Nodes.text(m.toString(), FONT));
+				getChildren().add(Nodes.text(m.toString(), FONT));
+	}
+	
+	public void clear() {
+		ObservableList<Node> children = getChildren();
+		children.subList(1, children.size()).clear();
 	}
 	
 }

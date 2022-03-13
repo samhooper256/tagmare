@@ -27,11 +27,15 @@ public class Buffs extends HBox {
 	}
 	
 	public void update() {
-		ObservableList<Node> children = getChildren();
-		children.subList(0, children.size() - 1).clear();
+		clear();
 		for(Modifier m : Hub.player().modifiers())
 			if(m.isBuff())
-				children.add(0, Nodes.text(m.toString(), FONT));
+				getChildren().add(0, Nodes.text(m.toString(), FONT));
+	}
+	
+	public void clear() {
+		ObservableList<Node> children = getChildren();
+		children.subList(0, children.size() - 1).clear();
 	}
 	
 }

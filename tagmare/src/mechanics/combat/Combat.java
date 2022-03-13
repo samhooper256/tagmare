@@ -61,6 +61,8 @@ public final class Combat {
 		if(started())
 			throw new IllegalStateException(String.format("Already started (turn=%d)", turn));
 		drawPile.addAllToTop(Hub.deck().shuffledCopyOfCards());
+		Hub.player().block().set(0);
+		Hub.player().modifiers().clear();
 		stackStartPlayerTurn(); //increments turn; does not call resume().
 	}
 	

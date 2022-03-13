@@ -2,16 +2,16 @@ package mechanics;
 
 public class Energy {
 
-	public static final int MAX = 3;
+	public static final int DEFAULT = 3;
 	
 	private int amount;
 	
 	public Energy() {
-		amount = MAX;
+		amount = DEFAULT;
 	}
 
 	public void setToMax() {
-		amount = MAX;
+		amount = DEFAULT;
 	}
 	
 	public int amount() {

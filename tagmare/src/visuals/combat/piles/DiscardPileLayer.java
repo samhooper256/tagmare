@@ -21,6 +21,10 @@ public class DiscardPileLayer extends Pane {
 		getChildren().add(cr);
 	}
 	
+	public void clear() {
+		getChildren().clear();
+	}
+	
 	public List<Node> cardRepresentations() {
 		return getChildren();
 	}

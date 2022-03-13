@@ -51,9 +51,8 @@ public class WinLayer extends Pane implements Updatable {
 		darkGlass = new DarkGlass();
 		skipArrow = new SkipArrow();
 		skipLabel = new SkipLabel();
-		setOpacity(0);
-		setMouseTransparent(true);
 		setPickOnBounds(true);
+		hide();
 	}
 	
 	public void startCardReward() {
@@ -72,6 +71,11 @@ public class WinLayer extends Pane implements Updatable {
 		for(Node n : getChildren())
 			if(n instanceof Updatable)
 				((Updatable) n).update(diff);
+	}
+	
+	public void hide() {
+		setOpacity(0);
+		setMouseTransparent(true);
 	}
 	
 }

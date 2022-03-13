@@ -1,6 +1,7 @@
 package visuals.calendar;
 
 import javafx.util.Duration;
+import mechanics.Hub;
 import visuals.Vis;
 import visuals.animations.*;
 import visuals.eye.Eye;
@@ -17,6 +18,7 @@ public class CalendarEye extends Eye {
 		startTransition(() -> {
 			Vis.manager().startNextCombat();
 			Animation.manager().add(new DelayedAction(CLOSE_HOLD, () -> proceedInTransition()));
+			setEndAction(Hub.combat()::resume);
 		});
 	}
 	

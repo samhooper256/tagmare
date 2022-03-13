@@ -42,6 +42,9 @@ public class Eye extends Pane {
 		}
 		
 		private void finisher() {
+			if(endAction != null)
+				endAction.run();
+			setEndAction(null);
 			setPickOnBounds(false);
 		}
 		
@@ -58,6 +61,7 @@ public class Eye extends Pane {
 	private final Rectangle midBlocker;
 	
 	private boolean inProgress;
+	private Runnable endAction;
 	
 	public Eye() {
 		setPickOnBounds(false);
@@ -69,7 +73,15 @@ public class Eye extends Pane {
 	}
 
 	public void startTransition(Runnable peakAction) {
+		startTransition(peakAction, null);
+	}
+	
+	/** The {@code peakAction} is responsible for calling {@link #proceedInTransition()}. {@code endAction} will be
+	 * run once the eyes are fully open. Note that the {@code endAction} can also be set by a sublcass during the
+	 * {@code peakAction} using {@link #setEndAction(Runnable)}. */
+	public void startTransition(Runnable peakAction, Runnable endAction) {
 		inProgress = true;
+		this.endAction = endAction;
 		setPickOnBounds(true);
 		Animation.manager().add(new Close(peakAction));
 	}
@@ -79,6 +91,10 @@ public class Eye extends Pane {
 			throw new IllegalStateException("This Eye is not in progress.");
 		midBlocker.setVisible(false);
 		Animation.manager().add(new Open());
+	}
+	
+	protected void setEndAction(Runnable endAction) {
+		this.endAction = endAction;
 	}
 	
 	public TopEyelid top() {

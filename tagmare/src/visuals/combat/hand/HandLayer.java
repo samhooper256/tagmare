@@ -233,6 +233,16 @@ public class HandLayer extends Pane implements Updatable {
 			throw new IllegalArgumentException(String.format("Not in play: %s", card));
 	}
 	
+	public void clear() {
+		for(Node n : cardGroup.getChildren())
+			((CardRepresentation) n).cancelAnimation();
+		for(Node n : playGroup.getChildren())
+			((CardRepresentation) n).cancelAnimation();
+		cardGroup.getChildren().clear();
+		playGroup.getChildren().clear();
+		cardsInPlay.clear();
+	}
+	
 	private CardRepresentation getRepresentation(int index) {
 		return (CardRepresentation) cardGroup.getChildren().get(index);
 	}

@@ -189,7 +189,6 @@ public final class VisualManagerImpl implements VisualManager {
 		c.startWithoutResuming();
 		CombatManager.setupCombat(c);
 		Vis.gameScene().showCombat(c);
-		c.resume();
 	}
 
 	@Override
