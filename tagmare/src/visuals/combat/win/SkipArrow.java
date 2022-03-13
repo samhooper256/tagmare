@@ -8,7 +8,8 @@ public class SkipArrow extends Sprite {
 	public static final double
 		WIDTH = Images.SKIP_ARROW.getWidth(),
 		HEIGHT = Images.SKIP_ARROW.getHeight(),
-		Y = 720;
+		Y = 720,
+		INTRO_START_Y = Y -20;
 	
 	public SkipArrow() {
 		super(Images.SKIP_ARROW);

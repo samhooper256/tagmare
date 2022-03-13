@@ -155,6 +155,11 @@ public abstract class AbstractAnimation implements Animation {
 	}
 	
 	@Override
+	public long elapsed() {
+		return elapsed;
+	}
+	
+	@Override
 	public Interpolator interpolator() {
 		return interpolator;
 	}

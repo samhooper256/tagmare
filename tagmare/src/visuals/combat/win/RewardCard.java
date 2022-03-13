@@ -12,11 +12,12 @@ public class RewardCard extends AbstractCardRepresentation implements Updatable 
 	
 	public static final Duration
 		INTRO_1_DURATION = Duration.millis(600),
-		INTRO_DELAY = Duration.millis(300),
+		INTRO_DELAY = Duration.millis(150),
 		INTRO_2_DURATION = Duration.millis(600),
 		OUTRO_DURATION = Duration.millis(600);
 	
-	private static final double Y = GameScene.CENTER_Y - HEIGHT * .5;
+	public static final double Y = GameScene.CENTER_Y - HEIGHT * .5;
+	
 	/** Distance from {@link GameScene#CENTER_X} to the center of the {@link Position#LEFT} (or {@link Position#RIGHT})
 	 * card. */
 	private static final double CENTER_DIST = 300;

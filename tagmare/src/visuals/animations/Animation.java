@@ -32,6 +32,9 @@ public interface Animation extends Updatable {
 	
 	long duration();
 	
+	/** nanoseconds elapsed. */
+	long elapsed();
+	
 	Interpolator interpolator();
 	
 	/** Returns {@code this}. */

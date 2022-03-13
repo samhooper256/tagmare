@@ -30,6 +30,10 @@ public final class Fonts {
 		GEORGIA_24 = Font.font("Georgia", 24),
 		GEORGIA_24_BOLD = Font.font("Georgia", FontWeight.BOLD, 24),
 		GEORGIA_30 = Font.font("Georgia", 30),
-		GEORGIA_30_BOLD = Font.font("Georgia", FontWeight.BOLD, 30);
+		GEORGIA_30_BOLD = Font.font("Georgia", FontWeight.BOLD, 30),
+		GEORGIA_36 = Font.font("Georgia", 36),
+		GEORGIA_36_BOLD = Font.font("Georgia", FontWeight.BOLD, 36),
+		GEORGIA_36_ITALIC = Font.font("Georgia", FontPosture.ITALIC, 36),
+		GEORGIA_72_ITALIC = Font.font("Georgia", FontPosture.ITALIC, 72);
 
 }
