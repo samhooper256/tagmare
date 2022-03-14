@@ -8,7 +8,7 @@ public abstract class LabeledIcon extends IntentIcon {
 	
 	public LabeledIcon(Image image) {
 		super(image);
-		label = new IntentLabel("?");
+		label = new IntentLabel();
 		getChildren().add(label);
 	}
 	

@@ -32,6 +32,9 @@ public final class IntentRepresentation extends HBox {
 		else if(intent instanceof BasicBlock) {
 			return Arrays.asList(new BlockIcon((BasicBlock) intent));
 		}
+		else if(intent instanceof BlockStrike) {
+			return Arrays.asList(new BlockStrikeIcon((BlockStrike) intent));
+		}
 		else if(intent instanceof DoNothing) {
 			return Arrays.asList(new UnlabeledIcon(Images.DO_NOTHING_INTENT));
 		}

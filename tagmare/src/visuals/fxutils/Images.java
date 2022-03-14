@@ -22,6 +22,7 @@ public final class Images {
 		//intents:
 		SWORD_INTENT = get("sword_intent.png"),
 		SHIELD_INTENT = get("shield_intent.png"),
+		SHIELD_AND_SWORD_INTENT = get("shield_and_sword_intent.png"),
 		DO_NOTHING_INTENT = get("do_nothing_intent.png"),
 		//cards/combat:
 		CARD_BACK = get("card_back.png"),
