@@ -23,7 +23,8 @@ public class Gallery extends Pane {
 		RIGHT_X = GameScene.WIDTH - LEFT_X,
 		VERTICAL_SEPARATION = 50,
 		BOTTOM_MARGIN = DESCRIPTION_Y,
-		SCROLL_MULTIPLIER = 5;
+		SCROLL_MULTIPLIER = 5,
+		ANIMATION_OFFSET = 15;
 	
 	private static final double[] X_COORDS = new double[CARDS_PER_ROW];
 	
@@ -53,6 +54,7 @@ public class Gallery extends Pane {
 		@Override
 		public void interpolate(double frac) {
 			setOpacity(frac);
+			setYOffsetUnclamped(Nums.lerp(frac, ANIMATION_OFFSET, 0));
 		}
 		
 		private void finisher() {
@@ -71,6 +73,7 @@ public class Gallery extends Pane {
 		@Override
 		public void interpolate(double frac) {
 			setOpacity(1 - frac);
+			setYOffsetUnclamped(Nums.lerp(frac, 0, ANIMATION_OFFSET));
 		}
 
 		private void finisher() {
@@ -85,7 +88,6 @@ public class Gallery extends Pane {
 	private final OrderTip tip;
 	
 	private boolean introInProgress;
-	private int cardCount;
 	private double yOffset;
 	
 	public Gallery() {
@@ -105,7 +107,6 @@ public class Gallery extends Pane {
 		cardGroup = new Group(); //y is set whenever startIntro() is called.
 		this.description = new GalleryDescription(description);
 		introInProgress = false;
-		cardCount = 0;
 		yOffset = 0;
 		getChildren().addAll(glass, tip, this.description, cardGroup);
 		setOpacity(0);
@@ -123,17 +124,9 @@ public class Gallery extends Pane {
 			cardGroup.getChildren().add(gc);
 			i++;
 		}
-		cardCount = i;
+		description.setTextFor(i);
 	}
 
-	public void setDescription(String text) {
-		description.setText(text);
-	}
-	
-	public void setAdditionalTipText(String additionalTipText) {
-		tip.setAdditionalTipText(additionalTipText);
-	}
-	
 	public void startIntro(Iterable<Card> cards) {
 		setCards(cards);
 		setMouseTransparent(false);
@@ -164,6 +157,10 @@ public class Gallery extends Pane {
 	
 	private void setYOffset(double yo) {
 		yo = Nums.clamp(yo, minYOffset(), 0);
+		setYOffsetUnclamped(yo);
+	}
+
+	private void setYOffsetUnclamped(double yo) {
 		yOffset = yo;
 		description.setLayoutY(DESCRIPTION_Y + yOffset);
 		tip.setLayoutY(TIP_Y + yOffset);
@@ -177,7 +174,12 @@ public class Gallery extends Pane {
 	}
 	
 	public int rowCount() {
-		return (cardCount - 1) / CARDS_PER_ROW + 1;
+		return (cardCount() - 1) / CARDS_PER_ROW + 1;
+	}
+	
+	private int cardCount() {
+		return description.cardCount(); //just use GalleryDescription's cardCount property instead of making a
+		//new one here.
 	}
 	
 	private boolean scrollingAllowed() {
@@ -186,6 +188,14 @@ public class Gallery extends Pane {
 	
 	private double minYOffset() {
 		return Math.min(0, GameScene.HEIGHT - bottomY() - BOTTOM_MARGIN);
+	}
+	
+	public void setDescription(String description) {
+		this.description.setDescription(description);
+	}
+	
+	public void setAdditionalTipText(String additionalTipText) {
+		tip.setAdditionalTipText(additionalTipText);
 	}
 	
 }
