@@ -20,7 +20,7 @@ public final class Strike {
 	
 	@Override
 	public String toString() {
-		return String.format("Strike(%d)", damage());
+		return String.format("Strike[%d]", damage());
 	}
 	
 }

@@ -19,6 +19,10 @@ public final class Images {
 		CALENDAR_TOP_RIBBON = get("calendar_top_ribbon.png"),
 		CALENDAR_BOTTOM_RIBBON = get("calendar_bottom_ribbon.png"),
 		DESK = get("desk.png"),
+		//intents:
+		SWORD_INTENT = get("sword_intent.png"),
+		SHIELD_INTENT = get("shield_intent.png"),
+		DO_NOTHING_INTENT = get("do_nothing_intent.png"),
 		//cards/combat:
 		CARD_BACK = get("card_back.png"),
 		ATTACK_BASE = get("attack_base.png"),

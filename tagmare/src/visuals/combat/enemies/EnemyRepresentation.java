@@ -12,6 +12,7 @@ import mechanics.Block;
 import mechanics.enemies.Enemy;
 import mechanics.modifiers.Modifier;
 import visuals.*;
+import visuals.combat.enemies.intents.IntentRepresentation;
 import visuals.fxutils.*;
 
 public class EnemyRepresentation extends StackPane {
@@ -26,8 +27,10 @@ public class EnemyRepresentation extends StackPane {
 	
 	private final Enemy enemy;
 	private final VBox vBox, modifierBox;
-	private final Text name, healthAndBlock, intent, modifierLabel;
+	private final Text name, healthAndBlock, modifierLabel;
 	private final Pane sliceLayer;
+	
+	private IntentRepresentation intentRepresentation;
 	
 	private EnemyRepresentation(Enemy enemy) {
 		this.enemy = enemy;
@@ -35,13 +38,12 @@ public class EnemyRepresentation extends StackPane {
 		name.setFont(Fonts.UI_14);
 		healthAndBlock = new Text(getHealthAndBlockString());
 		healthAndBlock.setFont(Fonts.UI_14);
-		intent = new Text(getIntentString());
-		intent.setFont(Fonts.UI_14);
+		intentRepresentation = IntentRepresentation.of(enemy.intent());
 		modifierLabel = new Text("Modifiers:");
 		modifierLabel.setFont(Fonts.UI_14);
 		modifierBox = new VBox(modifierLabel);
 		modifierBox.setAlignment(Pos.TOP_CENTER);
-		vBox = new VBox(name, healthAndBlock, intent, modifierLabel, modifierBox);
+		vBox = new VBox(intentRepresentation, name, healthAndBlock, modifierLabel, modifierBox);
 		vBox.setAlignment(Pos.CENTER);
 		sliceLayer = new Pane();
 		getChildren().addAll(vBox, sliceLayer);
@@ -56,10 +58,6 @@ public class EnemyRepresentation extends StackPane {
 			String.format("(%d block)", block.amount()));
 	}
 	
-	private String getIntentString() {
-		return String.format("\n%s\n", enemy().intent());
-	}
-	
 	private void mouseClicked() {
 		if(Vis.handLayer().hasSelected())
 			Vis.handLayer().selected().requestStartBeingPlayed(enemy());
@@ -67,8 +65,12 @@ public class EnemyRepresentation extends StackPane {
 	
 	public void update() {
 		updateHealthAndBlock();
-		intent.setText(getIntentString());
 		updateModifiers();
+		if(intentRepresentation.intent() != enemy.intent()) {
+			intentRepresentation = IntentRepresentation.of(enemy.intent());
+			vBox.getChildren().set(0, intentRepresentation);
+		}
+		intentRepresentation.update();
 	}
 
 	private void updateHealthAndBlock() {
