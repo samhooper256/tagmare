@@ -2,22 +2,15 @@ package mechanics.actions;
 
 import mechanics.enemies.Enemy;
 
-public class EOTEnemyLoseBlock extends AbstractAction {
+public class EOTEnemyLoseBlock extends EnemyTargettedAction {
 
-	private final Enemy enemy;
-	
-	public EOTEnemyLoseBlock(Enemy enemy) {
-		super(null);
-		this.enemy = enemy;
+	public EOTEnemyLoseBlock(Enemy target) {
+		super(null, target);
 	}
 	
 	@Override
 	public void execute() {
-		enemy().block().set(0);
-	}
-	
-	public Enemy enemy() {
-		return enemy;
+		target().block().set(0);
 	}
 	
 }

@@ -8,7 +8,7 @@ public class VocabQuiz extends AbstractEnemy {
 	private static final int MAX_HEALTH = 24;
 	
 	public VocabQuiz() {
-		super(MAX_HEALTH);
+		super(EnemyTag.VOCAB_QUIZ, MAX_HEALTH);
 	}
 	
 	@Override
@@ -17,11 +17,6 @@ public class VocabQuiz extends AbstractEnemy {
 			return new StrikeIntent(11);
 		else
 			return new BasicBlock(7);
-	}
-	
-	@Override
-	public String name() {
-		return "Vocab Quiz";
 	}
 	
 }

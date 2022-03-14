@@ -6,20 +6,28 @@ import mechanics.enemies.intents.*;
 
 abstract class AbstractEnemy extends AbstractEntity implements Enemy {
 
-	protected Intent intent;
+	private final EnemyTag tag;
 	
-	protected AbstractEnemy(int maxHealth) {
+	protected Intent intent;
+
+	protected AbstractEnemy(EnemyTag tag, int maxHealth) {
 		super(maxHealth);
+		this.tag = tag;
 		intent = new DoNothing();
 	}
+	
+	/** Assumes {@link Combat#turn()} has been incremented to the turn this {@link Intent} is for. */
+	protected abstract Intent generateIntent();
 	
 	@Override
 	public final void updateIntent() {
 		intent = generateIntent();
 	}
 	
-	/** Assumes {@link Combat#turn()} has been incremented to the turn this {@link Intent} is for. */
-	protected abstract Intent generateIntent();
+	@Override
+	public EnemyTag tag() {
+		return tag;
+	}
 	
 	@Override
 	public Intent intent() {

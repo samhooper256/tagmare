@@ -7,12 +7,12 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import mechanics.Block;
 import mechanics.enemies.Enemy;
 import mechanics.modifiers.Modifier;
 import visuals.*;
 import visuals.fxutils.*;
 
+/** HNB means {@link HealthAndBlock}. */
 public class EnemyRepresentation extends StackPane {
 
 	private static final WeakHashMap<Enemy, EnemyRepresentation> MAP = new WeakHashMap<>();
@@ -25,53 +25,93 @@ public class EnemyRepresentation extends StackPane {
 	
 	private final Enemy enemy;
 	private final VBox vBox, modifierBox;
-	private final Text name, healthAndBlock, modifierLabel;
+	private final Text name, modifierLabel;
+	private final HealthAndBlock healthAndBlock;
 	private final Sprite sprite;
-	private final Pane sliceLayer;
+	private final KnockLayer sliceLayer, chipLayer;
 	
 	private final IntentContainer intentContainer;
 	
 	private EnemyRepresentation(Enemy enemy) {
 		this.enemy = enemy;
-		name = new Text(enemy.name());
+		name = new Text(enemy.displayName());
 		name.setFont(Fonts.UI_14);
-		healthAndBlock = new Text(getHealthAndBlockString());
-		healthAndBlock.setFont(Fonts.UI_14);
+		healthAndBlock = new HealthAndBlock(enemy);
 		intentContainer = new IntentContainer(enemy.intent());
 		modifierLabel = new Text("Modifiers:");
 		modifierLabel.setFont(Fonts.UI_14);
 		modifierBox = new VBox(modifierLabel);
 		modifierBox.setAlignment(Pos.TOP_CENTER);
-		sprite = new Sprite(Images.TEST_ENEMY);
+		sprite = new Sprite(Images.forEnemy(enemy));
 		vBox = new VBox(intentContainer, name, sprite, healthAndBlock, modifierLabel, modifierBox);
 		vBox.setAlignment(Pos.CENTER);
-		sliceLayer = new Pane();
-		getChildren().addAll(vBox, sliceLayer);
+		sliceLayer = new KnockLayer();
+		chipLayer = new KnockLayer();
+		getChildren().addAll(vBox, sliceLayer, chipLayer);
 		Nodes.setPrefAndMaxWidth(this, 300);
 		setOnMouseClicked(me -> mouseClicked());
 	}
 
-	private String getHealthAndBlockString() {
-		Block block = enemy().block();
-		return String.format("%d/%d%s", enemy().health().hp(), enemy.health().max(), block.isZero() ? "" : 
-			String.format("(%d block)", block.amount()));
-	}
-	
 	private void mouseClicked() {
 		if(Vis.handLayer().hasSelected())
 			Vis.handLayer().selected().requestStartBeingPlayed(enemy());
 	}
 	
-	public void updateHealthAndBlockAndModifiers() {
-		updateHealthAndBlock();
-		updateModifiers();
+	public void startHNBTransition(boolean resume) {
+		HealthBar hb = healthAndBlock.healthBar();
+		BlockIndicator bi = healthAndBlock.blockIndicator();
+		boolean hbc = hb.hasChanged(), bic = bi.hasChanged();
+		startKnocks(hb, bi);
+		if(hbc && !bic) {
+			hb.startTransition(resume);
+		}
+		else if(!hbc && bic) {
+			bi.startTransition(resume);
+		}
+		else if(hbc && bic) {
+			//put the resume on whichever takes longer.
+			if(hb.secToAnimateChange() > bi.secToAnimateChange()) {
+				hb.startTransition(resume);
+				bi.startTransition(false);
+			}
+			else {
+				hb.startTransition(false);
+				bi.startTransition(true);
+			}
+		}
+		else { //nothing changed
+			if(resume)
+				Vis.manager().checkedResumeFromAnimation();
+		}
 	}
 	
-	private void updateHealthAndBlock() {
-		healthAndBlock.setText(getHealthAndBlockString());
+	private void startKnocks(HealthBar hb, BlockIndicator bi) {
+		if(bi.change() < 0)
+			startChip(-bi.change());
+		if(hb.hpChange() < 0)
+			startSlice(-hb.hpChange());
+	}
+	
+	private void startSlice(int damage) {
+		startKnock(sliceLayer, new Slice(damage));
+	}
+	
+	private void startChip(int damage) {
+		startKnock(chipLayer, new Chip(damage));
+	}
+	
+	private void startKnock(KnockLayer layer, NumberKnock knock) {
+		layer.getChildren().clear();
+		Nodes.setLayout(knock, getMaxWidth() * .5 - Slice.WIDTH * .5, getHeight() * .5 - Slice.HEIGHT * .5);
+		layer.getChildren().add(knock);
+		knock.startAnimation();
+	}
+	
+	public void updateHNBInstantly() {
+		healthAndBlock.update();
 	}
 
-	private void updateModifiers() {
+	public void updateModifiers() {
 		ObservableList<Node> children = modifierBox.getChildren();
 		children.clear();
 		for(Modifier m : enemy().modifiers()) {
@@ -83,19 +123,6 @@ public class EnemyRepresentation extends StackPane {
 	
 	public void startIntentTransition() {
 		intentContainer.startTransition(enemy.intent());
-	}
-	
-	public void startSlice(int damage) {
-		startSlice(damage, true);
-	}
-	
-	public void startSlice(int damage, boolean checkedResume) {
-		updateHealthAndBlock();
-		sliceLayer.getChildren().clear();
-		Slice slice = new Slice(damage);
-		Nodes.setLayout(slice, getMaxWidth() * .5 - Slice.WIDTH * .5, getHeight() * .5 - Slice.HEIGHT * .5);
-		sliceLayer.getChildren().add(slice);
-		slice.startAnimation(checkedResume);
 	}
 	
 	public Enemy enemy() {

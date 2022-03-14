@@ -7,7 +7,7 @@ import visuals.fxutils.*;
 
 public class BottomRibbon extends Pane {
 	
-	public static final double HEIGHT = 60, Y = GameScene.HEIGHT - HEIGHT, HEALTH_BAR_WIDTH = 400;
+	public static final double HEIGHT = 60, Y = GameScene.HEIGHT - HEIGHT;
 	
 	private final HealthBar healthBar;
 	private final Buffs buffs;
@@ -18,12 +18,12 @@ public class BottomRibbon extends Pane {
 		setLayoutY(Y);
 		Nodes.setPrefAndMaxWidth(this, GameScene.WIDTH);
 		setBackground(Backgrounds.of(Color.LIGHTGRAY));
-		healthBar = new HealthBar(HEALTH_BAR_WIDTH);
+		healthBar = new HealthBar();
 		buffs = new Buffs();
 		debuffs = new Debuffs();
-		Nodes.setPrefAndMaxSize(buffs, GameScene.CENTER_X - HEALTH_BAR_WIDTH * .5, HEIGHT);
-		debuffs.setLayoutX(GameScene.CENTER_X + HEALTH_BAR_WIDTH * .5);
-		Nodes.setPrefAndMaxSize(debuffs, GameScene.CENTER_X - HEALTH_BAR_WIDTH * .5, HEIGHT);
+		Nodes.setPrefAndMaxSize(buffs, GameScene.CENTER_X - HealthBar.WIDTH * .5, HEIGHT);
+		debuffs.setLayoutX(GameScene.CENTER_X + HealthBar.WIDTH * .5);
+		Nodes.setPrefAndMaxSize(debuffs, GameScene.CENTER_X - HealthBar.WIDTH * .5, HEIGHT);
 		shield = new Shield();
 		shield.setLayoutX(GameScene.CENTER_X - Shield.WIDTH * .5);
 		shield.setLayoutY(-2);

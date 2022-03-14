@@ -5,17 +5,12 @@ import mechanics.enemies.intents.*;
 public class CalculusPracticeQuiz extends AbstractEnemy {
 
 	public CalculusPracticeQuiz() {
-		super(82);
-	}
-
-	@Override
-	public String name() {
-		return "Calculus Practice Quiz";
+		super(EnemyTag.CALCULUS_PRACTICE_QUIZ, 82);
 	}
 
 	@Override
 	protected Intent generateIntent() {
-		return new BlockStrike(5, 5);
+		return new BlockStrike(99, 5);
 	}
 	
 }

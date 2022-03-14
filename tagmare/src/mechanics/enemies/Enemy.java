@@ -8,7 +8,11 @@ import mechanics.enemies.intents.*;
 
 public interface Enemy extends Entity {
 
-	String name();
+	EnemyTag tag();
+	
+	default String displayName() {
+		return tag().displayName();
+	}
 
 	/** Used to explicitly set this {@link Enemy Enemy's} {@link #intent()}. Note that {@link #updateIntent()} should
 	 * be used to give the enemy a new {@link Intent} for a new turn. */
@@ -21,6 +25,7 @@ public interface Enemy extends Entity {
 	/** Every {@link Enemy Enemy's} {@link Intent} is {@link DoNothing} by default. */
 	Intent intent();
 	
+	/** <em>Should not be overridden.</em> */
 	@Override
 	default ActionSourceType type() {
 		return ActionSourceType.ENEMY;

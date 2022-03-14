@@ -1,6 +1,6 @@
 package visuals;
 
-import java.util.*;
+import java.util.List;
 
 import mechanics.*;
 import mechanics.actions.*;
@@ -15,156 +15,146 @@ public final class VisualManagerImpl implements VisualManager {
 
 	private boolean waitingOnAnimation;
 	
+	//TODO factor out pausing and executing? Need to check on a few things (e.g. why am I explicitly calling resume
+	//inside some of the blocks? Should I just return from executeAction(Action) instead of resuming to eliminate
+	//the recursive calls to resume()?)
 	@Override
 	public void executeAction(final Action action) {
+//		System.err.printf("executing %s%n", action);
 		waitingOnAnimation = true;
 		Vis.debugLayer().stackDisplay().update();
-		if(action instanceof PutCardInPlay) {
-			action.execute();
-			Card card = ((HasCard) action).card();
-			Vis.handLayer().moveSelectedToInPlay(card);
-		}
-		else if(action instanceof PutBypassedCardInPlay) {
-			Hub.combat().pause();
-			action.execute();
+		pauseAndExecute(action);
+		if(action instanceof PutBypassedCardInPlay) {
 			CardRepresentation.of(((HasCard) action).card()).startBeingBypassPlayed();
 		}
-		else if(action instanceof PlaceCardOnTopOfDrawPile) {
-			waitingOnAnimation = false;
-			action.execute();
-			Vis.pileLayer().draw().addCardToTop(((HasCard) action).card());
-		}
 		else if(action instanceof SimpleDrawRequest) {
-			Hub.combat().pause();
-			action.execute();
 			SimpleDrawRequest a = (SimpleDrawRequest) action;
 			Card card = a.getCard();
 			if(card != null)
 				Vis.handLayer().startAddCardToRightAnimation(card);
 			else
-				Hub.combat().resume();
+				pullOut();
 		}
 		else if(action instanceof EOTDiscard || action instanceof ExplicitDiscard) {
-			Hub.combat().pause();
-			action.execute();
 			Card card = ((HasCard) action).card();
 			Vis.handLayer().startEOTDiscard(card);
 		}
 		else if(action instanceof RemoveOTFromPlay) {
-			Hub.combat().pause();
-			action.execute();
 			Card card = ((HasCard) action).card();
 			CardRepresentation.of(card).startRemoveOT();
 		}
 		else if(action instanceof ReturnToDrawPile) {
-			Hub.combat().pause();
-			action.execute();
 			Card card = ((HasCard) action).card();
 			Vis.handLayer().startReturnToDrawPile(card);
 		}
 		else if(action instanceof SetEnergy || action instanceof ChangeEnergy) {
-			Hub.combat().pause();
-			action.execute();
 			Vis.infoLayer().energyMeter().startEnergyChangeAnimation(Hub.energy().amount());
 		}
-		else if(action instanceof RefillDrawPile) {
-			action.execute();
-			Vis.pileLayer().draw().setCards(Hub.drawPile().trueOrder()); //TODO some kind of animation for this?
-		}
 		else if(action instanceof NaturalDiscard) {
-			Hub.combat().pause();
 			HasCard hc = ((HasCard) action);
-			action.execute();
 			Vis.handLayer().startNaturalDiscard(hc.card());
 		}
 		else if(action instanceof DealDamage || action instanceof ProcrastinatedDamage) {
-			HasDamage hd = (HasDamage) action;
-			Enemy target = (Enemy) ((TargettedAction) action).target();
-			Hub.combat().pause();
-			action.execute();
-			EnemyRepresentation.of(target).startSlice(hd.damage());
+			EnemyRepresentation.of(((EnemyTargettedAction) action).target()).startHNBTransition(true);
+		}
+		else if(action instanceof EnemyBlock || action instanceof EOTEnemyLoseBlock) {
+			EnemyRepresentation.of(((EnemyTargettedAction) action).target()).startHNBTransition(true);
+		}
+		else if(action instanceof DealDamageToAll) {
+			List<Enemy> enemies = Hub.enemies();
+			for(int i = 0; i < enemies.size() - 1; i++) {
+				EnemyRepresentation er = EnemyRepresentation.of(enemies.get(i));
+				er.startHNBTransition(false);
+			}
+			EnemyRepresentation last = EnemyRepresentation.of(enemies.get(enemies.size() - 1));
+			last.startHNBTransition(true); //TODO it should resume after whatever animation takes the longest, not on the last one.
 		}
 		else if(action instanceof ChangeHealth) {
 			ChangeHealth ch = (ChangeHealth) action;
-			Hub.combat().pause();
-			action.execute();
 			Entity target = ch.target();
 			if(ch.amount() < 0 && target instanceof Enemy) {
-				EnemyRepresentation.of((Enemy) target).startSlice(-ch.amount());
+				EnemyRepresentation er = EnemyRepresentation.of((Enemy) target);
+				er.startHNBTransition(true);
 			}
 			else {
-				updateHBMOfAllEnemies();
+				updateHNBOfAllEnemiesInstantly();
 				Vis.ribbonLayer().bottom().update();
-				Hub.combat().resume();
+				pullOut();
 			}
 		}
-		else if(action instanceof DealDamageToAll) {
-			Hub.combat().pause();
-			HasDamage ddta = (DealDamageToAll) action;
-			action.execute();
-			List<Enemy> enemies = Hub.enemies();
-			for(int i = 0; i < enemies.size() - 1; i++)
-				EnemyRepresentation.of(enemies.get(i)).startSlice(ddta.damage(), false);
-			EnemyRepresentation.of(enemies.get(enemies.size() - 1)).startSlice(ddta.damage(), true);
-		}
 		else if(action instanceof UpdateIntent || action instanceof CancelIntent) {
-			Hub.combat().pause();
-			action.execute();
 			EnemyRepresentation.of(((EnemyTargettedAction) action).target()).startIntentTransition();
+		}
+		else if(action instanceof RefillDrawPile) {
+			pullOut();
+			Vis.pileLayer().draw().setCards(Hub.drawPile().trueOrder()); //TODO some kind of animation for this?
+		}
+		else if(action instanceof PlaceCardOnTopOfDrawPile) {
+			pullOut();
+			Vis.pileLayer().draw().addCardToTop(((HasCard) action).card());
+		}
+		else if(action instanceof PutCardInPlay) {
+			pullOut();
+			Vis.handLayer().moveSelectedToInPlay(((HasCard) action).card());
 		}
 		else if(action instanceof RemoveModifier ||
 				action instanceof ApplyModifier || action instanceof ChangeModifier) {
-			waitingOnAnimation = false;
-			action.execute();
-			updateHBMOfAllEnemies();
+			pullOut();
+			updateModifiersOfAllEnemies();
 			Vis.ribbonLayer().bottom().updateModifiers();
 			updateAllTexts();
 		}
 		else if(action instanceof DecreaseMotivationalVideoEffectiveness || action instanceof IncreaseExcuseCost) {
-			waitingOnAnimation = false;
-			action.execute();
+			pullOut();
 			updateAllTexts();
 		}
 		else if(action instanceof ClearEnemy) {
-			waitingOnAnimation = false;
-			action.execute();
+			pullOut();
 			Vis.enemyLayer().updateEnemiesShown();
 		}
 		else if(action instanceof TakeDamage || action instanceof GainBlock) {
-			waitingOnAnimation = false;
-			action.execute();
+			pullOut();
 			BottomRibbon br = Vis.ribbonLayer().bottom();
 			br.healthBar().update();
 			br.shield().update();
 		}
 		else if(action instanceof SOTLoseBlock) {
-			waitingOnAnimation = false;
-			action.execute();
+			pullOut();
 			Vis.ribbonLayer().bottom().shield().update();
 		}
 		else if(action instanceof SetInquiry) {
-			waitingOnAnimation = false;
-			action.execute();
+			pullOut();
 			SetInquiry si = (SetInquiry) action;
-//			if(!Hub.combat().requestSupplyCardsToInquiry(Arrays.asList(Hub.hand().get(0))))
-//				throw new IllegalStateException("oof");
 			Vis.inquiryLayer().startInquiry(si.inquiry());
 		}
 		else if(action instanceof WinCombat) {
-			waitingOnAnimation = false;
-			action.execute();
+			pullOut();
 			Vis.winLayer().startCardReward();
 		}
 		else {
-			waitingOnAnimation = false;
-			action.execute();
+			pullOut();
 		}
 	}
-
-	/** HBM = Health, Block, and Modifiers*/
-	private void updateHBMOfAllEnemies() {
+	
+	/** Used when you've already paused the combat but realize your animation is instantaneous. */
+	private void pullOut() {
+		waitingOnAnimation = false;
+		Hub.combat().setRunning(true);
+	}
+	
+	private void pauseAndExecute(Action action) {
+		Hub.combat().pause();
+		action.execute();
+	}
+	
+	private void updateHNBOfAllEnemiesInstantly() {
 		for(Enemy e : Hub.enemies())
-			EnemyRepresentation.of(e).updateHealthAndBlockAndModifiers();
+			EnemyRepresentation.of(e).updateHNBInstantly();
+	}
+	
+	private void updateModifiersOfAllEnemies() {
+		for(Enemy e : Hub.enemies())
+			EnemyRepresentation.of(e).updateModifiers();
 	}
 	
 	private void updateAllTexts() {

@@ -8,7 +8,7 @@ import visuals.Fonts;
 
 public class IntentLabel extends Label {
 
-	private static final String CSS = "intent-label";
+	public static final String CSS = "intent-label";
 	
 	public IntentLabel() {
 		this("");

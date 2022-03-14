@@ -36,7 +36,7 @@ public final class Combat {
 	private CardInquiry cardInquiry;
 	
 	public Combat() {
-		this(new VocabQuiz(), new CalculusPracticeQuiz());
+		this(new VocabQuiz());
 	}
 	
 	public Combat(Enemy... startingEnemies) {
@@ -68,33 +68,37 @@ public final class Combat {
 	}
 	
 	public void resume() {
-		if(!started())
-			throw new IllegalStateException("Not started");
-		running = true;
-		while(!stack().isEmpty()) {
-			Action top = stack().pop();
-			if(top.canExecute()) {
-				mostRecentlyExecuted = top;
-				VisualManager.get().executeAction(mostRecentlyExecuted);
-				addClearsIfEnemyKilled(mostRecentlyExecuted);
-				if(mostRecentlyExecuted instanceof ClearEnemy && enemies().size() == 0)
-					stack().push(new WinCombat());
-				if(mostRecentlyExecuted instanceof CardAccepting)
-					clearInquiry();
-				if(paused())
-					return;
+		outer:
+		while(true) {
+			if(!started())
+				throw new IllegalStateException("Not started");
+			running = true;
+			while(!stack().isEmpty()) {
+				Action top = stack().pop();
+				if(top.canExecute()) {
+					mostRecentlyExecuted = top;
+					VisualManager.get().executeAction(mostRecentlyExecuted);
+					addClearsIfEnemyKilled(mostRecentlyExecuted);
+					if(mostRecentlyExecuted instanceof ClearEnemy && enemies().size() == 0)
+						stack().push(new WinCombat());
+					if(mostRecentlyExecuted instanceof CardAccepting)
+						clearInquiry();
+					if(paused())
+						break outer;
+				}
 			}
-		}
-		if(state == CombatState.PLAYER_TO_ENEMY) {
-			stack().push(new StartEnemyTurn());
-			resume();
-		}
-		if(state == CombatState.ENEMY_TURN) { //enemies have nothing else to do - start the player's next turn.
-			stackStartPlayerTurn();
-			resume();
-		}
-		else {
-			running = false;
+			if(state == CombatState.PLAYER_TO_ENEMY) {
+				stack().push(new StartEnemyTurn());
+				continue outer;
+			}
+			if(state == CombatState.ENEMY_TURN) { //enemies have nothing else to do - start the player's next turn.
+				stackStartPlayerTurn();
+				continue outer;
+			}
+			else {
+				running = false;
+			}
+			break outer;
 		}
 	}
 	
@@ -236,6 +240,11 @@ public final class Combat {
 	
 	public void pause() {
 		running = false;
+	}
+	
+	/** Sets the value of {@link #isRunning()}. Does not {@link #resume()}. Use with care. */
+	public void setRunning(boolean running) {
+		this.running = true;
 	}
 	
 	public boolean isRunning() {

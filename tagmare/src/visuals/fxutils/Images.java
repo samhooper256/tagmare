@@ -5,6 +5,7 @@ import java.util.*;
 import base.Main;
 import javafx.scene.image.*;
 import mechanics.cards.*;
+import mechanics.enemies.*;
 
 /**
  * Utility class for creating {@link javafx.scene.image.Image} objects from resource files and working with
@@ -26,6 +27,7 @@ public final class Images {
 		SHIELD_INTENT = get("shield_intent.png"),
 		SHIELD_AND_SWORD_INTENT = get("shield_and_sword_intent.png"),
 		DO_NOTHING_INTENT = get("do_nothing_intent.png"),
+		ENEMY_SHIELD = get("enemy_shield.png"),
 		//cards/combat:
 		CARD_BACK = get("card_back.png"),
 		ATTACK_BASE = get("attack_base.png"),
@@ -44,9 +46,14 @@ public final class Images {
 		
 	
 	private static final Map<CardTag, Image> CARD_IMAGE_MAP = new HashMap<>();
+	private static final Map<EnemyTag, Image> ENEMY_IMAGE_MAP = new HashMap<>();
 	
 	static {
+		//Cards:
 		CARD_IMAGE_MAP.put(CardTag.DISCIPLINE, DISCIPLINE_CARD);
+		
+		//Enemies:
+		// (none yet)
 	}
 	
 	private Images() {}
@@ -54,6 +61,11 @@ public final class Images {
 	public static Image forCard(Card c) {
 		Image image = CARD_IMAGE_MAP.get(c.tag());
 		return image == null ? TEST_IMAGE : image;
+	}
+	
+	public static Image forEnemy(Enemy e) {
+		Image image = ENEMY_IMAGE_MAP.get(e.tag());
+		return image == null ? TEST_ENEMY : image;
 	}
 	
 	/**
