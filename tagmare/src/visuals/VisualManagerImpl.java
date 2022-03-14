@@ -93,32 +93,32 @@ public final class VisualManagerImpl implements VisualManager {
 				EnemyRepresentation.of((Enemy) target).startSlice(-ch.amount());
 			}
 			else {
-				updateAllEnemies();
+				updateHBMOfAllEnemies();
 				Vis.ribbonLayer().bottom().update();
 				Hub.combat().resume();
 			}
 		}
 		else if(action instanceof DealDamageToAll) {
-			HasDamage ddta = (DealDamageToAll) action;
 			Hub.combat().pause();
+			HasDamage ddta = (DealDamageToAll) action;
 			action.execute();
 			List<Enemy> enemies = Hub.enemies();
 			for(int i = 0; i < enemies.size() - 1; i++)
 				EnemyRepresentation.of(enemies.get(i)).startSlice(ddta.damage(), false);
 			EnemyRepresentation.of(enemies.get(enemies.size() - 1)).startSlice(ddta.damage(), true);
 		}
-		else if(action instanceof UpdateEnemyIntents || action instanceof RemoveModifier ||
+		else if(action instanceof UpdateIntent || action instanceof CancelIntent) {
+			Hub.combat().pause();
+			action.execute();
+			EnemyRepresentation.of(((EnemyTargettedAction) action).target()).startIntentTransition();
+		}
+		else if(action instanceof RemoveModifier ||
 				action instanceof ApplyModifier || action instanceof ChangeModifier) {
 			waitingOnAnimation = false;
 			action.execute();
-			updateAllEnemies();
+			updateHBMOfAllEnemies();
 			Vis.ribbonLayer().bottom().updateModifiers();
 			updateAllTexts();
-		}
-		else if(action instanceof CancelIntent) {
-			waitingOnAnimation = false;
-			action.execute();
-			updateAllEnemies();
 		}
 		else if(action instanceof DecreaseMotivationalVideoEffectiveness || action instanceof IncreaseExcuseCost) {
 			waitingOnAnimation = false;
@@ -161,9 +161,10 @@ public final class VisualManagerImpl implements VisualManager {
 		}
 	}
 
-	private void updateAllEnemies() {
+	/** HBM = Health, Block, and Modifiers*/
+	private void updateHBMOfAllEnemies() {
 		for(Enemy e : Hub.enemies())
-			EnemyRepresentation.of(e).update();
+			EnemyRepresentation.of(e).updateHealthAndBlockAndModifiers();
 	}
 	
 	private void updateAllTexts() {

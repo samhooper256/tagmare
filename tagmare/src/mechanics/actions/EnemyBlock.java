@@ -2,10 +2,8 @@ package mechanics.actions;
 
 import mechanics.enemies.Enemy;
 
-public class EnemyBlock extends AbstractAction {
+public class EnemyBlock extends EnemyTargettedAction {
 
-	private final Enemy target;
-	
 	private int amount;
 	
 	/** Uses the same {@link Enemy} for the {@link #source()} and {@link #target()}. */
@@ -15,8 +13,7 @@ public class EnemyBlock extends AbstractAction {
 	
 	/** @param target the {@link Enemy} gaining block. */
 	public EnemyBlock(int amount, ActionSource source, Enemy target) {
-		super(source);
-		this.target = target;
+		super(source, target);
 		this.amount = amount;
 	}
 	
@@ -31,11 +28,6 @@ public class EnemyBlock extends AbstractAction {
 	
 	public void setAmount(int amount) {
 		this.amount = amount;
-	}
-	
-	/** The {@link Enemy} gaining block. */
-	public Enemy target() {
-		return target;
 	}
 	
 }

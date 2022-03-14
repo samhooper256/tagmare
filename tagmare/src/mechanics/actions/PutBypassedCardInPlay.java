@@ -4,7 +4,7 @@ import mechanics.*;
 import mechanics.cards.Card;
 import mechanics.enemies.Enemy;
 
-public class PutBypassedCardInPlay extends AbstractTargettedAction implements HasCard {
+public class PutBypassedCardInPlay extends EnemyTargettedAction implements HasCard {
 
 	private final Card card;
 	
@@ -28,11 +28,6 @@ public class PutBypassedCardInPlay extends AbstractTargettedAction implements Ha
 		else
 			stack.push(new NaturalDiscard(card));
 		stack.pushReversed(card.generateActions(target()));
-	}
-	
-	@Override
-	public Enemy target() {
-		return (Enemy) super.target();
 	}
 	
 }

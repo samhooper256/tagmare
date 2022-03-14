@@ -2,7 +2,7 @@ package mechanics.actions;
 
 import mechanics.enemies.Enemy;
 
-public class DealDamage extends AbstractTargettedAction implements HasDamage {
+public class DealDamage extends EnemyTargettedAction implements HasDamage {
 
 	/** Must be non-negative. */
 	private static int verifyDamage(int damage) {
@@ -31,11 +31,6 @@ public class DealDamage extends AbstractTargettedAction implements HasDamage {
 	@Override
 	public void setDamage(int amount) {
 		this.damage = verifyDamage(amount);
-	}
-	
-	@Override
-	public Enemy target() {
-		return (Enemy) super.target();
 	}
 	
 }

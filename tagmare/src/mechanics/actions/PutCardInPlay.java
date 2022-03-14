@@ -5,7 +5,7 @@ import mechanics.cards.Card;
 import mechanics.enemies.Enemy;
 
 /** Does not check/verify the legality of the {@link #card()}. */
-public final class PutCardInPlay extends AbstractTargettedAction implements HasCard {
+public final class PutCardInPlay extends EnemyTargettedAction implements HasCard {
 	
 	private final Card card;
 	
@@ -31,11 +31,6 @@ public final class PutCardInPlay extends AbstractTargettedAction implements HasC
 			stack.push(new NaturalDiscard(card));
 		stack.pushReversed(card.generateActions(target()));
 		stack.push(new ChangeEnergy(-card.energyCost(), card));
-	}
-	
-	@Override
-	public Enemy target() {
-		return (Enemy) super.target();
 	}
 	
 }

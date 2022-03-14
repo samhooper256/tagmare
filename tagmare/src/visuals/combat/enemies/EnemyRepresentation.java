@@ -6,13 +6,11 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import mechanics.Block;
 import mechanics.enemies.Enemy;
 import mechanics.modifiers.Modifier;
 import visuals.*;
-import visuals.combat.enemies.intents.IntentRepresentation;
 import visuals.fxutils.*;
 
 public class EnemyRepresentation extends StackPane {
@@ -28,9 +26,10 @@ public class EnemyRepresentation extends StackPane {
 	private final Enemy enemy;
 	private final VBox vBox, modifierBox;
 	private final Text name, healthAndBlock, modifierLabel;
+	private final Sprite sprite;
 	private final Pane sliceLayer;
 	
-	private IntentRepresentation intentRepresentation;
+	private final IntentContainer intentContainer;
 	
 	private EnemyRepresentation(Enemy enemy) {
 		this.enemy = enemy;
@@ -38,17 +37,17 @@ public class EnemyRepresentation extends StackPane {
 		name.setFont(Fonts.UI_14);
 		healthAndBlock = new Text(getHealthAndBlockString());
 		healthAndBlock.setFont(Fonts.UI_14);
-		intentRepresentation = IntentRepresentation.of(enemy.intent());
+		intentContainer = new IntentContainer(enemy.intent());
 		modifierLabel = new Text("Modifiers:");
 		modifierLabel.setFont(Fonts.UI_14);
 		modifierBox = new VBox(modifierLabel);
 		modifierBox.setAlignment(Pos.TOP_CENTER);
-		vBox = new VBox(intentRepresentation, name, healthAndBlock, modifierLabel, modifierBox);
+		sprite = new Sprite(Images.TEST_ENEMY);
+		vBox = new VBox(intentContainer, name, sprite, healthAndBlock, modifierLabel, modifierBox);
 		vBox.setAlignment(Pos.CENTER);
 		sliceLayer = new Pane();
 		getChildren().addAll(vBox, sliceLayer);
-		setBackground(Backgrounds.of(Color.PINK));
-		Nodes.setPrefAndMaxSize(this, 300, 300);
+		Nodes.setPrefAndMaxWidth(this, 300);
 		setOnMouseClicked(me -> mouseClicked());
 	}
 
@@ -63,16 +62,11 @@ public class EnemyRepresentation extends StackPane {
 			Vis.handLayer().selected().requestStartBeingPlayed(enemy());
 	}
 	
-	public void update() {
+	public void updateHealthAndBlockAndModifiers() {
 		updateHealthAndBlock();
 		updateModifiers();
-		if(intentRepresentation.intent() != enemy.intent()) {
-			intentRepresentation = IntentRepresentation.of(enemy.intent());
-			vBox.getChildren().set(0, intentRepresentation);
-		}
-		intentRepresentation.update();
 	}
-
+	
 	private void updateHealthAndBlock() {
 		healthAndBlock.setText(getHealthAndBlockString());
 	}
@@ -87,6 +81,10 @@ public class EnemyRepresentation extends StackPane {
 		}
 	}
 	
+	public void startIntentTransition() {
+		intentContainer.startTransition(enemy.intent());
+	}
+	
 	public void startSlice(int damage) {
 		startSlice(damage, true);
 	}
@@ -95,7 +93,7 @@ public class EnemyRepresentation extends StackPane {
 		updateHealthAndBlock();
 		sliceLayer.getChildren().clear();
 		Slice slice = new Slice(damage);
-		Nodes.setLayout(slice, getMaxWidth() * .5 - Slice.WIDTH * .5, getMaxHeight() * .5 - Slice.HEIGHT * .5);
+		Nodes.setLayout(slice, getMaxWidth() * .5 - Slice.WIDTH * .5, getHeight() * .5 - Slice.HEIGHT * .5);
 		sliceLayer.getChildren().add(slice);
 		slice.startAnimation(checkedResume);
 	}

@@ -20,7 +20,7 @@ public class Slice extends Group {
 	public static final double WIDTH = 50, HEIGHT = 50;
 	
 	private static final Duration DURATION = Duration.millis(500);
-	private static final double NX0 = 20, NY0 = 0;
+	private static final double NX0 = 20, NY0 = 0; //initial x and y coordinates.
 	private static final DoubleUnaryOperator X = t -> NX0 + 20 * t, Y = t -> NY0 + 32 * t * (t - .9);
 	
 	private class SliceAnimation extends AbstractAnimation {

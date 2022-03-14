@@ -5,7 +5,7 @@ import mechanics.modifiers.debuffs.Procrastinated;
 
 /** The damage dealt is taken directly from the {@link #source()}; it is not computed until {@link #execute()} is
  * called. */
-public class ProcrastinatedDamage extends AbstractTargettedAction implements HasDamage {
+public class ProcrastinatedDamage extends EnemyTargettedAction implements HasDamage {
 
 	public ProcrastinatedDamage(Procrastinated source, Enemy target) {
 		super(source, target);
@@ -24,11 +24,6 @@ public class ProcrastinatedDamage extends AbstractTargettedAction implements Has
 	@Override
 	public int damage() {
 		return source().integer();
-	}
-	
-	@Override
-	public Enemy target() {
-		return (Enemy) super.target();
 	}
 	
 }
