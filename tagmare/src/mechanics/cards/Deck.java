@@ -16,6 +16,7 @@ public class Deck implements Iterable<Card> {
 		CardTag.REVIEW_NOTES,
 		CardTag.WRITE_NONSENSE,
 		CardTag.RAGE,
+		CardTag.FORESIGHT,
 		CardTag.RAGE
 	);
 	

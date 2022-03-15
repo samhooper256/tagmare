@@ -4,7 +4,6 @@ public final class Todo {
 
 	/*
 	 * - Organize Card (need a "ReturnFromDiscardPile" action or something).
-	 * - Foresight Card
 	 * - Brag Card
 	 * - Curve Card?
 	 * - Passives: No Sleep Gang, Good Habits, Take a Break, Keyboard Shortcuts, Spiritual Enlightenment.

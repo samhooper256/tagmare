@@ -82,6 +82,9 @@ public final class VisualManagerImpl implements VisualManager {
 		else if(action instanceof SOTLoseBlock) {
 			Vis.ribbonLayer().ribbon().shield().startSmoothFall(true);
 		}
+		else if(action instanceof ViewDrawPileInOrder) {
+			Vis.gameScene().foresightGallery().startIntro();
+		}
 		else if(action instanceof RefillDrawPile) {
 			pullOut();
 			Vis.pileLayer().draw().setCards(Hub.drawPile().trueOrder()); //TODO some kind of animation for this?

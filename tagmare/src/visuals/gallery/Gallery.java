@@ -78,6 +78,7 @@ public class Gallery extends Pane {
 
 		private void finisher() {
 			setMouseTransparent(true);
+			runCloseAction();
 		}
 		
 	}
@@ -87,6 +88,7 @@ public class Gallery extends Pane {
 	private final GalleryDescription description;
 	private final OrderTip tip;
 	
+	private Runnable closeAction;
 	private boolean introInProgress;
 	private double yOffset;
 	
@@ -98,14 +100,19 @@ public class Gallery extends Pane {
 		this(description, "");
 	}
 	
+	public Gallery(String description, String additionalTipText) {
+		this(description, additionalTipText, null);
+	}
+	
 	/** Any additional text should be punctuated and should not start with leading whitespace.
 	 * Pass an empty string for no additional text. */
-	public Gallery(String description, String additionalTipText) {
+	public Gallery(String description, String additionalTipText, Runnable closeAction) {
 		glass = new GalleryGlass();
 		glass.setOnMouseClicked(me -> glassClicked());
 		tip = new OrderTip(additionalTipText);
 		cardGroup = new Group(); //y is set whenever startIntro() is called.
 		this.description = new GalleryDescription(description);
+		this.closeAction = closeAction;
 		introInProgress = false;
 		yOffset = 0;
 		getChildren().addAll(glass, tip, this.description, cardGroup);
@@ -113,10 +120,13 @@ public class Gallery extends Pane {
 		setMouseTransparent(true);
 		setOnScroll(this::scrolled);
 	}
-	
+
 	public void setCards(Iterable<Card> cards) {
+		setCards(cards.iterator());
+	}
+	
+	public void setCards(Iterator<Card> itr) {
 		cardGroup.getChildren().clear();
-		Iterator<Card> itr = cards.iterator();
 		int i = 0;
 		while(itr.hasNext()) {
 			GalleryCard gc = GalleryCard.of(itr.next());
@@ -126,15 +136,16 @@ public class Gallery extends Pane {
 		}
 		description.setTextFor(i);
 	}
-
+	
 	public void startIntro(Iterable<Card> cards) {
 		setCards(cards);
-		setMouseTransparent(false);
 		startIntro();
 	}
 	
-	/** Assumes {@link #setCards(List)} has already been called. */
+	/** Assumes {@link #setCards(List)} has already been called <em>OR</em> an overridden version of this method
+	 * has called {@link #setCards(Iterable)} before calling {@code super.startIntro()}. */
 	public void startIntro() {
+		setMouseTransparent(false);
 		setOpacity(0);
 		setYOffset(0);
 		introInProgress = true;
@@ -165,6 +176,17 @@ public class Gallery extends Pane {
 		description.setLayoutY(DESCRIPTION_Y + yOffset);
 		tip.setLayoutY(TIP_Y + yOffset);
 		cardGroup.setLayoutY(TOP_Y + yOffset);
+	}
+	
+	private void runCloseAction() {
+		if(closeAction != null)
+			closeAction.run();
+	}
+	
+	/** Returns {@code this} {@link Gallery}. */
+	public Gallery setCloseAction(Runnable closeAction) {
+		this.closeAction = closeAction;
+		return this;
 	}
 	
 	/** The y-coordinate of cards on the bottommost row when this {@link Gallery} is fully scrolled up. */

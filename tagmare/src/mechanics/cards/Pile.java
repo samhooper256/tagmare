@@ -89,6 +89,11 @@ public abstract class Pile implements Iterable<Card> {
 	public Iterator<Card> iterator() {
 		return Iterators.unmodifiable(trueOrder.iterator());
 	}
+
+	/** Returns a descending {@link Iterator} over the {@link #trueOrder()}. Unmodifiable. */
+	public Iterator<Card> descendingIterator() {
+		return Iterators.descendingUnmodifiable(trueOrder);
+	}
 	
 	@Override
 	public String toString() {

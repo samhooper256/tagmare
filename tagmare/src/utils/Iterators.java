@@ -75,5 +75,26 @@ public final class Iterators {
 		};
 	}
 	
+	public static <T> Iterator<T> descendingUnmodifiable(List<T> list) {
+		return new Iterator<T>() {
+			
+			int nextIndex = list.size() - 1;
+
+			@Override
+			public boolean hasNext() {
+				return nextIndex >= 0;
+			}
+
+			@Override
+			public T next() {
+				if(!hasNext())
+					throw new IllegalStateException("No more elements");
+				T item = list.get(nextIndex);
+				nextIndex--;
+				return item;
+			}
+			
+		};
+	}
 	
 }

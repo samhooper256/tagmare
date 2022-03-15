@@ -11,7 +11,7 @@ import mechanics.combat.Combat;
 import visuals.calendar.*;
 import visuals.calendar.bottomribbon.BottomRibbonLayer;
 import visuals.calendar.topribbon.TopRibbonLayer;
-import visuals.combat.CombatEye;
+import visuals.combat.*;
 import visuals.combat.debug.DebugLayer;
 import visuals.combat.enemies.EnemyLayer;
 import visuals.combat.hand.HandLayer;
@@ -38,6 +38,7 @@ public class GameScene extends Scene implements Updatable {
 
 	//Galleries:
 	private final Gallery deckGallery, drawPileGallery, discardPileGallery;
+	private final ForesightGallery foresightGallery;
 	
 	//Calendar:
 	private final CalendarLayer calendarLayer;
@@ -104,10 +105,12 @@ public class GameScene extends Scene implements Updatable {
 		deckGallery = new Gallery("Deck");
 		drawPileGallery = new Gallery("Draw Pile", "Cards are not shown in the order they will be drawn.");
 		discardPileGallery = new Gallery("Discard Pile", "Cards are shown in the order they were discarded.");
-		galleryLayer = new Pane(deckGallery, drawPileGallery, discardPileGallery);
+		foresightGallery = new ForesightGallery();
+		galleryLayer = new Pane(deckGallery, drawPileGallery, discardPileGallery, foresightGallery);
 		galleryLayer.setPickOnBounds(false);
 		
 		content.getChildren().addAll(lowerContent, galleryLayer, eyeLayer);
+		
 		getStylesheets().add(Main.class.getResource(Main.RESOURCES_PREFIX + "style.css").toExternalForm());
 		
 		setOnMouseMoved(this::mouseMoved);
@@ -194,6 +197,10 @@ public class GameScene extends Scene implements Updatable {
 	
 	public Gallery discardPileGallery() {
 		return discardPileGallery;
+	}
+	
+	public ForesightGallery foresightGallery() {
+		return foresightGallery;
 	}
 	
 	public double mouseX() {
