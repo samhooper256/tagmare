@@ -2,9 +2,7 @@ package base;
 
 public final class Todo {
 
-	/*
-	 * - Organize Card (need a "ReturnFromDiscardPile" action or something).
-	 * - Brag Card
+	/* - Brag Card
 	 * - Curve Card?
 	 * - Passives: No Sleep Gang, Good Habits, Take a Break, Keyboard Shortcuts, Spiritual Enlightenment.
 	 * - Singed Cards: Apathy, Nihlism, Resentment, Anxiety

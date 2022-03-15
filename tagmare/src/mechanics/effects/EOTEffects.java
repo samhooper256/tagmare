@@ -4,7 +4,7 @@ import mechanics.Hub;
 import mechanics.actions.*;
 import mechanics.actions.list.*;
 import mechanics.modifiers.*;
-import mechanics.modifiers.debuffs.Nonsense;
+import mechanics.modifiers.debuffs.*;
 
 import static mechanics.modifiers.ModifierTag.*;
 
@@ -22,7 +22,12 @@ public final class EOTEffects {
 		if(pmods.contains(TOMATOED))
 			list.add(RemoveModifier.fromPlayer(TOMATOED, null));
 		if(pmods.contains(MEMORIZING))
-				list.add(RemoveModifier.fromPlayer(MEMORIZING, null));
+			list.add(RemoveModifier.fromPlayer(MEMORIZING, null));
+		//TODO Good Habits
+		if(pmods.contains(TOXIC)) {
+			Toxic t = pmods.getModifierOrThrow(TOXIC);
+			list.add(new TakeDamage(t.integer(), t));
+		}
 		if(pmods.contains(NONSENSE)) {
 			Nonsense n = pmods.getModifierOrThrow(NONSENSE);
 			list.add(new TakeDamage(n.integer(), n));

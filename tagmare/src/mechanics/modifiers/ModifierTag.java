@@ -18,7 +18,8 @@ public enum ModifierTag {
 	MEMORIZING("Memorizing", false),
 	RESERVES("Reserves", true),
 	PACKED("Packed", true),
-	CHEATING("Cheating", true);
+	CHEATING("Cheating", true),
+	TOXIC("Toxic", true);
 	
 	private final String name;
 	private final boolean isInteger;

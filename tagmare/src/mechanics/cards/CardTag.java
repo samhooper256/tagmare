@@ -80,6 +80,8 @@ public enum CardTag {
 			ct("See your draw pile in the order cards will be drawn.")),
 	ORGANIZE("Organize", 1, false, Organize::new,
 			ct("Return all skills (or as many as will fit) from your discard pile to your hand"), true),
+	BRAG("Brag", 1, false, Brag::new,
+			ct(String.format("Gain %d Motivation. Gain %d Toxic.", Brag.MOTIVATION, Brag.TOXIC))),
 	//PASSIVES:
 	TAKE_A_BREAK("Take A Break", 1, false, TakeABreak::new,
 			ct(String.format("End your turn. At the start of next turn, gain %d Concentration.", TakeABreak.CONCENTRATION)), true),
