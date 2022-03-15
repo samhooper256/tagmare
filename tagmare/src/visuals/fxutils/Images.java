@@ -33,6 +33,7 @@ public final class Images {
 		DO_NOTHING_INTENT = get("do_nothing_intent.png"),
 		ENEMY_SHIELD = get("enemy_shield.png"),
 		//cards/combat:
+		COMBAT_RIBBON = get("combat_ribbon.png"),
 		CARD_BACK = get("card_back.png"),
 		ATTACK_BASE = get("attack_base.png"),
 		PASSIVE_BASE = get("passive_base.png"),

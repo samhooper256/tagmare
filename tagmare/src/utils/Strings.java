@@ -46,4 +46,13 @@ public final class Strings {
 		return containsOnly(s, Character::isDigit, startInclusive, endExclusive);
 	}
 	
+	public static String repeat(String s, int times) {
+		if(times < 0)
+			throw new IllegalArgumentException(String.format("times < 0 (was %d)", times));
+		StringBuilder result = new StringBuilder(s.length() * times);
+		for(int i = 0; i < times; i++)
+			result.append(s);
+		return result.toString();
+	}
+	
 }

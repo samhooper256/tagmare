@@ -214,6 +214,7 @@ public class GameScene extends Scene implements Updatable {
 	public void debugPrint() {
 		System.out.printf("===GameScene=================================%n");
 		handLayer().debugPrint();
+		ribbonLayer().debugPrint();
 		System.out.printf("=============================================%n");
 	}
 	

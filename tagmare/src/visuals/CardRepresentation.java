@@ -11,13 +11,13 @@ import mechanics.cards.Card;
 import mechanics.enemies.Enemy;
 import visuals.animations.*;
 import visuals.combat.hand.*;
-import visuals.combat.ribbon.BottomRibbon;
+import visuals.combat.ribbon.CombatRibbon;
 import visuals.fxutils.*;
 
 public final class CardRepresentation extends AbstractCardRepresentation implements Updatable {
 	
 	public static final double 
-			Y = BottomRibbon.Y - HEIGHT,
+			Y = CombatRibbon.Y - HEIGHT,
 			ATTACK_X = GameScene.CENTER_X - WIDTH * .5, ATTACK_Y = 450,
 			TOP_X = GameScene.CENTER_X - WIDTH * .5, TOP_Y = 20;
 	public static final Duration SCALE_DURATION = Duration.millis(500);

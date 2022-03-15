@@ -15,9 +15,9 @@ public final class CombatManager {
 		Vis.pileLayer().discard().clear();
 		Vis.pileLayer().draw().setCards(c.drawPile());
 		Vis.infoLayer().energyMeter().setEnergy(0);
-		Vis.ribbonLayer().bottom().buffs().update();
-		Vis.ribbonLayer().bottom().debuffs().update();
-		Vis.ribbonLayer().bottom().shield().update();
+		Vis.ribbonLayer().ribbon().buffs().update();
+		Vis.ribbonLayer().ribbon().debuffs().update();
+		Vis.ribbonLayer().ribbon().shield().update();
 		Vis.enemyLayer().setupEnemies(c);
 		Vis.winLayer().hide();
 	}

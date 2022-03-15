@@ -101,7 +101,6 @@ public class EnemyRepresentation extends StackPane {
 	}
 	
 	private void startKnock(KnockLayer layer, NumberKnock knock) {
-		layer.getChildren().clear();
 		Nodes.setLayout(knock, getMaxWidth() * .5 - Slice.WIDTH * .5, getHeight() * .5 - Slice.HEIGHT * .5);
 		layer.getChildren().add(knock);
 		knock.startAnimation();

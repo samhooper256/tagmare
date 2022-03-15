@@ -13,10 +13,10 @@ public class Deck implements Iterable<Card> {
 		CardTag.MOTIVATIONAL_VIDEO,
 		CardTag.DIVIDE_AND_CONQUER,
 		CardTag.PACK_LUNCH,
-		CardTag.PACK_LUNCH,
 		CardTag.REVIEW_NOTES,
-		CardTag.STUDY,
-		CardTag.READ_FOR_FUN
+		CardTag.WRITE_NONSENSE,
+		CardTag.RAGE,
+		CardTag.RAGE
 	);
 	
 	public static Deck createStartingDeck() {

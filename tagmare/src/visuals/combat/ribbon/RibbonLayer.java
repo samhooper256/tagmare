@@ -4,17 +4,21 @@ import javafx.scene.layout.Pane;
 
 public class RibbonLayer extends Pane {
 
-	private final BottomRibbon bottom;
+	private final CombatRibbon bottom;
 	
 	public RibbonLayer() {
 		setMouseTransparent(true);
 		setPickOnBounds(false);
-		bottom = new BottomRibbon();
+		bottom = new CombatRibbon();
 		getChildren().add(bottom);
 	}
 	
-	public BottomRibbon bottom() {
+	public CombatRibbon ribbon() {
 		return bottom;
 	}
 	
+	public void debugPrint() {
+		System.out.printf("RibbonLayer%n");
+		bottom.debugPrint(1);
+	}
 }

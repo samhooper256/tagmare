@@ -69,7 +69,7 @@ public final class VisualManagerImpl implements VisualManager {
 			}
 			else {
 				updateHNBOfAllEnemiesInstantly();
-				Vis.ribbonLayer().bottom().update();
+				Vis.ribbonLayer().ribbon().update();
 				pullOut();
 			}
 		}
@@ -77,10 +77,10 @@ public final class VisualManagerImpl implements VisualManager {
 			EnemyRepresentation.of(((EnemyTargettedAction) action).target()).startIntentTransition();
 		}
 		else if(action instanceof TakeDamage || action instanceof GainBlock) {
-			Vis.ribbonLayer().bottom().startHNBTransition(true);
+			Vis.ribbonLayer().ribbon().startHNBTransition(true);
 		}
 		else if(action instanceof SOTLoseBlock) {
-			Vis.ribbonLayer().bottom().shield().startSmoothFall(true);
+			Vis.ribbonLayer().ribbon().shield().startSmoothFall(true);
 		}
 		else if(action instanceof RefillDrawPile) {
 			pullOut();
@@ -98,7 +98,7 @@ public final class VisualManagerImpl implements VisualManager {
 				action instanceof ApplyModifier || action instanceof ChangeModifier) {
 			pullOut();
 			updateModifiersOfAllEnemies();
-			Vis.ribbonLayer().bottom().updateModifiers();
+			Vis.ribbonLayer().ribbon().updateModifiers();
 			updateAllTexts();
 		}
 		else if(action instanceof DecreaseMotivationalVideoEffectiveness || action instanceof IncreaseExcuseCost) {

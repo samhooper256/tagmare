@@ -30,7 +30,6 @@ public final class Vis {
 		return gameScene().calendarEye();
 	}
 	
-	
 	public static CalendarLayer calendarLayer() {
 		return gameScene().calendarLayer();
 	}

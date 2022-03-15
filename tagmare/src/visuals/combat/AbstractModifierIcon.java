@@ -1,18 +1,19 @@
-package visuals;
+package visuals.combat;
 
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import mechanics.modifiers.ModifierTag;
+import visuals.*;
 import visuals.fxutils.*;
 
-public class AbstractModifierIcon extends Pane {
+/** The {@link #sprite()} and {@link #label()} are the only children by default; they both have their layout coordinates
+ * at (0, 0). */
+public abstract class AbstractModifierIcon extends Pane implements ModifierIcon {
 
-	public static final double WIDTH = 32, HEIGHT = 32;
 	public static final String CSS = "modifier-icon";
 	
-	private static final double LABEL_Y = 10;
 	private static final Font FONT = Fonts.UI_24_BOLD;
 	private static final Color TEXT_COLOR = Color.WHITE;
 	
@@ -24,20 +25,27 @@ public class AbstractModifierIcon extends Pane {
 		this.tag = tag;
 		sprite = new Sprite(Images.forModifier(tag));
 		label = Nodes.label(FONT, TEXT_COLOR);
-		label.setLayoutY(LABEL_Y);
-		label.layoutXProperty().bind(label.widthProperty().negate().add(WIDTH + 2));
-		Nodes.setAllSizes(this, WIDTH, HEIGHT);
 		getChildren().addAll(sprite, label);
 		getStyleClass().add(CSS);
 	}
+
+	protected Sprite sprite() {
+		return sprite;
+	}
 	
+	protected Label label() {
+		return label;
+	}
+	
+	@Override
 	public ModifierTag tag() {
 		return tag;
 	}
 	
+	@Override
 	public void setInteger(int integer) {
-		if(!tag.isIntegerModifier())
-			throw new UnsupportedOperationException(String.format("Not an integer Modifier: %s", tag));
+		if(!tag().isIntegerModifier())
+			throw new UnsupportedOperationException(String.format("Not an integer Modifier: %s", tag()));
 		label.setText(String.valueOf(integer));
 	}
 	

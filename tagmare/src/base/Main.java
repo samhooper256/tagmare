@@ -42,7 +42,10 @@ public class Main extends Application {
 				}
 				else {
 					GameScene.get().debugPrint();
-					Hub.combat().debugPrint();
+					if(Hub.combat() != null)
+						Hub.combat().debugPrint();
+					else
+						System.out.printf("=== There is currently no combat ===%n");
 				}
 			}
 			in.close();

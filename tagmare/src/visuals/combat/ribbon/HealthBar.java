@@ -7,7 +7,7 @@ import visuals.combat.AbstractHealthBar;
 
 public class HealthBar extends AbstractHealthBar {
 
-	public static final double WIDTH = 400, HEIGHT = BottomRibbon.HEIGHT, RADIUS = 6;
+	public static final double WIDTH = 96 * 4, HEIGHT = CombatRibbon.HEIGHT, RADIUS = 6;
 	public static final Font FONT = Fonts.UI_30;
 	
 	public HealthBar() {

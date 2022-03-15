@@ -3,9 +3,10 @@ package visuals.combat.ribbon;
 import java.util.HashMap;
 
 import mechanics.modifiers.ModifierTag;
-import visuals.AbstractModifierIcon;
+import utils.Strings;
+import visuals.combat.VerticalModifierIcon;
 
-public class PlayerModifierIcon extends AbstractModifierIcon {
+public class PlayerModifierIcon extends VerticalModifierIcon {
 
 	private static final HashMap<ModifierTag, PlayerModifierIcon> MAP = new HashMap<>();
 	
@@ -17,6 +18,18 @@ public class PlayerModifierIcon extends AbstractModifierIcon {
 	
 	private PlayerModifierIcon(ModifierTag tag) {
 		super(tag);
+		setOnMouseClicked(me -> {
+			System.out.printf("PlayerModifierIcon (tag=%s)%n", tag);
+		});
 	}
 
+	public void debugPrint(int indent) {
+		System.out.printf("%s%s%n", Strings.repeat("\t", indent), this);
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("PlayerModifierIcon[%s showing %s]", tag(), label().getText());
+	}
+	
 }

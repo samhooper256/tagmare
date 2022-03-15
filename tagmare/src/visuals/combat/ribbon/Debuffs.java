@@ -1,40 +1,37 @@
 package visuals.combat.ribbon;
 
-import javafx.collections.ObservableList;
 import javafx.geometry.*;
-import javafx.scene.Node;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.*;
 import mechanics.Hub;
 import mechanics.modifiers.Modifier;
-import visuals.Fonts;
+import visuals.GameScene;
 import visuals.fxutils.Nodes;
 
 public class Debuffs extends HBox {
 
-	private static final Font FONT = Fonts.GEORGIA_18;
-	private static final double SPACING = Buffs.SPACING, PADDING = Buffs.PADDING;
+	private static final double SPACING = Buffs.SPACING, PADDING = Buffs.PADDING, HEIGHT = PlayerModifierIcon.HEIGHT;
 
-	private final Text title;
+	public static final double X = GameScene.CENTER_X + .5 * HealthBar.WIDTH + 144, Y_IN_RIBBON = 2;
 	
 	public Debuffs() {
 		super(SPACING);
-		title = Nodes.text("Debuffs >>>", FONT);
 		setAlignment(Pos.CENTER_LEFT);
 		setPadding(new Insets(PADDING));
-		getChildren().addAll(title);
+		setLayoutX(X);
+		setLayoutY(Y_IN_RIBBON);
+		Nodes.setAllHeights(this, HEIGHT);
 	}
 	
 	public void update() {
-		clear();
-		for(Modifier m : Hub.player().modifiers())
-			if(m.isDebuff())
-				getChildren().add(Nodes.text(m.toString(), FONT));
-	}
-	
-	public void clear() {
-		ObservableList<Node> children = getChildren();
-		children.subList(1, children.size()).clear();
+		getChildren().clear();
+		for(Modifier m : Hub.player().modifiers()) {
+			if(m.isDebuff()) {
+				PlayerModifierIcon icon = PlayerModifierIcon.of(m.tag());
+				if(m.isInteger())
+					icon.setInteger(m.integer());
+				getChildren().add(icon);
+			}
+		}
 	}
 	
 }
