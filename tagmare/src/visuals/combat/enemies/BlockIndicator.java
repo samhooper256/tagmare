@@ -23,7 +23,7 @@ public class BlockIndicator extends StackPane {
 	public static final Color TEXT_COLOR = Color.WHITE;
 	public static final String CSS = "block-indicator";
 	
-	private static final Duration VISIBILITY_DURATION = Duration.millis(500), NUMERIC_DURATION = Duration.millis(300);
+	public static final Duration VISIBILITY_DURATION = Duration.millis(500), NUMERIC_DURATION = Duration.millis(300);
 	private static final double ANIMATION_Y = -10, OUTRO_ROTATION = -30, OUTRO_MOVE_X = -10, OUTRO_MOVE_Y = 10;
 	private static final DoubleUnaryOperator OUTRO_X = t -> OUTRO_MOVE_X * t, OUTRO_Y = t -> OUTRO_MOVE_Y * t * t;
 	

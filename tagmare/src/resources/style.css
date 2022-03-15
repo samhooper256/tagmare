@@ -6,21 +6,14 @@
 	-fx-font: 14 "Georgia";
 }
 
-.inquiry-instructions .text {
-	-fx-stroke: black;
-    -fx-stroke-width: 1px;
-}
-
 .skip-label {
 	-fx-font: oblique 36 "Georgia";
 	-fx-text-fill: white;
 }
 
-.intent-label .text {
-	-fx-stroke: black;
-    -fx-stroke-width: 1px;
-}
-
+.inquiry-instructions .text,
+.intent-label .text,
+.player-shield .text,
 .block-indicator .text {
 	-fx-stroke: black;
     -fx-stroke-width: 1px;

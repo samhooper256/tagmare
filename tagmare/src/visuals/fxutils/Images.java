@@ -40,7 +40,7 @@ public final class Images {
 		TEST_IMAGE = get("test_image.png"),
 		CARD_BACKLIGHT = get("card_backlight.png"),
 		DISCIPLINE_CARD = get("discipline_card.png"),
-		SHIELD = get("shield.png"),
+		PLAYER_SHIELD = get("player_shield.png"),
 		SKIP_ARROW = get("skip_arrow.png"),
 		SKIP_ARROW_HOVERED = get("skip_arrow_hovered.png");
 		

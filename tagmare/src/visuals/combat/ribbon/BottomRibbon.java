@@ -2,12 +2,12 @@ package visuals.combat.ribbon;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import visuals.GameScene;
+import visuals.*;
 import visuals.fxutils.*;
 
 public class BottomRibbon extends Pane {
 	
-	public static final double HEIGHT = 60, Y = GameScene.HEIGHT - HEIGHT;
+	public static final double HEIGHT = 64, Y = GameScene.HEIGHT - HEIGHT;
 	
 	private final HealthBar healthBar;
 	private final Buffs buffs;
@@ -25,8 +25,7 @@ public class BottomRibbon extends Pane {
 		debuffs.setLayoutX(GameScene.CENTER_X + HealthBar.WIDTH * .5);
 		Nodes.setPrefAndMaxSize(debuffs, GameScene.CENTER_X - HealthBar.WIDTH * .5, HEIGHT);
 		shield = new Shield();
-		shield.setLayoutX(GameScene.CENTER_X - Shield.WIDTH * .5);
-		shield.setLayoutY(-2);
+		shield.setAnchorX(GameScene.CENTER_X - Shield.WIDTH * .5);
 		getChildren().addAll(healthBar, buffs, debuffs, shield);
 	}
 	
@@ -35,6 +34,28 @@ public class BottomRibbon extends Pane {
 		healthBar().update();
 		updateModifiers();
 		shield().update();
+	}
+	
+	public void startHNBTransition(boolean resume) {
+		boolean hbc = healthBar.hasChanged(), sc = shield.hasChanged();
+		if(hbc && !sc)
+			healthBar.startTransition(resume);
+		else if(!hbc && sc)
+			shield.startTransition(resume);
+		else if(hbc && sc) {
+			if(healthBar.secToAnimateChange() > shield.secToAnimateChange()) {
+				healthBar.startTransition(resume);
+				shield.startTransition(false);
+			}
+			else {
+				healthBar.startTransition(false);
+				shield.startTransition(resume);
+			}
+		}
+		else {
+			if(resume)
+				Vis.manager().checkedResumeFromAnimation();
+		}
 	}
 	
 	public void updateModifiers() {

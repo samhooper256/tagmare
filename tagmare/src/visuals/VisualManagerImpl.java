@@ -36,16 +36,13 @@ public final class VisualManagerImpl implements VisualManager {
 				pullOut();
 		}
 		else if(action instanceof EOTDiscard || action instanceof ExplicitDiscard) {
-			Card card = ((HasCard) action).card();
-			Vis.handLayer().startEOTDiscard(card);
+			Vis.handLayer().startEOTDiscard(((HasCard) action).card());
 		}
 		else if(action instanceof RemoveOTFromPlay) {
-			Card card = ((HasCard) action).card();
-			CardRepresentation.of(card).startRemoveOT();
+			CardRepresentation.of(((HasCard) action).card()).startRemoveOT();
 		}
 		else if(action instanceof ReturnToDrawPile) {
-			Card card = ((HasCard) action).card();
-			Vis.handLayer().startReturnToDrawPile(card);
+			Vis.handLayer().startReturnToDrawPile(((HasCard) action).card());
 		}
 		else if(action instanceof SetEnergy || action instanceof ChangeEnergy) {
 			Vis.infoLayer().energyMeter().startEnergyChangeAnimation(Hub.energy().amount());
@@ -54,10 +51,8 @@ public final class VisualManagerImpl implements VisualManager {
 			HasCard hc = ((HasCard) action);
 			Vis.handLayer().startNaturalDiscard(hc.card());
 		}
-		else if(action instanceof DealDamage || action instanceof ProcrastinatedDamage) {
-			EnemyRepresentation.of(((EnemyTargettedAction) action).target()).startHNBTransition(true);
-		}
-		else if(action instanceof EnemyBlock || action instanceof EOTEnemyLoseBlock) {
+		else if(action instanceof DealDamage || action instanceof ProcrastinatedDamage ||
+				action instanceof EnemyBlock || action instanceof EOTEnemyLoseBlock) {
 			EnemyRepresentation.of(((EnemyTargettedAction) action).target()).startHNBTransition(true);
 		}
 		else if(action instanceof DealDamageToAll) {
@@ -85,6 +80,12 @@ public final class VisualManagerImpl implements VisualManager {
 		else if(action instanceof UpdateIntent || action instanceof CancelIntent) {
 			EnemyRepresentation.of(((EnemyTargettedAction) action).target()).startIntentTransition();
 		}
+		else if(action instanceof TakeDamage || action instanceof GainBlock) {
+			Vis.ribbonLayer().bottom().startHNBTransition(true);
+		}
+		else if(action instanceof SOTLoseBlock) {
+			Vis.ribbonLayer().bottom().shield().startSmoothFall(true);
+		}
 		else if(action instanceof RefillDrawPile) {
 			pullOut();
 			Vis.pileLayer().draw().setCards(Hub.drawPile().trueOrder()); //TODO some kind of animation for this?
@@ -111,16 +112,6 @@ public final class VisualManagerImpl implements VisualManager {
 		else if(action instanceof ClearEnemy) {
 			pullOut();
 			Vis.enemyLayer().updateEnemiesShown();
-		}
-		else if(action instanceof TakeDamage || action instanceof GainBlock) {
-			pullOut();
-			BottomRibbon br = Vis.ribbonLayer().bottom();
-			br.healthBar().update();
-			br.shield().update();
-		}
-		else if(action instanceof SOTLoseBlock) {
-			pullOut();
-			Vis.ribbonLayer().bottom().shield().update();
 		}
 		else if(action instanceof SetInquiry) {
 			pullOut();
