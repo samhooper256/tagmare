@@ -12,8 +12,6 @@ import mechanics.input.CardInquiry;
 import utils.RNG;
 import visuals.VisualManager;
 
-//TODO should Concentration apply to Free Time?
-//TODO CardRewards currently can give Do Homework, Review Notes, Guilt as rewards.
 public final class Combat {
 
 	/** The default number of cards drawn per turn. */

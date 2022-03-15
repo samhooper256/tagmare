@@ -23,13 +23,6 @@ import visuals.combat.win.WinLayer;
 import visuals.fxutils.Nodes;
 import visuals.gallery.Gallery;
 
-/* TODO
- * - if you click a targetted card as it is being drawn from the draw pile (and maybe while it's discarded?) bad stuff
- * happens.
- * - if you hover over a card while they're reorganizing, they get slightly offset in the x direction.
- * - the combat starts before the eye is done opening; it looks kind of "rushed" - add a delay there. Maybe Eyes
- * have a second action that runs when it is fully done opening?
- */
 public class GameScene extends Scene implements Updatable {
 	
 	public static final double WIDTH = 1920, HEIGHT = 1080, CENTER_X = WIDTH * .5, CENTER_Y = HEIGHT * .5;
