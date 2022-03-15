@@ -9,15 +9,11 @@ import mechanics.combat.Combat;
 import mechanics.enemies.Enemy;
 import visuals.combat.CombatManager;
 import visuals.combat.enemies.EnemyRepresentation;
-import visuals.combat.ribbon.BottomRibbon;
 
 public final class VisualManagerImpl implements VisualManager {
 
 	private boolean waitingOnAnimation;
 	
-	//TODO factor out pausing and executing? Need to check on a few things (e.g. why am I explicitly calling resume
-	//inside some of the blocks? Should I just return from executeAction(Action) instead of resuming to eliminate
-	//the recursive calls to resume()?)
 	@Override
 	public void executeAction(final Action action) {
 //		System.err.printf("executing %s%n", action);

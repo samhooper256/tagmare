@@ -28,9 +28,14 @@ public class Buffs extends HBox {
 	
 	public void update() {
 		clear();
-		for(Modifier m : Hub.player().modifiers())
-			if(m.isBuff())
-				getChildren().add(0, Nodes.text(m.toString(), FONT));
+		for(Modifier m : Hub.player().modifiers()) {
+			if(m.isBuff()) {
+				PlayerModifierIcon icon = PlayerModifierIcon.of(m.tag());
+				if(m.isInteger())
+					icon.setInteger(m.integer());
+				getChildren().add(0, icon);
+			}
+		}
 	}
 	
 	public void clear() {

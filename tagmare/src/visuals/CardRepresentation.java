@@ -4,6 +4,7 @@ import java.util.*;
 
 import base.Updatable;
 import javafx.scene.Node;
+import javafx.scene.input.*;
 import javafx.util.Duration;
 import mechanics.Hub;
 import mechanics.cards.Card;
@@ -139,7 +140,7 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 		faceUp = true;
 		setOnMouseEntered(e -> hoverEntered());
 		setOnMouseExited(e -> hoverExited());
-		setOnMousePressed(e -> mousePressed());
+		setOnMousePressed(this::mousePressed);
 	}
 	
 	@Override
@@ -175,7 +176,9 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 		}
 	}
 
-	private void mousePressed() {
+	private void mousePressed(MouseEvent me) {
+		if(me.getButton() != MouseButton.PRIMARY)
+			return;
 		if(!Vis.handLayer().contains(this)) //this will happen if the user clicks on a card in the draw/discard pile.
 			return;
 		if(Vis.inquiryActive()) {

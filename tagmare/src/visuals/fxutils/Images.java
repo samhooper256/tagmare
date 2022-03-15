@@ -6,6 +6,7 @@ import base.Main;
 import javafx.scene.image.*;
 import mechanics.cards.*;
 import mechanics.enemies.*;
+import mechanics.modifiers.*;
 
 /**
  * Utility class for creating {@link javafx.scene.image.Image} objects from resource files and working with
@@ -22,6 +23,9 @@ public final class Images {
 		DESK = get("desk.png"),
 		//enemies:
 		TEST_ENEMY = get("test_enemy.png"),
+		//modifiers:
+		TEST_MODIFIER = get("test_modifier.png"),
+		PACKED_MODIFIER = get("packed_modifier.png"),
 		//intents:
 		SWORD_INTENT = get("sword_intent.png"),
 		SHIELD_INTENT = get("shield_intent.png"),
@@ -47,6 +51,7 @@ public final class Images {
 	
 	private static final Map<CardTag, Image> CARD_IMAGE_MAP = new HashMap<>();
 	private static final Map<EnemyTag, Image> ENEMY_IMAGE_MAP = new HashMap<>();
+	private static final Map<ModifierTag, Image> MODIFIER_IMAGE_MAP = new HashMap<>();
 	
 	static {
 		//Cards:
@@ -54,6 +59,9 @@ public final class Images {
 		
 		//Enemies:
 		// (none yet)
+		
+		//Modifiers:
+		MODIFIER_IMAGE_MAP.put(ModifierTag.PACKED, PACKED_MODIFIER);
 	}
 	
 	private Images() {}
@@ -68,6 +76,15 @@ public final class Images {
 		return image == null ? TEST_ENEMY : image;
 	}
 	
+	public static Image forModifier(Modifier m) {
+		return forModifier(m.tag());
+	}
+	
+	public static Image forModifier(ModifierTag tag) {
+		Image image = MODIFIER_IMAGE_MAP.get(tag);
+		return image == null ? TEST_MODIFIER : image;
+	}
+
 	/**
 	 * Returns the image given by {@code filename} by invoking {@link Image#Image(java.io.InputStream)} with
 	 * the appropriate {@link InputStream}. The file indicated by {@code filename} must be in the "resources"

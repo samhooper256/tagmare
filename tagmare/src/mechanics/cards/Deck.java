@@ -7,16 +7,16 @@ import utils.*;
 public class Deck implements Iterable<Card> {
 	
 	private static final List<CardTag> STARTING_DECK = Colls.ulist(
-		CardTag.DO_HOMEWORK,
-		CardTag.DO_HOMEWORK,
-		CardTag.DO_HOMEWORK,
-		CardTag.DO_HOMEWORK,
-		CardTag.DO_HOMEWORK,
+		CardTag.COPY,
+		CardTag.TAKE_A_BREAK,
+		CardTag.DISCIPLINE,
+		CardTag.MOTIVATIONAL_VIDEO,
+		CardTag.DIVIDE_AND_CONQUER,
+		CardTag.PACK_LUNCH,
+		CardTag.PACK_LUNCH,
 		CardTag.REVIEW_NOTES,
-		CardTag.REVIEW_NOTES,
-		CardTag.REVIEW_NOTES,
-		CardTag.REVIEW_NOTES,
-		CardTag.REVIEW_NOTES
+		CardTag.STUDY,
+		CardTag.READ_FOR_FUN
 	);
 	
 	public static Deck createStartingDeck() {
