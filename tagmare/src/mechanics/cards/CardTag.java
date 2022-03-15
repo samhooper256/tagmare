@@ -10,11 +10,12 @@ import utils.English;
 
 public enum CardTag {
 	//Texts should be punctuated.
-	//ATTACKS:
+	//STARTER CARDS:
 	DO_HOMEWORK("Do Homework", 1, true, DoHomework::new,
 			ct("Deal D0 damage.", DoHomework.DAMAGE)),
 	REVIEW_NOTES("Review Notes", 1, false, ReviewNotes::new,
 			ct("Gain B0 block.", ReviewNotes.BLOCK)),
+	//ATTACKS:
 	PROCRASTINATE("Procrastinate", 1, true, Procrastinate::new,
 			String.format("Next turn, deal %d damage. Motivation and Discipline do not apply to this card.", Procrastinate.DAMAGE)),
 	GRIND("Grind", 2, true, Grind::new,
@@ -77,6 +78,8 @@ public enum CardTag {
 			ct("Your next card (that's not Copy) is played twice. Add a Guilt to the top of your draw pile."), true),
 	FORESIGHT("Foresight", 1, false, Foresight::new,
 			ct("See your draw pile in the order cards will be drawn.")),
+	ORGANIZE("Organize", 1, false, Organize::new,
+			ct("Return all skills (or as many as will fit) from your discard pile to your hand"), true),
 	//PASSIVES:
 	TAKE_A_BREAK("Take A Break", 1, false, TakeABreak::new,
 			ct(String.format("End your turn. At the start of next turn, gain %d Concentration.", TakeABreak.CONCENTRATION)), true),

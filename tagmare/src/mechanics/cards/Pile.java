@@ -76,6 +76,16 @@ public abstract class Pile implements Iterable<Card> {
 		sorted.clear();
 	}
 	
+	public boolean contains(Card c) {
+		return trueOrder.contains(c);
+	}
+	
+	public void removeOrThrow(Card c) {
+		if(!trueOrder.remove(c))
+			throw new IllegalStateException(String.format("Not in this %s: %s", getClass().getSimpleName(), c));
+		sorted.remove(c);
+	}
+	
 	/** Unmodifiable. Updated dynamically. The cards are in order from the bottom of the pile to the top. */
 	public List<Card> trueOrder() {
 		return Collections.unmodifiableList(trueOrder);

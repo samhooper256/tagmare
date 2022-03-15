@@ -6,20 +6,20 @@ import mechanics.cards.*;
 import mechanics.effects.SkillEffects;
 import mechanics.enemies.Enemy;
 
-public class Foresight extends AbstractCard implements Skill {
+public class Organize extends AbstractCard implements Skill {
 
-	public Foresight() {
-		super(CardTag.FORESIGHT);
+	public Organize() {
+		super(CardTag.ORGANIZE);
 	}
 
 	@Override
 	public Card copy() {
-		return new Foresight();
+		return new Organize();
 	}
 
 	@Override
 	public ActionList generateActions(Enemy target) {
-		return SkillEffects.apply(this, new ViewDrawPileInOrder(this));
+		return SkillEffects.apply(this, new OrganizeTrail(this));
 	}
 	
 }

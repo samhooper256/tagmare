@@ -74,7 +74,7 @@ public class HandLayer extends Pane implements Updatable {
 		}
 		
 	}
-
+	
 	private final Group cardGroup, playGroup;
 	private final Arrow arrow;
 	

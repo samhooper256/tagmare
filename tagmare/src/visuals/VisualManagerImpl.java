@@ -85,6 +85,9 @@ public final class VisualManagerImpl implements VisualManager {
 		else if(action instanceof ViewDrawPileInOrder) {
 			Vis.gameScene().foresightGallery().startIntro();
 		}
+		else if(action instanceof ReturnFromDiscardPile) {
+			Vis.handLayer().startAddCardToRightAnimation(((HasCard) action).card());
+		}
 		else if(action instanceof RefillDrawPile) {
 			pullOut();
 			Vis.pileLayer().draw().setCards(Hub.drawPile().trueOrder()); //TODO some kind of animation for this?

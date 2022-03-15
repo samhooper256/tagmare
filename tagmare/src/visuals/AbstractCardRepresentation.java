@@ -50,7 +50,7 @@ public abstract class AbstractCardRepresentation extends StackPane {
 		description.setTextAlignment(TextAlignment.CENTER);
 		description.getStyleClass().add(DESCRIPTION_CSS);
 		energy = Nodes.label(NAME_FONT, ENERGY_COLOR);
-		energy.setText("1");
+		updateEnergyCost();
 		energyWrap = new VBox(energy);
 		energyWrap.setAlignment(Pos.TOP_CENTER);
 		base = new Sprite(baseImage(card));
@@ -92,11 +92,15 @@ public abstract class AbstractCardRepresentation extends StackPane {
 		card().updateText();
 		updateName();
 		description.setText(card.text().displayText());
-		energy.setText(card.energyCost() < 0 ? "" : String.valueOf(card.energyCost()));
+		updateEnergyCost();
 	}
 	
 	private void updateName() {
 		name.setText(card.displayName());
+	}
+	
+	public void updateEnergyCost() {
+		energy.setText(card.energyCost() < 0 ? "" : String.valueOf(card().energyCost()));
 	}
 	
 	protected void setChildren(List<Node> children) {
