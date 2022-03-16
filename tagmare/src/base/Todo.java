@@ -2,8 +2,10 @@ package base;
 
 public final class Todo {
 
-	/* - Curve Card?
-	 * - Passives: No Sleep Gang, Good Habits, Take a Break, Keyboard Shortcuts, Spiritual Enlightenment.
+	/* TODO LIST:
+	 * - TOOLTIPS!
+	 * - Curve Card?
+	 * - Passives: No Sleep Gang, Good Habits, Keyboard Shortcuts, Spiritual Enlightenment.
 	 * - Singed Cards: Apathy, Nihlism, Resentment, Anxiety
 	 * - if you click a targetted card as it is being drawn from the draw pile (and maybe while it's discarded?) bad stuff
 	 * happens.
