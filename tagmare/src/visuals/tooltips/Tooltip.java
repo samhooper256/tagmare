@@ -11,7 +11,7 @@ import visuals.fxutils.*;
 public class Tooltip extends VBox {
 
 	public static final double WIDTH = 120, PADDING = 2, BACKGROUND_ROUNDING = 3;
-	public static final Font TITLE_FONT = Fonts.GEORGIA_12_BOLD, DESCRIPTION_FONT = Fonts.GEORGIA_12;
+	public static final Font TITLE_FONT = Fonts.GEORGIA_14_BOLD, DESCRIPTION_FONT = Fonts.GEORGIA_14;
 	
 	private final Label title, description;
 	
