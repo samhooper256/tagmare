@@ -13,10 +13,12 @@ public class Deck implements Iterable<Card> {
 		YOGA,
 		APATHY,
 		APATHY,
-		POMODORO,
+		DISCIPLINE,
 		DIVIDE_AND_CONQUER,
+		WRITE_NONSENSE,
 		CRAM,
-		REVIEW_NOTES
+		NIHILISM,
+		NIHILISM
 	);
 	
 	public static Deck createStartingDeck() {

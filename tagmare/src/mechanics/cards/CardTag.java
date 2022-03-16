@@ -100,7 +100,10 @@ public enum CardTag {
 	GUILT("Guilt", -1, false, Guilt::new,
 			ct("Unplayable. If this card is in your hand at the end of your turn, put it on top of your draw pile.")),
 	APATHY("Apathy", -1, false, Apathy::new,
-			ct(String.format("Unplayable. If this card is discarded during your turn, gain %d energy", Apathy.ENERGY)));
+			ct(String.format("Unplayable. If this card is discarded during your turn, gain %d energy", Apathy.ENERGY))),
+	NIHILISM("Nihilism", -1, false, Nihilism::new,
+			ct(String.format("Unplayable. if this card is discarded during your turn, draw %s",
+			English.pluralSpaced("card", Nihilism.DRAW))));
 	
 	private static final List<CardTag> REWARDABLE;
 	
