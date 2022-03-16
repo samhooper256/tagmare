@@ -3,7 +3,6 @@ package base;
 public final class Todo {
 
 	/* TODO LIST:
-	 * - Nihilism
 	 * - Resentment
 	 * - Anxiety
 	 * - if you click a targetted card as it is being drawn from the draw pile (and maybe while it's discarded?) bad stuff
