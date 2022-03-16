@@ -102,8 +102,11 @@ public enum CardTag {
 	APATHY("Apathy", -1, false, Apathy::new,
 			ct(String.format("Unplayable. If this card is discarded during your turn, gain %d energy", Apathy.ENERGY))),
 	NIHILISM("Nihilism", -1, false, Nihilism::new,
-			ct(String.format("Unplayable. if this card is discarded during your turn, draw %s",
-			English.pluralSpaced("card", Nihilism.DRAW))));
+			ct(String.format("Unplayable. If this card is discarded during your turn, draw %s",
+			English.pluralSpaced("card", Nihilism.DRAW)))),
+	RESENTMENT("Resentment", -1, false, Resentment::new,
+			ct(String.format("Unplayable. If this card is discarded during your turn, deal %d damage to ALL enemies",
+			Resentment.DAMAGE)));
 	
 	private static final List<CardTag> REWARDABLE;
 	

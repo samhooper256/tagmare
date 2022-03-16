@@ -15,7 +15,7 @@ public class Deck implements Iterable<Card> {
 		APATHY,
 		DISCIPLINE,
 		DIVIDE_AND_CONQUER,
-		WRITE_NONSENSE,
+		RESENTMENT,
 		CRAM,
 		NIHILISM,
 		NIHILISM
