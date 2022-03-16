@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 
 import mechanics.cards.attacks.*;
 import mechanics.cards.passives.*;
-import mechanics.cards.singed.Guilt;
+import mechanics.cards.singed.*;
 import mechanics.cards.skills.*;
 import utils.English;
 
@@ -98,7 +98,9 @@ public enum CardTag {
 			SpiritualEnlightenment.STARTING_MOTIVATION, SpiritualEnlightenment.RATE)), true),
 	//SINGED:
 	GUILT("Guilt", -1, false, Guilt::new,
-			ct("Unplayable. If this card is in your hand at the end of your turn, put it on top of your draw pile."));
+			ct("Unplayable. If this card is in your hand at the end of your turn, put it on top of your draw pile.")),
+	APATHY("Apathy", -1, false, Apathy::new,
+			ct(String.format("Unplayable. If this card is discarded during your turn, gain %d energy", Apathy.ENERGY)));
 	
 	private static final List<CardTag> REWARDABLE;
 	
