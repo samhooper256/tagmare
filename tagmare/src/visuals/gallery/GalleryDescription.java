@@ -24,6 +24,7 @@ public class GalleryDescription extends Label {
 
 	public void setTextFor(int cardCount) {
 		setText(String.format("%s (%s)", description, English.pluralSpaced("card", cardCount)));
+		this.cardCount = cardCount;
 	}
 	
 	public void setDescription(String description) {

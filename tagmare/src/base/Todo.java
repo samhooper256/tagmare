@@ -2,7 +2,8 @@ package base;
 
 public final class Todo {
 
-	/* - Curve Card?
+	/* - Yoga inquiry not working? (probably the mouse event is not going through).
+	 * - Curve Card?
 	 * - Passives: No Sleep Gang, Good Habits, Take a Break, Keyboard Shortcuts, Spiritual Enlightenment.
 	 * - Singed Cards: Apathy, Nihlism, Resentment, Anxiety
 	 * - if you click a targetted card as it is being drawn from the draw pile (and maybe while it's discarded?) bad stuff
@@ -13,6 +14,7 @@ public final class Todo {
 	 * - Make it so Guilt, Do Homework, and Review Notes cannot appear as card rewards
 	 * - Make "View Deck" button look nicer (maybe make 2 drawings in Google Drawings, one with a dropshadow for when
 	 * you hover over it)?
+	 * - Modifier Icon artwork
 	 * - should Concentration apply to Free Time?
 	 * - Show your health on the calendar page.
 	 * - Show what the combats are on the calendar page.
