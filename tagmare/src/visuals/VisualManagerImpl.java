@@ -48,8 +48,11 @@ public final class VisualManagerImpl implements VisualManager {
 			Vis.handLayer().startNaturalDiscard(hc.card());
 		}
 		else if(action instanceof DealDamage || action instanceof ProcrastinatedDamage ||
-				action instanceof EnemyBlock || action instanceof EOTEnemyLoseBlock) {
+				action instanceof EnemyBlock) {
 			EnemyRepresentation.of(((EnemyTargettedAction) action).target()).startHNBTransition(true);
+		}
+		else if(action instanceof EOTEnemyLoseBlock) {
+			EnemyRepresentation.of(((EnemyTargettedAction) action).target()).startBlockTransition(true, false);
 		}
 		else if(action instanceof DealDamageToAll) {
 			List<Enemy> enemies = Hub.enemies();

@@ -86,13 +86,33 @@ public class EnemyRepresentation extends StackPane {
 		}
 	}
 	
+	public void startBlockTransition(boolean resume, boolean showChip) {
+		BlockIndicator bi = healthAndBlock.blockIndicator();
+		boolean bic = bi.hasChanged();
+		if(showChip)
+			startChip(bi);
+		if(bic)
+			bi.startTransition(resume);
+		else if(resume)
+			Vis.manager().checkedResumeFromAnimation();
+	}
+	
+	
 	private void startKnocks(HealthBar hb, BlockIndicator bi) {
+		startChip(bi);
+		startSlice(hb);
+	}
+
+	private void startChip(BlockIndicator bi) {
 		if(bi.change() < 0)
 			startChip(-bi.change());
+	}
+	
+	private void startSlice(HealthBar hb) {
 		if(hb.hpChange() < 0)
 			startSlice(-hb.hpChange());
 	}
-	
+
 	private void startSlice(int damage) {
 		startKnock(sliceLayer, new Slice(damage));
 	}

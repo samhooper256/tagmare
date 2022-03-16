@@ -13,7 +13,6 @@ public final class Todo {
 	 * - Make "View Deck" button look nicer (maybe make 2 drawings in Google Drawings, one with a dropshadow for when
 	 * you hover over it)?
 	 * - Intent tooltips
-	 * - When an enemy EOTLoses its block, it shows a Chip.
 	 * - Modifier Icon artwork
 	 * - Show your health on the calendar page.
 	 * - Show what the combats are on the calendar page.
@@ -24,6 +23,9 @@ public final class Todo {
 	 * 		- Ideas!
 	 * 		- More intents (debuff, buff, attack+buff, attack with multiple strikes) 
 	 * - Curve Card?
+	 * 
+	 * OPTIONAL:
+	 * - Make EOTLoseBlock smoothly fade out and slide down like SOTLoseBlock does for player.
 	 */
 	
 	private Todo() {
