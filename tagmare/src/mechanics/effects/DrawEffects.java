@@ -16,6 +16,7 @@ public final class DrawEffects {
 	public static ActionList apply(Card card) {
 		ActionListBuilder list = Action.listBuilder();
 		ModifierSet pmods = Hub.player().modifiers();
+		EffectUtils.addNoSleepGang(list);
 		if(pmods.contains(ModifierTag.ENRAGED)) {
 			Enraged enraged = pmods.getModifierOrThrow(ModifierTag.ENRAGED);
 			list.add(new ExplicitDiscard(card, enraged));

@@ -1,6 +1,7 @@
 package mechanics.effects;
 
-import mechanics.actions.list.ActionList;
+import mechanics.actions.Action;
+import mechanics.actions.list.*;
 import mechanics.cards.Card;
 
 public final class NaturalDiscardEffects {
@@ -10,7 +11,9 @@ public final class NaturalDiscardEffects {
 	}
 	
 	public static ActionList apply(Card card) {
-		return ActionList.EMPTY; //TODO
+		ActionListBuilder list = Action.listBuilder();
+		EffectUtils.addNoSleepGang(list);
+		return list.build();
 	}
 	
 }

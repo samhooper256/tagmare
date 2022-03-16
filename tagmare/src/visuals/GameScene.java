@@ -120,7 +120,7 @@ public class GameScene extends Scene implements Updatable {
 		
 		setOnKeyPressed(ke -> {
 			if(ke.getCode() == KeyCode.D)
-				Main.debugPrint();
+				DebugConsole.debugPrint();
 		});
 	}
 	

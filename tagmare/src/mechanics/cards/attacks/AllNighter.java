@@ -23,7 +23,7 @@ public class AllNighter extends AbstractCard implements Attack {
 	@Override
 	public ActionList generateActions(Enemy target) {
 		return AttackEffects.apply(this,
-			new DealDamageToAll(this, DAMAGE),
+			new DealDamageToAll(DAMAGE, this),
 			new ForcedEndTurn(this),
 			ApplyModifier.toPlayer(new KnockedOut(), this)
 		);

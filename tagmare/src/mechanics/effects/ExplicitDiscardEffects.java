@@ -14,10 +14,6 @@ public final class ExplicitDiscardEffects {
 		
 	}
 	
-	public static ActionList apply(ExplicitDiscard ed) {
-		return apply(ed.card());
-	}
-	
 	/** Returns a (possibly empty) {@link ActionList} of the {@link Action Actions} that should be executed immediately
 	 * <em>after</em> the {@link Card} is discarded. */
 	public static ActionList apply(Card card) {
@@ -26,6 +22,7 @@ public final class ExplicitDiscardEffects {
 			Defenestrating d = Hub.player().modifiers().getModifierOrThrow(ModifierTag.DEFENESTRATING);
 			list.add(new DealDamage(d.integer(), d, RNG.pickOrThrow(Hub.enemies())));
 		}
+		EffectUtils.addNoSleepGang(list);
 		return list.build();
 	}
 	

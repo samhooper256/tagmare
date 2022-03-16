@@ -7,7 +7,7 @@ public class DealDamageToAll extends AbstractAction implements HasDamage {
 
 	private int damage;
 	
-	public DealDamageToAll(ActionSource source, int damage) {
+	public DealDamageToAll(int damage, ActionSource source) {
 		super(source);
 		this.damage = damage;
 	}

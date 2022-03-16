@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.function.Supplier;
 
 import mechanics.cards.attacks.*;
-import mechanics.cards.passives.TakeABreak;
+import mechanics.cards.passives.*;
 import mechanics.cards.singed.Guilt;
 import mechanics.cards.skills.*;
 import utils.English;
@@ -86,7 +86,10 @@ public enum CardTag {
 	//PASSIVES:
 	TAKE_A_BREAK("Take A Break", 1, false, TakeABreak::new,
 			ct(String.format("End your turn. At the start of next turn, gain %d Concentration.", TakeABreak.CONCENTRATION)), true),
-	//SIGNED:
+	NO_SLEEP_GANG("No Sleep Gang", 3, false, NoSleepGang::new,
+			ct(String.format("At the end of each turn, gain %d Tired. Whenever you draw or discard a card, deal %1$d "
+					+ "damage to ALL enemies", NoSleepGang.BUFF_AMOUNT)), true),
+	//SINGED:
 	GUILT("Guilt", -1, false, Guilt::new,
 			ct("Unplayable. If this card is in your hand at the end of your turn, put it on top of your draw pile."));
 	

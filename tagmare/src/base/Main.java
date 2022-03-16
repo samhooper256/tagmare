@@ -3,11 +3,10 @@ package base;
 import java.io.InputStream;
 import java.util.*;
 
-import javafx.application.*;
+import javafx.application.Application;
 import javafx.stage.Stage;
 import mechanics.Hub;
-import mechanics.actions.DealDamage;
-import visuals.*;
+import visuals.GameScene;
 
 public class Main extends Application {
 	
@@ -25,24 +24,7 @@ public class Main extends Application {
 		Thread t = new Thread(() -> {
 			while(in.hasNextLine()) {
 				String line = in.nextLine();
-				if(line.startsWith("deal ")) {
-					String[] split = line.trim().split(" +");
-					if(split.length != 4 || !split[2].equals("to"))
-						continue;
-					int damage = Integer.parseInt(split[1]), enemyIndex = Integer.parseInt(split[3]);
-					if(Hub.combat().isRunning()) {
-						System.out.printf("<!!!> Failed; Combat is running.%n");
-					}
-					else {
-						Platform.runLater(() -> {
-							Hub.stack().push(new DealDamage(damage, null, Hub.enemies().get(enemyIndex)));
-							Hub.combat().resume();
-						});
-					}
-				}
-				else {
-					debugPrint();
-				}
+				DebugConsole.acceptInput(line);
 			}
 			in.close();
 		});
@@ -53,14 +35,6 @@ public class Main extends Application {
 		Updater.startTimer();
 	}
 
-	public static void debugPrint() {
-		GameScene.get().debugPrint();
-		if(Hub.combat() != null)
-			Hub.combat().debugPrint();
-		else
-			System.out.printf("=== There is currently no combat ===%n");
-	}
-	
 	/**
 	 * Produces an {@link Optional} of the {@link InputStream} for a resource in the "resources" folder.
 	 * If the resource could not be located, the returned {@code Optional} will be empty. Otherwise, it

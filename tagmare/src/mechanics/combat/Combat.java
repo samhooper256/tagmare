@@ -34,7 +34,7 @@ public final class Combat {
 	private CardInquiry cardInquiry;
 	
 	public Combat() {
-		this(new VocabQuiz());
+		this(new VocabQuiz(), new APESProgressCheck());
 	}
 	
 	public Combat(Enemy... startingEnemies) {

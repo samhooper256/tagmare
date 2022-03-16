@@ -31,7 +31,9 @@ public enum ModifierTag {
 			n -> String.format("At the start of next turn, gain %d energy and draw %d cards.", n, n))),
 	CHEATING("Cheating", forked1("Your next non-Copy card is played twice.",
 			n -> String.format("Your next %d non-Copy cards are played twice", n))),
-	TOXIC("Toxic", n -> String.format("At the end of your turn, take %d damage", n));
+	TOXIC("Toxic", n -> String.format("At the end of your turn, take %d damage", n)),
+	NO_SLEEP_GANG("No Sleep Gang", n -> String.format("Whenever you draw or discard a card, deal %d damage to all "
+			+ "enemies. At the end of each turn, gain %1$d Tired.", n));
 	
 	public static List<String> displayNames() {
 		return Collections.unmodifiableList(ModifierTagDisplayNames.DISPLAY_NAMES);
