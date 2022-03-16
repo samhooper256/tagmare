@@ -1,5 +1,6 @@
 package visuals.tooltips;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -9,7 +10,7 @@ import visuals.fxutils.*;
 
 public class Tooltip extends VBox {
 
-	public static final double WIDTH = 100;
+	public static final double WIDTH = 120, PADDING = 2, BACKGROUND_ROUNDING = 3;
 	public static final Font TITLE_FONT = Fonts.GEORGIA_12_BOLD, DESCRIPTION_FONT = Fonts.GEORGIA_12;
 	
 	private final Label title, description;
@@ -29,7 +30,8 @@ public class Tooltip extends VBox {
 		this.title.setWrapText(true);
 		this.description = Nodes.label(description, DESCRIPTION_FONT, Color.WHITE);
 		this.description.setWrapText(true);
-		setBackground(Backgrounds.of(Colors.TAG_BLUE));
+		setPadding(new Insets(PADDING));
+		setBackground(Backgrounds.rounded(Colors.TAG_BLUE, BACKGROUND_ROUNDING));
 		Nodes.setAllWidths(this, WIDTH);
 		getChildren().addAll(this.title, this.description);
 	}

@@ -4,6 +4,7 @@ import java.util.WeakHashMap;
 
 import mechanics.cards.Card;
 import visuals.AbstractCardRepresentation;
+import visuals.tooltips.CardTooltipManager;
 
 public class GalleryCard extends AbstractCardRepresentation {
 
@@ -17,6 +18,7 @@ public class GalleryCard extends AbstractCardRepresentation {
 	
 	private GalleryCard(Card card) {
 		super(card);
+		CardTooltipManager.install(this);
 	}
 	
 }

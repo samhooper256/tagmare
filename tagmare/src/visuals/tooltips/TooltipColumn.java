@@ -10,7 +10,10 @@ import javafx.scene.layout.VBox;
  * <p>{@link #setVisible(boolean) Invisible} by defualt.</p>*/
 public class TooltipColumn extends VBox {
 
+	public static final double SPACING = 2;
+	
 	public TooltipColumn() {
+		super(SPACING);
 		setVisible(false);
 	}
 	

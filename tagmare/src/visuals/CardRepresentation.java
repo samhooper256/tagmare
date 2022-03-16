@@ -15,8 +15,9 @@ import visuals.animations.*;
 import visuals.combat.hand.CardMoveAnimation;
 import visuals.combat.ribbon.CombatRibbon;
 import visuals.fxutils.*;
+import visuals.tooltips.*;
 
-public final class CardRepresentation extends AbstractCardRepresentation implements Updatable {
+public final class CardRepresentation extends AbstractCardRepresentation implements Updatable, TooltipAware {
 	
 	public static final double 
 			Y = CombatRibbon.Y - HEIGHT,
@@ -137,6 +138,7 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 	}
 	
 	private final List<Node> faceDownChildren;
+	private final CardTooltipManager cardTooltipManager;
 	
 	private State state;
 	private boolean hovered, faceUp;
@@ -150,9 +152,18 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 		state = State.DOWN;
 		hovered = false;
 		faceUp = true;
+		cardTooltipManager = CardTooltipManager.install(this);
+		cardTooltipManager.setShowCondition(this::tooltipShowCondition);
 		setOnMouseEntered(e -> hoverEntered());
 		setOnMouseExited(e -> hoverExited());
 		setOnMousePressed(this::mousePressed);
+	}
+	
+	private boolean tooltipShowCondition() {
+		return 	isFaceUp() &&
+				!Vis.handLayer().hasSelected() &&
+				!Vis.handLayer().addInProgress() &&
+				(state == State.UP || state == State.DOWN || state == State.TO_UP || state == State.TO_DOWN);
 	}
 	
 	@Override
@@ -191,7 +202,7 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 	private void mousePressed(MouseEvent me) {
 		if(me.getButton() != MouseButton.PRIMARY)
 			return;
-		System.out.printf("mouse pressed on %s%n", this);
+		tooltipManager().hide();
 		if(!Vis.handLayer().contains(this)) //this will happen if the user clicks on a card in the draw/discard pile.
 			return;
 		if(Vis.inquiryActive()) {
@@ -202,13 +213,8 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 			Vis.handLayer().hasAnyCardsInPlay() ||
 			Vis.handLayer().addInProgress() ||
 			(Vis.handLayer().hasSelected() && Vis.handLayer().selected() != this)) {
-			System.out.printf("click blocked in big boi; state=%s, hasAnyCardsInPlay? %b, addInProgress? %b,"
-					+ "hasSelected? %b selected=%s%n",
-					Hub.combat().state(), Vis.handLayer().hasAnyCardsInPlay(), Vis.handLayer().addInProgress(),
-					Vis.handLayer().hasSelected(), Vis.handLayer().selected());
 			return;
 		}
-		System.out.printf("click went through%n");
 		cancelAnimation();
 		cma = null;
  		if(state == State.BEING_PLAYED || state == State.FLYING_TO_DISCARD || state == State.FLYING_TO_DRAW ||
@@ -408,6 +414,11 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 	
 	public void setState(State state) {
 		this.state = state;
+	}
+	
+	@Override
+	public CardTooltipManager tooltipManager() {
+		return cardTooltipManager;
 	}
 	
 	@Override

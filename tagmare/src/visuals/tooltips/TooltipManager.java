@@ -32,6 +32,7 @@ public class TooltipManager {
 	private final Region region;
 	private final EventHandler<MouseEvent> enterHandler, exitHandler;
 	
+	private ShowCondition showCondition;
 	private boolean installed;
 
 	public TooltipManager(Region region, Side side) {
@@ -42,12 +43,19 @@ public class TooltipManager {
 		this.column = new TooltipColumn();
 		this.region = region;
 		this.side = side;
+		showCondition = null;
 		enterHandler = me -> {
-			update();
-			column().setVisible(true);
+			if(satisfiesShowCondition()) {
+				update();
+				column().setVisible(true);
+			}
 		};
-		exitHandler = me -> column().setVisible(false);
+		exitHandler = me -> hide();
 		installed = false;
+	}
+	
+	private boolean satisfiesShowCondition() {
+		return showCondition() == null || showCondition().getAsBoolean();
 	}
 	
 	public void install() {
@@ -137,7 +145,7 @@ public class TooltipManager {
 			rh = rbounds.getHeight(), rw = rbounds.getWidth(),
 			rx = rbounds.getMinX(), ry = rbounds.getMinY(),
 			rrx = rx + rw, rby = ry + rh,
-			H = GameScene.HEIGHT, W = GameScene.WIDTH;
+			H = GameScene.get().getHeight(), W = GameScene.get().getWidth();
 		switch(side) {
 			case LEFT:
 				return rx >= cw && ch <= H;
@@ -203,6 +211,10 @@ public class TooltipManager {
 		return Vis.gameScene().tooltipLayer().sceneToLocal(x, y);
 	}
 	
+	public void hide() {
+		column().setVisible(false);
+	}
+	
 	/** The preferred {@link Side}. The {@link #column()} will be displayed on this side if possible. If not possible,
 	 * then the picking order (from first to last) for each side is:
 	 * <ul>
@@ -227,6 +239,15 @@ public class TooltipManager {
 	
 	public Region region() {
 		return region;
+	}
+	
+	/** {@code null} (no condition) by default. */
+	public ShowCondition showCondition() {
+		return showCondition;
+	}
+	
+	public void setShowCondition(ShowCondition showCondition) {
+		this.showCondition = showCondition;
 	}
 	
 }

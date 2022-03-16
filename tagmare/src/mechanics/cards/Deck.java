@@ -7,12 +7,7 @@ import utils.*;
 public class Deck implements Iterable<Card> {
 	
 	private static final List<CardTag> STARTING_DECK = Colls.ulist(
-		CardTag.PACK_LUNCH,
-		CardTag.DO_HOMEWORK,
-		CardTag.TAKE_A_BREAK,
-		CardTag.YOGA,
-		CardTag.COPY,
-		CardTag.CAFFEINE
+		CardTag.values()
 	);
 	
 	public static Deck createStartingDeck() {

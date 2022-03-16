@@ -7,8 +7,9 @@ import utils.Nums;
 import visuals.*;
 import visuals.animations.*;
 import visuals.fxutils.Nodes;
+import visuals.tooltips.*;
 
-public class RewardCard extends AbstractCardRepresentation implements Updatable {
+public class RewardCard extends AbstractCardRepresentation implements Updatable, TooltipAware {
 	
 	public static final Duration
 		INTRO_1_DURATION = Duration.millis(600),
@@ -100,6 +101,7 @@ public class RewardCard extends AbstractCardRepresentation implements Updatable 
 	}
 
 	private final Position position;
+	private final CardTooltipManager cardTooltipManager;
 	
 	private boolean hovered, introInProgres, clicked;
 	
@@ -108,11 +110,17 @@ public class RewardCard extends AbstractCardRepresentation implements Updatable 
 		setVisible(false);
 		this.position = position;
 		introInProgres = hovered = clicked = false;
+		cardTooltipManager = CardTooltipManager.install(this);
+		cardTooltipManager.setShowCondition(this::tooltipShowCondition);
 		setOnMouseClicked(me -> mouseClicked());
 		setOnMouseEntered(me -> hoverEntered());
 		setOnMouseExited(me -> hoverExited());
 	}
 
+	private boolean tooltipShowCondition() {
+		return !introInProgres && !clicked;
+	}
+	
 	public void startIntro() {
 		Nodes.setLayout(this, Position.CENTER.x(), GameScene.HEIGHT);
 		introInProgres = true;
@@ -156,6 +164,7 @@ public class RewardCard extends AbstractCardRepresentation implements Updatable 
 		if(introInProgres || clicked)
 			return;
 		clicked = true;
+		tooltipManager().hide();
 		Vis.winLayer().selectAndExit(this);
 	}
 	
@@ -169,6 +178,11 @@ public class RewardCard extends AbstractCardRepresentation implements Updatable 
 	
 	public Position position() {
 		return position;
+	}
+
+	@Override
+	public CardTooltipManager tooltipManager() {
+		return cardTooltipManager;
 	}
 	
 }

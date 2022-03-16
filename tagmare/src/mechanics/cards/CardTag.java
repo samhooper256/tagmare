@@ -1,5 +1,6 @@
 package mechanics.cards;
 
+import java.util.*;
 import java.util.function.Supplier;
 
 import mechanics.cards.attacks.*;
@@ -93,6 +94,23 @@ public enum CardTag {
 		return new CardText(formattedString, defaultValuesOfVariables);
 	}
 	
+	/** There must be no leading or trailing whitespace on the given string.
+	 * Returns {@code null} iff there is no {@link CardTag} with the given {@link #displayName()}. */	
+	public static CardTag withDisplayName(String displayName) {
+		for(CardTag tag : values())
+			if(tag.displayName.equals(displayName))
+				return tag;
+		return null;
+	}
+	
+	public static boolean hasDisplayName(String displayName) {
+		return withDisplayName(displayName) != null;
+	}
+
+	public static List<String> displayNames() {
+		return Collections.unmodifiableList(CardTagDisplayNames.DISPLAY_NAMES);
+	}
+	
 	private final String displayName;
 	private final boolean targetted, oneTime;
 	private final int energyCost;
@@ -117,6 +135,7 @@ public enum CardTag {
 		this.supplier = supplier;
 		this.text = text;
 		this.oneTime = oneTime;
+		CardTagDisplayNames.DISPLAY_NAMES.add(displayName);
 	}
 	
 	public String displayName() {

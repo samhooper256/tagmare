@@ -18,9 +18,9 @@ public class Gallery extends Pane {
 
 	private static final Duration INTRO_DURATION = Duration.millis(500), OUTRO_DURATION = INTRO_DURATION;
 	
-	public static final double LEFT_X = 100, TOP_Y = 120, TIP_Y = TOP_Y - 40, DESCRIPTION_Y = TOP_Y - 80;
+	public static final double LEFT_X = 120, TOP_Y = 120, TIP_Y = TOP_Y - 40, DESCRIPTION_Y = TOP_Y - 80;
 	private static final double
-		RIGHT_X = GameScene.WIDTH - LEFT_X,
+		RIGHT_X = GameScene.WIDTH - LEFT_X + 40, //TODO remove +40
 		VERTICAL_SEPARATION = 50,
 		BOTTOM_MARGIN = DESCRIPTION_Y,
 		SCROLL_MULTIPLIER = 5,
@@ -65,15 +65,19 @@ public class Gallery extends Pane {
 	
 	private class Outro extends AbstractAnimation {
 		
+		double startY, endY;
+		
 		public Outro() {
 			super(OUTRO_DURATION);
+			startY = yOffset;
+			endY = startY + ANIMATION_OFFSET;
 			setFinish(this::finisher);
 		}
 
 		@Override
 		public void interpolate(double frac) {
 			setOpacity(1 - frac);
-			setYOffsetUnclamped(Nums.lerp(frac, 0, ANIMATION_OFFSET));
+			setYOffsetUnclamped(Nums.lerp(frac, startY, endY));
 		}
 
 		private void finisher() {

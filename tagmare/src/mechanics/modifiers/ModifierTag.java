@@ -2,12 +2,15 @@ package mechanics.modifiers;
 
 import static mechanics.modifiers.Descriptor.forked1;
 
+import java.util.*;
+
 import mechanics.modifiers.buffs.Discipline;
 
 /** An immutable tag for each kind of {@link Modifier} (including hidden ones).*/
 public enum ModifierTag {
 	//All descriptions should be punctuated.
-	AP_CLASSROOM("AP Classroom", "", "This is an AP Classroom assignment."),
+	AP_CLASSROOM("AP Classroom", "A modifier that deisgnates AP Classroom assignments.",
+			"This is an AP Classroom assignment."),
 	MOTIVATION("Motivation", n -> String.format("Your next attack deals %d extra damage.", n)),
 	PROCRASTINATED("Procrastinated", "",
 			n -> String.format("This enemy will take %d damage at the start of next turn.", n)),
@@ -30,17 +33,33 @@ public enum ModifierTag {
 			n -> String.format("Your next %d non-Copy cards are played twice", n))),
 	TOXIC("Toxic", n -> String.format("At the end of your turn, take %d damage", n));
 	
-	private final String name, generalDescription;
+	public static List<String> displayNames() {
+		return Collections.unmodifiableList(ModifierTagDisplayNames.DISPLAY_NAMES);
+	}
+	
+	public static ModifierTag withDisplayName(String displayName) {
+		for(ModifierTag tag : values())
+			if(tag.displayName().equals(displayName))
+				return tag;
+		return null;
+	}
+	
+	public static boolean hasDisplayName(String displayName) {
+		return withDisplayName(displayName) != null;
+	}
+	
+	private final String displayName, generalDescription;
 	private final boolean isInteger;
 	private final Descriptor descriptor;
 	
 	/** The general description can be an empty string or {@code null} if it is not needed. If {@code null}, it will
 	 * be converted to an empty string. */
-	ModifierTag(String name, String generalDescription, Descriptor descriptor, boolean isInteger) {
-		this.name = name;
+	ModifierTag(String displayName, String generalDescription, Descriptor descriptor, boolean isInteger) {
+		this.displayName = displayName;
 		this.isInteger = isInteger;
 		this.generalDescription = generalDescription == null ? "" : generalDescription;
 		this.descriptor = descriptor;
+		ModifierTagDisplayNames.DISPLAY_NAMES.add(displayName);
 	}
 	
 	/** Assumes the modifier is an integer modifier. */
@@ -66,7 +85,7 @@ public enum ModifierTag {
 	}
 	
 	public String displayName() { //cannot call this "name()" because of the final method in Enum.
-		return name;
+		return displayName;
 	}
 	
 	public boolean isIntegerModifier() {
