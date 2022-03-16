@@ -3,7 +3,7 @@ package mechanics;
 import java.util.*;
 
 import mechanics.combat.Combat;
-import mechanics.enemies.APESProgressCheck;
+import mechanics.enemies.*;
 
 public final class Calendar {
 
@@ -16,8 +16,8 @@ public final class Calendar {
 	public Calendar() {
 		List<Combat> combatsModifiable = new ArrayList<>();
 		for(int i = 0; i < WEEKS; i++) {
-			if(i == 1)
-				combatsModifiable.add(new Combat(new APESProgressCheck()));
+			if(i == 0)
+				combatsModifiable.add(new Combat(new CalculusPracticeQuiz()));
 			else
 				combatsModifiable.add(new Combat());
 		}

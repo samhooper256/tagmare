@@ -2,7 +2,7 @@ package mechanics.effects;
 
 import mechanics.enemies.Enemy;
 import mechanics.modifiers.*;
-import mechanics.modifiers.buffs.Concentration;
+import mechanics.modifiers.buffs.*;
 import mechanics.Hub;
 import mechanics.actions.*;
 import mechanics.actions.list.*;
@@ -44,6 +44,14 @@ public final class SOTEffects {
 			Modifier ol = pmods.getModifierOrThrow(ON_LEAVE);
 			list.add(ApplyModifier.toPlayer(new Concentration(ol.integer()), ol));
 			list.add(RemoveModifier.fromPlayer(ON_LEAVE, null));
+		}
+		if(pmods.contains(MENTAL_EXPANSION)) {
+			MentalExpansion me = pmods.getModifierOrThrow(MENTAL_EXPANSION);
+			list.add(ApplyModifier.toPlayer(new Motivation(me.integer()), me));
+		}
+		if(pmods.contains(ENLIGHTENED)) {
+			Enlightened e = pmods.getModifierOrThrow(ENLIGHTENED);
+			list.add(ApplyModifier.toPlayer(new MentalExpansion(e.integer()), e));
 		}
 		for(Enemy e : Hub.enemies())
 			if(e.modifiers().contains(PROCRASTINATED))

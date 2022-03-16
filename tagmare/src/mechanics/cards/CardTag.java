@@ -93,6 +93,9 @@ public enum CardTag {
 			ct(String.format("At the end of each turn, gain %d block.", GoodHabits.BLOCK)), true),
 	KEYBOARD_SHORTCUTS("Keyboard Shortcuts", 1, false, KeyboardShortcuts::new,
 			ct(String.format("Whenever an Attack deals damage, deal %d more", KeyboardShortcuts.DAMAGE)), true),
+	SPIRITUAL_ENLIGHTENMENT("Spiritual Enlightenment", 3, false, SpiritualEnlightenment::new,
+			ct(String.format("At the start of each turn, gain %d Motivation and increase this gain by %d",
+			SpiritualEnlightenment.STARTING_MOTIVATION, SpiritualEnlightenment.RATE)), true),
 	//SINGED:
 	GUILT("Guilt", -1, false, Guilt::new,
 			ct("Unplayable. If this card is in your hand at the end of your turn, put it on top of your draw pile."));

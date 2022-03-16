@@ -35,7 +35,9 @@ public enum ModifierTag {
 	NO_SLEEP_GANG("No Sleep Gang", n -> String.format("Whenever you draw or discard a card, deal %d damage to all "
 			+ "enemies. At the end of each turn, gain %1$d Tired.", n)),
 	GOOD_HABITS("Good Habits", n -> String.format("At the end of each turn, gain %d block", n)),
-	SHORTCUTS("Shortcuts", n -> String.format("Whenever an Attack deals damage, deal %d more", n));
+	SHORTCUTS("Shortcuts", n -> String.format("Whenever an Attack deals damage, deal %d more", n)),
+	ENLIGHTENED("Enlightened", n -> String.format("At the start of each turn, gain %d Mental Expansion", n)),
+	MENTAL_EXPANSION("Mental Expansion", n -> String.format("At the start of each turn, gain %d Motivation", n));
 	
 	public static List<String> displayNames() {
 		return Collections.unmodifiableList(ModifierTagDisplayNames.DISPLAY_NAMES);
