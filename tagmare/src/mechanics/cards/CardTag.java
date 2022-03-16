@@ -106,7 +106,10 @@ public enum CardTag {
 			English.pluralSpaced("card", Nihilism.DRAW)))),
 	RESENTMENT("Resentment", -1, false, Resentment::new,
 			ct(String.format("Unplayable. If this card is discarded during your turn, deal %d damage to ALL enemies",
-			Resentment.DAMAGE)));
+			Resentment.DAMAGE))),
+	ANXIETY("Anxiety", -1, false, Anxiety::new,
+			ct(String.format("Unplayable. If this card is discarded during your turn, gain %d block.",
+			Anxiety.BLOCK)));
 	
 	private static final List<CardTag> REWARDABLE;
 	

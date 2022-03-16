@@ -17,7 +17,7 @@ public class Deck implements Iterable<Card> {
 		DIVIDE_AND_CONQUER,
 		RESENTMENT,
 		CRAM,
-		NIHILISM,
+		ANXIETY,
 		NIHILISM
 	);
 	
