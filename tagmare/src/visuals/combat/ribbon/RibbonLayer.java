@@ -7,7 +7,6 @@ public class RibbonLayer extends Pane {
 	private final CombatRibbon bottom;
 	
 	public RibbonLayer() {
-		setMouseTransparent(true);
 		setPickOnBounds(false);
 		bottom = new CombatRibbon();
 		getChildren().add(bottom);

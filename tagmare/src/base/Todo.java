@@ -16,7 +16,6 @@ public final class Todo {
 	 * - Make "View Deck" button look nicer (maybe make 2 drawings in Google Drawings, one with a dropshadow for when
 	 * you hover over it)?
 	 * - Modifier Icon artwork
-	 * - should Concentration apply to Free Time?
 	 * - Show your health on the calendar page.
 	 * - Show what the combats are on the calendar page.
 	 * - Finish calendar artwork (add Week 1, Week 2, etc. text)

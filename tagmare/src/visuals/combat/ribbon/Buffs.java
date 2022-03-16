@@ -30,7 +30,7 @@ public class Buffs extends HBox {
 	public void update() {
 		getChildren().clear();
 		for(Modifier m : Hub.player().modifiers()) {
-			if(m.isBuff()) {
+			if(m.isBuff() && m.isVisible()) {
 				PlayerModifierIcon icon = PlayerModifierIcon.of(m.tag());
 				if(m.isInteger())
 					icon.setInteger(m.integer());

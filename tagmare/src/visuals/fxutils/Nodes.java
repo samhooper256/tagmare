@@ -1,5 +1,6 @@
 package visuals.fxutils;
 
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
@@ -67,6 +68,10 @@ public final class Nodes {
 	public static void setLayout(Node node, double x, double y) {
 		node.setLayoutX(x);
 		node.setLayoutY(y);
+	}
+	
+	public static void setLayout(Node node, Point2D point) {
+		setLayout(node, point.getX(), point.getY());
 	}
 	
 	public static void setScale(Region r, double factor) {

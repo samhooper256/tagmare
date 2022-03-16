@@ -41,11 +41,7 @@ public class Main extends Application {
 					}
 				}
 				else {
-					GameScene.get().debugPrint();
-					if(Hub.combat() != null)
-						Hub.combat().debugPrint();
-					else
-						System.out.printf("=== There is currently no combat ===%n");
+					debugPrint();
 				}
 			}
 			in.close();
@@ -55,6 +51,14 @@ public class Main extends Application {
 //		primaryStage.setMaximized(true);
 		System.out.println(Hub.deck());
 		Updater.startTimer();
+	}
+
+	public static void debugPrint() {
+		GameScene.get().debugPrint();
+		if(Hub.combat() != null)
+			Hub.combat().debugPrint();
+		else
+			System.out.printf("=== There is currently no combat ===%n");
 	}
 	
 	/**

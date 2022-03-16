@@ -1,13 +1,17 @@
 package visuals.tooltips;
 
+import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 
-/** {@link Tooltip Tooltips} shown in the order added. Do not modify {@link #getChildren()};
- * instead, use {@link #add(Tooltip)}, {@link #remove(Tooltip)}, and {@link #removeOrThrow(Tooltip)}. */
+/** <p>{@link Tooltip Tooltips} shown in the order added. Do not modify {@link #getChildren()};
+ * instead, use {@link #add(Tooltip)}, {@link #remove(Tooltip)}, and {@link #removeOrThrow(Tooltip)}.</p>
+ * <p>The {@link #getWidth()} and {@link #getHeight()} of the column account for (include) any padding/spacing around
+ * the outsides of the tooltips.</p>
+ * <p>{@link #setVisible(boolean) Invisible} by defualt.</p>*/
 public class TooltipColumn extends VBox {
 
 	public TooltipColumn() {
-		
+		setVisible(false);
 	}
 	
 	public void add(Tooltip tooltip) {
@@ -27,6 +31,11 @@ public class TooltipColumn extends VBox {
 	/** {@code true} iff this {@link TooltipColumn} has exactly one {@link Tooltip}. */
 	public boolean isSingle() {
 		return getChildren().size() == 1;
+	}
+	
+	public void update() {
+		for(Node n : getChildren())
+			((Tooltip) n).update();
 	}
 	
 }

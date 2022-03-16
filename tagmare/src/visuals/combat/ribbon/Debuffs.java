@@ -25,7 +25,7 @@ public class Debuffs extends HBox {
 	public void update() {
 		getChildren().clear();
 		for(Modifier m : Hub.player().modifiers()) {
-			if(m.isDebuff()) {
+			if(m.isDebuff() && m.isVisible()) {
 				PlayerModifierIcon icon = PlayerModifierIcon.of(m.tag());
 				if(m.isInteger())
 					icon.setInteger(m.integer());

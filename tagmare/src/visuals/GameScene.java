@@ -33,7 +33,7 @@ public class GameScene extends Scene implements Updatable {
 		return INSTANCE;
 	}
 	
-	private final Pane content, lowerContent, galleryLayer, eyeLayer;
+	private final Pane content, lowerContent, galleryLayer, tooltipLayer, eyeLayer;
 	private final Scale scale;
 
 	//Galleries:
@@ -97,23 +97,31 @@ public class GameScene extends Scene implements Updatable {
 		lowerContent = new Pane();
 		lowerContent.getChildren().addAll(calendarChildren);
 		
-		calendarEye = new CalendarEye();
-		combatEye = new CombatEye();
-		eyeLayer = new Pane(calendarEye, combatEye);
-		eyeLayer.setPickOnBounds(false);
-		
 		deckGallery = new Gallery("Deck");
 		drawPileGallery = new Gallery("Draw Pile", "Cards are not shown in the order they will be drawn.");
 		discardPileGallery = new Gallery("Discard Pile", "Cards are shown in the order they were discarded.");
 		foresightGallery = new ForesightGallery();
 		galleryLayer = new Pane(deckGallery, drawPileGallery, discardPileGallery, foresightGallery);
 		galleryLayer.setPickOnBounds(false);
+
+		tooltipLayer = new Pane();
+		tooltipLayer.setMouseTransparent(true);
 		
-		content.getChildren().addAll(lowerContent, galleryLayer, eyeLayer);
+		calendarEye = new CalendarEye();
+		combatEye = new CombatEye();
+		eyeLayer = new Pane(calendarEye, combatEye);
+		eyeLayer.setPickOnBounds(false);
+		
+		content.getChildren().addAll(lowerContent, galleryLayer, tooltipLayer, eyeLayer);
 		
 		getStylesheets().add(Main.class.getResource(Main.RESOURCES_PREFIX + "style.css").toExternalForm());
 		
 		setOnMouseMoved(this::mouseMoved);
+		
+		setOnKeyPressed(ke -> {
+			if(ke.getCode() == KeyCode.D)
+				Main.debugPrint();
+		});
 	}
 	
 	@Override
@@ -201,6 +209,10 @@ public class GameScene extends Scene implements Updatable {
 	
 	public ForesightGallery foresightGallery() {
 		return foresightGallery;
+	}
+	
+	public Pane tooltipLayer() {
+		return tooltipLayer;
 	}
 	
 	public double mouseX() {

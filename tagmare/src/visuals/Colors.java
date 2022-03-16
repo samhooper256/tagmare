@@ -10,7 +10,8 @@ public final class Colors {
 	
 	public static final Color
 		/** TAG Gold. */
-		GOLD = Color.rgb(250, 177, 20),
+		TAG_GOLD = Color.rgb(250, 177, 20),
+		TAG_BLUE = Color.rgb(1, 24, 128),
 		DAMAGE_KNOCKED = Color.RED,
 		BLOCK_KNOCKED = Color.rgb(92, 101, 152),
 		HEALTH_FILLED = Color.RED,

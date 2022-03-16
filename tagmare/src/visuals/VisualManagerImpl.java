@@ -21,7 +21,7 @@ public final class VisualManagerImpl implements VisualManager {
 		Vis.debugLayer().stackDisplay().update();
 		pauseAndExecute(action);
 		if(action instanceof PutBypassedCardInPlay) {
-			CardRepresentation.of(((HasCard) action).card()).startBeingBypassPlayed();
+			CardRepresentation.of(((HasCard) action).card()).putBypassedCardInPlayed();
 		}
 		else if(action instanceof SimpleDrawRequest) {
 			SimpleDrawRequest a = (SimpleDrawRequest) action;
@@ -91,6 +91,9 @@ public final class VisualManagerImpl implements VisualManager {
 		else if(action instanceof SetInquiry) {
 			Vis.inquiryLayer().startInquiry(((SetInquiry) action).inquiry());
 		}
+		else if(action instanceof PutCardInPlay) {
+			CardRepresentation.of(((HasCard) action).card()).startPutCardInPlay();
+		}
 		else if(action instanceof RefillDrawPile) {
 			pullOut();
 			Vis.pileLayer().draw().setCards(Hub.drawPile().trueOrder()); //TODO some kind of animation for this?
@@ -98,10 +101,6 @@ public final class VisualManagerImpl implements VisualManager {
 		else if(action instanceof PlaceCardOnTopOfDrawPile) {
 			pullOut();
 			Vis.pileLayer().draw().addCardToTop(((HasCard) action).card());
-		}
-		else if(action instanceof PutCardInPlay) {
-			pullOut();
-			Vis.handLayer().moveSelectedToInPlay(((HasCard) action).card());
 		}
 		else if(action instanceof RemoveModifier ||
 				action instanceof ApplyModifier || action instanceof ChangeModifier) {

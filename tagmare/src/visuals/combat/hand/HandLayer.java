@@ -1,7 +1,5 @@
 package visuals.combat.hand;
 
-import java.util.*;
-
 import base.*;
 import javafx.collections.ObservableList;
 import javafx.scene.*;
@@ -81,25 +79,24 @@ public class HandLayer extends Pane implements Updatable {
 	private boolean addInProgress;
 	private CardRepresentation selected;
 	private Card cardBeingAdded;
-	private Set<Card> cardsInPlay;
 	
 	public HandLayer() {
 		setPickOnBounds(false);
 		arrow = new Arrow();
 		cardGroup = new Group();
 		playGroup = new Group();
-		cardsInPlay = new HashSet<>();
+		addInProgress = false;
 		getChildren().addAll(arrow, cardGroup, playGroup);
 	}
 	
-	public void transferToPlayGroup(CardRepresentation cr) {
+	public void transferToPlayGroupOrThrow(CardRepresentation cr) {
 		if(!cardGroup.getChildren().contains(cr))
 			throw new IllegalStateException(String.format("Not in cardGroup: %s", cr));
 		playGroup.getChildren().add(cr); //this will remove cr from cardGroup.
 	}
 	
-	public void addToCardsInPlay(Card card) {
-		if(!cardsInPlay.add(card))
+	public void addToCardsInPlayOrThrow(Card card) {
+		if(!playGroup.getChildren().add(CardRepresentation.of(card)))
 			throw new IllegalArgumentException(String.format("Already in cardsInPlay: %s", card));
 	}
 	
@@ -123,7 +120,7 @@ public class HandLayer extends Pane implements Updatable {
 				.setDest(coords[count - 1], CardRepresentation.Y).setFinish(this::addFinisher));
 		for(int i = 0; i < count - 1; i++) {
 			CardRepresentation irep = getRepresentation(i);
-			if(cardsInPlay.contains(irep.card()))
+			if(playGroup.getChildren().contains(irep))
 				continue;
 			Animation.manager().add(new CardMoveAnimation(irep, CARD_SHIFT_DURATION, Interpolator.SQRT)
 					.setStart().setDest(coords[i], CardRepresentation.Y));
@@ -139,7 +136,7 @@ public class HandLayer extends Pane implements Updatable {
 	/** Does not set {@link #selected()} to {@code null} since that has already been done by
 	 * {@link #moveSelectedToInPlay(Card)}. */
 	public void startNaturalDiscard(Card card) {
-		if(!cardsInPlay.contains(card))
+		if(!playGroup.getChildren().contains(CardRepresentation.of(card)))
 			throw new IllegalArgumentException(String.format("Not in play: %s", card));
 		CardRepresentation cr = CardRepresentation.of(card);
 		Animation.manager().add(new NaturalDiscardAnimation(cr).setStart());
@@ -185,13 +182,13 @@ public class HandLayer extends Pane implements Updatable {
 		int count = cardCountForWidth();
 		int countExcludingPlaying = count;
 		for(int i = 0; i < count; i++)
-			if(cardsInPlay.contains(getRepresentation(i).card()))
+			if(playGroup.getChildren().contains(getRepresentation(i)))
 				countExcludingPlaying--;
 		double[] coords = X_COORDS[countExcludingPlaying];
 		int ci = 0;
 		for(int i = 0; i < count; i++) {
 			CardRepresentation cr = getRepresentation(i);
-			if(cardsInPlay.contains(cr.card()))
+			if(playGroup.getChildren().contains(cr))
 				continue;
 			Animation.manager().add(new CardMoveAnimation(cr, CARD_SHIFT_DURATION,
 					Interpolator.SQRT).setStart().setDest(coords[ci], CardRepresentation.Y));
@@ -213,23 +210,16 @@ public class HandLayer extends Pane implements Updatable {
 		return cardGroup.getChildren().size();
 	}
 	
-	/** Removes the {@link CardRepresentation} as descendant node of this {@link HandLayer} only. */
-	public void removeOrThrow(CardRepresentation cr) {
-		if(!cardGroup.getChildren().remove(cr) && !playGroup.getChildren().remove(cr))
-			throw new IllegalArgumentException(String.format("Not in this HandLayer: %s.\nchildren=%s", cr,
-					getChildren()));
-	}
-	
 	public void moveSelectedToInPlay(Card card) {
 		if(card == null || selected() == null || card != selected().card())
 			throw new IllegalArgumentException(
 					String.format("card is not the selected one (card=%s, selected=%s)", card, selected()));
 		setSelected(null);
-		cardsInPlay.add(card);
+		playGroup.getChildren().add(CardRepresentation.of(card));
 	}
 	
 	public void removeFromInPlayOrThrow(Card card) {
-		if(!cardsInPlay.remove(card))
+		if(!playGroup.getChildren().remove(CardRepresentation.of(card)))
 			throw new IllegalArgumentException(String.format("Not in play: %s", card));
 	}
 	
@@ -244,7 +234,10 @@ public class HandLayer extends Pane implements Updatable {
 			((CardRepresentation) n).cancelAnimation();
 		cardGroup.getChildren().clear();
 		playGroup.getChildren().clear();
-		cardsInPlay.clear();
+	}
+	
+	public boolean hasAnyCardsInPlay() {
+		return playGroup.getChildren().size() > 0;
 	}
 	
 	private CardRepresentation getRepresentation(int index) {
@@ -289,11 +282,6 @@ public class HandLayer extends Pane implements Updatable {
 	/** All {@link Group#getChildren() children} are {@link CardRepresentation CardRepresentations}. */
 	public Group cardGroup() {
 		return cardGroup;
-	}
-	
-	/** All {@link Group#getChildren() children} are {@link CardRepresentation CardRepresentations}. */
-	public Group playGroup() {
-		return playGroup;
 	}
 	
 	public void debugPrint() {

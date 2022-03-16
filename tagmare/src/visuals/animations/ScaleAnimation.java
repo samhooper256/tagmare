@@ -9,6 +9,8 @@ public class ScaleAnimation extends AbstractAnimation {
 	private final Region region;
 	private final double destScale, startScale;
 	
+	/** Uses the {@link Region Region's} current {@link Region#scaleXProperty() scale x} as the
+	 * {@link #startScale()}. */
 	public ScaleAnimation(Duration duration, Region region, double destScale) {
 		this(duration, region, destScale, region.getScaleX());
 	}
@@ -23,8 +25,12 @@ public class ScaleAnimation extends AbstractAnimation {
 	public Region region() {
 		return region;
 	}
+
+	public double startScale() {
+		return startScale;
+	}
 	
-	public double factor() {
+	public double destScale() {
 		return destScale;
 	}
 

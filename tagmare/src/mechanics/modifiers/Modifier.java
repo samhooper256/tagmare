@@ -78,6 +78,17 @@ public interface Modifier extends ActionSource {
 		setInteger(integer() - amount);
 	}
 	
+	default String generalDescription() {
+		return tag().generalDescription();
+	}
+	
+	default String description() {
+		if(isInteger())
+			return tag().description(integer());
+		else
+			return tag().description();
+	}
+	
 	@Override
 	default ActionSourceType type() {
 		return ActionSourceType.MODIFIER;

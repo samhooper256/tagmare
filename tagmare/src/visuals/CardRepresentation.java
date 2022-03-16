@@ -7,10 +7,12 @@ import javafx.scene.Node;
 import javafx.scene.input.*;
 import javafx.util.Duration;
 import mechanics.Hub;
+import mechanics.actions.PutCardInPlay;
 import mechanics.cards.Card;
+import mechanics.combat.CombatState;
 import mechanics.enemies.Enemy;
 import visuals.animations.*;
-import visuals.combat.hand.*;
+import visuals.combat.hand.CardMoveAnimation;
 import visuals.combat.ribbon.CombatRibbon;
 import visuals.fxutils.*;
 
@@ -21,6 +23,7 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 			ATTACK_X = GameScene.CENTER_X - WIDTH * .5, ATTACK_Y = 450,
 			TOP_X = GameScene.CENTER_X - WIDTH * .5, TOP_Y = 20;
 	public static final Duration SCALE_DURATION = Duration.millis(500);
+	public static final Duration TO_ATTACK_DURATION = Duration.millis(500);
 	
 	private static final Duration
 		FOCUS_DURATION = Duration.millis(400),
@@ -73,13 +76,23 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 		
 	}
 	
-	private class ToAttackAnimation extends CardMoveAnimation {
+	private class PutTargettedInPlayAnimation extends CardMoveAnimation {
 		
-		public ToAttackAnimation() {
-			super(CardRepresentation.this, SCALE_DURATION, Interpolator.LINEAR);
+		public PutTargettedInPlayAnimation() {
+			super(CardRepresentation.this, TO_ATTACK_DURATION, Interpolator.LINEAR);
+			setStart();
 			setDest(ATTACK_X, ATTACK_Y);
-			setFinish(CardRepresentation.this::beingPlayedFinished);
+			setFinish(CardRepresentation.this::putCardInPlayFinished);
 		}
+	}
+	
+	private class PutUntargettedInPlayAnimation extends ScaleAnimation {
+		
+		public PutUntargettedInPlayAnimation() {
+			super(SCALE_DURATION, CardRepresentation.this, DEST_PLAY_SCALE);
+			setFinish(CardRepresentation.this::putCardInPlayFinished);
+		}
+		
 	}
 	
 	private class FlyBackToHandAnimation extends CardMoveAnimation {
@@ -128,7 +141,6 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 	private State state;
 	private boolean hovered, faceUp;
 	private Animation cma;
-	private Enemy target;
 	
 	private CardRepresentation(Card card) {
 		super(card);
@@ -179,15 +191,24 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 	private void mousePressed(MouseEvent me) {
 		if(me.getButton() != MouseButton.PRIMARY)
 			return;
+		System.out.printf("mouse pressed on %s%n", this);
 		if(!Vis.handLayer().contains(this)) //this will happen if the user clicks on a card in the draw/discard pile.
 			return;
 		if(Vis.inquiryActive()) {
 			Vis.inquiryLayer().clickedCardFromHand(card);
 			return;
 		}
-		if(	(Vis.handLayer().addInProgress()) ||
-			(Vis.handLayer().hasSelected() && Vis.handLayer().selected() != this))
+		if( Hub.combat().state() != CombatState.PLAYER_TURN ||
+			Vis.handLayer().hasAnyCardsInPlay() ||
+			Vis.handLayer().addInProgress() ||
+			(Vis.handLayer().hasSelected() && Vis.handLayer().selected() != this)) {
+			System.out.printf("click blocked in big boi; state=%s, hasAnyCardsInPlay? %b, addInProgress? %b,"
+					+ "hasSelected? %b selected=%s%n",
+					Hub.combat().state(), Vis.handLayer().hasAnyCardsInPlay(), Vis.handLayer().addInProgress(),
+					Vis.handLayer().hasSelected(), Vis.handLayer().selected());
 			return;
+		}
+		System.out.printf("click went through%n");
 		cancelAnimation();
 		cma = null;
  		if(state == State.BEING_PLAYED || state == State.FLYING_TO_DISCARD || state == State.FLYING_TO_DRAW ||
@@ -225,54 +246,45 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 		state = State.DOWN;
 	}
 	
+	/** Can be used on non-targetted cards only. Calls {@link VisualManager#playCardFromHand(Card, Enemy)} if legal.*/
 	private void requestStartBeingPlayed() {
 		if(card.isLegal(null))
-			startBeingPlayed();
+			VisualManager.get().playCardFromHand(card, null);
 		else
 			startFlyBackToHand();
 	}
 
-	private void startBeingPlayed() {
-		cancelAnimation();
-		cma = new ScaleAnimation(SCALE_DURATION, this, DEST_PLAY_SCALE);
-		cma.setFinish(this::beingPlayedFinished);
-		Vis.handLayer().transferToPlayGroup(this);
-		Vis.handLayer().startReorganize();
-		Animation.manager().add(cma);
-		state = State.BEING_PLAYED;
-	}
-	
+	/** Argument must be non-{@code null} (in other words, only for targetted cards).*/
 	public void requestStartBeingPlayed(Enemy target) {
-		if(card.isLegal(target))
-			startBeingPlayed(target);
+		if(card.isLegal(Objects.requireNonNull(target))) {
+			VisualManager.get().playCardFromHand(card, target);
+		}
 	}
 	
-	/** @param target must not be {@code null}. */
-	private void startBeingPlayed(Enemy target) {
-		if(!card.isTargetted())
-			throw new IllegalStateException(String.format("Not a targetted card: %s", card));
-		this.target = Objects.requireNonNull(target);
+	/** Should be called when a {@link PutCardInPlay} action is executed. */
+	public void startPutCardInPlay() {
 		cancelAnimation();
+		if(card.isTargetted())
+			cma = new PutTargettedInPlayAnimation();
+		else
+			cma = new PutUntargettedInPlayAnimation();
 		Vis.handLayer().arrow().unbindAndHide();
-		Vis.handLayer().transferToPlayGroup(this);
+		Vis.handLayer().setSelected(null);
+		Vis.handLayer().transferToPlayGroupOrThrow(this);
 		Vis.handLayer().startReorganize();
-		cma = new ToAttackAnimation().setStart();
 		Animation.manager().add(cma);
 		state = State.BEING_PLAYED;
 	}
 	
-	private void beingPlayedFinished() {
-		Vis.manager().playCardFromHand(card, target);
-		target = null;
+	private void putCardInPlayFinished() {
+		Vis.manager().checkedResumeFromAnimation();
 	}
 	
-	public void startBeingBypassPlayed() {
+	public void putBypassedCardInPlayed() {
 		cancelAnimation();
 		setOpacity(0);
 		Nodes.setLayout(this, GameScene.CENTER_X - WIDTH * .5, GameScene.CENTER_Y - HEIGHT * .5);
-		if(!Vis.handLayer().playGroup().getChildren().add(this))
-			throw new IllegalStateException(String.format("Already in playGroup: %s", this));
-		Vis.handLayer().addToCardsInPlay(card);
+		Vis.handLayer().addToCardsInPlayOrThrow(card);
 		cma = new BypassIntroAnimation();
 		Animation.manager().add(cma);
 		state = State.BEING_PLAYED;
@@ -323,7 +335,6 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 	private void removeOTFinished() {
 		this.state = State.DOWN;
 		Vis.handLayer().removeFromInPlayOrThrow(card);
-		Vis.handLayer().removeOrThrow(this);
 		Vis.manager().checkedResumeFromAnimation();
 	}
 	
@@ -409,7 +420,6 @@ public final class CardRepresentation extends AbstractCardRepresentation impleme
 		System.out.printf("%sstate=%s%n", prefix, state);
 		System.out.printf("%shovered=%s%n", prefix, hovered);
 		System.out.printf("%scma=%s%n", prefix, cma);
-		System.out.printf("%starget=%s%n", prefix, target);
 	}
 	
 }
