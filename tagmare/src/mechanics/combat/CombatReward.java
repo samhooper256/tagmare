@@ -13,7 +13,7 @@ public final class CombatReward {
 	
 	public CombatReward() {
 		List<Card> cardsModifiable = new ArrayList<>(CARD_COUNT);
-		for(CardTag ct : RNG.pickUnique(CardTag.values(), CARD_COUNT))
+		for(CardTag ct : RNG.pickUnique(CardTag.rewardable(), CARD_COUNT))
 			cardsModifiable.add(ct.generate());
 		cards = Collections.unmodifiableList(cardsModifiable);
 	}

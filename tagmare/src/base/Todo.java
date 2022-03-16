@@ -9,7 +9,6 @@ public final class Todo {
 	 * - if you hover over a card while they're reorganizing, they get slightly offset in the x direction.
 	 * - trying to pick up and play cards ASAP when the combat starts is a little glitchy and annoying. 
 	 * - Add card rarities?
-	 * - Make it so Guilt, Do Homework, and Review Notes cannot appear as card rewards
 	 * - Make "View Deck" button look nicer (maybe make 2 drawings in Google Drawings, one with a dropshadow for when
 	 * you hover over it)?
 	 * - Intent tooltips

@@ -100,6 +100,16 @@ public enum CardTag {
 	GUILT("Guilt", -1, false, Guilt::new,
 			ct("Unplayable. If this card is in your hand at the end of your turn, put it on top of your draw pile."));
 	
+	private static final List<CardTag> REWARDABLE;
+	
+	static {
+		List<CardTag> r = new ArrayList<>(Arrays.asList(values()));
+		r.remove(DO_HOMEWORK);
+		r.remove(REVIEW_NOTES);
+		r.remove(GUILT);
+		REWARDABLE = Collections.unmodifiableList(r);
+	}
+	
 	private static CardText ct(String formattedString, int... defaultValuesOfVariables) {
 		return new CardText(formattedString, defaultValuesOfVariables);
 	}
@@ -119,6 +129,10 @@ public enum CardTag {
 
 	public static List<String> displayNames() {
 		return Collections.unmodifiableList(CardTagDisplayNames.DISPLAY_NAMES);
+	}
+	
+	public static List<CardTag> rewardable() {
+		return REWARDABLE;
 	}
 	
 	private final String displayName;
@@ -171,6 +185,12 @@ public enum CardTag {
 	/** Generates a new {@link Card} every time. */
 	public Card generate() {
 		return supplier.get();
+	}
+	
+	/** Returns {@code true} iff this card can be in a card reward. Some cards can't, like starter cards and
+	 * {@link Guilt}. */
+	public boolean isRewardable() {
+		return REWARDABLE.contains(this);
 	}
 	
 }
