@@ -4,21 +4,16 @@ import java.util.*;
 
 import utils.*;
 
+import static mechanics.cards.CardTag.*;
+
 public class Deck implements Iterable<Card> {
 	
 	private static final List<CardTag> STARTING_DECK = Colls.ulist(
-		CardTag.YOGA,
-		CardTag.CAFFEINE,
-		CardTag.NO_SLEEP_GANG,
-		CardTag.CRAM,
-		CardTag.MOTIVATIONAL_VIDEO,
-		CardTag.COPY,
-		CardTag.DO_HOMEWORK,
-		CardTag.DO_HOMEWORK,
-		CardTag.STUDY,
-		CardTag.GOOD_HABITS,
-		CardTag.GOOD_HABITS,
-		CardTag.REVIEW_NOTES
+		KEYBOARD_SHORTCUTS,
+		KEYBOARD_SHORTCUTS,
+		DEFENESTRATE,
+		CTRL_F,
+		FREE_TIME
 	);
 	
 	public static Deck createStartingDeck() {

@@ -79,8 +79,10 @@ public final class Combat {
 					addClearsIfEnemyKilled(mostRecentlyExecuted);
 					if(mostRecentlyExecuted instanceof ClearEnemy && enemies().size() == 0)
 						stack().push(new WinCombat());
-					if(mostRecentlyExecuted instanceof CardAccepting)
+					else if(mostRecentlyExecuted instanceof CardAccepting)
 						clearInquiry();
+					else if(mostRecentlyExecuted instanceof HasDamage)
+						stack().pushReversed(DealDamageEffects.getDownstream((HasDamage) mostRecentlyExecuted));
 					if(paused())
 						break outer;
 				}

@@ -6,7 +6,7 @@ import mechanics.enemies.Enemy;
 
 /** Adds the {@link KillEffects} to the {@link ActionStack}.
  * The {@link #source()} is the action that killed the {@link #enemy()}. */
-public class ClearEnemy extends AbstractAction {
+public final class ClearEnemy extends AbstractAction {
 
 	private final Enemy enemy;
 	

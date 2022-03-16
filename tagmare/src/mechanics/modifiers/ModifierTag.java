@@ -34,7 +34,8 @@ public enum ModifierTag {
 	TOXIC("Toxic", n -> String.format("At the end of your turn, take %d damage", n)),
 	NO_SLEEP_GANG("No Sleep Gang", n -> String.format("Whenever you draw or discard a card, deal %d damage to all "
 			+ "enemies. At the end of each turn, gain %1$d Tired.", n)),
-	GOOD_HABITS("Good Habits", n -> String.format("At the end of each turn, gain %d block", n));
+	GOOD_HABITS("Good Habits", n -> String.format("At the end of each turn, gain %d block", n)),
+	SHORTCUTS("Shortcuts", n -> String.format("Whenever an Attack deals damage, deal %d more", n));
 	
 	public static List<String> displayNames() {
 		return Collections.unmodifiableList(ModifierTagDisplayNames.DISPLAY_NAMES);

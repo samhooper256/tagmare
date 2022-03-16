@@ -42,6 +42,7 @@ public class EnemyRepresentation extends StackPane {
 		modifierLabel.setFont(Fonts.UI_14);
 		modifierBox = new VBox(modifierLabel);
 		modifierBox.setAlignment(Pos.TOP_CENTER);
+		updateModifiers();
 		sprite = new Sprite(Images.forEnemy(enemy));
 		vBox = new VBox(intentContainer, name, sprite, healthAndBlock, modifierLabel, modifierBox);
 		vBox.setAlignment(Pos.CENTER);

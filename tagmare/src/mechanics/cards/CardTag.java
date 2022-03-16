@@ -91,6 +91,8 @@ public enum CardTag {
 					+ "damage to ALL enemies", NoSleepGang.BUFF_AMOUNT)), true),
 	GOOD_HABITS("Good Habits", 1, false, GoodHabits::new,
 			ct(String.format("At the end of each turn, gain %d block.", GoodHabits.BLOCK)), true),
+	KEYBOARD_SHORTCUTS("Keyboard Shortcuts", 1, false, KeyboardShortcuts::new,
+			ct(String.format("Whenever an Attack deals damage, deal %d more", KeyboardShortcuts.DAMAGE)), true),
 	//SINGED:
 	GUILT("Guilt", -1, false, Guilt::new,
 			ct("Unplayable. If this card is in your hand at the end of your turn, put it on top of your draw pile."));
