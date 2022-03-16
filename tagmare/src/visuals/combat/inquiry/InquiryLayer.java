@@ -75,8 +75,9 @@ public class InquiryLayer extends Pane {
 		setMouseTransparent(true);
 	}
 
-	//Assumes opacity is 0.
+	/** Will call {@link VisualManager#checkedResumeFromAnimation()} when it fades out. */
 	public void startInquiry(CardInquiry inquiry) {
+		//Assumes opacity is 0.
 		this.inquiry = inquiry;
 		instructions.setText(inquiry.displayText());
 		CardRepresentation.of(Colls.any(Hub.combat().cardsInPlay())).startFlyToTop();

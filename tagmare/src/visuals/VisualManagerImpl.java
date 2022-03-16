@@ -88,6 +88,9 @@ public final class VisualManagerImpl implements VisualManager {
 		else if(action instanceof ReturnFromDiscardPile) {
 			Vis.handLayer().startAddCardToRightAnimation(((HasCard) action).card());
 		}
+		else if(action instanceof SetInquiry) {
+			Vis.inquiryLayer().startInquiry(((SetInquiry) action).inquiry());
+		}
 		else if(action instanceof RefillDrawPile) {
 			pullOut();
 			Vis.pileLayer().draw().setCards(Hub.drawPile().trueOrder()); //TODO some kind of animation for this?
@@ -114,11 +117,6 @@ public final class VisualManagerImpl implements VisualManager {
 		else if(action instanceof ClearEnemy) {
 			pullOut();
 			Vis.enemyLayer().updateEnemiesShown();
-		}
-		else if(action instanceof SetInquiry) {
-			pullOut();
-			SetInquiry si = (SetInquiry) action;
-			Vis.inquiryLayer().startInquiry(si.inquiry());
 		}
 		else if(action instanceof WinCombat) {
 			pullOut();
