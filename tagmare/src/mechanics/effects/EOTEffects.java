@@ -4,6 +4,7 @@ import mechanics.Hub;
 import mechanics.actions.*;
 import mechanics.actions.list.*;
 import mechanics.modifiers.*;
+import mechanics.modifiers.buffs.GoodHabits;
 import mechanics.modifiers.debuffs.*;
 
 import static mechanics.modifiers.ModifierTag.*;
@@ -23,7 +24,10 @@ public final class EOTEffects {
 			list.add(RemoveModifier.fromPlayer(TOMATOED, null));
 		if(pmods.contains(MEMORIZING))
 			list.add(RemoveModifier.fromPlayer(MEMORIZING, null));
-		//TODO Good Habits
+		if(pmods.contains(GOOD_HABITS)) {
+			GoodHabits gh = pmods.getModifierOrThrow(GOOD_HABITS);
+			list.add(new GainBlock(gh.integer(), gh));
+		}
 		if(pmods.contains(TOXIC)) {
 			Toxic t = pmods.getModifierOrThrow(TOXIC);
 			list.add(new TakeDamage(t.integer(), t));

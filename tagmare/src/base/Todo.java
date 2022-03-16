@@ -3,7 +3,6 @@ package base;
 public final class Todo {
 
 	/* TODO LIST:
-	 * - Good Habits
 	 * - Keyboard Shortcuts
 	 * - Spiritual Enlightenment
 	 * - Singed Cards: Apathy, Nihlism, Resentment, Anxiety
