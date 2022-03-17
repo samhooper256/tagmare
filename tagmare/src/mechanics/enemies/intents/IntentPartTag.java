@@ -4,10 +4,10 @@ import static mechanics.enemies.intents.IntentPartDescriptor.constant;
 
 public enum IntentPartTag {
 	//Descriptions should be punctuated.
-	ATTACK_PART(true, n -> String.format("This enemy intends to attack for %d damage.", n)),
-	BLOCK_PART(true, n -> String.format("This enemy intends to gain %d block.", n)),
-	BUFF_PART(false, constant("This enemy intends to buff itself.")),
-	DEBUFF_PART(false, constant("This enemy intends to debuff you."));
+	ATTACK(true, n -> String.format("This enemy intends to attack for %d damage.", n)),
+	BLOCK(true, n -> String.format("This enemy intends to gain %d block.", n)),
+	BUFF(false, constant("This enemy intends to buff itself.")),
+	DEBUFF(false, constant("This enemy intends to debuff you."));
 	
 	private final boolean isInteger;
 	private final IntentPartDescriptor descriptor;

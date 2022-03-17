@@ -29,7 +29,7 @@ public final class AttackPart extends IntegerPart {
 	
 	@Override
 	public IntentPartTag tag() {
-		return IntentPartTag.ATTACK_PART;
+		return IntentPartTag.ATTACK;
 	}
 
 	@Override

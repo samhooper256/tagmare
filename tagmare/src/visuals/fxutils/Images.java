@@ -30,6 +30,8 @@ public final class Images {
 		//intents:
 		SWORD_INTENT = get("sword_intent.png"),
 		SHIELD_INTENT = get("shield_intent.png"),
+		BUFF_INTENT = get("buff_intent.png"),
+		DEBUFF_INTENT = get("debuff_intent.png"),
 		ENEMY_SHIELD = get("enemy_shield.png"),
 		//cards/combat:
 		COMBAT_RIBBON = get("combat_ribbon.png"),
@@ -65,8 +67,10 @@ public final class Images {
 		MODIFIER_IMAGE_MAP.put(ModifierTag.PACKED, PACKED_MODIFIER);
 		
 		//IntentParts:
-		INTENT_PART_IMAGE_MAP.put(IntentPartTag.ATTACK_PART, SWORD_INTENT);
-		INTENT_PART_IMAGE_MAP.put(IntentPartTag.BLOCK_PART, SHIELD_INTENT);
+		INTENT_PART_IMAGE_MAP.put(IntentPartTag.ATTACK, SWORD_INTENT);
+		INTENT_PART_IMAGE_MAP.put(IntentPartTag.BLOCK, SHIELD_INTENT);
+		INTENT_PART_IMAGE_MAP.put(IntentPartTag.BUFF, BUFF_INTENT);
+		INTENT_PART_IMAGE_MAP.put(IntentPartTag.DEBUFF, DEBUFF_INTENT);
 	}
 	
 	private Images() {}

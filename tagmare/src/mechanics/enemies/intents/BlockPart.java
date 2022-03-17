@@ -27,7 +27,7 @@ public class BlockPart extends IntegerPart {
 	
 	@Override
 	public IntentPartTag tag() {
-		return IntentPartTag.BLOCK_PART;
+		return IntentPartTag.BLOCK;
 	}
 
 }

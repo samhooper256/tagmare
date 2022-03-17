@@ -3,15 +3,9 @@ package base;
 public final class Todo {
 
 	/* TODO LIST:
-	 * - if you click a targetted card as it is being drawn from the draw pile (and maybe while it's discarded?) bad stuff
-	 * happens.
-	 * - if you hover over a card while they're reorganizing, they get slightly offset in the x direction.
-	 * - trying to pick up and play cards ASAP when the combat starts is a little glitchy and annoying. 
 	 * - Add card rarities?
 	 * - Make "View Deck" button look nicer (maybe make 2 drawings in Google Drawings, one with a dropshadow for when
 	 * you hover over it)?
-	 *  - Buff IntentPart artwork
-	 *  - Debuff IntentPart artwork
 	 * - Modifier Icon artwork
 	 * - Show your health on the calendar page.
 	 * - Show what the combats are on the calendar page.

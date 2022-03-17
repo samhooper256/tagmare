@@ -5,7 +5,6 @@ import mechanics.enemies.intents.AttackPart;
 
 public class AttackIcon extends LabeledIcon {
 	
-	
 	public AttackIcon(AttackPart attackPart) {
 		super(attackPart);
 	}

@@ -36,6 +36,10 @@ public final class IntentRepresentation extends HBox {
 			return new AttackIcon((AttackPart) ip);
 		else if(ip instanceof BlockPart)
 			return new BlockIcon((BlockPart) ip);
+		else if(ip instanceof DebuffPart)
+			return new DebuffIcon((DebuffPart) ip);
+		else if(ip instanceof BuffPart)
+			return new BuffIcon((BuffPart) ip);
 		else
 			throw new UnsupportedOperationException(String.format("IntentPart: %s", ip));
 	}
