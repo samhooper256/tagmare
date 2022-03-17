@@ -1,20 +1,24 @@
 package visuals.combat.enemies.intents;
 
-import mechanics.enemies.intents.BasicBlock;
-import visuals.fxutils.Images;
+import mechanics.enemies.Enemy;
+import mechanics.enemies.intents.*;
 
+/** Should call {@link #update(Enemy)} after constructing. */
 public class BlockIcon extends LabeledIcon {
 
-	private final BasicBlock basicBlock;
-	
-	public BlockIcon(BasicBlock basicBlock) {
-		super(Images.SHIELD_INTENT);
-		this.basicBlock = basicBlock;
-		update();
+	public BlockIcon(BlockPart blockPart) {
+		super(blockPart);
 	}
+	
 	@Override
-	public void update() {
-		label().setText(String.valueOf(basicBlock.block()));
+	public void update(Enemy enemy) {
+		super.update(enemy);
+		label().setText(String.valueOf(intentPart().getModifiedInteger(enemy)));
+	}
+	
+	@Override
+	public BlockPart intentPart() {
+		return (BlockPart) super.intentPart();
 	}
 	
 }

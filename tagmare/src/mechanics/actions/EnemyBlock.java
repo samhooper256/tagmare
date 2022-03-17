@@ -4,30 +4,30 @@ import mechanics.enemies.Enemy;
 
 public class EnemyBlock extends EnemyTargettedAction {
 
-	private int amount;
+	private int block;
 	
 	/** Uses the same {@link Enemy} for the {@link #source()} and {@link #target()}. */
-	public EnemyBlock(int amount, Enemy sourceAndTarget) {
-		this(amount, sourceAndTarget, sourceAndTarget);
+	public EnemyBlock(int block, Enemy sourceAndTarget) {
+		this(block, sourceAndTarget, sourceAndTarget);
 	}
 	
 	/** @param target the {@link Enemy} gaining block. */
-	public EnemyBlock(int amount, ActionSource source, Enemy target) {
+	public EnemyBlock(int block, ActionSource source, Enemy target) {
 		super(source, target);
-		this.amount = amount;
+		this.block = block;
 	}
 	
 	@Override
 	public void execute() {
-		target().block().gain(amount);
+		target().block().gain(block);
 	}
 
-	public int amount() {
-		return amount;
+	public int block() {
+		return block;
 	}
 	
-	public void setAmount(int amount) {
-		this.amount = amount;
+	public void setBlock(int amount) {
+		this.block = amount;
 	}
 	
 }

@@ -1,13 +1,13 @@
 package visuals.combat.enemies.intents;
 
-import javafx.scene.image.Image;
+import mechanics.enemies.intents.IntentPart;
 
-public abstract class LabeledIcon extends IntentIcon {
+public abstract class LabeledIcon extends IntentPartIcon {
 
 	private final IntentLabel label;
 	
-	public LabeledIcon(Image image) {
-		super(image);
+	public LabeledIcon(IntentPart intentPart) {
+		super(intentPart);
 		label = new IntentLabel();
 		getChildren().add(label);
 	}

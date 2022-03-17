@@ -5,7 +5,6 @@ import mechanics.actions.list.ActionList;
 import mechanics.cards.*;
 import mechanics.effects.SkillEffects;
 import mechanics.enemies.Enemy;
-import mechanics.enemies.intents.AttackIntent;
 
 public class Excuse extends AbstractCard implements Skill {
 
@@ -27,14 +26,14 @@ public class Excuse extends AbstractCard implements Skill {
 
 	@Override
 	public ActionList generateActions(Enemy target) {
-		if(target.intent() instanceof AttackIntent)
-			return SkillEffects.apply(this, new CancelIntent(this, target), new IncreaseExcuseCost(this));
+		if(target.intent().hasAttack())
+			return SkillEffects.apply(this, new CancelAttackParts(this, target), new IncreaseExcuseCost(this));
 		return ActionList.EMPTY;
 	}
 	
 	@Override
 	public boolean isLegal(Enemy target) {
-		return super.isLegal(target) && target.intent().isAttack();
+		return super.isLegal(target) && target.intent().hasAttack();
 	}
 	
 	@Override

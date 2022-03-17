@@ -17,7 +17,7 @@ public class CardTooltipManager extends TooltipManager {
 	
 	public CardTooltipManager(AbstractCardRepresentation cardRepresentation) {
 		super(cardRepresentation, Side.RIGHT);
-		column().getChildren().addAll(generateTooltips());
+		column().addAll(generateTooltips());
 	}
 	
 	private List<Tooltip> generateTooltips() {
@@ -26,7 +26,7 @@ public class CardTooltipManager extends TooltipManager {
 		List<Tooltip> list = new ArrayList<>();
 		//First, if it's OT, generate that:
 		if(card.isOneTime())
-			list.add(new OTTooltip());
+			list.add(CardTooltips.createOneTime());
 		//Scan the card's text for modifiers:
 		Set<String> seen = new HashSet<>();
 		outer:
@@ -46,12 +46,12 @@ public class CardTooltipManager extends TooltipManager {
 		//Check for the Guilt card separately:
 		String guilt = CardTag.GUILT.displayName();
 		if(text.startsWith(guilt) || text.endsWith(guilt) || text.contains(" " + guilt + " "))
-			list.add(new GuiltTooltip());
+			list.add(CardTooltips.createGuilt());
 		return list;
 	}
 	
 	private static Tooltip tooltipFor(ModifierTag tag) {
-		return new Tooltip(tag.displayName(), tag.generalDescription());
+		return Tooltip.titled(tag.displayName(), tag.generalDescription());
 	}
 	
 	@Override

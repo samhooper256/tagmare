@@ -10,8 +10,8 @@ public class Deck implements Iterable<Card> {
 	
 	private static final List<CardTag> STARTING_DECK = Colls.ulist(
 		YOGA,
-		YOGA,
-		APATHY,
+		EXCUSE,
+		EXCUSE,
 		APATHY,
 		DISCIPLINE,
 		DIVIDE_AND_CONQUER,

@@ -10,7 +10,7 @@ public final class Todo {
 	 * - Add card rarities?
 	 * - Make "View Deck" button look nicer (maybe make 2 drawings in Google Drawings, one with a dropshadow for when
 	 * you hover over it)?
-	 * - Intent tooltips
+	 * 
 	 * - Modifier Icon artwork
 	 * - Show your health on the calendar page.
 	 * - Show what the combats are on the calendar page.

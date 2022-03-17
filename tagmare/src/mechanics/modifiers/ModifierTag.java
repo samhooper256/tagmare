@@ -1,6 +1,6 @@
 package mechanics.modifiers;
 
-import static mechanics.modifiers.Descriptor.forked1;
+import static mechanics.modifiers.ModifierDescriptor.forked1;
 
 import java.util.*;
 
@@ -56,11 +56,11 @@ public enum ModifierTag {
 	
 	private final String displayName, generalDescription;
 	private final boolean isInteger;
-	private final Descriptor descriptor;
+	private final ModifierDescriptor descriptor;
 	
 	/** The general description can be an empty string or {@code null} if it is not needed. If {@code null}, it will
 	 * be converted to an empty string. */
-	ModifierTag(String displayName, String generalDescription, Descriptor descriptor, boolean isInteger) {
+	ModifierTag(String displayName, String generalDescription, ModifierDescriptor descriptor, boolean isInteger) {
 		this.displayName = displayName;
 		this.isInteger = isInteger;
 		this.generalDescription = generalDescription == null ? "" : generalDescription;
@@ -69,19 +69,19 @@ public enum ModifierTag {
 	}
 	
 	/** Assumes the modifier is an integer modifier. */
-	ModifierTag(String name, String generalDescription, Descriptor descriptor) {
+	ModifierTag(String name, String generalDescription, ModifierDescriptor descriptor) {
 		this(name, generalDescription, descriptor, true);
 	}
 	
 	/** Assumes the modifier is an integer modifier and sets the {@link #generalDescription()} to
 	 * {@code descriptor.forInteger(1)}. */
-	ModifierTag(String name, Descriptor descriptor) {
+	ModifierTag(String name, ModifierDescriptor descriptor) {
 		this(name, descriptor.forInteger(1), descriptor);
 	}
 	
 	/** Assumes the modifier is not an integer modifier. */
 	ModifierTag(String name, String generalDescription, String constantDescription) {
-		this(name, generalDescription, Descriptor.constant(constantDescription), false);
+		this(name, generalDescription, ModifierDescriptor.constant(constantDescription), false);
 	}
 	
 	/** Assumes the modifier is not an integer modifier and sets both the {@link #generalDescription()} and
@@ -115,7 +115,7 @@ public enum ModifierTag {
 		return description(0); //doesn't matter what we pass here.
 	}
 	
-	public Descriptor descriptor() {
+	public ModifierDescriptor descriptor() {
 		return descriptor;
 	}
 	

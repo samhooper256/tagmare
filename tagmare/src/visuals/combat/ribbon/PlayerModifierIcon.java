@@ -23,7 +23,7 @@ public class PlayerModifierIcon extends VerticalModifierIcon {
 	private PlayerModifierIcon(ModifierTag tag) {
 		super(tag);
 		TooltipManager ttm = new TooltipManager(this, Side.TOP);
-		tooltip = new Tooltip(tag.displayName(), tag.description(0));
+		tooltip = Tooltip.titled(tag.displayName(), tag.description(0));
 		ttm.column().add(tooltip);
 		ttm.install();
 	}

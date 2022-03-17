@@ -5,12 +5,13 @@ import java.util.*;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
+import mechanics.enemies.Enemy;
 import mechanics.enemies.intents.*;
 import visuals.fxutils.*;
 
 public final class IntentRepresentation extends HBox {
 
-	public static final double HEIGHT = IntentIcon.SIZE;
+	public static final double HEIGHT = IntentPartIcon.SIZE;
 	
 	private static final double SPACING = 8;
 	
@@ -22,25 +23,21 @@ public final class IntentRepresentation extends HBox {
 		return MAP.get(intent);
 	}
 	
-	private static List<IntentIcon> createIcons(Intent intent) {
-		if(intent instanceof StrikeIntent) {
-			List<IntentIcon> icons = new ArrayList<>();
-			for(Strike s : ((StrikeIntent) intent).strikes())
-				icons.add(new StrikeIcon(s));
-			return icons;
-		}
-		else if(intent instanceof BasicBlock) {
-			return Arrays.asList(new BlockIcon((BasicBlock) intent));
-		}
-		else if(intent instanceof BlockStrike) {
-			return Arrays.asList(new BlockStrikeIcon((BlockStrike) intent));
-		}
-		else if(intent instanceof DoNothing) {
-			return Arrays.asList(new UnlabeledIcon(Images.DO_NOTHING_INTENT));
-		}
-		else {
-			throw new UnsupportedOperationException(String.format("Intent: %s", intent));
-		}
+	private static List<IntentPartIcon> createIcons(Intent intent) {
+		List<IntentPart> parts = intent.parts();
+		ArrayList<IntentPartIcon> icons = new ArrayList<>(parts.size());
+		for(IntentPart ip : parts)
+			icons.add(createIcon(ip));
+		return icons;
+	}
+	
+	private static IntentPartIcon createIcon(IntentPart ip) {
+		if(ip instanceof AttackPart)
+			return new AttackIcon((AttackPart) ip);
+		else if(ip instanceof BlockPart)
+			return new BlockIcon((BlockPart) ip);
+		else
+			throw new UnsupportedOperationException(String.format("IntentPart: %s", ip));
 	}
 	
 	private final Intent intent;
@@ -49,13 +46,13 @@ public final class IntentRepresentation extends HBox {
 		super(SPACING);
 		this.intent = intent;
 		setAlignment(Pos.CENTER);
-		Nodes.setPrefAndMaxHeight(this, HEIGHT);
+		Nodes.setAllHeights(this, HEIGHT);
 		getChildren().addAll(createIcons(intent));
 	}
 
-	public void update() {
+	public void update(Enemy enemy) {
 		for(Node n : getChildren())
-			((IntentIcon) n).update();
+			((IntentPartIcon) n).update(enemy);
 	}
 
 	public List<Node> intentIcons() {

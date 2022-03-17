@@ -6,6 +6,7 @@ import base.Main;
 import javafx.scene.image.*;
 import mechanics.cards.*;
 import mechanics.enemies.*;
+import mechanics.enemies.intents.*;
 import mechanics.modifiers.*;
 
 /**
@@ -29,8 +30,6 @@ public final class Images {
 		//intents:
 		SWORD_INTENT = get("sword_intent.png"),
 		SHIELD_INTENT = get("shield_intent.png"),
-		SHIELD_AND_SWORD_INTENT = get("shield_and_sword_intent.png"),
-		DO_NOTHING_INTENT = get("do_nothing_intent.png"),
 		ENEMY_SHIELD = get("enemy_shield.png"),
 		//cards/combat:
 		COMBAT_RIBBON = get("combat_ribbon.png"),
@@ -53,6 +52,7 @@ public final class Images {
 	private static final Map<CardTag, Image> CARD_IMAGE_MAP = new HashMap<>();
 	private static final Map<EnemyTag, Image> ENEMY_IMAGE_MAP = new HashMap<>();
 	private static final Map<ModifierTag, Image> MODIFIER_IMAGE_MAP = new HashMap<>();
+	private static final Map<IntentPartTag, Image> INTENT_PART_IMAGE_MAP = new HashMap<>();
 	
 	static {
 		//Cards:
@@ -63,6 +63,10 @@ public final class Images {
 		
 		//Modifiers:
 		MODIFIER_IMAGE_MAP.put(ModifierTag.PACKED, PACKED_MODIFIER);
+		
+		//IntentParts:
+		INTENT_PART_IMAGE_MAP.put(IntentPartTag.ATTACK_PART, SWORD_INTENT);
+		INTENT_PART_IMAGE_MAP.put(IntentPartTag.BLOCK_PART, SHIELD_INTENT);
 	}
 	
 	private Images() {}
@@ -86,6 +90,15 @@ public final class Images {
 		return image == null ? TEST_MODIFIER : image;
 	}
 
+	public static Image forIntentPart(IntentPart part) {
+		return forIntentPart(part.tag());
+	}
+	
+	public static Image forIntentPart(IntentPartTag tag) {
+		Image image = INTENT_PART_IMAGE_MAP.get(tag);
+		return image == null ? SHIELD_INTENT : image;
+	}
+	
 	/**
 	 * Returns the image given by {@code filename} by invoking {@link Image#Image(java.io.InputStream)} with
 	 * the appropriate {@link InputStream}. The file indicated by {@code filename} must be in the "resources"

@@ -13,35 +13,60 @@ public class Tooltip extends VBox {
 	public static final double WIDTH = 120, PADDING = 2, BACKGROUND_ROUNDING = 3;
 	public static final Font TITLE_FONT = Fonts.GEORGIA_14_BOLD, DESCRIPTION_FONT = Fonts.GEORGIA_14;
 	
-	private final Label title, description;
+	private Label title, description;
 	
-	/** {@link #title()} and {@link #description()} will be empty strings. */
-	public Tooltip() {
-		this("", "");
+	/** Returns a new untitled {@link Tooltip} with an empty description. */
+	public static Tooltip untitled() {
+		return untitled("");
+	}
+
+	/** Returns a new untitled {@link Tooltip} with the given {@code description}. */
+	public static Tooltip untitled(String description) {
+		Tooltip t = new Tooltip();
+		addDescription(t, description);
+		return t;
 	}
 	
-	/** {@link #description()} will be an empty string. */
-	public Tooltip(String title) {
-		this(title, "");
+	/** Returns a new {@link Tooltip} with the given {@code title} and an empty description. */
+	public static Tooltip titled(String title) {
+		return titled(title, "");
 	}
 	
-	public Tooltip(String title, String description) {
-		this.title = Nodes.label(title, TITLE_FONT, Colors.TAG_GOLD);
-		this.title.setWrapText(true);
-		this.description = Nodes.label(description, DESCRIPTION_FONT, Color.WHITE);
-		this.description.setWrapText(true);
+	/** Returns a new {@link Tooltip} with the given {@code title} and {@code description}. */
+	public static Tooltip titled(String title, String description) {
+		Tooltip t = new Tooltip();
+		addTitle(t, title);
+		addDescription(t, description);
+		return t;
+	}
+	
+	private static void addTitle(Tooltip tooltip, String title) {
+		tooltip.title = Nodes.label(title, TITLE_FONT, Colors.TAG_GOLD);
+		tooltip.title.setWrapText(true);
+		tooltip.getChildren().add(tooltip.title);
+	}
+	
+	private static void addDescription(Tooltip tooltip, String description) {
+		tooltip.description = Nodes.label(description, DESCRIPTION_FONT, Color.WHITE);
+		tooltip.description.setWrapText(true);
+		tooltip.getChildren().add(tooltip.description);
+	}
+	
+	private Tooltip() {
 		setPadding(new Insets(PADDING));
 		setBackground(Backgrounds.rounded(Colors.TAG_BLUE, BACKGROUND_ROUNDING));
 		Nodes.setAllWidths(this, WIDTH);
-		getChildren().addAll(this.title, this.description);
 	}
 	
+	/** If this {@link Tooltip} is not {@link #isTitled() titled}, this method has no effect. */
 	public void setTitle(String title) {
-		this.title.setText(title);
+		if(isTitled())
+			this.title.setText(title);
 	}
 	
+	/** If this {@link Tooltip} is not {@link #isTitled() titled}, returns an empty string. */
 	public String title() {
-		return title.getText();
+		return isTitled() ? title.getText() : "";
 	}
 	
 	public void setDescription(String description) {
@@ -50,6 +75,10 @@ public class Tooltip extends VBox {
 	
 	public String description() {
 		return description.getText();
+	}
+	
+	public boolean isTitled() {
+		return title != null;
 	}
 	
 	/** Called immediately before this {@link Tooltip} is displayed (every time) if it is in a {@link TooltipColumn}.

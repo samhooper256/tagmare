@@ -5,7 +5,7 @@ import mechanics.modifiers.buffs.APClassroom;
 
 public class APESProgressCheck extends AbstractEnemy {
 
-	private static final int MAX_HEALTH = 29;
+	private static final int MAX_HEALTH = 29, DAMAGE = 6;
 	
 	public APESProgressCheck() {
 		super(EnemyTag.APES_PROGRESS_CHECK, MAX_HEALTH);
@@ -14,7 +14,7 @@ public class APESProgressCheck extends AbstractEnemy {
 
 	@Override
 	protected Intent generateIntent() {
-		return new StrikeIntent(6);
+		return Intent.withParts(new AttackPart(DAMAGE));
 	}
 	
 }

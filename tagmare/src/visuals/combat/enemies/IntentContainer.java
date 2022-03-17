@@ -2,14 +2,18 @@ package visuals.combat.enemies;
 
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import mechanics.enemies.Enemy;
 import mechanics.enemies.intents.Intent;
 import visuals.Vis;
 import visuals.animations.*;
 import visuals.combat.enemies.intents.IntentRepresentation;
+import visuals.fxutils.Nodes;
 
 public class IntentContainer extends StackPane {
 
-	private static final Duration TRANSITION_DURATION = Duration.millis(250);
+	public static final double HEIGHT = IntentRepresentation.HEIGHT;
+	
+	private static final Duration TRANSITION_DURATION = Duration.millis(500);
 	
 	private class Transition extends AbstractAnimation {
 		
@@ -37,13 +41,16 @@ public class IntentContainer extends StackPane {
 	public IntentContainer(Intent intent) {
 		top = IntentRepresentation.of(intent);
 		bottom = null;
+		Nodes.setAllHeights(this, HEIGHT);
 		getChildren().add(top);
 	}
 	
-	public void startTransition(Intent intent) {
+	/** Transitions to the enemy's current {@link Enemy#intent() intent}.*/
+	public void startTransition(Enemy enemy) {
 		if(transitionInProgress())
 			finishTransitionWithoutResume();
-		bottom = IntentRepresentation.of(intent);
+		bottom = IntentRepresentation.of(enemy.intent());
+		bottom.update(enemy);
 		bottom.setOpacity(0);
 		getChildren().add(0, bottom);
 		transition = new Transition();

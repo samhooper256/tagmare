@@ -84,28 +84,6 @@ public class TooltipManager {
 		column().update();
 	}
 	
-	//TODO remove this method - I don't THINK we need it.
-	private boolean canDisplayPerfectlyOn(Side side) {
-		double
-			ch = column().getHeight(), cw = column().getWidth(),
-			rh = region().getHeight(), rw = region().getWidth(),
-			rx = region().getLayoutX(), ry = region().getLayoutY(),
-			rcx = rx + .5 * rw, rcy = ry + .5 * rh,
-			rrx = rx + rw, rby = ry + rh,
-			H = GameScene.HEIGHT, W = GameScene.WIDTH;
-		switch(side) {
-			case LEFT:
-				return rx >= cw && rcy + .5 * ch <= H && rcy - .5 * ch >= 0;
-			case RIGHT:
-				return rrx + cw <= W && rcy + .5 * ch <= H && rcy - .5 * ch >= 0;
-			case TOP:
-				return ry >= ch && rcx + .5 * cw <= W && rcx - .5 * cw >= 0;
-			case BOTTOM:
-				return rby + ch <= H && rcx + .5 * cw <= W && rcx - .5 * cw >= 0;
-			default: throw uoe(side);
-		}
-	}
-	
 	/** Lays out the {@link #column()} under the assumption that it
 	 * {@link #canDisplayPerfectlyOn(Side) can be displayed perfectly} on the given {@link Side}. This method does not
 	 * check that condition and can be used without it being true. */

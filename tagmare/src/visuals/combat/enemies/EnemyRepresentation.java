@@ -42,7 +42,7 @@ public class EnemyRepresentation extends StackPane {
 		modifierLabel.setFont(Fonts.UI_14);
 		modifierBox = new VBox(modifierLabel);
 		modifierBox.setAlignment(Pos.TOP_CENTER);
-		updateModifiers();
+		updateModifiersAndIntents();
 		sprite = new Sprite(Images.forEnemy(enemy));
 		vBox = new VBox(intentContainer, name, sprite, healthAndBlock, modifierLabel, modifierBox);
 		vBox.setAlignment(Pos.CENTER);
@@ -131,7 +131,7 @@ public class EnemyRepresentation extends StackPane {
 		healthAndBlock.update();
 	}
 
-	public void updateModifiers() {
+	public void updateModifiersAndIntents() {
 		ObservableList<Node> children = modifierBox.getChildren();
 		children.clear();
 		for(Modifier m : enemy().modifiers()) {
@@ -142,7 +142,7 @@ public class EnemyRepresentation extends StackPane {
 	}
 	
 	public void startIntentTransition() {
-		intentContainer.startTransition(enemy.intent());
+		intentContainer.startTransition(enemy);
 	}
 	
 	public Enemy enemy() {

@@ -76,7 +76,7 @@ public final class VisualManagerImpl implements VisualManager {
 				pullOut();
 			}
 		}
-		else if(action instanceof UpdateIntent || action instanceof CancelIntent) {
+		else if(action instanceof UpdateIntent || action instanceof CancelAttackParts) {
 			EnemyRepresentation.of(((EnemyTargettedAction) action).target()).startIntentTransition();
 		}
 		else if(action instanceof TakeDamage || action instanceof GainBlock) {
@@ -108,7 +108,7 @@ public final class VisualManagerImpl implements VisualManager {
 		else if(action instanceof RemoveModifier ||
 				action instanceof ApplyModifier || action instanceof ChangeModifier) {
 			pullOut();
-			updateModifiersOfAllEnemies();
+			updateModifiersAndIntentsOfAllEnemies();
 			Vis.ribbonLayer().ribbon().updateModifiers();
 			updateAllTexts();
 		}
@@ -145,9 +145,9 @@ public final class VisualManagerImpl implements VisualManager {
 			EnemyRepresentation.of(e).updateHNBInstantly();
 	}
 	
-	private void updateModifiersOfAllEnemies() {
+	private void updateModifiersAndIntentsOfAllEnemies() {
 		for(Enemy e : Hub.enemies())
-			EnemyRepresentation.of(e).updateModifiers();
+			EnemyRepresentation.of(e).updateModifiersAndIntents();
 	}
 	
 	private void updateAllTexts() {

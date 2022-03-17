@@ -13,7 +13,7 @@ abstract class AbstractEnemy extends AbstractEntity implements Enemy {
 	protected AbstractEnemy(EnemyTag tag, int maxHealth) {
 		super(maxHealth);
 		this.tag = tag;
-		intent = new DoNothing();
+		intent = Intent.EMPTY;
 	}
 	
 	/** Assumes {@link Combat#turn()} has been incremented to the turn this {@link Intent} is for. */
