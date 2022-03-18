@@ -9,13 +9,13 @@ import static mechanics.cards.CardTag.*;
 public class Deck implements Iterable<Card> {
 	
 	private static final List<CardTag> STARTING_DECK = Colls.ulist(
+		SPIRITUAL_ENLIGHTENMENT,
 		MOTIVATIONAL_VIDEO,
 		DO_HOMEWORK,
 		DO_HOMEWORK,
 		DO_HOMEWORK,
-		DO_HOMEWORK,
-		MOTIVATIONAL_VIDEO,
-		REVIEW_NOTES,
+		DISCIPLINE,
+		DISCIPLINE,
 		REVIEW_NOTES,
 		REVIEW_NOTES,
 		REVIEW_NOTES

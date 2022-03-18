@@ -1,11 +1,10 @@
 package mechanics.effects;
 
-import mechanics.*;
+import mechanics.Hub;
 import mechanics.actions.*;
 import mechanics.actions.list.ActionList;
 import mechanics.cards.*;
 import mechanics.modifiers.*;
-import mechanics.modifiers.buffs.*;
 import mechanics.modifiers.mixed.*;
 
 /** These are effects that apply to (and therefore modify) the actions produced by a {@link Card}. Attack effects
@@ -41,7 +40,7 @@ public final class AttackEffects {
 			result += m.integer();
 		if(d != null)
 			result *= (1 + Discipline.PERCENT * d.integer());
-		return (int) Math.round(result);
+		return Math.max(0, (int) Math.round(result));
 	}
 	
 }
