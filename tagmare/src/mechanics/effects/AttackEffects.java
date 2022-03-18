@@ -6,6 +6,7 @@ import mechanics.actions.list.ActionList;
 import mechanics.cards.*;
 import mechanics.modifiers.*;
 import mechanics.modifiers.buffs.*;
+import mechanics.modifiers.mixed.*;
 
 /** These are effects that apply to (and therefore modify) the actions produced by a {@link Card}. Attack effects
  * <em>do not</em> add or remove any actions from the list actions a card produces; rather, attack effects simply

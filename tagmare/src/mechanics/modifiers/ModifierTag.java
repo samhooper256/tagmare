@@ -1,17 +1,21 @@
 package mechanics.modifiers;
 
 import static mechanics.modifiers.ModifierDescriptor.forked1;
+import static mechanics.modifiers.ModifierDescriptor.forkedSign;
 
 import java.util.*;
 
-import mechanics.modifiers.buffs.Discipline;
+import mechanics.modifiers.mixed.Discipline;
 
 /** An immutable tag for each kind of {@link Modifier} (including hidden ones).*/
 public enum ModifierTag {
 	//All descriptions should be punctuated.
 	AP_CLASSROOM("AP Classroom", "A modifier that deisgnates AP Classroom assignments.",
 			"This is an AP Classroom assignment."),
-	MOTIVATION("Motivation", n -> String.format("Your next attack deals %d extra damage.", n)),
+	MOTIVATION("Motivation", forkedSign(
+		n -> String.format("Your next attack deals %d less damage.", -n),
+		n -> String.format("Your next attack deals %d more damage.", n)
+	)),
 	PROCRASTINATED("Procrastinated", "",
 			n -> String.format("This enemy will take %d damage at the start of next turn.", n)),
 	ENRAGED("Enraged", forked1("Immediately discard the next card you draw.",

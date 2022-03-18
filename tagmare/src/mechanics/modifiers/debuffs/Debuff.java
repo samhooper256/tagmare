@@ -6,4 +6,9 @@ import mechanics.modifiers.Modifier;
  * {@link HiddenDebuff HiddenDebuffs}. */
 public interface Debuff extends Modifier {
 
+	@Override
+	default boolean isBuff() {
+		return false;
+	}
+	
 }

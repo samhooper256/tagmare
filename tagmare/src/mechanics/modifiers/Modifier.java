@@ -3,6 +3,7 @@ package mechanics.modifiers;
 import mechanics.actions.*;
 import mechanics.modifiers.buffs.*;
 import mechanics.modifiers.debuffs.Debuff;
+import mechanics.modifiers.mixed.Motivation;
 
 /** There are two kinds of {@link Modifier Modifiers}: {@link Buff Buffs} and {@link Debuff Debuffs}. All
  * {@link #isInteger() integer} modifiers are mutable. */
@@ -10,12 +11,11 @@ public interface Modifier extends ActionSource {
 
 	ModifierTag tag();
 	
-	default boolean isBuff() {
-		return this instanceof Buff;
-	}
+	boolean isBuff();
 	
+	/** Equivalent to {@code !isBuff()}. */
 	default boolean isDebuff() {
-		return this instanceof Debuff;
+		return !isBuff();
 	}
 	
 	/** Visible {@link Modifier Modifiers} will be shown to the user. */

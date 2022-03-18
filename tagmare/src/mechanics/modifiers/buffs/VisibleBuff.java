@@ -1,10 +1,7 @@
 package mechanics.modifiers.buffs;
 
-public interface VisibleBuff extends Buff {
+import mechanics.modifiers.VisibleModifier;
 
-	@Override
-	default boolean isVisible() {
-		return true;
-	}
+public interface VisibleBuff extends VisibleModifier, Buff {
 	
 }

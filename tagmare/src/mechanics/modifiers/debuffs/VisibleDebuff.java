@@ -1,10 +1,7 @@
 package mechanics.modifiers.debuffs;
 
-public interface VisibleDebuff extends Debuff {
+import mechanics.modifiers.VisibleModifier;
 
-	@Override
-	default boolean isVisible() {
-		return true;
-	}
+public interface VisibleDebuff extends VisibleModifier, Debuff {
 	
 }

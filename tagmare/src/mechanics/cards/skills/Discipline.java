@@ -19,7 +19,7 @@ public class Discipline extends AbstractCard implements Skill {
 
 	@Override
 	public ActionList generateActions(Enemy target) {
-		return SkillEffects.apply(this, ApplyModifier.toPlayer(new mechanics.modifiers.buffs.Discipline(), this));
+		return SkillEffects.apply(this, ApplyModifier.toPlayer(new mechanics.modifiers.mixed.Discipline(), this));
 	}
 	
 }

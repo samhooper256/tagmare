@@ -39,7 +39,7 @@ public class ModifierSet implements Iterable<Modifier> {
 	public boolean add(Modifier modifier) {
 		if(contains(modifier.tag())) {
 			if(modifier.isInteger()) {
-				getModifierOrThrow(modifier.tag()).increment(modifier.integer());
+				increment(modifier.tag(), modifier.integer());
 				return true;
 			}
 			//do nothing - this modifier does not stack
@@ -72,10 +72,7 @@ public class ModifierSet implements Iterable<Modifier> {
 	/** @throws IllegalArgumentException if {@code (!contains(tag))} or the modifier is not an
 	 * {@link Modifier#isInteger() integer} modifier. */
 	public void decrement(ModifierTag tag, int amount) {
-		Modifier m = getModifierOrThrow(tag);
-		m.decrement(amount);
-		if(m.integer() == 0)
-			removeOrThrow(tag);
+		increment(tag, -amount);
 	}
 	
 	public void increment(ModifierTag tag) {

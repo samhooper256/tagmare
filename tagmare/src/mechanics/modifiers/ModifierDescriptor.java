@@ -23,4 +23,9 @@ public interface ModifierDescriptor extends Descriptor {
 		return n -> n == 1 ? textFor1 : descriptor.forInteger(n);
 	}
 	
+	/** Uses {@code negative} if the integer is less than {@code 0}, {@code nonNegative} otherwise. */
+	static ModifierDescriptor forkedSign(ModifierDescriptor negative, ModifierDescriptor nonNegative) {
+		return n -> n < 0 ? negative.forInteger(n) : nonNegative.forInteger(n);
+	}
+	
 }

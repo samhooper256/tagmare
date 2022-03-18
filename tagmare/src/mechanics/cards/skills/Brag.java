@@ -5,8 +5,8 @@ import mechanics.actions.list.ActionList;
 import mechanics.cards.*;
 import mechanics.effects.SkillEffects;
 import mechanics.enemies.Enemy;
-import mechanics.modifiers.buffs.Motivation;
 import mechanics.modifiers.debuffs.Toxic;
+import mechanics.modifiers.mixed.Motivation;
 
 public class Brag extends AbstractCard implements Skill {
 
