@@ -30,6 +30,8 @@ public final class Images {
 		MOTIVATION_MODIFIER = get("motivation_modifier.png"),
 		DISCIPLINE_MODIFIER = get("discipline_modifier.png"),
 		MENTAL_EXPANSION_MODIFIER = get("mental_expansion_modifier.png"),
+		ENLIGHTENED_MODIFIER = get("enlightened_modifier.png"),
+		TIRED_MODIFIER = get("tired_modifier.png"),
 		//intents:
 		SWORD_INTENT = get("sword_intent.png"),
 		SHIELD_INTENT = get("shield_intent.png"),
@@ -71,6 +73,8 @@ public final class Images {
 		MODIFIER_IMAGE_MAP.put(ModifierTag.MOTIVATION, MOTIVATION_MODIFIER);
 		MODIFIER_IMAGE_MAP.put(ModifierTag.DISCIPLINE, DISCIPLINE_MODIFIER);
 		MODIFIER_IMAGE_MAP.put(ModifierTag.MENTAL_EXPANSION, MENTAL_EXPANSION_MODIFIER);
+		MODIFIER_IMAGE_MAP.put(ModifierTag.ENLIGHTENED, ENLIGHTENED_MODIFIER);
+		MODIFIER_IMAGE_MAP.put(ModifierTag.TIRED, TIRED_MODIFIER);
 		
 		//IntentParts:
 		INTENT_PART_IMAGE_MAP.put(IntentPartTag.ATTACK, SWORD_INTENT);

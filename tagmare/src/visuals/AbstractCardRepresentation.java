@@ -27,7 +27,7 @@ public abstract class AbstractCardRepresentation extends StackPane {
 	
 	public static final double IMAGE_WIDTH = 144, IMAGE_Y = 52;
 	
-	public static final Font NAME_FONT = Fonts.UI_18_BOLD, TEXT_FONT = Fonts.UI_14;
+	public static final Font ENERGY_FONT = Fonts.NUMBERS_18_BOLD, NAME_FONT = Fonts.UI_18_BOLD, TEXT_FONT = Fonts.UI_14;
 	
 	private static final Color ENERGY_COLOR = Color.rgb(255, 218, 184);
 	
@@ -49,7 +49,7 @@ public abstract class AbstractCardRepresentation extends StackPane {
 		description.setWrappingWidth(TEXT_WRAP_WIDTH);
 		description.setTextAlignment(TextAlignment.CENTER);
 		description.getStyleClass().add(DESCRIPTION_CSS);
-		energy = Nodes.label(NAME_FONT, ENERGY_COLOR);
+		energy = Nodes.label(ENERGY_FONT, ENERGY_COLOR);
 		updateEnergyCost();
 		energyWrap = new VBox(energy);
 		energyWrap.setAlignment(Pos.TOP_CENTER);

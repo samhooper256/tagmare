@@ -11,7 +11,7 @@ import visuals.fxutils.Images;
 public class HealthBar extends AbstractHealthBar {
 
 	public static final double HEIGHT = 20, RADIUS = 8, SIDE_PADDING = 3;
-	public static final Font FONT = Fonts.UI_12_BOLD;
+	public static final Font FONT = Fonts.NUMBERS_12_BOLD;
 	
 	public HealthBar(Enemy enemy) {
 		super(Images.forEnemy(enemy).getWidth(), HEIGHT, RADIUS, SIDE_PADDING, FONT, enemy.health());

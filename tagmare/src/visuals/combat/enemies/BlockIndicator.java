@@ -19,7 +19,7 @@ public class BlockIndicator extends StackPane {
 	//leave it visible at all times; only mess with the opacity.
 	
 	public static final double SIZE = 32;
-	public static final Font FONT = Fonts.UI_24_BOLD;
+	public static final Font FONT = Fonts.NUMBERS_24_BOLD;
 	public static final Color TEXT_COLOR = Color.WHITE;
 	public static final String CSS = "block-indicator";
 	

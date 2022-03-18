@@ -12,7 +12,7 @@ public class EnergyMeter extends StackPane {
 	public static final double WIDTH = 70, HEIGHT = 70;
 	
 	private static final Duration ENERGY_CHANGE_DURATION = Duration.millis(500);
-	private static final Font FONT = Fonts.UI_72_BOLD;
+	private static final Font FONT = Fonts.NUMBERS_72;
 	
 	private class EnergyChangeAnimation extends AbstractAnimation {
 

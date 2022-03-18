@@ -17,9 +17,9 @@ public class Main extends Application {
 	}
 	
 	@Override
-	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setScene(GameScene.get());
-		primaryStage.show();
+	public void start(Stage stage) throws Exception {
+		stage.setScene(GameScene.get());
+		stage.show();
 		Scanner in = new Scanner(System.in);
 		Thread t = new Thread(() -> {
 			while(in.hasNextLine()) {
@@ -31,6 +31,7 @@ public class Main extends Application {
 		t.setDaemon(true);
 		t.start();
 //		primaryStage.setMaximized(true);
+		stage.setFullScreen(true);
 		System.out.println(Hub.deck());
 		Updater.startTimer();
 	}

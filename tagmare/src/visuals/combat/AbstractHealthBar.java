@@ -14,7 +14,7 @@ import visuals.fxutils.*;
 public class AbstractHealthBar extends Pane {
 
 	public static final Color TEXT_COLOR = Color.WHITE;
-	public static final double DEFAULT_SIDE_PADDING = 0;
+	public static final double DEFAULT_SIDE_PADDING = 0, DEFUALT_TEXT_Y_OFFSET = 0;
 	
 	private static final Duration SLIDE_DURATION = Duration.millis(500);
 	
@@ -44,7 +44,7 @@ public class AbstractHealthBar extends Pane {
 		
 	}
 
-	private final double width, height, roundingRadius, sidePadding;
+	private final double width, height, roundingRadius, sidePadding, textYOffset;
 	private final Font font;
 	private final Health health;
 	private final Region filled, back;
@@ -56,10 +56,16 @@ public class AbstractHealthBar extends Pane {
 	
 	public AbstractHealthBar(double width, double height, double roundingRadius, double sidePadding,
 			Font font, Health health) {
+		this(width, height, roundingRadius, sidePadding, DEFUALT_TEXT_Y_OFFSET, font, health);
+	}
+	
+	public AbstractHealthBar(double width, double height, double roundingRadius, double sidePadding,
+			double textYOffset, Font font, Health health) {
 		this.width = width;
 		this.height = height;
 		this.roundingRadius = roundingRadius;
 		this.sidePadding = sidePadding;
+		this.textYOffset = textYOffset;
 		this.font = font;
 		this.health = health;
 		Nodes.setPrefAndMaxSize(this, width, height);
@@ -76,14 +82,14 @@ public class AbstractHealthBar extends Pane {
 	
 	private Label createHP() {
 		Label hp = Nodes.label(String.valueOf(health().hp()), font(), TEXT_COLOR);
-		hp.layoutYProperty().bind(hp.heightProperty().multiply(-.5).add(height() * .5));
+		hp.layoutYProperty().bind(hp.heightProperty().multiply(-.5).add(height() * .5 + textYOffset()));
 		hp.setLayoutX(sidePadding());
 		return hp;
 	}
 	
 	private Label createMax() {
 		Label max = Nodes.label(String.valueOf(health().hp()), font(), TEXT_COLOR);
-		max.layoutYProperty().bind(max.heightProperty().multiply(-.5).add(height() * .5));
+		max.layoutYProperty().bind(max.heightProperty().multiply(-.5).add(height() * .5 + textYOffset()));
 		max.layoutXProperty().bind(max.widthProperty().multiply(-1).add(width() - sidePadding()));
 		return max;
 	}
@@ -129,6 +135,10 @@ public class AbstractHealthBar extends Pane {
 	
 	public double sidePadding() {
 		return sidePadding;
+	}
+	
+	public double textYOffset() {
+		return textYOffset;
 	}
 	
 	public Font font() {

@@ -17,7 +17,7 @@ public final class Calendar {
 		List<Combat> combatsModifiable = new ArrayList<>();
 		for(int i = 0; i < WEEKS; i++) {
 			if(i == 0)
-				combatsModifiable.add(new Combat(new CalculusPracticeQuiz(), new GovernmentAMSCO()));
+				combatsModifiable.add(new Combat(new CalculusPracticeQuiz(), new GovernmentAMSCO(), new VocabQuiz()));
 			else
 				combatsModifiable.add(new Combat());
 		}

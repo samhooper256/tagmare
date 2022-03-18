@@ -1,13 +1,21 @@
 package visuals;
 
+import base.Main;
 import javafx.scene.text.*;
 
 public final class Fonts {
 
 	private static final String UI_FONT_NAME = "Courier New";
-	
+	private static final String NUMBERS_FONT_FILENAME = "Rubik-Regular.ttf";
+	private static final String NUMBERS_FONT_BOLD_FILENAME = "Rubik-Medium.ttf";
 	private Fonts() {
 		
+	}
+	
+	static {
+		//load the necessary fonts:
+		Font.loadFont(Main.getResourceStream(NUMBERS_FONT_FILENAME), 0);
+		Font.loadFont(Main.getResourceStream(NUMBERS_FONT_BOLD_FILENAME), 0);
 	}
 	
 	public static final Font
@@ -21,8 +29,16 @@ public final class Fonts {
 		UI_24_BOLD = Font.font(UI_FONT_NAME, FontWeight.BOLD, 24),
 		UI_30 = Font.font(UI_FONT_NAME, 30),
 		UI_30_BOLD = Font.font(UI_FONT_NAME, FontWeight.BOLD, 30),
-		UI_72 = Font.font(UI_FONT_NAME, 72),
-		UI_72_BOLD = Font.font(UI_FONT_NAME, FontWeight.BOLD, 72),
+		NUMBERS_18 = numbers(18),
+		NUMBERS_24 = numbers(24),
+		NUMBERS_30 = numbers(30),
+		NUMBERS_36 = numbers(36),
+		NUMBERS_48 = numbers(48),
+		NUMBERS_72 = numbers(72),
+		NUMBERS_12_BOLD = numbersBold(12),
+		NUMBERS_18_BOLD = numbersBold(18),
+		NUMBERS_24_BOLD = numbersBold(24),
+		NUMBERS_30_BOLD = numbersBold(30),
 		GEORGIA_12 = Font.font("Georgia", 12),
 		GEORGIA_12_BOLD = Font.font("Georgia", FontWeight.BOLD, 12),
 		GEORGIA_14 = Font.font("Georgia", 14),
@@ -39,4 +55,12 @@ public final class Fonts {
 		GEORGIA_36_ITALIC = Font.font("Georgia", FontPosture.ITALIC, 36),
 		GEORGIA_72_ITALIC = Font.font("Georgia", FontPosture.ITALIC, 72);
 
+	private static Font numbers(double size) {
+		return Font.loadFont(Main.getResourceStream(NUMBERS_FONT_FILENAME), size);
+	}
+	
+	private static Font numbersBold(double size) {
+		return Font.loadFont(Main.getResourceStream(NUMBERS_FONT_BOLD_FILENAME), size);
+	}
+	
 }

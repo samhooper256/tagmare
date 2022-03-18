@@ -14,7 +14,7 @@ public class Deck implements Iterable<Card> {
 		DO_HOMEWORK,
 		DO_HOMEWORK,
 		DO_HOMEWORK,
-		DISCIPLINE,
+		CRAM,
 		DISCIPLINE,
 		REVIEW_NOTES,
 		REVIEW_NOTES,

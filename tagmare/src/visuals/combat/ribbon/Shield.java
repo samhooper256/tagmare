@@ -19,7 +19,7 @@ public class Shield extends StackPane {
 	//don't change visibility; only adjust opacity
 	
 	public static final double WIDTH = 64, HEIGHT = 64;
-	public static final Font FONT = Fonts.UI_30_BOLD;
+	public static final Font FONT = Fonts.NUMBERS_30_BOLD;
 	public static final Color TEXT_COLOR = HealthBar.TEXT_COLOR;
 	public static final String CSS = "player-shield";
 	

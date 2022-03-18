@@ -3,12 +3,13 @@ package visuals.combat.enemies.intents;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
-import javafx.scene.text.TextAlignment;
+import javafx.scene.text.*;
 import visuals.Fonts;
 
 public class IntentLabel extends Label {
 
 	public static final String CSS = "intent-label";
+	public static final Font FONT = Fonts.NUMBERS_30_BOLD;
 	
 	public IntentLabel() {
 		this("");
@@ -16,7 +17,7 @@ public class IntentLabel extends Label {
 	
 	public IntentLabel(String text) {
 		super(text);
-		setFont(Fonts.UI_30_BOLD);
+		setFont(FONT);
 		setTextFill(Color.WHITE);
 		setTextAlignment(TextAlignment.CENTER);
 		setAlignment(Pos.CENTER);

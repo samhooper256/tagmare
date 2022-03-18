@@ -14,7 +14,7 @@ public abstract class AbstractModifierIcon extends Pane implements ModifierIcon 
 
 	public static final String CSS = "modifier-icon";
 	
-	private static final Font FONT = Fonts.UI_24_BOLD;
+	private static final Font FONT = Fonts.NUMBERS_24_BOLD;
 	private static final Color TEXT_COLOR = Color.WHITE;
 	
 	private final ModifierTag tag;
