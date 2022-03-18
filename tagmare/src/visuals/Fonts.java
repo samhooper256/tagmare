@@ -21,6 +21,8 @@ public final class Fonts {
 		UI_24_BOLD = Font.font(UI_FONT_NAME, FontWeight.BOLD, 24),
 		UI_30 = Font.font(UI_FONT_NAME, 30),
 		UI_30_BOLD = Font.font(UI_FONT_NAME, FontWeight.BOLD, 30),
+		UI_72 = Font.font(UI_FONT_NAME, 72),
+		UI_72_BOLD = Font.font(UI_FONT_NAME, FontWeight.BOLD, 72),
 		GEORGIA_12 = Font.font("Georgia", 12),
 		GEORGIA_12_BOLD = Font.font("Georgia", FontWeight.BOLD, 12),
 		GEORGIA_14 = Font.font("Georgia", 14),

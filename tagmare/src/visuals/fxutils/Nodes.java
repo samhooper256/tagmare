@@ -128,6 +128,10 @@ public final class Nodes {
 		return l;
 	}
 	
+	public static Text text(Font font) {
+		return text("", font);
+	}
+	
 	public static Text text(Font font, Paint textFill) {
 		return text("", font, textFill);
 	}
