@@ -17,10 +17,10 @@ public final class DrawEffects {
 		ActionListBuilder list = Action.listBuilder();
 		ModifierSet pmods = Hub.player().modifiers();
 		EffectUtils.addNoSleepGang(list);
-		if(pmods.contains(ModifierTag.ENRAGED)) {
-			Enraged enraged = pmods.getModifierOrThrow(ModifierTag.ENRAGED);
+		if(pmods.contains(ModifierTag.SUGAR_CRASH)) {
+			Enraged enraged = pmods.getModifierOrThrow(ModifierTag.SUGAR_CRASH);
 			list.add(new ExplicitDiscard(card, enraged));
-			list.add(ChangeModifier.decrement(card, Hub.player(), ModifierTag.ENRAGED));
+			list.add(ChangeModifier.decrement(card, Hub.player(), ModifierTag.SUGAR_CRASH));
 		}
 		return list.build();
 	}

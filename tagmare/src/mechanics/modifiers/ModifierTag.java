@@ -18,10 +18,10 @@ public enum ModifierTag {
 	)),
 	PROCRASTINATED("Procrastinated", "",
 			n -> String.format("This enemy will take %d damage at the start of next turn.", n)),
-	ENRAGED("Enraged", forked1("Immediately discard the next card you draw.",
+	SUGAR_CRASH("Sugar Crash", forked1("Immediately discard the next card you draw.",
 			n -> String.format("Immediately discard the next %d cards you draw.", n))),
 	KNOCKED_OUT("Knocked Out", "You cannot play any cards from your hand this turn."),
-	DEFENESTRATING("Defenestrating", "GENERAL", n -> "IDUNNO" + n, true), //TODO test Defenestration
+	DEFENESTRATING("Defenestrating", "N/A", n -> "N/A", true), //it's a HiddenBuff.
 	NONSENSE("Nonsense", n -> String.format("Take %d damage at the end of your turn.", n)),
 	TOMATOED("Tomatoed", "The next card you play this turn cannot be an attack and must not require more than 1 energy."),
 	DISCIPLINE("Discipline", n -> String.format("Attacks deal %.0f%% more damage.", n * Discipline.PERCENT * 100)),

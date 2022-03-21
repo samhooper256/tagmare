@@ -7,17 +7,17 @@ import mechanics.effects.AttackEffects;
 import mechanics.enemies.Enemy;
 import mechanics.modifiers.debuffs.Enraged;
 
-public class Rage extends AbstractCard implements Attack {
+public class SugarRush extends AbstractCard implements Attack {
 
 	public static final int DAMAGE = 2, TIMES = 4;
 	
-	public Rage() {
-		super(CardTag.RAGE);
+	public SugarRush() {
+		super(CardTag.SUGAR_RUSH);
 	}
 
 	@Override
 	public Card copy() {
-		return new Rage();
+		return new SugarRush();
 	}
 
 	@Override

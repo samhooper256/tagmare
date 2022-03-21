@@ -12,7 +12,7 @@ public class Enraged extends IntegerModifier implements VisibleDebuff {
 	
 	@Override
 	public ModifierTag tag() {
-		return ModifierTag.ENRAGED;
+		return ModifierTag.SUGAR_CRASH;
 	}
 
 }

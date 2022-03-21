@@ -16,6 +16,8 @@ import mechanics.modifiers.*;
  */
 public final class Images {
 	
+	public static final double MODIFIER_ICON_HEIGHT = 32;
+	
 	public static final Image
 		//calendar:
 		CALENDAR = get("calendar.png"),
@@ -32,6 +34,10 @@ public final class Images {
 		MENTAL_EXPANSION_MODIFIER = get("mental_expansion_modifier.png"),
 		ENLIGHTENED_MODIFIER = get("enlightened_modifier.png"),
 		TIRED_MODIFIER = get("tired_modifier.png"),
+		KNOCKED_OUT_MODIFIER = get("knocked_out_modifier.png"),
+		SUGAR_CRASH_MODIFIER = get("sugar_crash_modifier.png"),
+		DEFENESTRATING_MODIFIER = get("defenestrating_modifier.png"),
+		NONSENSE_MODIFIER = get("nonsense_modifier.png"),
 		//intents:
 		SWORD_INTENT = get("sword_intent.png"),
 		SHIELD_INTENT = get("shield_intent.png"),
@@ -75,6 +81,10 @@ public final class Images {
 		MODIFIER_IMAGE_MAP.put(ModifierTag.MENTAL_EXPANSION, MENTAL_EXPANSION_MODIFIER);
 		MODIFIER_IMAGE_MAP.put(ModifierTag.ENLIGHTENED, ENLIGHTENED_MODIFIER);
 		MODIFIER_IMAGE_MAP.put(ModifierTag.TIRED, TIRED_MODIFIER);
+		MODIFIER_IMAGE_MAP.put(ModifierTag.KNOCKED_OUT, KNOCKED_OUT_MODIFIER);
+		MODIFIER_IMAGE_MAP.put(ModifierTag.SUGAR_CRASH, SUGAR_CRASH_MODIFIER);
+		MODIFIER_IMAGE_MAP.put(ModifierTag.DEFENESTRATING, DEFENESTRATING_MODIFIER);
+		MODIFIER_IMAGE_MAP.put(ModifierTag.NONSENSE, NONSENSE_MODIFIER);
 		
 		//IntentParts:
 		INTENT_PART_IMAGE_MAP.put(IntentPartTag.ATTACK, SWORD_INTENT);

@@ -1,7 +1,7 @@
 package visuals.combat;
 
 import mechanics.modifiers.ModifierTag;
-import visuals.fxutils.Nodes;
+import visuals.fxutils.*;
 
 /** A {@link ModifierIcon} that shows the number below the icon image. */
 public class VerticalModifierIcon extends AbstractModifierIcon {
@@ -10,8 +10,14 @@ public class VerticalModifierIcon extends AbstractModifierIcon {
 	
 	public VerticalModifierIcon(ModifierTag tag) {
 		super(tag);
-		label().layoutYProperty().bind(label().heightProperty().negate().add(HEIGHT));
-		label().layoutXProperty().bind(label().widthProperty().multiply(-.5).add(.5 * WIDTH));
+		if(tag.isIntegerModifier()) {
+			label().layoutYProperty().bind(label().heightProperty().negate().add(HEIGHT));
+			label().layoutXProperty().bind(label().widthProperty().multiply(-.5).add(.5 * WIDTH));
+		}
+		else {
+			getChildren().remove(label());
+			sprite().setLayoutY(.5 * (HEIGHT - Images.MODIFIER_ICON_HEIGHT));
+		}
 		Nodes.setAllSizes(this, WIDTH, HEIGHT);
 	}
 	
