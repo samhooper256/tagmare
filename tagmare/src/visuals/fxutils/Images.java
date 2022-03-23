@@ -27,6 +27,7 @@ public final class Images {
 		//enemies:
 		TEST_ENEMY = get("test_enemy.png"),
 		//modifiers:
+		AP_CLASSROOM_MODIFIER = get("ap_classroom_modifier.png"),
 		TEST_MODIFIER = get("test_modifier.png"),
 		PACKED_MODIFIER = get("packed_modifier.png"),
 		MOTIVATION_MODIFIER = get("motivation_modifier.png"),
@@ -75,6 +76,7 @@ public final class Images {
 		// (none yet)
 		
 		//Modifiers:
+		MODIFIER_IMAGE_MAP.put(ModifierTag.AP_CLASSROOM, AP_CLASSROOM_MODIFIER);
 		MODIFIER_IMAGE_MAP.put(ModifierTag.PACKED, PACKED_MODIFIER);
 		MODIFIER_IMAGE_MAP.put(ModifierTag.MOTIVATION, MOTIVATION_MODIFIER);
 		MODIFIER_IMAGE_MAP.put(ModifierTag.DISCIPLINE, DISCIPLINE_MODIFIER);

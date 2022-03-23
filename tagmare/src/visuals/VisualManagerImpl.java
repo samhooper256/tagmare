@@ -147,7 +147,7 @@ public final class VisualManagerImpl implements VisualManager {
 	
 	private void updateModifiersAndIntentsOfAllEnemies() {
 		for(Enemy e : Hub.enemies())
-			EnemyRepresentation.of(e).updateModifiersAndIntents();
+			EnemyRepresentation.of(e).updateModifiers();
 	}
 	
 	private void updateAllTexts() {

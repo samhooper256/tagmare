@@ -2,13 +2,11 @@ package visuals.combat.enemies;
 
 import java.util.WeakHashMap;
 
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import mechanics.enemies.Enemy;
-import mechanics.modifiers.Modifier;
 import visuals.*;
 import visuals.fxutils.*;
 
@@ -24,8 +22,9 @@ public class EnemyRepresentation extends StackPane {
 	}
 	
 	private final Enemy enemy;
-	private final VBox vBox, modifierBox;
-	private final Text name, modifierLabel;
+	private final VBox vBox;
+	private final ModifierPane modifierBox;
+	private final Text name;
 	private final HealthAndBlock healthAndBlock;
 	private final Sprite sprite;
 	private final KnockLayer sliceLayer, chipLayer;
@@ -34,22 +33,20 @@ public class EnemyRepresentation extends StackPane {
 	
 	private EnemyRepresentation(Enemy enemy) {
 		this.enemy = enemy;
+		Image image = Images.forEnemy(enemy);
+		sprite = new Sprite(image);
+		Nodes.setPrefAndMaxWidth(this, image.getWidth());
 		name = new Text(enemy.displayName());
 		name.setFont(Fonts.UI_14);
 		healthAndBlock = new HealthAndBlock(enemy);
 		intentContainer = new IntentContainer(enemy.intent());
-		modifierLabel = new Text("Modifiers:");
-		modifierLabel.setFont(Fonts.UI_14);
-		modifierBox = new VBox(modifierLabel);
-		modifierBox.setAlignment(Pos.TOP_CENTER);
-		updateModifiersAndIntents();
-		sprite = new Sprite(Images.forEnemy(enemy));
-		vBox = new VBox(intentContainer, name, sprite, healthAndBlock, modifierLabel, modifierBox);
+		modifierBox = new ModifierPane(this);
+		updateModifiers();
+		vBox = new VBox(intentContainer, name, sprite, healthAndBlock, modifierBox);
 		vBox.setAlignment(Pos.CENTER);
 		sliceLayer = new KnockLayer();
 		chipLayer = new KnockLayer();
 		getChildren().addAll(vBox, sliceLayer, chipLayer);
-		Nodes.setPrefAndMaxWidth(this, 300);
 		setOnMouseClicked(me -> mouseClicked());
 	}
 
@@ -131,14 +128,8 @@ public class EnemyRepresentation extends StackPane {
 		healthAndBlock.update();
 	}
 
-	public void updateModifiersAndIntents() {
-		ObservableList<Node> children = modifierBox.getChildren();
-		children.clear();
-		for(Modifier m : enemy().modifiers()) {
-			Text t = new Text(m.toString());
-			t.setFont(Fonts.UI_14);
-			children.add(t);
-		}
+	public void updateModifiers() {
+		//TODO update modifiers
 	}
 	
 	public void startIntentTransition() {
