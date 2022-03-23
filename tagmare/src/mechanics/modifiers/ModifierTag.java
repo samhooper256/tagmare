@@ -34,7 +34,7 @@ public enum ModifierTag {
 	PACKED("Packed", forked1("At the start of next turn, gain 1 energy and draw 1 card.",
 			n -> String.format("At the start of next turn, gain %d energy and draw %d cards.", n, n))),
 	CHEATING("Cheating", forked1("Your next non-Copy card is played twice.",
-			n -> String.format("Your next %d non-Copy cards are played twice", n))),
+			n -> String.format("Your next non-Copy card is played %d additional times.", n))),
 	TOXIC("Toxic", n -> String.format("At the end of your turn, take %d damage", n)),
 	NO_SLEEP_GANG("No Sleep Gang", n -> String.format("Whenever you draw or discard a card, deal %d damage to all "
 			+ "enemies. At the end of each turn, gain %1$d Tired.", n)),

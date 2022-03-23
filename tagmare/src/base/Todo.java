@@ -10,10 +10,11 @@ public final class Todo {
 	 * - Show your health on the calendar page.
 	 * - Show what the combats are on the calendar page.
 	 * - Finish calendar artwork (add Week 1, Week 2, etc. text)
-	 * - Add desk artwork.
+	 * - Add desk artwork (behind calendar).
+	 * - Should Tomatoed be an integer modifier (stacks?)
+	 * - Enemy modifiers need to update (preferably without creating new EnemyModifierIcons every time).
 	 * - ENEMIES:
-	 * 		- Ideas!
-	 * 		- More intents (debuff, buff, attack+buff, attack with multiple strikes) 
+	 * 		- Ideas! 
 	 * - Curve Card?
 	 * 
 	 * OPTIONAL:

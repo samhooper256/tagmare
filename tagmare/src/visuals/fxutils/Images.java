@@ -39,6 +39,8 @@ public final class Images {
 		SUGAR_CRASH_MODIFIER = get("sugar_crash_modifier.png"),
 		DEFENESTRATING_MODIFIER = get("defenestrating_modifier.png"),
 		NONSENSE_MODIFIER = get("nonsense_modifier.png"),
+		TOMATOED_MODIFIER = get("tomatoed_modifier.png"),
+		CHEATING_MODIFIER = get("cheating_modifier.png"),
 		//intents:
 		SWORD_INTENT = get("sword_intent.png"),
 		SHIELD_INTENT = get("shield_intent.png"),
@@ -87,6 +89,8 @@ public final class Images {
 		MODIFIER_IMAGE_MAP.put(ModifierTag.SUGAR_CRASH, SUGAR_CRASH_MODIFIER);
 		MODIFIER_IMAGE_MAP.put(ModifierTag.DEFENESTRATING, DEFENESTRATING_MODIFIER);
 		MODIFIER_IMAGE_MAP.put(ModifierTag.NONSENSE, NONSENSE_MODIFIER);
+		MODIFIER_IMAGE_MAP.put(ModifierTag.TOMATOED, TOMATOED_MODIFIER);
+		MODIFIER_IMAGE_MAP.put(ModifierTag.CHEATING, CHEATING_MODIFIER);
 		
 		//IntentParts:
 		INTENT_PART_IMAGE_MAP.put(IntentPartTag.ATTACK, SWORD_INTENT);
