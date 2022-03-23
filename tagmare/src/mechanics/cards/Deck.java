@@ -15,7 +15,7 @@ public class Deck implements Iterable<Card> {
 		ALL_NIGHTER,
 		CRAM,
 		DISCIPLINE,
-		PROCRASTINATE,
+		TAKE_A_BREAK,
 		PROCRASTINATE,
 		COPY,
 		WRITE_NONSENSE

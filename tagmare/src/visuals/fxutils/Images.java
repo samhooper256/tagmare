@@ -42,6 +42,8 @@ public final class Images {
 		NONSENSE_MODIFIER = get("nonsense_modifier.png"),
 		TOMATOED_MODIFIER = get("tomatoed_modifier.png"),
 		CHEATING_MODIFIER = get("cheating_modifier.png"),
+		ON_LEAVE_MODIFIER = get("on_leave_modifier.png"),
+		CONCENTRATION_MODIFIER = get("concentration_modifier.png"),
 		//intents:
 		SWORD_INTENT = get("sword_intent.png"),
 		SHIELD_INTENT = get("shield_intent.png"),
@@ -93,6 +95,8 @@ public final class Images {
 		MODIFIER_IMAGE_MAP.put(ModifierTag.NONSENSE, NONSENSE_MODIFIER);
 		MODIFIER_IMAGE_MAP.put(ModifierTag.TOMATOED, TOMATOED_MODIFIER);
 		MODIFIER_IMAGE_MAP.put(ModifierTag.CHEATING, CHEATING_MODIFIER);
+		MODIFIER_IMAGE_MAP.put(ModifierTag.ON_LEAVE, ON_LEAVE_MODIFIER);
+		MODIFIER_IMAGE_MAP.put(ModifierTag.CONCENTRATION, CONCENTRATION_MODIFIER);
 		
 		//IntentParts:
 		INTENT_PART_IMAGE_MAP.put(IntentPartTag.ATTACK, SWORD_INTENT);
