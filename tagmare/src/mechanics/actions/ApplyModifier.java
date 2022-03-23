@@ -1,5 +1,7 @@
 package mechanics.actions;
 
+import java.util.Objects;
+
 import mechanics.*;
 import mechanics.modifiers.Modifier;
 
@@ -13,7 +15,7 @@ public class ApplyModifier extends AbstractTargettedAction {
 	private final Modifier modifier;
 	
 	public ApplyModifier(Modifier modifier, ActionSource source, Entity target) {
-		super(source, target);
+		super(source, Objects.requireNonNull(target));
 		this.modifier = modifier;
 	}
 	

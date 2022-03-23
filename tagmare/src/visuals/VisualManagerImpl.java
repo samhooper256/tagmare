@@ -108,7 +108,7 @@ public final class VisualManagerImpl implements VisualManager {
 		else if(action instanceof RemoveModifier ||
 				action instanceof ApplyModifier || action instanceof ChangeModifier) {
 			pullOut();
-			updateModifiersAndIntentsOfAllEnemies();
+			updateModifiersOfAllEnemies();
 			Vis.ribbonLayer().ribbon().updateModifiers();
 			updateAllTexts();
 		}
@@ -145,7 +145,7 @@ public final class VisualManagerImpl implements VisualManager {
 			EnemyRepresentation.of(e).updateHNBInstantly();
 	}
 	
-	private void updateModifiersAndIntentsOfAllEnemies() {
+	private void updateModifiersOfAllEnemies() {
 		for(Enemy e : Hub.enemies())
 			EnemyRepresentation.of(e).updateModifiers();
 	}

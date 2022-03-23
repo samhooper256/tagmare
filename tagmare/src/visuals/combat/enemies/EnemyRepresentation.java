@@ -23,7 +23,7 @@ public class EnemyRepresentation extends StackPane {
 	
 	private final Enemy enemy;
 	private final VBox vBox;
-	private final ModifierPane modifierBox;
+	private final ModifierPane modifierPane;
 	private final Text name;
 	private final HealthAndBlock healthAndBlock;
 	private final Sprite sprite;
@@ -40,9 +40,9 @@ public class EnemyRepresentation extends StackPane {
 		name.setFont(Fonts.UI_14);
 		healthAndBlock = new HealthAndBlock(enemy);
 		intentContainer = new IntentContainer(enemy.intent());
-		modifierBox = new ModifierPane(this);
+		modifierPane = new ModifierPane(this);
 		updateModifiers();
-		vBox = new VBox(intentContainer, name, sprite, healthAndBlock, modifierBox);
+		vBox = new VBox(intentContainer, name, sprite, healthAndBlock, modifierPane);
 		vBox.setAlignment(Pos.CENTER);
 		sliceLayer = new KnockLayer();
 		chipLayer = new KnockLayer();
@@ -129,11 +129,15 @@ public class EnemyRepresentation extends StackPane {
 	}
 
 	public void updateModifiers() {
-		//TODO update modifiers
+		modifierPane().update(enemy().modifiers());
 	}
 	
 	public void startIntentTransition() {
 		intentContainer.startTransition(enemy);
+	}
+	
+	public ModifierPane modifierPane() {
+		return modifierPane;
 	}
 	
 	public Enemy enemy() {

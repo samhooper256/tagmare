@@ -24,4 +24,8 @@ public interface Entity extends ActionSource {
 		return !isDead();
 	}
 	
+	default boolean isPlayer() {
+		return this instanceof Player;
+	}
+	
 }
