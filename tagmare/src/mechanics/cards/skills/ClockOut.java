@@ -6,17 +6,17 @@ import mechanics.cards.*;
 import mechanics.effects.SkillEffects;
 import mechanics.enemies.Enemy;
 
-public class Reserves extends AbstractCard implements Skill {
+public class ClockOut extends AbstractCard implements Skill {
 
 	public static final int ADDITIONAL = 1;
 	
-	public Reserves() {
-		super(CardTag.RESERVES);
+	public ClockOut() {
+		super(CardTag.CLOCK_OUT);
 	}
 	
 	@Override
 	public Card copy() {
-		return new Reserves();
+		return new ClockOut();
 	}
 
 	@Override

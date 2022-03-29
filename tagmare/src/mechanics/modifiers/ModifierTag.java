@@ -30,7 +30,7 @@ public enum ModifierTag {
 	PLANNING_AHEAD("Planning Ahead", n -> String.format("At the start of next turn, gain %d block.", n)),
 	TIRED("Tired", n -> String.format("Gain %d less energy at the start of next turn", n)),
 	MEMORIZING("Memorizing", "You can no longer gain block from skills this turn."),
-	RESERVES("Reserves", n -> String.format("At the start of next turn, gain %d energy.", n)),
+	CLOCKED("Clocked", n -> String.format("At the start of next turn, gain %d energy.", n)),
 	PACKED("Packed", forked1("At the start of next turn, gain 1 energy and draw 1 card.",
 			n -> String.format("At the start of next turn, gain %d energy and draw %d cards.", n, n))),
 	CHEATING("Cheating", forked1("Your next non-Copy card is played twice.",

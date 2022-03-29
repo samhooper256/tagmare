@@ -1,12 +1,12 @@
 package mechanics.actions;
 
 import mechanics.*;
-import mechanics.modifiers.buffs.Reserves;
+import mechanics.modifiers.buffs.Clocked;
 
 /** Spawns two actions: set the player's energy to 0, then adding Reserves modifier. */
 public class ReserveEnergy extends AbstractAction {
 
-	public ReserveEnergy(mechanics.cards.skills.Reserves source) {
+	public ReserveEnergy(mechanics.cards.skills.ClockOut source) {
 		super(source);
 	}
 
@@ -16,7 +16,7 @@ public class ReserveEnergy extends AbstractAction {
 		int amount = e.amount();
 		Hub.stack().pushReversed(
 			new SetEnergy(0),
-			ApplyModifier.toPlayer(new Reserves(amount + mechanics.cards.skills.Reserves.ADDITIONAL), this)
+			ApplyModifier.toPlayer(new Clocked(amount + mechanics.cards.skills.ClockOut.ADDITIONAL), this)
 		);
 	}
 

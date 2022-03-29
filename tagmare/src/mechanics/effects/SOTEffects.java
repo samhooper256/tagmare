@@ -24,10 +24,10 @@ public final class SOTEffects {
 			list.add(new ChangeEnergy(-tired.integer(), tired));
 			list.add(RemoveModifier.fromPlayer(TIRED, null));
 		}
-		if(pmods.contains(RESERVES)) {
-			Modifier r = pmods.getModifierOrThrow(RESERVES);
+		if(pmods.contains(CLOCKED)) {
+			Modifier r = pmods.getModifierOrThrow(CLOCKED);
 			list.add(new ChangeEnergy(r.integer(), r));
-			list.add(RemoveModifier.fromPlayer(RESERVES, null));
+			list.add(RemoveModifier.fromPlayer(CLOCKED, null));
 		}
 		if(pmods.contains(PACKED)) {
 			Modifier p = pmods.getModifierOrThrow(PACKED);
