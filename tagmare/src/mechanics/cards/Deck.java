@@ -14,6 +14,7 @@ public class Deck implements Iterable<Card> {
 		SUGAR_RUSH,
 		CRAM,
 		PLANNER,
+		MEMORIZE,
 		GRIND
 	);
 	

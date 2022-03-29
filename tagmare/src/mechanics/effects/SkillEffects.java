@@ -4,6 +4,7 @@ import mechanics.Hub;
 import mechanics.actions.*;
 import mechanics.actions.list.ActionList;
 import mechanics.cards.*;
+import mechanics.cards.skills.Planner;
 import mechanics.modifiers.ModifierSet;
 import mechanics.modifiers.buffs.PlanningAhead;
 
@@ -37,7 +38,7 @@ public final class SkillEffects {
 	public static int getModifiedBlock(Skill card, int block) {
 		ModifierSet pmods = Hub.player().modifiers();
 		int result = block;
-		if(pmods.contains(MEMORIZING))
+		if(pmods.contains(MEMORIZING) && !(card instanceof Planner))
 			result = 0;
 		else if(pmods.contains(CONCENTRATION))
 			result += pmods.getModifierOrThrow(CONCENTRATION).integer();

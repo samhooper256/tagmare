@@ -44,7 +44,8 @@ public final class Images {
 		CHEATING_MODIFIER = get("cheating_modifier.png"),
 		ON_LEAVE_MODIFIER = get("on_leave_modifier.png"),
 		CONCENTRATION_MODIFIER = get("concentration_modifier.png"),
-		PLANNING_AHEAD = get("planning_ahead_modifier.png"),
+		PLANNING_AHEAD_MODIFIER = get("planning_ahead_modifier.png"),
+		MEMORIZING_MODIFIER = get("memorizing_modifier.png"),
 		//intents:
 		SWORD_INTENT = get("sword_intent.png"),
 		SHIELD_INTENT = get("shield_intent.png"),
@@ -98,8 +99,9 @@ public final class Images {
 		MODIFIER_IMAGE_MAP.put(ModifierTag.CHEATING, CHEATING_MODIFIER);
 		MODIFIER_IMAGE_MAP.put(ModifierTag.ON_LEAVE, ON_LEAVE_MODIFIER);
 		MODIFIER_IMAGE_MAP.put(ModifierTag.CONCENTRATION, CONCENTRATION_MODIFIER);
-		MODIFIER_IMAGE_MAP.put(ModifierTag.PLANNING_AHEAD, PLANNING_AHEAD);
-		
+		MODIFIER_IMAGE_MAP.put(ModifierTag.PLANNING_AHEAD, PLANNING_AHEAD_MODIFIER);
+		MODIFIER_IMAGE_MAP.put(ModifierTag.MEMORIZING, MEMORIZING_MODIFIER);
+
 		//IntentParts:
 		INTENT_PART_IMAGE_MAP.put(IntentPartTag.ATTACK, SWORD_INTENT);
 		INTENT_PART_IMAGE_MAP.put(IntentPartTag.BLOCK, SHIELD_INTENT);

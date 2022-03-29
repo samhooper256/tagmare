@@ -1,6 +1,7 @@
 package visuals.combat.ribbon;
 
 import javafx.scene.layout.Pane;
+import mechanics.Hub;
 import utils.Strings;
 import visuals.*;
 import visuals.fxutils.*;
