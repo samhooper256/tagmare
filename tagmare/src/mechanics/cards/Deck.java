@@ -9,17 +9,55 @@ import static mechanics.cards.CardTag.*;
 public class Deck implements Iterable<Card> {
 	
 	private static final List<CardTag> STARTING_DECK = Colls.ulist(
-		SPIRITUAL_ENLIGHTENMENT,
-		TAKE_A_BREAK,
-		SUGAR_RUSH,
-		CLOCK_OUT,
 		BRAG,
-		BRAG,
-		CRAM,
-		PLANNER,
-		MEMORIZE,
-		GRIND
+		PROCRASTINATE,
+		DO_HOMEWORK
 	);
+	/*
+	private static final List<CardTag> STARTING_DECK = Colls.ulist(
+		CardTag.ALL_NIGHTER,
+		CardTag.ANXIETY,
+		CardTag.APATHY,
+		CardTag.BEFORE_MIDNIGHT,
+		CardTag.BLUFF,
+		CardTag.BRAG,
+		CardTag.CAFFEINE,
+		CardTag.CLOCK_OUT,
+		CardTag.COPY,
+		CardTag.CRAM,
+		CardTag.CTRL_F,
+		CardTag.DEFENESTRATE,
+		CardTag.DISCIPLINE,
+		CardTag.DIVIDE_AND_CONQUER,
+		CardTag.DO_HOMEWORK,
+		CardTag.EXCUSE,
+		CardTag.FORESIGHT,
+		CardTag.FREE_TIME,
+		CardTag.GOOD_HABITS,
+		CardTag.GRIND,
+		CardTag.KEYBOARD_SHORTCUTS,
+		CardTag.MEMORIZE,
+		CardTag.MOTIVATIONAL_VIDEO,
+		CardTag.NIHILISM,
+		CardTag.NO_SLEEP_GANG,
+		CardTag.ORGANIZE,
+		CardTag.PACK_LUNCH,
+		CardTag.PLANNER,
+		CardTag.POMODORO,
+		CardTag.PROCRASTINATE,
+		CardTag.PUSH_THROUGH,
+		CardTag.QUIZLET,
+		CardTag.READ_FOR_FUN,
+		CardTag.RESENTMENT,
+		CardTag.REVIEW_NOTES,
+		CardTag.SPIRITUAL_ENLIGHTENMENT,
+		CardTag.STUDY,
+		CardTag.SUGAR_RUSH,
+		CardTag.TAKE_A_BREAK,
+		CardTag.WRITE_NONSENSE,
+		CardTag.YOGA
+	);
+	*/
 	
 	public static Deck createStartingDeck() {
 		Deck deck = new Deck();

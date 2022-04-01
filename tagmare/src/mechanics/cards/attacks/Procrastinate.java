@@ -13,6 +13,12 @@ public class Procrastinate extends AbstractCard implements Attack {
 	public Procrastinate() {
 		super(CardTag.PROCRASTINATE);
 	}
+	
+	@Override
+	public boolean usesMotivation() {
+		return false;
+	}
+	
 	@Override
 	public Card copy() {
 		return new Procrastinate();
