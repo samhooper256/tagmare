@@ -12,7 +12,8 @@ public class Deck implements Iterable<Card> {
 		BRAG,
 		GOOD_HABITS,
 		PROCRASTINATE,
-		DO_HOMEWORK
+		DO_HOMEWORK,
+		KEYBOARD_SHORTCUTS
 	);
 	/*
 	private static final List<CardTag> STARTING_DECK = Colls.ulist(
