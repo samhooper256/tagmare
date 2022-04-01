@@ -47,6 +47,7 @@ public final class Images {
 		PLANNING_AHEAD_MODIFIER = get("planning_ahead_modifier.png"),
 		MEMORIZING_MODIFIER = get("memorizing_modifier.png"),
 		CLOCKED_MODIFIER = get("clocked_modifier.png"),
+		TOXIC_MODIFIER = get("toxic_modifier.png"),
 		//intents:
 		SWORD_INTENT = get("sword_intent.png"),
 		SHIELD_INTENT = get("shield_intent.png"),
@@ -103,6 +104,7 @@ public final class Images {
 		MODIFIER_IMAGE_MAP.put(ModifierTag.PLANNING_AHEAD, PLANNING_AHEAD_MODIFIER);
 		MODIFIER_IMAGE_MAP.put(ModifierTag.MEMORIZING, MEMORIZING_MODIFIER);
 		MODIFIER_IMAGE_MAP.put(ModifierTag.CLOCKED, CLOCKED_MODIFIER);
+		MODIFIER_IMAGE_MAP.put(ModifierTag.TOXIC, TOXIC_MODIFIER);
 		
 		//IntentParts:
 		INTENT_PART_IMAGE_MAP.put(IntentPartTag.ATTACK, SWORD_INTENT);
