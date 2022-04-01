@@ -10,6 +10,7 @@ public class Deck implements Iterable<Card> {
 	
 	private static final List<CardTag> STARTING_DECK = Colls.ulist(
 		BRAG,
+		GOOD_HABITS,
 		PROCRASTINATE,
 		DO_HOMEWORK
 	);
