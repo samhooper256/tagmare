@@ -5,6 +5,7 @@ import mechanics.actions.*;
 import mechanics.actions.list.*;
 import mechanics.modifiers.*;
 import mechanics.modifiers.buffs.GoodHabits;
+import mechanics.modifiers.buffs.NoSleepGang;
 import mechanics.modifiers.debuffs.*;
 
 import static mechanics.modifiers.ModifierTag.*;
@@ -36,6 +37,10 @@ public final class EOTEffects {
 			Nonsense n = pmods.getModifierOrThrow(NONSENSE);
 			list.add(new TakeDamage(n.integer(), n));
 			list.add(RemoveModifier.fromPlayer(NONSENSE, null));
+		}
+		if(pmods.contains(NO_SLEEP_GANG)) {
+			NoSleepGang nsg = pmods.getModifierOrThrow(NO_SLEEP_GANG);
+			list.add(ApplyModifier.toPlayer(new Tired(nsg.integer()), nsg));
 		}
 		return list.build();
 	}

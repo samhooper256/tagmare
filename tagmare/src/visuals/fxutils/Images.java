@@ -50,6 +50,7 @@ public final class Images {
 		TOXIC_MODIFIER = get("toxic_modifier.png"),
 		GOOD_HABITS_MODIFIER = get("good_habits_modifier.png"),
 		SHORTCUTS_MODIFIER = get("shortcuts_modifier.png"),
+		NO_SLEEP_GANG_MODIFIER = get("no_sleep_gang_modifier.png"),
 		//intents:
 		SWORD_INTENT = get("sword_intent.png"),
 		SHIELD_INTENT = get("shield_intent.png"),
@@ -109,6 +110,7 @@ public final class Images {
 		MODIFIER_IMAGE_MAP.put(ModifierTag.TOXIC, TOXIC_MODIFIER);
 		MODIFIER_IMAGE_MAP.put(ModifierTag.GOOD_HABITS, GOOD_HABITS_MODIFIER);
 		MODIFIER_IMAGE_MAP.put(ModifierTag.SHORTCUTS, SHORTCUTS_MODIFIER);
+		MODIFIER_IMAGE_MAP.put(ModifierTag.NO_SLEEP_GANG, NO_SLEEP_GANG_MODIFIER);
 		
 		//IntentParts:
 		INTENT_PART_IMAGE_MAP.put(IntentPartTag.ATTACK, SWORD_INTENT);

@@ -88,7 +88,7 @@ public enum CardTag {
 			ct(String.format("End your turn. At the start of next turn, gain %d Concentration.", TakeABreak.CONCENTRATION)), true),
 	NO_SLEEP_GANG("No Sleep Gang", 3, false, NoSleepGang::new,
 			ct(String.format("At the end of each turn, gain %d Tired. Whenever you draw or discard a card, deal %1$d "
-					+ "damage to ALL enemies", NoSleepGang.BUFF_AMOUNT)), true),
+			+ "damage to ALL enemies", NoSleepGang.BUFF_AMOUNT)), true),
 	GOOD_HABITS("Good Habits", 1, false, GoodHabits::new,
 			ct(String.format("At the end of each turn, gain %d block.", GoodHabits.BLOCK)), true),
 	KEYBOARD_SHORTCUTS("Keyboard Shortcuts", 1, false, KeyboardShortcuts::new,

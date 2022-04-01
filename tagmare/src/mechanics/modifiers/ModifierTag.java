@@ -36,7 +36,7 @@ public enum ModifierTag {
 	CHEATING("Cheating", forked1("Your next non-Copy card is played twice.",
 			n -> String.format("Your next non-Copy card is played %d additional times.", n))),
 	TOXIC("Toxic", n -> String.format("At the end of your turn, take %d damage", n)),
-	NO_SLEEP_GANG("No Sleep Gang", n -> String.format("Whenever you draw or discard a card, deal %d damage to all "
+	NO_SLEEP_GANG("No Sleep Gang", n -> String.format("Whenever you draw or discard a card, deal %d damage to ALL "
 			+ "enemies. At the end of each turn, gain %1$d Tired.", n)),
 	GOOD_HABITS("Good Habits", n -> String.format("At the end of each turn, gain %d block", n)),
 	SHORTCUTS("Shortcuts", n -> String.format("Whenever an Attack deals damage, deal %d more", n)),

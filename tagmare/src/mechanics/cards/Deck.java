@@ -13,6 +13,7 @@ public class Deck implements Iterable<Card> {
 		GOOD_HABITS,
 		PROCRASTINATE,
 		DO_HOMEWORK,
+		NO_SLEEP_GANG,
 		KEYBOARD_SHORTCUTS
 	);
 	/*

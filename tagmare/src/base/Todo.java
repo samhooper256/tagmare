@@ -3,19 +3,18 @@ package base;
 public final class Todo {
 
 	/* TODO LIST:
+	 * 
 	 * - Add card rarities?
 	 * - Make "View Deck" button look nicer (maybe make 2 drawings in Google Drawings, one with a dropshadow for when
 	 * you hover over it)?
-	 * - Modifier Icon artwork
 	 * - Show your health on the calendar page.
 	 * - Show what the combats are on the calendar page.
 	 * - Finish calendar artwork (add Week 1, Week 2, etc. text)
 	 * - Add desk artwork (behind calendar).
-	 * - Should Tomatoed be an integer modifier (stacks?)
-	 * - Enemy modifiers need to update (preferably without creating new EnemyModifierIcons every time).
 	 * - ENEMIES:
-	 * 		- Ideas! 
+	 * 		- Ideas!
 	 * - Curve Card?
+	 * 
 	 * 
 	 * OPTIONAL:
 	 * - Make EOTLoseBlock smoothly fade out and slide down like SOTLoseBlock does for player.

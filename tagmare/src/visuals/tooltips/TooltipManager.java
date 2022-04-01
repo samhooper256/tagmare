@@ -141,8 +141,9 @@ public class TooltipManager {
 	 * {@link Side}. <em>Behavior is undefined if this assumption isn't true.</em>*/
 	private void layoutInFull(Side side) {
 		Bounds rbounds = region().localToScene(region().getBoundsInLocal());
+		Bounds cbounds = column().localToScene(column().getBoundsInLocal());
 		double
-			ch = column().getHeight(), cw = column().getWidth(),
+			ch = cbounds.getHeight(), cw = cbounds.getWidth(),
 			rh = rbounds.getHeight(), rw = rbounds.getWidth(),
 			rx = rbounds.getMinX(), ry = rbounds.getMinY(),
 			rcx = rx + .5 * rw, rcy = ry + .5 * rh,
